@@ -1,0 +1,19 @@
+1998-02-28  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Bug.m:  Include random.h instead of simtools.h.
+	Reformatting throughout.
+
+	* FoodSpace.m: Likewise.
+
+1998-02-04  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Bug.h: Include from objectbase/ instead of swarmobject/.
+
+1998-01-27  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* main.m (main): Constify argv.
+
+1997-12-17  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Makefile (SWARMHOME): Don't define if already defined.
+

@@ -1,3 +1,7 @@
+2003-04-06  Scott Christley <schristley@mac.com>
+
+	* Makefile.am (INCLUDES): Use libobjc definition.
+
 2003-03-26  Scott Christley <schristley@mac.com>
 
 	* java.m: Use GNUstep mframe for GNUstep.

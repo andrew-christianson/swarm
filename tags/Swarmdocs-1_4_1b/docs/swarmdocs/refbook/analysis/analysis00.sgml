@@ -1,0 +1,80 @@
+<PARTINTRO>
+
+  <SIDEBAR>
+    <TITLE>Overview</TITLE>
+
+    <PARA>This is the library where tools primarily related to
+      analysis tasks, reside. This includes tools which simplify the
+      task of graphing values or displaying distributions as well as
+      more specific measurement tools (such as Average, Entropy).
+    </PARA>
+
+  </SIDEBAR>
+
+  <SECT1 ID="SWARM.ANALYSIS.SGML.SECT1.DEPEND">
+    <TITLE>Dependencies</TITLE> 
+
+    <PARA>Following are the other header files imported by
+    &lt;analysis.h&gt;:
+
+<PROGRAMLISTING>
+#import &lt;objectbase.h&gt;
+#import &lt;simtoolsgui.h&gt;
+</PROGRAMLISTING>
+
+      </PARA>
+
+  </SECT1>
+
+  <SECT1 ID="SWARM.ANALYSIS.SGML.SECT1.COMPAT">
+    <TITLE>Compatibility</TITLE>
+
+    <PARA>No explicit compatibility issues for particular versions of
+    Swarm</PARA>
+
+  </SECT1>
+
+<!--
+  <SECT1 ID="SWARM.ANALYSIS.SGML.SECT1.USAGE">
+    <TITLE>Usage Guide</TITLE>
+
+    <PARA>Unavailable</PARA>
+
+  </SECT1>
+
+  <SECT1 ID="SWARM.ANALYSIS.SGML.SECT1.ADVUSAGE">
+    <TITLE>Advanced Usage Guide</TITLE>
+
+    <PARA>Unavailable</PARA>
+
+  </SECT1>
+
+  <SECT1 ID="SWARM.ANALYSIS.SGML.SECT1.SUBCLASS">
+    <TITLE>Subclassing Reference</TITLE>
+
+    <PARA>Unavailable</PARA>
+
+  </SECT1>
+
+  <SECT1 ID="SWARM.ANALYSIS.SGML.SECT1.DESIGN">
+    <TITLE>Interface Design Notes</TITLE>
+
+    <PARA>Unavailable</PARA>
+
+  </SECT1>
+
+  <SECT1 ID="SWARM.ANALYSIS.SGML.SECT1.IMPL">
+    <TITLE>Implementation Notes</TITLE>
+
+    <PARA>Unavailable</PARA>
+  </SECT1>
+
+-->
+
+</PARTINTRO>
+
+<!--
+Local Variables:
+sgml-parent-document:("analysiscont.sgml" "PARTINTRO")
+End:
+-->

@@ -1,3 +1,8 @@
+2004-07-24  Scott Christley  <schristley@mac.com>
+
+	* java.m (swarm_directory_java_associate_objects): Exclude
+	swarmGUIMode code when GNUstep is enabled.
+
 2004-07-21  Scott Christley  <schristley@mac.com>
 
 	* java.m (swarm_directory_java_associate_objects): Exclude

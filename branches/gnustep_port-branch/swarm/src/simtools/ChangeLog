@@ -1,3 +1,11 @@
+2003-04-06  Scott Christley <schristley@mac.com>
+
+	* Makefile.am (INCLUDES): Use libobjc definition.  Add GNUstep
+	includes.
+
+	* initSwarm.h (STRINGIFY): Do not define macro if it is already
+	defined.
+
 2002-04-14  Alex Lancaster  <alex@swarm.org>
 
 	* AppendFile.h, AppendFile.m, InFile.h, InFile.m, NSelect.h,

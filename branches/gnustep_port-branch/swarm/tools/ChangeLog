@@ -1,3 +1,9 @@
+2003-04-06  Scott Christley <schristley@mac.com>
+
+	* Makefile.am (INCLUDES): Use libobjc definition.
+	(findImp__EXEEXT__LDFLAGS): Use libobjc definition.  Add GNUstep
+	library flags.
+
 2003-03-31  Scott Christley <schristley@mac.com>
 
 	* Makefile.am (INCLUDES): Add GNUstep includes.

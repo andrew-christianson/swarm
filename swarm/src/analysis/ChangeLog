@@ -1,10 +1,21 @@
-2003-04-06  Scott Christley <schristley@mac.com>
+2004-07-21  Scott Christley  <schristley@mac.com>
 
-	* Makefile.am (INCLUDES): Use libobjc definition.
+	* Makefile.am (INCLUDES): Parameterize simtoolsgui and gui.
+	(SRC): Do not build ActiveGraph, EZBin, EZDistribution, EZGraph,
+	and FunctionGraph for a non-gui Swarm build.
 
-2003-03-31  Scott Christley <schristley@mac.com>
+	* analysis.h: #ifndef DISABLE_GUI classes not applicable for
+	a non-gui Swarm build.
 
-	* Makefile.am (INCLUDES): Add GNUstep includes.
+2004-07-16  Scott Christley <schristley@mac.com>
+
+	* Makefile.am (INCLUDES): Use libobjc definition. Add GNUstep includes.
+
+2003-06-11  Paul E. Johnson  <pauljohn@pjdell.pols.ukans.edu>
+
+	* EZGraph.m ([EZSequence -setActiveOutFile:]): to stop compiler
+	 harrassment, cast 
+	activeOutFile = (ActiveOutFile *)anActiveOutFile;
 
 2002-09-13  Paul Johnson   <pjohnson@localhost.localdomain>
  

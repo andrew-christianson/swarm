@@ -42,7 +42,7 @@ setBltLibrary (id interp, const char *path)
 static void
 ensureBltSupportFiles (id arguments, id interp)
 {
-  const char *fileName = "bltGraph.tcl";
+  const char *fileName = "graph.tcl";
   const char *basePath = [interp globalVariableValue: "blt_library"];
   BOOL retry = NO;
   
@@ -62,7 +62,8 @@ ensureBltSupportFiles (id arguments, id interp)
 
             if (swarmHome)
               {
-                const char *libdir = "share/blt2.4";
+                //const char *libdir = "share/blt2.4";
+                const char *libdir = "lib/blt2.4";
                 char libPath[strlen (swarmHome) + strlen (libdir) + 1];
                 char *p;
                 
@@ -114,7 +115,7 @@ ensureBltSupportFiles (id arguments, id interp)
 
   // This avoids the need for consultation of tclIndex, which is useful
   // when distributing just the minimum set of Tcl support files.
-  [self eval: "source $blt_library/bltGraph.tcl"];
+  [self eval: "source $blt_library/graph.tcl"];
 
   [self eval: "wm withdraw ."];			  // don't map "."
   
@@ -131,7 +132,8 @@ ensureBltSupportFiles (id arguments, id interp)
     const char *fullVersion = [self getBltFullVersion];
 
     if (strcmp (fullVersion, "8.0-unoff") == 0
-        || strcmp (fullVersion, "2.4") == 0)
+        || strcmp (fullVersion, "2.4") == 0
+        || strcmp (fullVersion, "3.0") == 0)
       {
         [self eval: "namespace import blt::barchart"];
         [self eval: "namespace import blt::bitmap"];
@@ -200,7 +202,7 @@ ensureBltSupportFiles (id arguments, id interp)
       return YES;
     }
   else
-    return (major >= 2 && minor >= 3);
+    return ((major == 2 && minor >= 3) || (major >= 3));
 }
      
 @end

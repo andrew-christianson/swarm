@@ -43,7 +43,9 @@
 #define DEFAULT_PROMPT "Tcl% "
 #define DEFAULT_PARTIAL_PROMPT "Tcl> "
 
-#if (TCL_MAJOR_VERSION == 8) && (TCL_MINOR_VERSION == 3)
+#if (TCL_MAJOR_VERSION == 8) && (TCL_MINOR_VERSION == 4)
+#define SUBDIR "tcl8.4"
+#elif (TCL_MAJOR_VERSION == 8) && (TCL_MINOR_VERSION == 3)
 #define SUBDIR "tcl8.3"
 #elif (TCL_MAJOR_VERSION == 8) && (TCL_MINOR_VERSION == 2)
 #define SUBDIR "tcl8.2"
@@ -201,6 +203,11 @@ fix_tcl_path (const char *path)
 		    valueDesc:"@"];
   objectsToNames = [[HashTable alloc] initKeyDesc:"@"
 		    valueDesc:"*"];
+
+  /* This calls Tcl_FindEncoding which ends up
+     calling TclWinSetInterfaces which sets getFileAttributesExProc 
+     which will be used by TclpObjNormalizePath. */
+  Tcl_FindExecutable (argv[0]);
 
   /* Create and init tcl interpreter */
 

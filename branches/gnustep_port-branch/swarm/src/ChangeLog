@@ -1,4 +1,25 @@
-2003-04-06  Scott Christley <schristley@mac.com>
+2004-07-21  Scott Christley  <schristley@mac.com>
+
+	* Makefile.am (SUBDIRS): Parameterize simtoolsgui and gui.
+	(SWARMMODULES): Likewise.
+	(INCLUDES): Likewise.
+
+	* SwarmEnvironment.h: #ifndef DISABLE_GUI methods not
+	applicable for a non-gui Swarm build.
+
+	* swarm.h: Likewise.
+
+	* SwarmEnvironment.m: Likewise.
+	([SwarmEnvironment createEnd]): Set swarmGUIMode to NO for a
+	non-gui Swarm build.
+
+2004-07-20  Marcus G. Daniels  <mgd@baby>
+
+	* Makefile.am (libswarm_la_LDFLAGS): Add -Wl,--export-all and
+	-shrext .dll for the case of USEDLL.  Current libtool behavior is
+	to make .exe's instead of .dlls if latter is absent.
+
+2004-07-16  Scott Christley <schristley@mac.com>
 
 	* Makefile.am (SUBDIRS): Use tcl/tk gui definition.  Add GNUstep
 	definition.
@@ -9,6 +30,49 @@
 
 	* SwarmEnvironment.m ([SwarmEnvironment updateDisplay]): Do not
 	call GUI_EVENT_ASYNC() for GNUstep.
+
+2004-02-25  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* Makefile.am:add libswarmobjc to libswarm deps.
+	
+2004-02-02  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* Makefile.am:fix problems with external avcall by
+	adding SWFFILIB.
+	
+2003-09-15  Bill Northcott  <w.northcott@unsw.edu.au>
+
+	* Makefile.rules : Add configured SED to make-h2x invocation.
+
+2003-06-29  mgd  <mgd@drone>
+
+	* Makefile.am (libswarm_la_LDFLAGS): Add -no-undefined.
+	(install-data-local): Disable rule.
+
+2003-05-22  Marcus G. Daniels  <mgd@xserve.santafe.edu>
+
+	* SwarmEnvironment.m (_initSwarm_):
+	Add call to __objc_exec_class_for_all_initial_modules.
+
+	* Makefile.am (classList.m): New rule.
+	(libswarm_la_SOURCES, BUILT_SOURCES): Add classList.m.
+
+2003-05-02    <mgd@mac.swarm.org>
+	
+	* SwarmEnvironment.m (predispatch, createBegin): Remove the
+	constructor attribute and call from createBegin instead.  (The
+	constructor gets called on Mac, but apparently things aren't set
+	up at that point.
+
+2003-05-01    <mgd@arrow.santafe.edu>
+
+	* SwarmEnvironment.m (_swarm_i_Zone_c__allocIVarsComponent_,
+	_swarm_i_Zone_c__freeIVarsComponent_,
+	_swarm_i_Zone_c__allocBlock_,
+	_swarm_i_Zone_c__freeBlock_blockSize_,
+	_swarm_i_ComponentZone_c__allocIVars_,
+	_swarm_i_Object_s__drop): New globals.
+	(predispatch): New constructor function.
 
 2002-10-19    <pauljohn@dv253s74.lawrence.ks.us>
 

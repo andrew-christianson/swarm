@@ -424,6 +424,7 @@ SIMTOOLSGUIINCLUDE='-I$(top_srcdir)/src/simtoolsgui'
 GUIDIR='gui'
 GUIDIRINCLUDE='-I$(top_srcdir)/src/gui'
 AM_CONDITIONAL(DISABLE_GUI, false)
+AM_CONDITIONAL(ENABLE_GNUSTEP, false)
 if test "$enable_gui" = no; then
    TCLTKGUIDIR=
    SIMTOOLSGUI=
@@ -439,6 +440,7 @@ if test "$enable_gnustep" = yes; then
    SIMTOOLSGUIINCLUDE=
    GUIDIR=
    GUIDIRINCLUDE=
+   AM_CONDITIONAL(ENABLE_GNUSTEP, true)
 fi
 AC_SUBST(TCLTKGUIDIR)
 AC_SUBST(SIMTOOLSGUI)
@@ -470,4 +472,54 @@ COM/Makefile COM/c/Makefile
 src/gui/Makefile src/simtoolsgui/Makefile src/tclobjc/Makefile src/tkobjc/Makefile src/tkobjc/tk/Makefile src/swarmgstep/Makefile
 ])
 
-# abs_srcdir=`cd $srcdir; pwd`
+# Output configuration for user to check
+echo
+echo "Swarm has been configured with the following settings."
+echo
+
+echo "Swarm install directory :" ${prefix}
+if test "$enable_libobjc" = yes; then
+   echo "ObjC Library            : Swarm local"
+else
+   echo "ObjC Library            : GNU GCC"
+fi
+#echo "ObjC Library         : Apple"
+if test -n "$ffidir"; then
+   echo "FFI                     : yes," ${ffilibdir}
+else
+   echo "AVCALL                  : Swarm local"
+fi
+
+if test "$enable_gui" = no; then
+   echo "Graphical Libraries     : GUI disabled, batch-only"
+else
+   if test "$enable_gnustep" = yes; then
+      echo "Graphical Libraries     : GNUstep enabled"
+   else
+      echo "Graphical Libraries     : TCL/TK/BLT enabled"
+   fi
+fi
+
+if test -n "$jdkdir"; then
+   echo "Java support            : yes," ${jdkdir}
+else
+   echo "Java support            : no"
+fi
+
+echo
+echo "Auxiliary Libraries"
+if test -n "$hdf5libdir"; then
+   echo "HDF5                    : yes," ${hdf5libdir}
+else
+   echo "HDF5                    : no"
+fi
+if test -n "$pnglibdir"; then
+   echo "png                     : yes," ${pnglibdir}
+else
+   echo "png                     : no"
+fi
+if test -n "$zliblibdir"; then
+   echo "zlib                    : yes," ${zliblibdir}
+else
+   echo "zlib                    : no"
+fi

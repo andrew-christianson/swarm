@@ -135,6 +135,11 @@ const char *realpath (const char *path, char *resolved_path);
 long long strtoll (const char *nptr, char **endptr, int base);
 #endif
 
+#ifdef GNUSTEP
+#define LLONG_MIN LONG_MIN
+#define LLONG_MAX LONG_MAX
+
+#else
 #ifndef LLONG_MIN
 #ifdef LONG_LONG_MIN
 #define LLONG_MIN LONG_LONG_MIN
@@ -152,6 +157,7 @@ long long strtoll (const char *nptr, char **endptr, int base);
 #define LLONG_MAX LONG_MAX
 #else
 #error long long max value missing
+#endif
 #endif
 #endif
 

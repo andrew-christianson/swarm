@@ -1,19 +1,94 @@
-2003-03-25  Scott Christley <schristley@mac.com>
+2004-07-16  Scott Christley <schristley@mac.com>
 
-	* Makefile.am (SUBDIRS): Use libobjc definition.
+	* Makefile.am (SUBDIRS): Use libobjc definition.  Move etc before
+	src so clean targets work.
+	(super-clean): New target.
 
-	* configure.in: Add --enable-gnustep flag.  Skip configuration of
-	libobjc, tkobjc, and tclobjc when GNUstep is available.  Add
-	swarmgstep module when GNUstep is enabled.
+	* configure.in: Add --enable-gnustep and --disable-libbojc flag.
+	Skip configuration of libobjc, tkobjc, and tclobjc when GNUstep is
+	available.  Add swarmgstep module when GNUstep is enabled.
+
+2004-04-20  Marcus G. Daniels <mgd@santafe.edu>
+
+	* VERSION: Bump.
+
+2004-02-25  Marcus G. Daniels <mgd@santafe.edu>
+
+	* VERSION: Bump.
+
+2004-02-15  Marcus G. Daniels <mgd@santafe.edu>
+
+	* configure.in: Move wn_PROG_OBJC below AC_PROG_CC.
+
+2004-02-02  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* configure.in:fix problems with external avcall
+	
+2004-01-21  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* configure.in: remove obsolete attempt to AC_SUBST
+	  OBJCDEPMODE.  All now done by new wn_PROG_OBJC
+	  macro, ACLIBOBJ and AM_DEPENDENCIES.
+
+2003-08-12  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* configure.in: allow libjavaswarm to build against combined
+	libswarm. and add MACOSJAVA for .jnilib ext in libjavaswarm.
+
+2003-08-11  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* m4/aclibtool.m4: provide appropriate libtool macros for
+	libtool-1.4.3+.
+
+2003-08-01  Bill Northcott  <w.northcott@unsw.edu.au>
+
+	* INSTALL: added '--enable-onelib' option to docs
+
+2003-08-01  Bill Northcott  <w.northcott@unsw.edu.au>
+
+	* configure.in, Makefile.am : added '--enable-onelib' option to 
+	  build as a single library.
+	* ltmain.sh : update libtool to 1.5a (28Jul03)
+	  removes annoyances such as relink on install.
+
+2003-07-17  Alex Lancaster  <alex@swarm.org>
+
+	* INSTALL: Note `--without-jdkdir' option for non-Java builds.
+
+2003-07-15 Paul Johnson <pauljohn@ku.edu>
+
+	* VERSION: Bump to 2.1.146
+
+2003-06-23 Paul Johnson <pauljohn@ku.edu>
+
+	* VERSION: Bump.  This edition supports Java on MacOS
+
+2003-05-22  Marcus G. Daniels  <mgd@xserve.santafe.edu>
+
+	* VERSION: Bump.
+
+	* config.guess, config.sub, ltmain.sh: Update to latest.
+
+2003-03-26  Alex Lancaster  <alex@swarm.org>
+
+	* README: Change e-mail address of support list to new
+	www.swarm.org server, and fix ftp.santafe.edu -> ftp.swarm.org.
+	Update pointers for CVS and MacOS X users.
+
+2003-02-26  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* configure.in: Complete conversion to libtool 1.4.3. autogen.sh
+	test for 1.4.3 and glibtool on Darwin autoconfigure SED
 
 2003-02-14  Bill Northcott <W.Northcott@unsw.edu.au>
 
-	* ltmain.sh and libtool/ltmain.sh: from libtool 1.4.3 needed on MacOS X.  
-	  needs SED environment var pointing to gnu sed.  
+	* ltmain.sh and libtool/ltmain.sh: from libtool 1.4.3 needed on
+	  MacOS X.  needs SED environment var pointing to gnu sed.
 
 2003-02-14  Bill Northcott <W.Northcott@unsw.edu.au>
 
-	* configure.in and libtool/configure: Update update Objective-C flags for recent compilers
+	* configure.in and libtool/configure: Update update Objective-C
+	flags for recent compilers
 
 2003-01-13  Alex Lancaster  <alexl@users.sourceforge.net>
 

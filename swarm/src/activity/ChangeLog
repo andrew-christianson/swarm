@@ -1,3 +1,7 @@
+2003-03-31  Scott Christley <schristley@mac.com>
+
+	* Makefile.am (INCLUDES): Add GNUstep includes.
+
 2002-10-19    <pauljohn@dv253s74.lawrence.ks.us>
 
 	* Makefile.am (install-data-local): $(DESTDIR) added

@@ -1,3 +1,11 @@
+2003-04-06  Scott Christley <schristley@mac.com>
+
+	* Makefile.am (INCLUDES): Use libobjc definition.  Add GNUstep
+	includes.
+
+	* Object2dDisplay.m ([Object2dDisplay -makeProbeAtX:Y:]): Do not
+	call GUI_BEEP for GNUstep.
+
 2002-04-14  Alex Lancaster  <alex@swarm.org>
 
 	* Ca2d.h, Ca2d.m, ConwayLife2d.h, ConwayLife2d.m, DblBuffer2d.h,

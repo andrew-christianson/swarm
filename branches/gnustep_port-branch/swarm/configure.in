@@ -15,7 +15,8 @@ AC_PROG_CC
 test -n "$OBJC" || OBJC="$CC"
 AC_SUBST(OBJC)
 test -n "$OBJCFLAGS" || OBJCFLAGS="$CFLAGS"
-OBJCFLAGS="$OBJCFLAGS -fgnu-runtime -fno-strict-aliasing -Wall -Wno-import -Wno-protocol -Wno-long-long -Werror"
+OBJCFLAGS="$OBJCFLAGS -fgnu-runtime -fno-strict-aliasing -Wall -Wno-import -Wno-protocol -Wno-long-long"
+#OBJCFLAGS="$OBJCFLAGS -fgnu-runtime -fno-strict-aliasing -Wall -Wno-import -Wno-protocol -Wno-long-long -Werror"
 AC_SUBST(OBJCFLAGS)
 
 AC_LIBTOOL_WIN32_DLL
@@ -63,6 +64,14 @@ AC_ARG_WITH(xpmlibname,
 
 md_FIND_XPM
 
+AC_ARG_ENABLE(gnustep,
+[  --enable-gnustep                 Enable Swarm for use with GNUstep],
+  ,enable_gnustep=no)
+
+if test "$enable_gnustep" = yes; then
+md_FIND_GNUSTEPLIB
+fi
+
 AC_ARG_WITH(tcldir,
 [  --with-tcldir=DIR                Use DIR/include and DIR/lib for Tcl],
   tclincludedir=$withval/include
@@ -80,6 +89,10 @@ AC_ARG_WITH(tclscriptdir,
 [  --with-tclscriptdir=DIR          Use DIR for Tcl scripts],
   tclscriptdir=$withval)
 
+if test "$enable_gnustep" = yes; then
+   echo GNUstep integration is enabled.  Skipping configuration of tclobjc
+else
+
 md_FIND_TCL
 md_FIND_TCL_HEADERS
 if test -z "$tclincludedir" ; then
@@ -95,6 +108,11 @@ md_FIND_TCL_SCRIPTS
 
 AC_SUBST(tclscriptdir)
 md_CHECK_TCLTK_LIBINC_VERSION_MATCH(tcl)
+
+TCLMODULE=tclobjc
+AC_SUBST(TCLMODULE)
+
+fi
 
 AC_ARG_WITH(tkdir,
 [  --with-tkdir=TKDIR               Use DIR/include and DIR/lib for Tk],
@@ -113,6 +131,10 @@ AC_ARG_WITH(tklibname,
 [  --with-tklibname=NAME            Use -lNAME for Tk],
   tklibname=$withval)
 
+if test "$enable_gnustep" = yes; then
+   echo GNUstep integration is enabled.  Skipping configuration of tkobjc
+else
+
 md_FIND_TK_HEADERS
 if test -z "$tkincludedir" ; then
   AC_MSG_ERROR(Please specify Tk include path using --with-tkincludedir)
@@ -129,6 +151,11 @@ AC_SUBST(tkscriptdir)
 
 md_CHECK_TCLTK_LIBINC_VERSION_MATCH(tk)
 
+TKMODULE=tkobjc
+AC_SUBST(TKMODULE)
+
+fi
+
 AC_ARG_WITH(bltdir,
 [  --with-bltdir=DIR                Use DIR/include and DIR/lib for BLT],
   bltdir=$withval)
@@ -137,7 +164,13 @@ AC_ARG_WITH(bltlibname,
 [  --with-bltlibname=NAME           Use -lNAME for BLT],
   bltlibname=$withval)
 
+if test "$enable_gnustep" = yes; then
+   echo GNUstep integration is enabled.  Skipping configuration of BLT
+else
+
 md_FIND_BLT
+
+fi
 
 AC_ARG_WITH(ffidir,
 [  --with-ffidir=DIR                Use DIR/include and DIR/lib for libffi],
@@ -316,12 +349,62 @@ AC_SUBST(AVCALLDIR)
 OBJCDEPMODE='depmode=gcc3'
 AC_SUBST(OBJCDEPMODE)
 
-AC_OUTPUT([Makefile m4/Makefile src/Makefile src/activity/Makefile src/analysis/Makefile src/collections/Makefile src/defobj/Makefile src/gui/Makefile src/misc/Makefile src/objectbase/Makefile src/random/Makefile src/simtools/Makefile src/simtoolsgui/Makefile src/space/Makefile src/tclobjc/Makefile src/tkobjc/Makefile src/tkobjc/tk/Makefile etc/config.swarm etc/Makefile.appl etc/Makefile.lib etc/Makefile.common etc/Makefile.tests etc/Makefile tests/Makefile tests/activity/Makefile tests/collections/Makefile tests/defobj/Makefile tests/objectbase/Makefile tests/simtools/Makefile tests/space/Makefile tools/Makefile tools/print-hdf5 java/Makefile java/javaswarm java/javacswarm java/c/Makefile java/swarm/Makefile java/swarm/Makefile.rules COM/Makefile COM/c/Makefile])
+if test "$enable_gnustep" = no; then
+   LIBOBJCDIR='libobjc'
+   LIBOBJCINCLUDES='-I$(top_builddir)/libobjc -I$(top_srcdir)/libobjc'
+   LIBOBJCLDFLAGS='-L../libobjc'
+else
+   LIBOBJCDIR=
+   LIBOBJCINCLUDES=
+   LIBOBJCLDFLAGS=
+fi
+AC_SUBST(LIBOBJCDIR)
+AC_SUBST(LIBOBJCINCLUDES)
+AC_SUBST(LIBOBJCLDFLAGS)
+
+if test "$enable_gnustep" = no; then
+   TCLTKGUIDIR='tclobjc tkobjc'
+else
+   TCLTKGUIDIR=
+fi
+AC_SUBST(TCLTKGUIDIR)
+
+AC_OUTPUT([Makefile m4/Makefile src/Makefile src/activity/Makefile
+src/analysis/Makefile src/collections/Makefile src/defobj/Makefile
+src/gui/Makefile src/misc/Makefile src/objectbase/Makefile
+src/random/Makefile src/simtools/Makefile src/simtoolsgui/Makefile
+src/space/Makefile etc/modules etc/config.swarm etc/Makefile.appl
+etc/Makefile.lib etc/Makefile.common etc/Makefile.tests etc/Makefile
+tests/Makefile tests/activity/Makefile tests/collections/Makefile
+tests/defobj/Makefile tests/objectbase/Makefile
+tests/simtools/Makefile tests/space/Makefile tools/Makefile
+tools/print-hdf5 java/Makefile java/javaswarm java/javacswarm
+java/c/Makefile java/swarm/Makefile java/swarm/Makefile.rules
+COM/Makefile COM/c/Makefile])
+
+if test "$enable_gnustep" = no; then
+AC_OUTPUT([src/tclobjc/Makefile src/tkobjc/Makefile src/tkobjc/tk/Makefile])
+else
+AC_OUTPUT([src/swarmgstep/Makefile])
+fi
 
 abs_srcdir=`cd $srcdir; pwd`
 
-test -d libobjc || mkdir libobjc
-(cd libobjc ; ${CONFIG_SHELL-/bin/sh} $abs_srcdir/libobjc/configure --srcdir=$abs_srcdir/libobjc --cache-file=../config.cache --exec-prefix=$exec_prefix --prefix=$prefix --bindir=$bindir --sbindir=$sbindir --libdir=$libdir --includedir=$includedir --oldincludedir=$oldincludedir --libexecdir=$libexecdir --sharedstatedir=$sharedstatedir -localstatedir=$localstatedir --sysconfdir=$sysconfdir --datadir=$datadir  --infodir=$infodir --mandir=$mandir --enable-shared=$enable_shared --enable-static=$enable_static --host=$host --target=$target --build=$build)
+if test "$enable_gnustep" = no; then
+   test -d libobjc || mkdir libobjc
+   (cd libobjc ; ${CONFIG_SHELL-/bin/sh} $abs_srcdir/libobjc/configure
+   --srcdir=$abs_srcdir/libobjc --cache-file=../config.cache
+   --exec-prefix=$exec_prefix --prefix=$prefix --bindir=$bindir
+   --sbindir=$sbindir --libdir=$libdir --includedir=$includedir
+   --oldincludedir=$oldincludedir --libexecdir=$libexecdir
+   --sharedstatedir=$sharedstatedir -localstatedir=$localstatedir
+   --sysconfdir=$sysconfdir --datadir=$datadir  --infodir=$infodir
+   --mandir=$mandir --enable-shared=$enable_shared
+   --enable-static=$enable_static --host=$host --target=$target
+   --build=$build)
+else
+   echo GNUstep integration is enabled.  Skipping configuration of libobjc.
+fi
 
 if test -n "$AVCALLDIR"; then
   test -d avcall || mkdir avcall

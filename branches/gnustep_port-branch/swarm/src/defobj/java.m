@@ -12,7 +12,9 @@
 #include <Foundation/NSMethodSignature.h>
 #include <mframe.h>
 #else
+#ifdef USE_MFRAME
 #include <objc/mframe.h>
+#endif
 #endif
 
 #import "internal.h" // FCALL_TYPE_COUNT, objc_type_for_fcall_type
@@ -1534,6 +1536,7 @@ swarm_directory_java_associate_objects (jobject swarmEnvironment)
     ASSOCIATE (uniformDblRand);
   }
 
+#ifndef DISABLE_GUI
   if (swarmGUIMode)
     {
       extern id probeDisplayManager;
@@ -1549,6 +1552,7 @@ swarm_directory_java_associate_objects (jobject swarmEnvironment)
       ASSOCIATE (ControlStateQuit);
       ASSOCIATE (ControlStateNextTime);
     }
+#endif
   
   {
     extern id <Symbol> Initialized, Running, Stopped, Holding, Released, 

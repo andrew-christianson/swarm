@@ -758,9 +758,15 @@
             (progn
               (insert "  extern id java_swarmEnvironmentCreating;\n")
               (insert "  extern void swarm_java_constructors ();\n")
+              (insert "  extern void __objc_exec_class_for_all_initial_modules ();\n")
+              (insert "  extern void swarm_force_references ();\n")
+              (insert "  extern void swarm_java_predispatch ();\n")
               (insert "  extern void swarm_directory_associate_objects_startup (jobject swarmEnvironment);\n")
               (insert "  jobject nextPhase;\n\n")
               (insert "  jniEnv = env;\n")
+	      (insert "  __objc_exec_class_for_all_initial_modules ();\n")
+	      (insert "  swarm_force_references ();\n")
+              (insert "  swarm_java_predispatch ();\n")
               (insert "  swarm_java_constructors ();\n")
               (insert "  java_create_refs ();\n")
               (insert "  defobj_init_java_call_tables ((void *) env);\n")
@@ -849,6 +855,7 @@
       (loop for phase in '(:creating :using)
             for dht = (create-dispatch-hash-table protocol phase)
             do
+	    (dump-dispatch-hash-table dht protocol phase)
             (loop for method in (expanded-method-list protocol phase)
                   unless (unwanted-create-method-p protocol method)
                   do
@@ -857,6 +864,7 @@
       (loop for method in (expanded-method-list protocol :setting)
             for dht = (create-dispatch-hash-table protocol :setting)
 	    do 
+	    (dump-dispatch-hash-table dht protocol :setting)
 	    (java-print-native-method method protocol :creating dht)
 	    (insert "\n")
 	    (java-print-native-method method protocol :using dht)))))

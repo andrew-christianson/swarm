@@ -1,11 +1,31 @@
-2004-03-13  Scott Christley  <schristl@nd.edu>
+2004-07-16  Scott Christley  <schristley@mac.com>
 
 	* Makefile.in (clean): New target.
+	(CPPFLAGS): Use libobjc definition.  Add GNUstep includes.
 
-2003-04-06  Scott Christley <schristley@mac.com>
+2003-09-15  Bill Northcott <W.Northcott@unsw.edu.au>
 
-	* Makefile.in (CPPFLAGS): Use libobjc definition.  Add GNUstep
-	includes.
+	* Makefile.in: fix undefined symbol issue when linking against
+	single swarm library on MacOS X - this may be needed elsewhere?
+
+2003-06-29  mgd  <mgd@drone>
+
+	* Makefile.in ($(JAVASWARM_DLL)): Add classList.o to link.
+	Don't filter out nil_method.
+
+2003-05-22  Marcus G. Daniels  <mgd@xserve.santafe.edu>
+
+	* Makefile.in (predispatch.c): Remove the constructor and rename
+	to swarm_java_predispatch.
+
+2003-05-10  Marcus Daniels  <mgd@mac>
+
+	* Makefile.in ($(_LIBJAVASWARM_LA)): Use -lswarmobjc instead of -lobjc.
+
+2003-04-30    <mgd@arrow.santafe.edu>
+
+	* Makefile.in (javaswarm_entities): Add predispatch.
+	(predispatch.{c,lo}): New rules.
 
 2002-10-19    <pauljohn@dv253s74.lawrence.ks.us>
 

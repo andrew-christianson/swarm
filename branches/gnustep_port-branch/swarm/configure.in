@@ -11,18 +11,18 @@ test "x$ACLOCAL" = xaclocal && ACLOCAL="aclocal -I m4"
 AM_CONFIG_HEADER(swarmconfig.h externvar.h)
 
 AC_PROG_CC
+wn_PROG_OBJC
+LT_AC_PROG_SED
+AC_SUBST(SED)
 
-test -n "$OBJC" || OBJC="$CC"
-AC_SUBST(OBJC)
 test -n "$OBJCFLAGS" || OBJCFLAGS="$CFLAGS"
 OBJCFLAGS="$OBJCFLAGS -fgnu-runtime -fno-strict-aliasing -Wall -Wno-import -Wno-protocol -Wno-long-long"
-#OBJCFLAGS="$OBJCFLAGS -fgnu-runtime -fno-strict-aliasing -Wall -Wno-import -Wno-protocol -Wno-long-long -Werror"
 AC_SUBST(OBJCFLAGS)
 
 AC_LIBTOOL_WIN32_DLL
 AC_PROG_LIBTOOL
 
-SHLIBPATH_VAR=`./libtool --config | sed -n 's/^shlibpath_var=\(.*\)/\1/p'`
+SHLIBPATH_VAR=`./libtool --config | $SED -n 's/^shlibpath_var=\(.*\)/\1/p'`
 AC_SUBST(SHLIBPATH_VAR)
 
 AC_PATH_XTRA
@@ -45,6 +45,19 @@ if test -z "$defaultdir" ; then
   defaultdir='${prefix}'
 fi
 
+AC_ARG_ENABLE(onelib,
+[  --enable-onelib                        build as a single library],
+        , enable_onelib=no)
+if test x$enable_onelib = xyes; then
+	ONELIB=yes
+else
+	ONELIB=no
+fi
+
+AC_ARG_ENABLE(gui,
+[  --disable-gui                    Disable GUI, Swarm is batch only],
+  ,enable_gui=yes)
+
 AC_ARG_WITH(xpmdir,
 [  --with-xpmdir=DIR                Use DIR/include and DIR/lib for XPM],
   xpmincludedir=$withval/include
@@ -64,12 +77,18 @@ AC_ARG_WITH(xpmlibname,
 
 md_FIND_XPM
 
+AC_ARG_ENABLE(libobjc,
+[  --disable-libobjc                Disable local ObjC library],
+  ,enable_libobjc=yes)
+
 AC_ARG_ENABLE(gnustep,
 [  --enable-gnustep                 Enable Swarm for use with GNUstep],
   ,enable_gnustep=no)
 
 if test "$enable_gnustep" = yes; then
 md_FIND_GNUSTEPLIB
+   echo GNUstep integration is enabled.  Skipping configuration of local libobjc
+   enable_libobjc=no
 fi
 
 AC_ARG_WITH(tcldir,
@@ -89,9 +108,12 @@ AC_ARG_WITH(tclscriptdir,
 [  --with-tclscriptdir=DIR          Use DIR for Tcl scripts],
   tclscriptdir=$withval)
 
-if test "$enable_gnustep" = yes; then
-   echo GNUstep integration is enabled.  Skipping configuration of tclobjc
+if test "$enable_gui" = no; then
+   echo GUI has been disabled.  Skipping configure of tclobjc
 else
+   if test "$enable_gnustep" = yes; then
+      echo GNUstep integration is enabled.  Skipping configuration of tclobjc
+   else
 
 md_FIND_TCL
 md_FIND_TCL_HEADERS
@@ -112,6 +134,7 @@ md_CHECK_TCLTK_LIBINC_VERSION_MATCH(tcl)
 TCLMODULE=tclobjc
 AC_SUBST(TCLMODULE)
 
+   fi
 fi
 
 AC_ARG_WITH(tkdir,
@@ -131,9 +154,12 @@ AC_ARG_WITH(tklibname,
 [  --with-tklibname=NAME            Use -lNAME for Tk],
   tklibname=$withval)
 
-if test "$enable_gnustep" = yes; then
-   echo GNUstep integration is enabled.  Skipping configuration of tkobjc
+if test "$enable_gui" = no; then
+   echo GUI has been disabled.  Skipping configure of tkobjc
 else
+   if test "$enable_gnustep" = yes; then
+      echo GNUstep integration is enabled.  Skipping configuration of tkobjc
+   else
 
 md_FIND_TK_HEADERS
 if test -z "$tkincludedir" ; then
@@ -154,6 +180,7 @@ md_CHECK_TCLTK_LIBINC_VERSION_MATCH(tk)
 TKMODULE=tkobjc
 AC_SUBST(TKMODULE)
 
+   fi
 fi
 
 AC_ARG_WITH(bltdir,
@@ -164,12 +191,16 @@ AC_ARG_WITH(bltlibname,
 [  --with-bltlibname=NAME           Use -lNAME for BLT],
   bltlibname=$withval)
 
-if test "$enable_gnustep" = yes; then
-   echo GNUstep integration is enabled.  Skipping configuration of BLT
+if test "$enable_gui" = no; then
+   echo GUI has been disabled.  Skipping configure of tclobjc
 else
+   if test "$enable_gnustep" = yes; then
+      echo GNUstep integration is enabled.  Skipping configuration of BLT
+   else
 
 md_FIND_BLT
 
+   fi
 fi
 
 AC_ARG_WITH(ffidir,
@@ -233,7 +264,14 @@ AC_ARG_ENABLE(subdirs,
 if test $prefix = /usr || test $enable_subdirs = yes; then
    includesubdir=swarm
    includedir=${includedir}/${includesubdir}
-   libdir=${libdir}/swarm
+  
+   if ! test -x $prefix/bin/cygwin1.dll; then
+     # Cygwin will want to use ../bin for DLLs, which will result
+     # in /usr/lib/bin/cygswarm.dll.  Anyway, the shared libraries 
+     # are consolidated into a single DLL, so there is no proliferation 
+     # of libraries
+     libdir=${libdir}/swarm
+   fi
 fi
 
 md_CHECK_LINKFLAGS
@@ -251,11 +289,11 @@ md_CHECK_BUILTIN_APPLY
 md_CHECK_SIZES
 md_CHECK_long_long_printf
 
-AC_OBJEXT
-if test $ac_objext = o ; then 
+#AC_OBJEXT
+#if test $ac_objext = o ; then 
  # so that LIBOBJS additions from AC_REPLACE_FUNCS have a .lo suffix.
-  ac_objext=lo
-fi
+#  ac_objext=lo
+#fi
 
 ac_save_CFLAGS=$CFLAGS
 CFLAGS="$CFLAGS -fno-builtin"
@@ -289,10 +327,10 @@ if test $exec_prefix = NONE; then
 else
   swarm_exec_prefix=$exec_prefix
 fi
-swarm_bindir="`echo $bindir | sed 's/{/{swarm_/'`"
-swarm_libdir="`echo $libdir | sed 's/{/{swarm_/'`"
-swarm_includedir="`echo $includedir | sed 's/{/{swarm_/'`"
-swarm_datadir="`echo $datadir | sed 's/{/{swarm_/'`"
+swarm_bindir="`echo $bindir | $SED 's/{/{swarm_/'`"
+swarm_libdir="`echo $libdir | $SED 's/{/{swarm_/'`"
+swarm_includedir="`echo $includedir | $SED 's/{/{swarm_/'`"
+swarm_datadir="`echo $datadir | $SED 's/{/{swarm_/'`"
 
 SWARMLDFLAGS="-L\${swarm_libdir} -rpath \${swarm_libdir}"
 AC_SUBST(SWARMLDFLAGS)
@@ -326,12 +364,21 @@ if test $USEDLL = yes; then
   noinst_LIBS='lib$(MODULE).la'
   inst_LDFLAGS=-static
 else
-  LIBSWARM_LA=libswarm.la
-  SWARM_DLL=
-  LIBJAVASWARM_LA=lib${JAVASWARM_LIB_NAME}.la
-  JAVASWARM_DLL=
-  inst_LIBS='lib$(MODULE).la' 
-  inst_LDFLAGS='-rpath $(DESTDIR)$(libdir) -version-info $(CURRENT):$(REVISION):$(AGE)'
+  if test  x$ONELIB = xyes; then
+	  LIBSWARM_LA=libswarm.la
+	  SWARM_DLL=
+	  LIBJAVASWARM_LA=lib${JAVASWARM_LIB_NAME}.la
+	  JAVASWARM_DLL=
+	  noinst_LIBS='lib$(MODULE).la' 
+	  inst_LDFLAGS=
+  else
+	  LIBSWARM_LA=libswarm.la
+	  SWARM_DLL=
+	  LIBJAVASWARM_LA=lib${JAVASWARM_LIB_NAME}.la
+	  JAVASWARM_DLL=
+	  inst_LIBS='lib$(MODULE).la' 
+      inst_LDFLAGS='-rpath $(DESTDIR)$(libdir) -version-info $(CURRENT):$(REVISION):$(AGE)'
+  fi
 fi
 AC_SUBST(SWARM_DLL)
 AC_SUBST(LIBSWARM_LA)
@@ -340,39 +387,78 @@ AC_SUBST(JAVASWARM_DLL)
 AC_SUBST(noinst_LIBS)
 AC_SUBST(inst_LIBS)
 AC_SUBST(inst_LDFLAGS)
+AC_SUBST(ONELIB)
+AC_SUBST(MACOSJAVA)
 
 AC_PATH_PROG(EMACS, emacs, missing)
 
 test -n "$ffidir" || AVCALLDIR=avcall
 AC_SUBST(AVCALLDIR)
 
-OBJCDEPMODE='depmode=gcc3'
-AC_SUBST(OBJCDEPMODE)
-
-if test "$enable_gnustep" = no; then
+if test "$enable_libobjc" = yes; then
    LIBOBJCDIR='libobjc'
    LIBOBJCINCLUDES='-I$(top_builddir)/libobjc -I$(top_srcdir)/libobjc'
    LIBOBJCLDFLAGS='-L../libobjc'
+   LIBOBJCLIB='-lswarmobjc'
+   LIBOBJCDEP='$(top_builddir)/libobjc/libswarmobjc.la'
+   AC_DEFINE([USE_MFRAME], 1, [Define if mframe functions to be used.])
+   # test -d libobjc || mkdir libobjc
+   AC_CONFIG_SUBDIRS(libobjc)
 else
+   echo Skipping configuration of local ObjC library.
    LIBOBJCDIR=
    LIBOBJCINCLUDES=
    LIBOBJCLDFLAGS=
+   LIBOBJCLIB='-lobjc'
+   LIBOBJCDEP=
 fi
 AC_SUBST(LIBOBJCDIR)
 AC_SUBST(LIBOBJCINCLUDES)
 AC_SUBST(LIBOBJCLDFLAGS)
+AC_SUBST(LIBOBJCLIB)
+AC_SUBST(LIBOBJCDEP)
 
-if test "$enable_gnustep" = no; then
-   TCLTKGUIDIR='tclobjc tkobjc'
-else
+TCLTKGUIDIR='tclobjc tkobjc'
+SIMTOOLSGUI='simtoolsgui'
+SIMTOOLSGUIINCLUDE='-I$(top_srcdir)/src/simtoolsgui'
+GUIDIR='gui'
+GUIDIRINCLUDE='-I$(top_srcdir)/src/gui'
+AM_CONDITIONAL(DISABLE_GUI, false)
+if test "$enable_gui" = no; then
    TCLTKGUIDIR=
+   SIMTOOLSGUI=
+   SIMTOOLSGUIINCLUDE=
+   GUIDIR=
+   GUIDIRINCLUDE=
+   AC_DEFINE([DISABLE_GUI], 1, [Define if GUI is disabled.])
+   AM_CONDITIONAL(DISABLE_GUI, true)
+fi
+if test "$enable_gnustep" = yes; then
+   TCLTKGUIDIR=
+   SIMTOOLSGUI=
+   SIMTOOLSGUIINCLUDE=
+   GUIDIR=
+   GUIDIRINCLUDE=
 fi
 AC_SUBST(TCLTKGUIDIR)
+AC_SUBST(SIMTOOLSGUI)
+AC_SUBST(SIMTOOLSGUIINCLUDE)
+AC_SUBST(GUIDIR)
+AC_SUBST(GUIDIRINCLUDE)
+
+if test -n "$AVCALLDIR"; then
+  test -d avcall || mkdir avcall
+  AC_CONFIG_SUBDIRS(avcall)
+else
+  test -d avcall || mkdir avcall
+  # avcall.h finds its way into dependency information
+  touch avcall/avcall.h
+fi
 
 AC_OUTPUT([Makefile m4/Makefile src/Makefile src/activity/Makefile
 src/analysis/Makefile src/collections/Makefile src/defobj/Makefile
-src/gui/Makefile src/misc/Makefile src/objectbase/Makefile
-src/random/Makefile src/simtools/Makefile src/simtoolsgui/Makefile
+src/misc/Makefile src/objectbase/Makefile
+src/random/Makefile src/simtools/Makefile 
 src/space/Makefile etc/modules etc/config.swarm etc/Makefile.appl
 etc/Makefile.lib etc/Makefile.common etc/Makefile.tests etc/Makefile
 tests/Makefile tests/activity/Makefile tests/collections/Makefile
@@ -380,37 +466,8 @@ tests/defobj/Makefile tests/objectbase/Makefile
 tests/simtools/Makefile tests/space/Makefile tools/Makefile
 tools/print-hdf5 java/Makefile java/javaswarm java/javacswarm
 java/c/Makefile java/swarm/Makefile java/swarm/Makefile.rules
-COM/Makefile COM/c/Makefile])
+COM/Makefile COM/c/Makefile
+src/gui/Makefile src/simtoolsgui/Makefile src/tclobjc/Makefile src/tkobjc/Makefile src/tkobjc/tk/Makefile src/swarmgstep/Makefile
+])
 
-if test "$enable_gnustep" = no; then
-AC_OUTPUT([src/tclobjc/Makefile src/tkobjc/Makefile src/tkobjc/tk/Makefile])
-else
-AC_OUTPUT([src/swarmgstep/Makefile])
-fi
-
-abs_srcdir=`cd $srcdir; pwd`
-
-if test "$enable_gnustep" = no; then
-   test -d libobjc || mkdir libobjc
-   (cd libobjc ; ${CONFIG_SHELL-/bin/sh} $abs_srcdir/libobjc/configure
-   --srcdir=$abs_srcdir/libobjc --cache-file=../config.cache
-   --exec-prefix=$exec_prefix --prefix=$prefix --bindir=$bindir
-   --sbindir=$sbindir --libdir=$libdir --includedir=$includedir
-   --oldincludedir=$oldincludedir --libexecdir=$libexecdir
-   --sharedstatedir=$sharedstatedir -localstatedir=$localstatedir
-   --sysconfdir=$sysconfdir --datadir=$datadir  --infodir=$infodir
-   --mandir=$mandir --enable-shared=$enable_shared
-   --enable-static=$enable_static --host=$host --target=$target
-   --build=$build)
-else
-   echo GNUstep integration is enabled.  Skipping configuration of libobjc.
-fi
-
-if test -n "$AVCALLDIR"; then
-  test -d avcall || mkdir avcall
-  (cd avcall; ${CONFIG_SHELL-/bin/sh} $abs_srcdir/avcall/configure --srcdir=$abs_srcdir/avcall --cache-file=../config.cache --exec-prefix=$exec_prefix --prefix=$prefix --bindir=$bindir --sbindir=$sbindir --libdir=$libdir --includedir=$includedir --oldincludedir=$oldincludedir --libexecdir=$libexecdir --sharedstatedir=$sharedstatedir -localstatedir=$localstatedir --sysconfdir=$sysconfdir --datadir=$datadir  --infodir=$infodir --mandir=$mandir --enable-shared=$enable_shared --enable-static=$enable_static --host=$host --target=$target --build=$build)
-else
-  test -d avcall || mkdir avcall
-  # avcall.h finds its way into dependency information
-  touch avcall/avcall.h
-fi
+# abs_srcdir=`cd $srcdir; pwd`

@@ -1,8 +1,0 @@
-.SUFFIXES: .m .xm
-
-.m.o:
-	$(OBJC) -c $(OBJCFLAGS) $(CPPFLAGS) $(EXTRACPPFLAGS) $(SWARMINCLUDES) $< 
-
-# Local Variables:
-# mode: makefile
-# End:

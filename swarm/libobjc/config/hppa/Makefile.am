@@ -1,1 +1,0 @@
-EXTRA_DIST = compiler-info-hpux.h mframe-hpux.h

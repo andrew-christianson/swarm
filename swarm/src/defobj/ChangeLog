@@ -1,7 +1,25 @@
+2003-03-26  Scott Christley <schristley@mac.com>
+
+	* java.m: Use GNUstep mframe for GNUstep.
+
+	* internal.h: Define _C_LNG_DBL for GNUstep.
+
+	* defobj.h ([FArguments -addObject:]): Definition conflicts with
+	NSArray, so use NSArray definition for GNUstep.
+
+	* Makefile.am (INCLUDES): Add GNUstep include directories.
+
+	* FCall.m: Use GNUstep mframe for GNUstep.
+
+	* DefObject.m: Use GNUstep mframe for GNUstep.
+
+	* COM.m: Use GNUstep mframe for GNUstep.
+
 2003-03-05  Scott Christley <schristley@mac.com>
 
 	* DefObject.m ([Object_s -dropAllocations:]): Replace asm code
 	with static field for drop selector.
+
 
 2003-02-14  Bill Northcott <W.Northcott@unsw.edu.au>
 

@@ -1,3 +1,11 @@
+2003-03-25  Scott Christley <schristley@mac.com>
+
+	* Makefile.am (SUBDIRS): Use libobjc definition.
+
+	* configure.in: Add --enable-gnustep flag.  Skip configuration of
+	libobjc, tkobjc, and tclobjc when GNUstep is available.  Add
+	swarmgstep module when GNUstep is enabled.
+
 2003-02-14  Bill Northcott <W.Northcott@unsw.edu.au>
 
 	* ltmain.sh and libtool/ltmain.sh: from libtool 1.4.3 needed on MacOS X.  

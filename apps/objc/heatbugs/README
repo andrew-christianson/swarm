@@ -1,6 +1,0 @@
-This is the Heatbug demo app.  The code is very well commented,
-so the only thing that needs to be said here is that if you want
-to see little pictures (pixmap) running around instead of squares,
-then run make like so:
-
-   make CPPFLAGS=-DUSE_PIXMAP

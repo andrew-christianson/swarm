@@ -1,3 +1,17 @@
+2003-04-06  Scott Christley <schristley@mac.com>
+
+	* modules.in: New file.  The modules file is now a template so
+	that tkobjc and tclobjc can be disabled and the GNUstep module
+	can be added to the list.
+
+	* modules: Remove file.
+
+	* Makefile.tests.in (INCLUDES):  Use libobjc variable.
+	(SWARMBUILDLDFLAGS): Recode to allow for $(libobjcdir) to have
+	a blank value.
+
+	* config.swarm.in: Add GNUstep definitions.
+
 2003-03-25  Scott Christley <schristley@mac.com>
 
 	* Makefile.appl.in: Add GNUstep libraries and flags; remove libobjc.

@@ -1,3 +1,10 @@
+2004-07-24  Scott Christley  <schristley@mac.com>
+
+	* Makefile.am (super-clean): Delete additional files.
+
+	* configure.in: Add ENABLE_GNUSTEP flag.  Echo configuration
+	summary.
+
 2004-07-23  Marcus G. Daniels <mgd@santafe.edu>
 
 	* configure.in:  Don't use /usr/lib/swarm for --enable-subdirs

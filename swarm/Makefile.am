@@ -52,18 +52,19 @@ super-clean: maintainer-clean
 	-rm -f src/collections/Makefile.in
 	-rm -f src/defobj/Makefile.in src/defobj/modulemap.elc
 	-rm -f src/defobj/modulemap src/defobj/modulemap.c
-	-rm -f src/gui/Makefile.in
+	-rm -f src/gui/Makefile.in src/gui/Makefile
 	-rm -f src/misc/Makefile.in
 	-rm -f src/objectbase/Makefile.in
 	-rm -f src/random/Makefile.in
 	-rm -f src/simtools/Makefile.in
-	-rm -f src/simtoolsgui/Makefile.in
+	-rm -f src/simtoolsgui/Makefile.in src/simtoolsgui/Makefile
 	-rm -f src/space/Makefile.in
 	-rm -f src/swarmgstep/Makefile.in
-	-rm -f src/tclobjc/Makefile.in
+	-rm -f src/tclobjc/Makefile.in src/tclobjc/Makefile
+	-rm -rf src/tclobjc/.deps src/tkobjc/.deps src/simtoolsgui/.deps
 	-rm -f src/tkobjc/Makefile.in src/tkobjc/analysis_tcl.x
-	-rm -f src/tkobjc/simtools_tcl.x
-	-rm -f src/tkobjc/tk/Makefile.in
+	-rm -f src/tkobjc/simtools_tcl.x src/tkobjc/Makefile
+	-rm -f src/tkobjc/tk/Makefile.in src/tkobjc/tk/Makefile
 	-rm -f src/Makefile.in src/getters.elc
 	-rm -f src/SwarmEnvironment_getters.h src/SwarmEnvironment_getters.m
 	-rm -f tests/activity/Makefile.in

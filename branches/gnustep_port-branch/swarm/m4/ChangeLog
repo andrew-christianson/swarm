@@ -1,3 +1,7 @@
+2003-08-08  Scott Christley  <schristley@mac.com>
+
+	* acgnustep.m4: New file.
+
 2003-01-04  Bill Northcott <W.Northcott@unsw.edu.au>
 
 	* actcltk.m4: Added more recent versions of tcl to include dir

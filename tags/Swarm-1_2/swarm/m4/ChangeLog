@@ -1,0 +1,45 @@
+1998-06-25  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* acpng.m4: Use zliblibdir and pnglibdir instead of zlibdir and
+	pngdir.
+
+1998-06-24  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* actcltk.m4 (INCPLACES, LIBPLACES): Add cygwin paths.
+	
+	* actcltk.m4, acpng.m4: Loop over .so and .a within directories.
+
+	* acpng.m4 (md_FIND_LIB, md_FIND_INCLUDE): New macros.  Use both
+	in md_FIND_ZLIB and md_FIND_PNG.
+
+	* actcltk.m4: Rename {TCL,TK}LIBNAME to {tcl,tk}libname.
+
+	* Makefile.am:  New file.
+
+1998-06-23  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* actcltk.m4: Don't clear tkincludedir or tclincludedir before
+	scanning directories.  First check any previous setting.
+
+1998-06-22  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* actcltk.m4 (INCPLACES, LIBPLACES): Use defaultdir instead of
+	prefix.  Update for Tcl, Tk, and BLT for shared libraries.  Set
+	and substitute TCLLIB, TKLIB, BLTLIB, TCLLDFLAGS, TKLDFLAGS, and
+	BLTLDFLAGS.
+	(md_FIND_TCLOBJC_HEADERS): Use defaultdir instead of prefix.
+	(md_FIND_TCLOBJC_LIBRARIES): Set and substitute TCLOBJCLIB and
+	TCLOBJCLDFLAGS.
+	(md_FIND_TCL_LIBRARIES): Check first in tcllibdir.
+	(md_FIND_TK_LIBRARIES): Check first in tklibdir.
+
+	* acpng.m4: Set and substitute ZLIBLDFLAGS.  Update PNG for
+	shared libraries.  Set and substitute PNGLDFLAGS.
+
+	* acffi.m4: Update for shared libraries. Set and substitute
+	FFILDFLAGS and FFILIB.
+
+	* acpng.m4: Correct error messages to report --with-{zlib,png}dir 
+	not just --with{zlib,png}.
+	
+

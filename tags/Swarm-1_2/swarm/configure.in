@@ -1,0 +1,151 @@
+AC_INIT(Makefile.appl.in)
+
+VERSION=`head -1 $srcdir/VERSION`
+AM_INIT_AUTOMAKE(swarm, $VERSION)
+if test "x$ACLOCAL" = xaclocal; then
+  ACLOCAL="aclocal -I m4"
+fi
+
+AM_CONFIG_HEADER(config.h)
+
+AC_PROG_CC
+AM_PROG_LIBTOOL
+
+AC_MSG_CHECKING(for GUI libs)
+AC_TRY_COMPILE([#ifdef _WIN32
+#error
+#endif],[],
+GUILIBS='-lXpm -lX11 $(X_EXTRA_LIBS)',
+GUILIBS='-luser32 -lgdi32')
+AC_MSG_RESULT($GUILIBS)
+AC_SUBST(GUILIBS)
+
+AC_PATH_XTRA
+if test "$ac_R_space" = yes ; then
+  RPATH='-R '
+else 
+  if test "$ac_R_nospace" = yes ; then
+    RPATH='-R'
+  else
+    RPATH='-Wl,-rpath '
+  fi
+fi
+AC_SUBST(RPATH)
+
+AC_ARG_WITH(defaultdir,
+[  --with-defaultdir=DIR            Use DIR instead of prefix as default path],
+  defaultdir=$withval)
+
+if test -z "$defaultdir" ; then
+  if test $prefix = NONE ; then
+    defaultdir=/usr/local
+  else
+    defaultdir=$prefix
+  fi
+fi
+
+AC_ARG_WITH(tcldir,
+[  --with-tcldir=DIR                Use DIR/include and DIR/lib for Tcl],
+  tclincludedir=$withval/include
+  tcllibdir=$withval/lib)
+
+AC_ARG_WITH(tclincludedir,
+[  --with-tclincludedir=DIR         Use DIR for Tcl header files],
+  tclincludedir=$withval)
+
+AC_ARG_WITH(tcllibname,
+[  --with-tcllibname=NAME           Use -lNAME for Tcl])
+
+md_FIND_TCL_HEADERS
+if test -z "$tclincludedir" ; then
+  AC_MSG_ERROR(Please specify Tcl header path using --with-tcldir or --with-tclincludedir)
+fi
+
+md_FIND_TCL_LIBRARIES
+if test -z "$tcllibdir" ; then
+  AC_MSG_ERROR(Please specify Tcl library path using --with-tcldir)
+fi
+
+AC_ARG_WITH(tkdir,
+[  --with-tkdir=TKDIR               Use DIR/include and DIR/lib for Tk],
+  tkincludedir=$withval/include
+  tklibdir=$withval/lib)
+
+AC_ARG_WITH(tkincludedir,
+[  --with-tkincludedir=DIR          Use DIR for Tk header files],
+  tkincludedir=$withval/include)
+
+AC_ARG_WITH(tklibname,
+[  --with-tklibname=NAME            Use -lNAME for Tk])
+
+md_FIND_TK_HEADERS
+if test -z "$tkincludedir" ; then
+  AC_MSG_ERROR(Please specify Tk include path using --with-tkincludedir)
+fi
+
+md_FIND_TK_LIBRARIES
+if test -z "$tklibdir" ; then
+  AC_MSG_ERROR(Please specify Tk library path using --with-tkdir)
+fi
+
+AC_ARG_WITH(tclobjcdir,
+[  --with-tclobjcdir=DIR            Use DIR/include and DIR/lib for tclobjc],
+  tclobjcdir=$withval)
+
+AC_ARG_WITH(tclobjcincludedir,
+[  --with-tclobjcincludedir=DIR     Use DIR for tclobjc headers],
+  tclobjcincludedir=$withval)
+
+AC_ARG_WITH(tclobjclibname,
+[  --with-tclobjclibname=NAME       Use -lNAME for tclobjc],
+  tclobjclibname=$withval)
+
+md_FIND_TCLOBJC_HEADERS
+md_FIND_TCLOBJC_LIBRARIES
+
+AC_ARG_WITH(bltdir,
+[  --with-bltdir=DIR                Use DIR/include and DIR/lib for BLT],
+  bltdir=$withval)
+
+AC_ARG_WITH(bltlibname,
+[  --with-bltlibname=NAME           Use -lNAME for BLT],
+  bltlibname=$withval)
+
+md_FIND_BLT
+
+AC_ARG_WITH(ffidir,
+[  --with-ffidir=DIR                Use DIR/include and DIR/lib for libffi],
+  ffidir=$withval)
+
+AC_ARG_WITH(ffcalldir,
+[  --with-ffcalldir=DIR             Use DIR/include and DIR/lib
+                                     for ffcall (alternative to libffi)])
+
+md_FIND_FFI
+
+AC_ARG_WITH(zlibdir,
+[  --with-zlibdir=DIR               Use DIR/include and DIR/lib for zlib],
+  zlibdir=$withval
+  zlibincludedir=$withval/include)
+
+AC_ARG_WITH(zlibincludedir,
+[  --with-zlibincludedir=DIR        Use DIR for zlib include files],
+  zlibincludedir=$withval)
+
+md_FIND_ZLIB
+
+AC_ARG_WITH(pngdir,
+[  --with-pngdir=DIR                Use DIR/include and DIR/lib for PNG],
+  pngdir=$withval
+  pngincludedir=$withval/include)
+
+AC_ARG_WITH(pngincludedir,
+[  --with-pngincludedir=DIR                Use DIR for PNG include files],
+  pngincludedir=$withval)
+
+md_FIND_PNG
+
+AC_CHECK_LIB(dl,main)
+
+AC_OUTPUT([Makefile m4/Makefile src/Makefile src/activity/Makefile src/analysis/Makefile src/collections/Makefile src/defobj/Makefile src/gui/Makefile src/misc/Makefile src/objectbase/Makefile src/random/Makefile src/simtools/Makefile src/simtoolsgui/Makefile src/space/Makefile src/tkobjc/Makefile src/tkobjc/tk/Makefile Makefile.appl Makefile.lib])
+

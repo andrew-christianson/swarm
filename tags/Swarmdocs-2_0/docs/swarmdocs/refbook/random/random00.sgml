@@ -1,0 +1,191 @@
+<PARTINTRO>
+
+  <SIDEBAR>
+    <TITLE>Overview</TITLE>
+ 
+    <PARA>First, a few thoughts on random number generation. It's hard
+      to do right! The root cause, of course, is that computer
+      algorithms themselves are not truly random. (Hence this library
+      contains pseudo-random generators only.)
+
+      There are many problems in implementing algorithms correctly and
+      efficiently, and in coming up with good tests for generators and
+      distributions. The history of pseudorandom number generation in
+      simulation work is mostly embarrassing. This library attempts to
+      do a decent job of generating random numbers, as well as
+      documenting how things work and what shortcomings there are.
+
+      If you want to learn more about random number generation, the
+      bibliography has useful notes (see the <link
+      linkend="swarm.random.sgml.bibliography">Bibliography</link>.)
+      Knuth is the main reference in this realm, but too old to
+      describe most of the particular generators used here, many of
+      which are drawn from recent literature.
+    </PARA>
+
+  </SIDEBAR>
+
+  <SECT1 ID="SWARM.RANDOM.SGML.SECT1.DEPEND">
+    <TITLE>Dependencies</TITLE> 
+
+    <PARA>Following are the other header files imported by
+    &lt;random.h&gt;:</PARA>
+
+<PROGRAMLISTING>
+#import &lt;objectbase.h&gt;
+#import &lt;random/generators.h&gt;
+#import &lt;random/distributions.h&gt;
+#import &lt;random/randomdefs.h&gt;
+#import &lt;random/randomvars.h&gt;</PROGRAMLISTING>
+
+    <PARA>The <EMPHASIS>objectbase</EMPHASIS> library interface is
+      included to provide the basic object
+      support. <FILENAME>randomdefs.h</FILENAME> contains some C
+      preprocessor macros and typedefs used in the library.</PARA>
+
+    <PARA>This reference guide contains the object definitions
+      for generators and distributions (see the list above) 
+      and also encodes the
+      inheritance structure through the "Protocols that this protocol
+      uses" section of each protocol. 
+
+      Just click on a (sub-)protocol name to see what methods it
+      implements. (You may want to review the section on Protocols in
+      the Objective-C book here!)
+
+    </PARA>
+
+    <para>In the protocols described, any protocol that ultimately
+      inherits from CREATABLE defines an object that you can use in
+      your program. (This is part of the Swarm defobj machinery.) In
+      other words, while 'InternalState' is a normal protocol (a list
+      of method definitions), the name `ACGgen' refers to both a
+      protocol and a class that implements that protocol. Similarly, 
+      'GammaDist' defines both a protocol and a class that implements 
+      that protocol.</para>
+
+    <para>All generators and distributions ultimately inherit from
+      SwarmObject.</para>
+      
+  </SECT1>
+
+  <SECT1 ID="SWARM.RANDOM.SGML.SECT1.COMPAT">
+    <TITLE>Compatibility</TITLE>
+
+    <ITEMIZEDLIST>
+      <LISTITEM>
+        
+        <FORMALPARA>
+          <TITLE>1.0.2 -&gt; 1.0.3</TITLE>
+          
+          <PARA><EMPHASIS>Note:</EMPHASIS> The new random library does
+            not work in the same way as the old one. This means that
+            some applications that used the random library provided
+            with the 1.0.2 release will be
+            <EMPHASIS>broken</EMPHASIS>.  However, porting these
+            applications to the new random library will be fairly easy
+            since large efforts were made to adhere to the standard
+            set with the last version and some backwards compatibility
+            hooks were incorporated.
+          </PARA>
+        </FORMALPARA>
+      </LISTITEM>
+      <LISTITEM>
+        
+        <FORMALPARA>
+          <TITLE>1.0, 1.1, 1.2, 1.3, 1.3.1, 1.4</TITLE>
+          
+          <PARA>There were no major compatibility issues in these
+            releases.
+
+          </PARA>
+        </FORMALPARA>
+      </LISTITEM>
+    </ITEMIZEDLIST>
+    
+  </SECT1>
+
+  <SECT1 ID="SWARM.RANDOM.SGML.SECT1.USAGE">
+    <TITLE>Usage Guide</TITLE>
+    
+    <SECT2>
+      <TITLE>Overview</TITLE>
+
+      <PARA>The <EMPHASIS>random</EMPHASIS> library contains two kinds
+        of objects, the <EMPHASIS>generators</EMPHASIS> which implement
+        different pseudo-random-number algorithms, and the 
+        <EMPHASIS>distributions</EMPHASIS> which transform the (uniform)
+        output from the generators into the desired simulated statistical
+        distributions. (The Swarm random library does not 
+        implement any <EMPHASIS>true</EMPHASIS> random number generators 
+        at this time.)
+      </PARA>
+
+    </SECT2>
+
+    <SECT2>
+      <TITLE>User Guide for Beginners</TITLE>
+       
+      <para>Please see the <link
+     linkend="swarm.random.sgml.appendix.sect1.usage-beginners">Random
+     Appendix</link>.  This section may go away in the future to be
+     relocated in the Swarm User Guide.</para>
+
+    </SECT2>
+
+    <SECT2>
+
+      <TITLE>Usage Guide to the Generators</TITLE>
+      
+     <para>Please see the <link
+     linkend="swarm.random.sgml.appendix.sect2.generator-usage">Random
+     Appendix</link>.</para>
+
+    </SECT2>
+    <SECT2>
+      <TITLE>Usage Guide to the Distributions</TITLE>     
+
+     <para>Please see the <link
+     linkend="swarm.random.sgml.appendix.sect2.distrib-usage">Random
+     Appendix</link>.</para>
+
+    </SECT2>
+
+  </SECT1>
+
+  <SECT1 ID="SWARM.RANDOM.SGML.SECT1.ADVUSAGE">
+    <TITLE>Advanced Usage Guide</TITLE>
+
+     <para>Please see the <link
+     linkend="swarm.random.sgml.appendix.sect1.adv-usage">Random
+     Appendix</link>.</para>
+
+  </SECT1>
+
+  <SECT1 ID="SWARM.RANDOM.SGML.SECT1.SUBCLASS">
+    <TITLE>Subclassing Reference</TITLE>
+
+    <PARA>Random library objects do not do anything exotic during the
+      create phase. The competent programmer may subclass these objects
+      in the normal manner.
+    </PARA>
+
+  </SECT1>
+
+  <SECT1 ID="SWARM.RANDOM.SGML.SECT1.IMPL">
+    <TITLE>Implementation Notes</TITLE>
+
+     <para>Please see the <link
+     linkend="swarm.random.sgml.appendix.sect1.implementation">Random
+     Appendix</link>.</para>
+
+  </SECT1>
+
+
+</PARTINTRO>
+
+<!--
+Local Variables:
+sgml-parent-document:("randomcont.sgml" "PARTINTRO")
+End:
+-->

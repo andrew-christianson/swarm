@@ -1,0 +1,135 @@
+1999-05-14  Alex Lancaster  <alex@santafe.edu>
+
+	* Usage-Guide.For-Beginners.sgml: Reformatted all exponents to use
+	the SUPERSCRIPT SGML tag for consistency throughout all sections.
+
+	* Usage-Guide.Generators.sgml: Likewise.
+
+1999-04-09  Alex Lancaster  <alex@santafe.edu>
+
+	* Usage-Guide.For-Beginners.sgml (Ferrenberg et al 1992, Nature
+	1994): Fixed citations.
+
+	* Usage-Guide.Resources.sgml: Updated as per e-mail from Sven
+	Thommesen <sthomme@humsci.auburn.edu>.
+
+	* Usage-Guide.Bibliography.sgml: Likewise.
+
+1999-03-08  Alex Lancaster  <alex@santafe.edu>
+
+	* Usage-Guide.Resources.sgml (Russell, 1992): Add citation.
+
+	* Usage-Guide.Bibliography.sgml (Russell, 1992): Add biblioentry,
+	as per email from Sven Thommesen.
+
+1999-02-11  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* Makefile.am (SGML): Add Whats-Left-ToDo-0.8.sgml.
+
+1999-02-10  Alex Lancaster  <alex@santafe.edu>
+
+	* Usage-Guide.Bibliography.sgml: Finessing of BIBLIOGRAPHY to get
+	all information appearing and alpha-ordering.  Some minor SGML tag
+	abuse required.
+
+1999-02-10 Sven Thommesen <sthomme@humsci.auburn.edu>
+
+	* [*].sgml: minor textual editing.
+
+1999-02-10  Alex Lancaster  <alex@santafe.edu>
+
+	* Usage-Guide.Resources.sgml (Russell, 1988): Removed citation tag.
+
+	* README.Generators-0.8.sgml, Table.Generators.Data.sgml,
+	Table.Generators.Quality.sgml,
+	Usage-Guide.Choosing-A-Generator.sgml,
+	Usage-Guide.Default-Generators.sgml,
+	Usage-Guide.For-Beginners.sgml, Usage-Guide.Test-Programs.sgml:
+	Brought all idrefs into line with naming convention.
+	
+	* Table.Generators.Quality.sgml (colspec): Make `col5'
+	colwidth=5cm.
+
+	* Table.Generators.Data.sgml: Add column captions for all thead
+	sections in each tgroup.
+
+	* Usage-Guide.Default-Generators.sgml: Prefaced title of table
+	with `Random Library'.
+
+	* Usage-Guide.Choosing-A-Generator.sgml: Replace all `^' plaintext
+	with SUPERSCRIPT.
+
+	* Table.Generators.Data.sgml: Likewise.
+
+	* Table.Generators.Quality.sgml: Likewise.
+	(SWARM.RANDOM.APPENDIX.GENERATOR.QUALITY.TABLE): Make all "col5"
+	entries with LITERAL tag for layout.
+
+	* Usage-Guide.For-Beginners.sgml: Add id to <SECT1>.
+
+1999-02-09  Alex Lancaster  <alex@santafe.edu>
+
+	* Makefile.am (SGML): Update with new SGML, as defined below.
+	(EXTRA_DIST): Add SGML to distribution.
+
+	* README.Distributions-0.8.sgml, README.Generators-0.8.sgml,
+	README.Random-0.8.sgml, Table.Generators.Data.sgml,
+	Table.Generators.Quality.sgml, Usage-Guide.Bibliography.sgml,
+	Usage-Guide.Choosing-A-Generator.sgml,
+	Usage-Guide.Default-Generators.sgml,
+	Usage-Guide.Distributions.sgml, Usage-Guide.For-Beginners.sgml,
+	Usage-Guide.Generators.sgml, Usage-Guide.Resources.sgml,
+	Usage-Guide.Test-Programs.sgml, Whats-Left-ToDo-0.8.sgml: Add new
+	massaged SGML which were converted from the orginal non-SGML files
+	for `Random' APPENDIX.
+	
+	* CHOOSING.A.GENERATOR, DEFAULT.GENERATORS, WHATS.NEW.in.0.7,
+	WHATS.LEFT.TODO, data.SplitGenerators.h, README.Distributions.v07,
+	README.Generators.v075, SOURCES.for.0.7, WHATS.CHANGED.in.0.7,
+	WHATS.CHANGED.in.0.75, data.NormalDist.h, data.SimpleGenerators.h,
+	dir.txt, doc.generators.maxvalue, doc.generators.table,
+	doc.quality.generators, doc.timings, methods.NormalDist.h,
+	methods.SimpleGenerators.h, methods.SplitGenerators.h: Remove.
+	Replaced with new versions.
+
+1999-02-03  Sven Thommesen <sthomme@humsci.auburn.edu>
+	
+	* README.Distributions-0.8, README.Generators-0.8,
+	README.Random-0.8, Table.Generators.Data,
+	Table.Generators.Quality, Usage-Guide.Bibliography,
+	Usage-Guide.Choosing-A-Generator, Usage-Guide.Default-Generators,
+	Usage-Guide.Distributions, Usage-Guide.For-Beginners,
+	Usage-Guide.Generators, Usage-Guide.Resources,
+	Usage-Guide.Test-Programs, Whats-Left-ToDo-0.8: replaced version
+	0.75 files with version 0.8 files. Renamed many of the files.
+
+1999-01-26  Alex Lancaster  <alex@santafe.edu>
+
+	* README.Distributions.v07 (CDATA): Wrap text in CDATA SGML
+	directives to stop erroneous interpretation of angle brackets etc.q
+
+	* README.Generators.v075 (CDATA): Likewise
+
+	* Makefile.am: Add file, include all files in EXTRA_DIST.
+
+	* README.Generators.v075 (Note): Change `-varySeed' to
+	`--varyseed' to reflect current usage.
+
+	* README.Distributions.v07: Likewise.
+
+1998-07-22  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* methods.NormalDist.h: Use @protocol instead of @deftype.
+
+1997-12-17  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* README.Generators.v075: Constify myFileName.
+
+	* README.Distributions.v07: Constify myFileName.
+
+	* methods.NormalDist.h: Constify return of getName.
+
+	* methods.SimpleGenerators.h: Likewise.
+
+	* methods.SplitGenerators.h: Likewise.
+

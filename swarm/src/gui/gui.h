@@ -282,7 +282,6 @@ USING
 - (void)setRangesXMin: (double)minx Max:(double)maxx YMin: (double)miny Max: (double)maxy;
 @end
 
-
 @protocol Histogram <ArchivedGeometryWidget, CREATABLE>
 //S: Histogram display tool.
 
@@ -911,6 +910,7 @@ CREATING
 #define GUI_INIT(arguments)  initAWTObjc (arguments)
 #endif
 
+#ifndef GNUSTEP
 #ifndef USE_JAVA
 #import <tkobjc/common.h>
 extern void initTkObjc (id arguments);
@@ -933,6 +933,7 @@ extern void initTkObjc (id arguments);
 
 #define GUI_INIT(arguments) initTkObjc (arguments)
 #endif
+#endif // !GNUSTEP
 
 @class Button;
 @class ButtonPanel;

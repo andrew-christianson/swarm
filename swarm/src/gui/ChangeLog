@@ -1,3 +1,7 @@
+2003-04-06  Scott Christley <schristley@mac.com>
+
+	* gui.h (GUI_*): Exclude tk macros for GNUstep.
+
 2001-05-13  Marcus G. Daniels  <mgd@drone.swarm.org>
 
 	* gui.h (Histogram): Name count: argument to setColors:count: and

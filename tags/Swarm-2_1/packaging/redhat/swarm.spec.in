@@ -1,0 +1,231 @@
+Summary: Toolkit for agent-based simulation.
+Name: swarm
+Version: @version@
+Release: @release@
+Copyright: @copyright@
+Group: Development/Libraries
+Source: @ftproot@/swarm-@version@.tar.gz
+%define prefix      /usr
+Prefix: %prefix
+BuildRoot: /tmp/swarm-root
+%ifarch ppc
+BuildPrereq: libffi >= 1.20
+%endif
+BuildPrereq: kaffe
+BuildPrereq: jikes
+Icon: swarm.xpm
+Packager: @packager@
+Distribution: @distribution@
+Vendor: @vendor@
+URL: @url@
+Requires: @base_requires@
+%ifarch ppc
+Requires: libffi >= 1.20
+%endif
+Provides: swarm-base
+Conflicts: swarm-hdf5
+
+%description
+Swarm is a simulation toolkit for complex adaptive systems. The Swarm
+project is sponsored by the Santa Fe Institute.  To use this version,
+you need a number of libraries and utilities, including tcl/tk 8.0.4
+or better, and the blt library package.
+
+@macros@
+
+%changelog
+* Mon Feb 28 2000 Marcus G. Daniels <mgd@swarm.org>
+
+- Remove ppc patch.
+
+- Remove versioning on kaffe and jikes BuildPrereq.
+
+- Break out system-specific build rules in to separate file, swarm.rules.
+
+- Add support for Sparc and SUSE/i386.
+
+- Hardwire /packages/bin/gcc as compiler.
+
+- Minimize use of %defines (using substitutions instead).
+
+* Fri Oct 22 1999 Alex Lancaster <alex@santafe.edu>
+
+- Replace $RPM_PACKAGE_VERSION with %{version} throughout.
+
+- Add "%gcc_path" macro so that path to gcc can be overriden (by
+  setting "%_gcc_path" in the ~/.rpmmacros file), so that packages can
+  be easily built against non-stock Red Hat 6.{1,2} compilers (such as
+  gcc-2.95.1).
+
+* Tue Oct 19 1999 Alex Lancaster <alex@santafe.edu>
+
+- Add XFree86-devel and egcs to Requires.
+
+- Bump kaffe version to 1.0.5.  Remove --disable-jar option to 
+  configure, jar now works in this release of kaffe.
+
+* Thu Oct 01 1999 Alex Lancaster <alex@santafe.edu>
+
+- Disable generation of swarm-kaffe package on ppc, kaffe broken.
+
+* Thu Sep 30 1999 Alex Lancaster <alex@santafe.edu>
+
+- Add "%ifarch ppc" directives to apply 2.0.1-ppc.patch;
+  platform-specific OBJCFLAGS/CFLAGS to configure; slightly alternate
+  versions numbers for kaffe; and Requires: tag for libffi.
+
+* Tue Sep 28 1999 Alex Lancaster <alex@santafe.edu>
+
+- Disable size, md5 and mtime checking using %verify for files which
+  are modified by the %post-install script to avoid -V option 
+  reporting a problem.
+
+- New swarm-static add-on subpackage, installs the static libraries:
+  used to build the stand-alone swarmdemos and for users wishing to
+  enable profiling.
+
+- Removed jikes Requires for installer of package (but not for builder)
+
+* Sun Sep 19 1999 Alex Lancaster <alex@santafe.edu>
+
+- Use macros wherever possible for common shell script code.
+
+- Available for public release.
+
+* Fri Sep 17 1999 Alex Lancaster <alex@santafe.edu>
+
+- Enable relocation of package, via sed scripts in the %post section.
+
+- Reformat spec file as per RHCN guidelines at http://developer.redhat.com
+
+- Various miscellaneous cleanups
+
+* Fri Sep 10 1999 Alex Lancaster <alex@santafe.edu>
+
+- Major structural changes to spec file. Development version, only.
+  Does not build the swarm-hdf5 correctly as yet.  Not for public
+  release.
+
+* Sun Aug 29 1999 Paul Johnson <pauljohn@ukans.edu>
+
+- jikes is the required java compiler.  Users have to install that or edit
+  javacswarm script and change jikes to javac.
+
+* Tue Aug 03 1999 Paul Johnson <pauljohn@ukans.edu>
+
+- Testing new SPEC file for swarm 2.0 preparation.
+
+* Sat Jun 05 1999 Paul Johnson <pauljohn@ukan.edu>
+
+- RPM compiled with a patched egcs to eliminate some warnings observed
+  by users who have the egcs as distributed with RH6.0.
+
+- Added patches for the Argument files and strchr and strdup usages
+
+* Wed Jan 27  1999 Paul Johnson <pauljohn@ukans.edu>
+
+- version bump (ouch!) to 1.4
+
+- Added xpm-devel requirement
+
+- Removed the exact version requirement for tcl/tk
+
+* Sun Dec 06 1998 Alex Lancaster <alex@santafe.edu>
+
+- Added stricter dependencies for tcl/tk - exact version numbers
+
+- disable the creation of static libraries 
+
+* Sun Oct 04 1998 Paul Johnson <pauljohn@ukans.edu>
+
+- Updated verison info for Swarm 1.3.1
+
+* Fri Sep 28 1998 Alex Lancaster <alex@santafe.edu>
+
+- Made package member of Development/Libraries group rather than X11/Libraries 
+
+- Bumped rel to 2
+
+- Added egcs and egcs-objc to Requires. 
+
+* Mon Aug 24 1998 Paul E. Johnson <pauljohn@ukans.edu>
+
+- finalized/revised for swarm 1.3 release. This binary is compiled
+  against blt2.4e, but experimentation shows it is fine with
+  blt8.0-unoff as well.
+
+* Wed Aug 12 1998 Paul E. Johnson <pauljohn@ukans.edu>
+
+- Used imlib.spec as template for swarm.
+
+%package static
+Summary: Static libraries for Swarm
+Group: Development/Libraries
+Requires: swarm-base
+
+%description static
+Contains static libraries for Swarm which are otherwise excluded from
+the normal binary distribuion
+
+%package kaffe
+Summary: Adds Java support to swarm-base package.
+Group: Development/Libraries
+Requires: kaffe = @kaffe_version@
+Requires: swarm-base
+
+%description kaffe
+swarm-kaffe adds Java support to your base Swarm package (either swarm
+or swarm-hdf5).  Kaffe is a freely-redistributable implementation of
+the Sun JDK.
+
+%prep 
+%setup -q
+
+%build
+
+%makebuilddir =without-hdf
+
+%define configure %baseconfigure --without-hdf5dir
+
+@rules@
+
+%gen_shared_filelist %prefix %{SWARM_SRC_DIR}/without-hdf
+
+%gen_static_filelist %prefix %{SWARM_SRC_DIR}/static
+
+cd =without-hdf
+%{gcc_path} make prefix=$RPM_BUILD_ROOT%{prefix} install JAVAC=/usr/bin/jikes
+
+%post
+%define pathfiles etc/swarm/* lib/swarm/lib*.la
+%fix_path %pathfiles 
+
+/sbin/ldconfig
+
+%post kaffe
+%define kaffepathfiles bin/java*swarm lib/swarm/libkaffeswarm*.la
+%fix_path %kaffepathfiles
+
+/sbin/ldconfig
+
+%files -f without-hdf
+%defattr(-,root,root)
+
+%files static -f static
+%defattr(-,root,root)
+
+%files kaffe
+%defattr(-,root,root)
+%verify(not size md5 mtime) %{prefix}/bin/javaswarm
+%verify(not size md5 mtime) %{prefix}/bin/javacswarm
+%verify(not size md5 mtime) %{prefix}/lib/swarm/libkaffeswarm*.la
+%{prefix}/lib/swarm/libkaffeswarm*.so*
+%{prefix}/share/swarm
+
+%clean 
+rm -rf $RPM_BUILD_ROOT
+
+# Local variables:
+# mode: shell-script
+# sh-shell: rpm
+# end:

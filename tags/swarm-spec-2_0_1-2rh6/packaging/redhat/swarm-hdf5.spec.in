@@ -1,0 +1,103 @@
+Summary: Toolkit for agent-based simulation with hdf5 enabled.
+Name: swarm-hdf5
+Version: @version@
+Release: @release@
+Copyright: @copyright@
+Group: Development/Libraries
+Source: @ftproot@/swarm-@version@.tar.gz 
+%ifarch ppc
+Patch: 2.0.1-ppc.patch
+%endif 
+%define prefix      /usr
+Prefix: %prefix
+BuildRoot: /tmp/swarm-root
+BuildPrereq: hdf5 > @hdf5_version@
+%ifarch ppc
+BuildPrereq: libffi >= 1.20
+#BuildPrereq: kaffe = 1.0b4
+%else
+BuildPrereq: kaffe = @kaffe_version@
+BuildPrereq: jikes = @jikes_version@
+%endif
+Icon: swarm.xpm
+Packager: @packager@
+Distribution: @distribution@
+Vendor: @vendor@
+URL: @url@
+Requires: egcs-objc 
+Requires: libpng
+Requires: libpng-devel
+Requires: zlib
+Requires: xpm
+Requires: xpm-devel
+Requires: blt
+Requires: tcl >= 8.0.4 
+Requires: tk >= 8.0.4 
+%ifarch ppc
+Requires: libffi >= 1.20
+%endif
+Provides: swarm-base
+Requires: hdf5 > @hdf5_version@
+Conflicts: swarm
+ 
+%description
+Swarm is a simulation toolkit for Complex Adaptive Systems. The Swarm
+project is sponsored by the Santa Fe Institute.  To use this version,
+you need a number of libraries and utilities, including tcl/tk 8.0.4
+or better, and the blt library package.  This version enables hdf5.
+
+@macros@
+
+%changelog
+* Fri Oct 01 1999 Alex Lancaster <alex@santafe.edu>
+
+- Use new common configure macros.  Enable macros for variant-ppc
+  build/install requirements as per swarm.spec.
+
+* Tue Sep 28 1999 Alex Lancaster <alex@santafe.edu>
+
+- Rework spec file macros more consistently.
+
+- Add jikes and kaffe as BuildPrereq, previously missing.
+
+* Sun Sep 19 1999 Alex Lancaster <alex@santafe.edu>
+
+- Split swarm and swarm-hdf5 files into separate spec files.  No
+  way to make two slightly different builds with overlapping namespace
+  in the BuildRoot using rpm, as yet.
+
+%prep 
+%setup -n swarm-@version@
+
+%build
+
+%makebuilddir =with-hdf
+
+%{SWARM_SRC_DIR}/configure --srcdir=%{SWARM_SRC_DIR} --with-defaultdir=/usr --disable-static --prefix='/REPLACE-AT-INSTALLATION' --enable-subdirs --with-hdf5dir=/usr %ffiflag %jdkflag
+make JAVAC=/usr/bin/jikes 
+                            
+%install
+rm -rf $RPM_BUILD_ROOT
+mkdir $RPM_BUILD_ROOT
+
+#install with-hdf5 version of build
+cd %{SWARM_SRC_DIR}
+%gen_shared_filelist %{prefix} %{SWARM_SRC_DIR}/with-hdf
+
+cd =with-hdf
+make prefix=$RPM_BUILD_ROOT%{prefix} JAVAC=/usr/bin/jikes install
+
+%post 
+%define hdf5pathfiles etc/swarm/* lib/swarm/lib*.la
+%fix_path %hdf5pathfiles
+
+%files -f with-hdf 
+%defattr(-,root,root)
+
+%clean 
+rm -rf $RPM_BUILD_ROOT
+
+# Local variables:
+# mode: shell-script
+# sh-shell: rpm
+# end:

@@ -1,6 +1,6 @@
-SUBDIRS = misc collections defobj activity objectbase $(TCLTKGUIDIR) gui random simtools simtoolsgui analysis space $(GNUSTEPMODULE)
+SUBDIRS = misc collections defobj activity objectbase $(TCLTKGUIDIR) $(GUIDIR) random simtools $(SIMTOOLSGUI) analysis space $(GNUSTEPMODULE)
 
-SWARMMODULES = space analysis $(GNUSTEPMODULE) $(SIMTOOLSGUIMODULE) simtools random $(TCLTKGUIDIR) objectbase activity defobj collections misc
+SWARMMODULES = space analysis $(GNUSTEPMODULE) $(SIMTOOLSGUI) simtools random $(TCLTKGUIDIR) objectbase activity defobj collections misc
 
 EXTRA_DIST = Makefile.rules getters.el SwarmEnvironment_getters.m
 
@@ -28,9 +28,10 @@ AGE = 0
 
 lib_LTLIBRARIES = @LIBSWARM_LA@
 EXTRA_LTLIBRARIES = libswarm.la
-libswarm_la_DEPENDENCIES = $(foreach module,$(SWARMMODULES),$(module)/lib$(module).la)
+libswarm_la_DEPENDENCIES = $(foreach module,$(SWARMMODULES),$(module)/lib$(module).la) $(LIBOBJCDEP)
 
-libswarm_la_SOURCES = SwarmEnvironment.m
+libswarm_la_SOURCES = SwarmEnvironment.m classList.m
+BUILT_SOURCES = classList.m
 
 include_HEADERS = swarm.h SwarmEnvironment.h SwarmEnvironment_getters.h
 
@@ -47,11 +48,13 @@ $(abs_top_builddir)/interface.elc: $(abs_top_builddir)/protocol.elc
 $(srcdir)/SwarmEnvironment_getters.m: swarm.h getters.elc
 	$(ENVEMACS) -batch -l '$(dos_abs_builddir)@PATHDELIM@getters.elc' -f generate-SwarmEnvironment-getters
 
-LIBS = $(foreach module,$(SWARMMODULES),-l$(module)) -lobjc $(SYSLIBS)
+EXPORTALL=-Wl,--export-all
+libswarm_la_LDFLAGS = -version-info $(CURRENT):$(REVISION):$(AGE) -rpath $(DESTDIR)$(libdir) $(foreach module,$(SWARMMODULES),-L$(module)) $(LIBOBJCLDFLAGS) $(FFILDFLAGS) $(SUPPORTLDFLAGS) -no-undefined $(if $(filter yes,$(USEDLL)),$(EXPORTALL) -shrext .dll) # -L$(dir $(shell $(CC) -print-libgcc-file-name)) 
+libswarm_la_LIBADD = $(SWFFILIB)
 
-INCLUDES = $(LIBOBJCINCLUDES) -I$(srcdir)/collections -I$(srcdir)/defobj -I$(srcdir)/activity -I$(srcdir)/objectbase -I$(srcdir)/random -I$(srcdir)/simtools -I$(srcdir)/gui -I$(srcdir)/simtoolsgui -I$(srcdir)/misc -I. -I$(srcdir) $(JAVAINCLUDES) $(GNUSTEPLIBINCLUDES)
+LIBS = $(foreach module,$(SWARMMODULES),-l$(module)) $(libswarm_la_LIBADD) $(LIBOBJCLIB) $(SYSLIBS)
 
-libswarm_la_LDFLAGS = -version-info $(CURRENT):$(REVISION):$(AGE) -rpath $(DESTDIR)$(libdir) $(foreach module,$(SWARMMODULES),-L$(module)) $(LIBOBJCLDFLAGS) $(SUPPORTLDFLAGS) # -L$(dir $(shell $(CC) -print-libgcc-file-name)) 
+INCLUDES = $(LIBOBJCINCLUDES) -I$(srcdir)/collections -I$(srcdir)/defobj -I$(srcdir)/activity -I$(srcdir)/objectbase -I$(srcdir)/random -I$(srcdir)/simtools $(GUIDIRINCLUDE) $(SIMTOOLSGUIINCLUDE) -I$(srcdir)/misc -I. -I$(srcdir) $(JAVAINCLUDES) $(GNUSTEPLIBINCLUDES)
 
 DLLWRAP = @DLLWRAP@
 if USEDLL
@@ -63,8 +66,13 @@ swarm.dll: swarm.dll.c $(OBJS)
 
 #$(CC) -nostdlib -Wl,-shared -Wl,--export-all-symbols -Wl,--out-implib,libswarmdll.a -Wl,--output-def,swarm.def -o swarm.dll swarm.dll.o $(patsubst %.lo,%.o,$(OBJS)) -L../libobjc $(SUPPORTLDFLAGS) -lobjcdll $(SYSLIBS) -lcygwin -lkernel32 `$(CC) -print-libgcc-file-name`
 
-install-data-local: 
-	$(INSTALL) libswarmdll.a $(DESTDIR)$(libdir)
-	ranlib $(DESTDIR)$(libdir)/libswarmdll.a
+#install-data-local: 
+#	$(INSTALL) libswarmdll.a $(DESTDIR)$(libdir)
+#	ranlib $(DESTDIR)$(libdir)/libswarmdll.a
 endif
 
+classList.m:
+	find $(foreach module,$(SWARMMODULES),$(srcdir)/$(module)) -name \*.h | grep -v random/test | xargs cat | egrep -v 'TARGET|TINDEX|List' | sed -n 's/^@interface  *\(.*\) *:.*/\1/p' > classList
+	cat classList | sed 's/.*/@class &;/' > classList.m
+	(echo 'void swarm_force_references () {' ; cat classList | sed 's/.*/  [& self];/'; echo '}') >> classList.m
+	$(RM) classList

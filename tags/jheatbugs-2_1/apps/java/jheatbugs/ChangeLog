@@ -1,0 +1,119 @@
+2000-02-27    <mgd@nest.swarm.org>
+
+	* StartHeatbugs.java (main): Update for 2.1 and SDG.
+
+	* HeatbugModelSwarm.java (buildActions): Store prototype in 
+	a variable.
+
+2000-01-24    <mgd@nest.swarm.org>
+
+	* jheatbugs.scm: New file.
+
+	* HeatbugBatchSwarm.java: Remove parameter settings in constructor.
+	(buildObjects): Use lispAppArchiver to create HeatbugModelSwarm.
+
+	* StartHeatbugs.java: Use lispAppArchiver to create HeatbugBatchSwarm.
+
+1999-12-27    <mgd@DRONE>
+
+	* Heatbug.java (Heatbug): Change x, y, idealTemperature,
+	outputHeat from long to int.
+	(setOutputHeat, setIdealTemperature): Use long instead of int.
+	(heatbugStep): Use long instead of int for heat.
+
+	* HeatSpace.java (maxHeat, addHeat$X$Y, findExtremeHeat$X$Y):
+	Use int instead of long.
+
+1999-12-22    <mgd@nest.swarm.org>
+
+	* HeatbugModelSwarm.java: Don't include FArguments, FCall creating
+	implementation and interface.
+	(buildActions): Use FCall and FArguments constructors to condense
+	things somewhat.
+
+1999-12-21    <mgd@nest.swarm.org>
+
+	* HeatbugModelSwarm.java (actionForEach): New ivar.
+	(syncUpdateOrder): New method.
+	(toggleRandomizedOrder, buildActions): Call it.
+	(buildActions): Rework to use setSelector$setJavaFlag.
+
+	* Heatbug.java: Rename step to heatbugStep.
+
+1999-12-10    <mgd@nest.swarm.org>
+
+	* HeatbugModelSwarm.java: Use createActionForEachHomogeneous$call
+	instead of createActionForEach$call$setFinalizationFlag.
+
+1999-11-20    <mgd@VAIO>
+
+	* Heatbug.java: New variable scratchHeatCell (only used for
+	return value from HeatSpace's findExtremeType$X$Y. 	
+
+	* HeatSpace.java: New variables sizeX and sizeY to cache
+	worldSize.  Use HeatCell field references for x and y instead
+	of getters.
+
+	* HeatCell.java: Make x and y public.
+
+1999-11-19  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* HeatbugModelSwarm.java: Import {FArguments,FCall}[C]{Impl}.
+	Import FActionForEach instead of ActionForEach.
+	(buildActions): Use FActionForEach with FCall (instead of
+	ActionForEach with a Selector).
+
+	* Heatbug.java (step): Make method a void return.
+
+1999-11-18  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* HeatbugObserverSwarm.java: Import java.util.List instead of
+	swarm.collections.List.
+	(buildObjects): Use size instead of getCount.
+
+	* HeatbugModelSwarm.java: Import java.util.LinkedList and
+	java.util.List instead of swarm.collections.ListImpl and
+	swarm.collections.List.
+	(addHeatbug, buildObjects): Use add instead of addLast.
+	(buildObjects): Use LinkedList constructor instead of ListImpl.
+
+1999-09-18  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* Initial release.
+
+1999-09-16  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* HeatbugBatchSwarm.java: Add disabled code for loading from
+	lispAppArchiver.
+
+	* HeatbugModelSwarm.java (buildActions): Add Randomized ForEach
+	ordering.
+
+1999-09-16    <mgd@HELEN>
+
+	* HeatbugObserverSwarm.java: Add drop method to disable
+	destroy notification for unhappyGraph and worldRaster.
+
+1999-09-14  Alex Lancaster  <alex@santafe.edu>
+
+	* HeatbugObserverSwarm.java (buildObjects): Pass windowGeometry
+	name to ZoomRaster creation
+
+1999-09-12  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* HeatbugObserverSwarm.java: Add geometry record names
+	to all archived ProbeDisplay calls, worldRaster, and unhappyGraph.
+
+	* StartHeatbugs.java: Add app name, version, and bug address
+	arguments to initSwarm.
+	(StartHeatbugs): Add name argument to setWindowGeometryRecordName.
+
+	* HeatbugObserverSwarm.java (buildObjects): Pass windowGeometry
+	name to EZGraph creation.
+
+1999-09-08  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* HeatbugBatchSwarm.java: Activate stopSchedule.
+
+	* HeatSpace.java: Use ArrayList instead of Swarm List.
+

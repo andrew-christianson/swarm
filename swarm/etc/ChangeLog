@@ -1,3 +1,9 @@
+2004-07-24  Scott Christley  <schristley@mac.com>
+
+	* Makefile.common.in (OBJCLIBS): Use libobjc definition.
+
+	* swarm.make (AUXILIARY_OBJCFLAGS): Disable import warnings.
+
 2004-07-21  Scott Christley  <schristley@mac.com>
 
 	* modules.in: Parameterize simtoolsgui module.

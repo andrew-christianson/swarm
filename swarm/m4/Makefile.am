@@ -1,1 +1,0 @@
-EXTRA_DIST = acffi.m4 acpng.m4 actcltk.m4

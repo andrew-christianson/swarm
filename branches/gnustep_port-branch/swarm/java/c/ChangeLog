@@ -1,3 +1,8 @@
+2003-04-06  Scott Christley <schristley@mac.com>
+
+	* Makefile.in (CPPFLAGS): Use libobjc definition.  Add GNUstep
+	includes.
+
 2002-10-19    <pauljohn@dv253s74.lawrence.ks.us>
 
 	* Makefile.in (install-la): $(DESTDIR) added

@@ -36,7 +36,8 @@
 #include <misc.h>
 
 #define ATDELIMCHAR '@'
-  
+
+#include <objc/objc.h>  
 #include <objc/objc-api.h>
 #include <objc/encoding.h>
 
@@ -407,7 +408,7 @@ tclObjc_msgSendToClientData(ClientData clientData, Tcl_Interp *interp,
       }
 
     Tcl_SetResult (interp, resultString, TCL_VOLATILE);
-    if (*tclObjc_eventHook)
+    if (tclObjc_eventHook)
       (*tclObjc_eventHook) ();
     [fc drop];
     [fa drop];
@@ -438,10 +439,16 @@ tclObjc_unregisterObjectNamed (Tcl_Interp *interp,
 void
 tclObjc_registerClassnames (Tcl_Interp *interp)
 {
+  Class cls; 
+  void *es = NULL;
+  while ((cls = objc_next_class(&es)))
+    tclObjc_registerObjectWithName(interp, (id)cls, cls->name);
+#if 0
   id class; 
   void *es = NULL;
   while ((class = objc_next_class(&es)))
     tclObjc_registerObjectWithName(interp, class, [class name]);
+#endif
 #if 0
   node_ptr node = NULL;
 

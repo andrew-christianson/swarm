@@ -1,6 +1,6 @@
-SUBDIRS = misc collections defobj activity objectbase tclobjc tkobjc gui random simtools simtoolsgui analysis space
+SUBDIRS = misc collections defobj activity objectbase $(TCLTKGUIDIR) gui random simtools simtoolsgui analysis space $(GNUSTEPMODULE)
 
-SWARMMODULES = space analysis simtoolsgui simtools random tkobjc tclobjc objectbase activity defobj collections misc
+SWARMMODULES = space analysis $(GNUSTEPMODULE) $(SIMTOOLSGUIMODULE) simtools random $(TCLTKGUIDIR) objectbase activity defobj collections misc
 
 EXTRA_DIST = Makefile.rules getters.el SwarmEnvironment_getters.m
 
@@ -49,9 +49,9 @@ $(srcdir)/SwarmEnvironment_getters.m: swarm.h getters.elc
 
 LIBS = $(foreach module,$(SWARMMODULES),-l$(module)) -lobjc $(SYSLIBS)
 
-INCLUDES = -I$(top_builddir)/libobjc -I$(top_srcdir)/libobjc -I$(srcdir)/collections -I$(srcdir)/defobj -I$(srcdir)/activity -I$(srcdir)/objectbase -I$(srcdir)/random -I$(srcdir)/simtools -I$(srcdir)/gui -I$(srcdir)/simtoolsgui -I$(srcdir)/misc -I. -I$(srcdir) $(JAVAINCLUDES)
+INCLUDES = $(LIBOBJCINCLUDES) -I$(srcdir)/collections -I$(srcdir)/defobj -I$(srcdir)/activity -I$(srcdir)/objectbase -I$(srcdir)/random -I$(srcdir)/simtools -I$(srcdir)/gui -I$(srcdir)/simtoolsgui -I$(srcdir)/misc -I. -I$(srcdir) $(JAVAINCLUDES) $(GNUSTEPLIBINCLUDES)
 
-libswarm_la_LDFLAGS = -version-info $(CURRENT):$(REVISION):$(AGE) -rpath $(DESTDIR)$(libdir) $(foreach module,$(SWARMMODULES),-L$(module)) -L../libobjc $(SUPPORTLDFLAGS) # -L$(dir $(shell $(CC) -print-libgcc-file-name)) 
+libswarm_la_LDFLAGS = -version-info $(CURRENT):$(REVISION):$(AGE) -rpath $(DESTDIR)$(libdir) $(foreach module,$(SWARMMODULES),-L$(module)) $(LIBOBJCLDFLAGS) $(SUPPORTLDFLAGS) # -L$(dir $(shell $(CC) -print-libgcc-file-name)) 
 
 DLLWRAP = @DLLWRAP@
 if USEDLL

@@ -237,7 +237,9 @@ PHASE(Using)
 
 - (void)updateDisplay
 {
+#ifndef GNUSTEP
   while (GUI_EVENT_ASYNC ()) {}
+#endif
 }
 
 - (void)xfprint: obj
@@ -276,6 +278,10 @@ _initSwarm_ (int argc, const char **argv, const char *appName,
 {
   id env = [SwarmEnvironment createBegin];
 
+#if DEBUG
+  fprintf(stderr, "Swarm Environment\n");
+  fprintf(stderr, "argc argv[0]: %d %s\n", argc, argv[0]);
+#endif
   [env setArguments:
          [(id) argumentsClass ?: (id) [Arguments_c class]
                          createArgc: argc

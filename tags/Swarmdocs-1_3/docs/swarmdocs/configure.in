@@ -1,0 +1,57 @@
+AC_INIT(protocol.el)
+
+AM_INIT_AUTOMAKE(swarmdocs, 1.3)
+
+AC_ARG_WITH(swarm,dnl
+changequote(<,>)dnl
+  --with-swarm=DIR        Swarm in DIR [$(SWARMSRCDIR)],dnl
+changequote([,])dnl
+  swarm_srcdir=$withval,dnl
+  swarm_srcdir='$(SWARMSRCDIR)')
+
+AC_ARG_WITH(dtd,dnl
+changequote(<,>)dnl
+  --with-dtd=DIR          DocBook DTD in DIR [${DOCBOOKDTDDIR:-/DocBookDTD}],dnl
+changequote([,])dnl
+  docbookdtd_srcdir=$withval,dnl
+  docbookdtd_srcdir=${DOCBOOKDTDDIR:-/DocBookDTD})
+
+AC_ARG_WITH(stylesheet,dnl
+changequote(<,>)dnl
+  --with-stylesheet=DIR   DocBook DSSSL in DIR [${DOCBOOKSTYLEDIR:-/DocBookStyleSheets}],dnl
+changequote([,])dnl
+  docbookstyle_srcdir=$withval,dnl
+  docbookstyle_srcdir=${DOCBOOKSTYLEDIR:-/DocBookStyleSheets})
+
+AC_ARG_WITH(gridturtle,dnl
+changequote(<,>)dnl
+  --with-gridturtle=DIR   GridTurtle in DIR [$(swarm_srcdir)/../gridturtle],dnl
+changequote([,])dnl
+  gridturtle_srcdir=$withval,dnl
+  gridturtle_srcdir=$swarm_srcdir/../gridturtle)
+
+AM_CONFIG_HEADER(config.h)
+
+AC_SUBST(swarm_srcdir)
+AC_SUBST(docbookdtd_srcdir)
+AC_SUBST(docbookstyle_srcdir)
+AC_SUBST(gridturtle_srcdir)
+
+AC_CHECK_PROG(EMACS, emacs, emacs, missing)
+AC_CHECK_PROG(JADE, jade, jade, missing)
+AC_CHECK_PROG(JADETEX, jadetex, jadetex, missing)
+AC_CHECK_PROG(DVIPS, dvips, dvips, missing)
+AC_CHECK_PROG(PNGTOPNM, pngtopnm, pngtopnm, missing)
+AC_CHECK_PROG(PNMTOPS, pnmtops, pnmtops, missing)
+AC_CHECK_PROG(CJPEG, cjpeg, cjpeg, missing)
+
+for i in EMACS JADE JADETEX DVIPS PNGTOPNM PNMTOPS CJPEG ; do
+if eval test '$ac_cv_prog_'$i = missing ; then
+AC_MSG_ERROR(Failed to find $i)
+fi
+done
+
+md_PROG_GS
+
+AC_OUTPUT([catalog Makefile figs/Makefile refbook/Makefile installbook/Makefile overbook/Makefile set/Makefile refbook/activity/Makefile refbook/analysis/Makefile refbook/collections/Makefile refbook/defobj/Makefile refbook/gui/Makefile refbook/objectbase/Makefile refbook/random/Makefile refbook/simtools/Makefile refbook/simtoolsgui/Makefile refbook/space/Makefile refbook/tech/Makefile refbook/refbook.tex overbook/overbook.tex installbook/installbook.tex set/set.tex])
+

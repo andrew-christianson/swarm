@@ -1,0 +1,320 @@
+1997-12-11  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* analysis.tcl: Delete troublesome newlines for parameters
+	in first line of active_item_info.
+
+	* control.[hm] (tkobjc_setupHistogramActiveOutlierMarker): Use 
+	a descriptive name (was tkobjc_setupHistogramMisc).
+
+1997-12-10  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* simtools.tcl: Delete extra line in sitecmd.
+
+	* XPixmap.m ([XPixmap -setFile:]): Constify argument.
+	Reformatting throughout.
+
+	* XPixmap.h (XPixmap): Constify filename.
+	Constify argument to setFile.
+	Reformatting throughout.
+
+	* XColormap.m ([XColormap -setColor:ToName:]): Constify ToName
+	argument.  Reformatting throughout.
+
+	* XColormap.h: Constify ToName argument to setColor.
+	Reformatting throughout.
+
+	* Form.m ([Form -addLineName:Variable:Type:]): Constify first
+	argument.  Reformatting throughout.
+
+	* Form.h: Constify first argument to addLineName.
+	Reformatting throughout.
+
+	* CanvasItem.m: Reformatting throughout.
+
+	* CanvasItem.h (CanvasItem): Constify item.
+	Reformatting throughout.
+
+	* RectangleNodeItem.m ([RectangleNodeItem -createItem]): Cast
+	argument to free to void* to avoid warning.
+	Reformatting throughout.
+
+	* RectangleNodeItem.h: Reformatting throughout.
+
+	* Rectangle.[hm]: Reformatting throughout.
+
+	* OvalNodeItem.m ([OvalNodeItem -createItem]): Cast argument
+	to free to void* to avoid warning. 
+	Reformatting throughout.
+
+	* OvalNodeItem.h (NodeItem): Reformatting throughout.
+
+	* NodeItem.m ([NodeItem -setColor:]): Constify argument.
+	([NodeItem -setBorderColor:]): Likewise.
+	([NodeItem -setString:]): Likewise.
+	Reformatting throughout.
+
+	* NodeItem.h (NodeItem): Constify text, item and string.
+	Constify argument to setString, setColor, and setBorderColor.
+	Reformatting throughout.
+
+	* LinkItem.m ([LinkItem -setColor:]): Constify argument.
+	Reformatting throughout.
+
+	* LinkItem.h (LinkItem): Constify line1 and line2.
+	Constify argument to setColor.
+	Reformatting throughout.
+
+	* BLTGraph.m ([BLTGraph -title:]): Constify argument.
+	([BLTGraph -axisLabelsX:Y:]): Constify arguments.
+	([GraphElement -getName]): Constify return.
+	([BLTVector -getName]): Likewise.
+	([GraphElement -setLabel:]): Constify argument.
+	([GraphElement -setColor:]): Likewise.
+	([GraphElement -setSymbol:]): Likewise.
+	Reformatting throughout.
+
+	* BLTGraph.h: Constify argument to BLTGraph title.
+	Constify arguments to BLTGraph axisLabelsX:Y:.
+	(GraphElement): Constify name.
+	Constify getName, setLabel, setColor, setSymbol.
+	(BLTVector): Constify name.
+	Constify getName.
+
+	* Histo.m ([Histo -setNumPoints:Labels:Colors:]): Constify arguments.
+	([Histo -title:]): Constify argument.
+	([Histo -axisLabelsX:Y:]): Constify arguments.
+	Reformatting throughout.
+
+	* Histo.h (Histo): Constify elements.
+	Constify arguments to setNumPoints.
+	Constify argument to title.
+	Constify argument to axisLabels.
+	Reformatting throughout.
+
+	* control.[hm]: Add new functions tkobjc_setupZoomStack,
+	tkobjc_setHistogramBarWidth, tkobjc_setHistogramXaxisRange,
+	tkobjc_setupHistogramMisc, tkobjc_setupHistogramLegend,
+	tkobjc_histogramActiveItemInfo,
+	tkobjc_setHistogramActiveOutlierText.  These features were
+	used in the analysis/EZBin and analysis/EZDistribution classes.
+
+	* control.[hm] (tkobjc_gimme_drag_and_drop_object): Renamed from
+	tkobjc_gimme_ddobj.
+
+	* DragDrop.m (new_BLT_p): New function.
+	(oldSetupDragAndDrop): New function.
+	(newSetupDragAndDrop): New function.
+	(setupDragAndDrop): New function.
+	(oldSetupDragAndDropArg): New function.
+	(newSetupDragAndDropArg): New function.
+	(setupDragAndDropArg): New function.
+	(oldSetupHandler): New function.
+	(newSetupHandler): New function.
+	(setupHandler): New function.
+	(setupDragAndDrop): Use new functions newSetupDragAndDrop and
+	oldSetupDragAndDrop.
+	(setupDragAndDropArg): New function.
+	(dragAndDrop): Use new function setupHandler.
+	(dragAndDropArg): Use new functions setupDragAndDropArg and
+	setupHandler.
+
+	* WindowGeometryRecord.m: Include collections/predicates.h.
+
+	* TkExtra.m ([TkExtra -preInitWithArgc:argv:]): Constify return
+	of preInitWithArgc.  Minor reformatting.
+
+	* tkobjc.m (initTkObjc): Update to renamed tkobjc_registerCommand.
+
+	* simtools.tcl: Add `super' bitmap.
+
+	* control.[hm]: Prefix everybody with "tkobjc_".  Add
+	tkobjc_configureHideBitmap, tkobjc_configureSpecialBitmap,
+	tkobjc_configureSuperBitmap, tkobjc_configureWidgetToBeep,
+	tkobjc_configureWidgetToDrop,
+	tkobjc_configureWidgetToPackBeforeAndFillLeftThenDisableAndResize,
+	tkobjc_bindButton3ToSpawn, tkobjc_bindButton3ToArgSpawn,
+	tkobjc_bindButton3ToBeUnhelpful, tkobjc_bindReturnToSetValue,
+	tkobjc_bindKeyReleaseReturnToResetColorAndUpdate,
+	tkobjc_bindFocusInToSetSelection,
+	tkobjc_bindFocusOutToClearSelection, and tkobjc_gimme_ddobj.
+	Renamed tkobjc_bindButton3ForCompleteProbeDisplay from
+	configureButton3ForCompleteProbeDisplay, tkobjc_bindWindowEntry
+	from configureWindowEntry, tkobjc_bindWindowExit from
+	configureWindowExit.
+	
+1997-12-09  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* control.m (dynamicEval): Add.
+
+	* control.h: Add dynamicEval.
+
+	* InputWidget.m ([InputWidget -setValue:]): Constify argument.
+	Reformatting throughout.
+	([InputWidget -linkVariable:Type:]): Cast variableName to char*
+	for Tcl_UnlinkVar and TclLinkVar.
+	([InputWidget -createEnd]): Add char * buf variable to
+	write the value for variableName.
+
+	* InputWidget.h (InputWidget): Constify variableName.
+	Constify argument to setValue.
+	Reformatting throughout.
+
+	* Entry.m ([Entry -setValue:]): Constify argument.
+	Reformatting throughout.
+
+	* Entry.h (InputWidget): Reformatting throughout.
+
+	* CheckButton.m (stringIsFalse): Constify argument.
+	([CheckButton -setValue:]): Constify argument.
+	Reformatting throughout.
+
+	* CheckButton.h: Reformatting throughout.
+
+	* analysis.tcl: New file.
+
+	* simtools.tcl: New file.
+
+	* tkobjc.m: Include tkobjc/control.h.  include simtools_tcl.x and
+	analysis_tcl.x.
+	(initTkObjc): Add check for batchmode.  In this case, set
+	globalTkInterp to Tcl and return.  Remove text of analysis EZBin Tcl
+	support routine active_item_info.  Remove disabled BLT-related
+	code.  Evaluate simtools_tcl and analysis_tcl.
+
+	* Makefile (tkobjc.o): Add dependencies on generated analysis_tcl.x
+	and simtools_tcl.x.  Add rule for conversion of tcl to tcl.x (C strings
+	of the files).
+
+	* DragDrop.m: Minor reformatting.
+
+	* Raster.m ([Raster -createEnd]): Cast second argument to
+	Tk_NameToWindow to char * to avoid GCC warning.
+	Reformatting throughout.
+
+Mon Dec  8 22:47:34 1997  glen e. p. ropella  <gepr@swarm.com>
+
+	* tkobjc: replaced all instances of swarmobject.h with
+	objectbase.h and swarmobject/ with objectbase/
+
+1997-12-08  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* control.m: Include <string.h>.
+	Move Tcl/Tk from MessageProbeWidget and VarProbeWidget:
+	(setAnchorEast): Add.
+	(setWidth): Add.
+	(setText): Add.
+	(ringBell): Add.
+	(normalState): Add.
+	(disabledState): Add.
+	(update): Add.
+	(focus): Add.
+
+	* control.h: Declare new functions setAnchorEast, setWidth,
+	setText, ringBell, normalState, disabledState, update, and focus.
+
+	* control.m (configureButton3ForCompleteProbeDisplay): Add
+	argument, probeDisplayManager, to avoid need for knowledge of
+	simtools in tkobjc.  Allocate probeDisplayManager name dynamically.
+
+	* control.h: Add declarations for packForget, deiconify,
+	releaseAndUpdate, and updateIdleTasksAndHold.
+	(configureButton3ForCompleteProbeDisplay): Add probeDisplayManager
+	argument to avoid need for declaration for a simtools object.
+
+1997-12-07  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* control.m (releaseAndUpdate, updateIdleTasksAndHold): Add.  
+	(These calls to Tcl were made in simtools/ProbeDisplay.m.)
+
+	* Widget.[hm] (Widget): Constify, minor reformatting.
+
+1997-12-04  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Widget.[hm] ([Widget -setWindowGeometry:s]): Constify.
+
+	* TextItem.[hm] ([TextItem -setText:]): Constify setter and
+	instance variable.
+
+	* Label.[hm] ([Label -setText:]): Constify.
+
+	* ButtonPanel.[hm] ([ButtonPanel -addButtonName:Command:]): Constify.
+
+	* Button.[hm] ([Button -setText:]): Constify.
+	([Button -setCommand:]): Constify.
+
+	* control.m (configureHideButton): Call markForDrop not drop 
+	(for safeprobes).
+
+	* control.[mh]: New files.
+
+	* Makefile (OBJECTS, HEADERS): Add control.[mh], common code from
+	SimpleProbeDisplay and CompleteProbeDisplay.
+	(control.o): Add.
+
+	* Frame.m ([Frame -drop]): Remove diagnostic.
+
+	* ButtonPanel.m: Include collections/String.h.
+	([ButtonPanel -setTargetName:]): Add.
+	([ButtonPanel -addButtonName:actionName:]): Add.
+
+	* ButtonPanel.h: Declare new methods -setTargetName and 
+	-addButtonName: actionName:.
+
+1997-11-29  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Frame.m ([Frame -drop]): Add.  (Only drop if no parent.)
+
+	* Frame.h: Add -(void)drop.
+
+	* Makefile (OBJECTS,HEADER): Add WindowGeometryRecord and
+	ArchivedGeometryWidget
+	(WindowGeometryRecord.o, ArchivedGeometryWidget.o): Add.
+
+	* tkobjc.h: Include WindowGeometryRecord.h and
+	ArchivedGeometryWidget.h.
+
+	* ButtonPanel.m: Remove -createEnd; Frame will take care of it.
+
+	* ButtonPanel.h (Frame): Derive ButtonPanel from Frame, not Widget.
+
+	* Frame.m ([Frame -createEnd]): Call registerAndLoad (since
+	ArchivedGeometryWidget's createEnd isn't being called).
+
+	* Frame.h: Inherit from ArchivedGeometryWidget instead of Widget.
+	* BLTGraph.h: Likewise.
+	* Raster.h: Likewise.
+
+	* WindowGeometryRecord.h: New files.  An object for storing
+	geometry information.
+
+	* ArchivedGeometryWidget.[hm]: New files. An enhanced Widget that
+	can communicate with the Archiver class (in simtools).
+
+Fri Nov 28 16:26:44 1997  glen e. p. ropella  <gepr@swarm.com>
+
+	* [Zoom]Raster.[hm] ([-handleButton]): Changed -handleButton
+	X and Y arguments from (long) to (int)because of a problem on
+	HP/UX.
+
+1997-11-16  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* tkobjc.h: Import DragDrop.h.
+
+1997-11-16  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* TkExtra.[hm] ([-getBltVersion]): Add routine to return the version
+	of BLT being used.
+
+1997-11-16  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* DragDrop.[hm]: New files.  Add functions containing the drag&drop
+	logic previously found in various classes in simtools/.  These
+	functions serve to dynamically adjust to the version of BLT being
+	used.
+
+1997-11-15  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* BLTGraph.m ([GraphElement -createEnd]): In BLT 2.3, the default
+	symbol type for lines is now a circle; explicitly specify no
+	symbol.
+

@@ -1,0 +1,260 @@
+<chapter id="swarm.user.user1.01.chapter">
+  <title>Introduction</title>
+
+  <para>The Swarm project was started in 1994 by Chris Langton, then
+    at <ulink url="http://www.santafe.edu">Santa Fe Institute</ulink>
+     (<acronym>SFI</acronym>)in New Mexico.  It is currently based at
+    the non-for-profit organization, <ulink
+     url="http://www.swarm.org">Swarm Development Group</ulink> also
+    based in Santa Fe, New Mexico.  The aim was to develop both a
+    vocabulary and a set of standard computer tools for the
+    development of multi-agent simulation models (so-called
+    <acronym>ABM</acronym>s, short for Agent-Based Models).  Armed
+    with this framework, researchers are able to focus on the
+    substance of the modeling task, avoiding some of the complicated
+    details of computer coding.</para>
+
+  <para>The Swarm project has benefitted from the contributions of
+    many programmers, including Roger Burkhart, Nelson Minar, Manor
+    Askenazi, Glen Ropella, Sven Thommesen, Marcus Daniels, Alex
+    Lancaster, Vladimir Jojic, and Irene Lee. </para>
+
+  <sect1 id="swarm.user.user1.01-facts.sect1">
+    <title>Basic Facts About Swarm</title> 
+
+    <indexterm><primary>Swarm</primary><secondary>described</secondary></indexterm>
+
+    <para>Swarm is a collection of software libraries which provide
+      support for simulation programming. Among the most prominent
+      features are the following.
+
+    <itemizedlist>
+
+	<listitem> <formalpara><title>Swarm Code is
+          Object-Oriented.</title><para>The swarm
+          libraries are written in a computer language called
+          "Objective-C", a superset of the C language. Objective-C
+          adds the ability to create software "classes" from which
+          individual instances can be created.  These instances are
+          self-contained entities, and the terminology of
+          object-oriented programming turns out to be very well suited
+          to discussions of agent-based models.</para>
+          </formalpara>
+        </listitem>
+
+	<listitem>
+          <formalpara><title>Swarm Programs are Hierarchical.</title>
+            
+            <para>Most swarm applications have a structure that
+            roughly goes like this.  First, a top level--often called
+            the "observer swarm"--is created.  That layer creates
+            screen displays and it also creates the level below it,
+            which is called the "model swarm".  The model swarm in
+            turn creates the individual agents, schedulestheir
+            activities, collects information about them and relays
+            that information when the observer swarm needs it. This
+            terminology is not required by Swarm, but its use does
+            facilitate it. </para>
+          </formalpara>
+	</listitem>
+
+	<listitem>
+          <formalpara><title>Swarm Provides Many Handy Tools.</title>
+
+            <para>As we shall see in later sections, the Swarm
+            libraries provide a number of convenient pieces of code
+            that will facilitate the design of an agent-based
+            model. These tools facilitate the management of memory,
+            the maintenance of lists, scheduling of actions, and many
+            other chores.</para>
+          </formalpara>
+        </listitem>
+      </itemizedlist>
+    </para> 
+
+    <para> Users build simulations by incorporating Swarm objects in
+      their own programs.  Users are encouraged to study a number of
+      tutorial examples in order to make full use of the Swarm
+      libraries and the strategy of modeling that inspires
+      them.</para>
+
+  </sect1>
+
+  <sect1 id="swarm.user.user1.01-target.sect1">
+
+    <title>Swarm is a Dynamic Platform</title>
+
+    <para>Swarm is <ulink url="http://www.gnu.org/philosophy/free-sw.html">
+        <firstterm>free software</firstterm></ulink> 
+      <footnote> <para>sometimes referred to as
+        "open source" source software, see the <ulink
+                                                      url="http://www.opensource.org/osd.html">Open Source
+        Definition</ulink>
+        </para>
+      </footnote>.  
+
+        The current Swarm distribution is effectively
+        <footnote> <para>The core Swarm libraries are currently
+        released under the <ulink
+                                  url="http://www.gnu.org/copyleft/lgpl.html">LGPL</ulink>, but
+        the standard binary distributions generally include many GPLed
+        support components, which effectively mean that Swarm is
+        GPLed.</para>
+      </footnote>
+      released under the GNU General Public License (<ulink
+                                                            url="http://www.gnu.org/copyleft/gpl.html">GPL</ulink>).  The
+      free software model of software development is particularly
+      effective for a tool like Swarm, for both theoretical and
+      practical reasons:
+      <itemizedlist>
+        <listitem>
+          <formalpara>
+            <title>Complete Observability</title> <para>With full
+            source available, if necessary, the modeller can always
+            track the execution of the simulation right down to the
+            operating system level.  This is very important for
+            reproducibility, and ultimately allows you to go about
+            proving (in an abstract mathematical sense) a simulation's
+            `correctness'.</para></formalpara>
+        </listitem>
+        <listitem>
+          <formalpara>
+            <title>Developer Mind-Share</title> <para>More
+            practically, Swarm is open source so that we can harness
+            developer mind-share: more technically minded users can
+            identify bugs, write patches, implement new features
+            generally contribute to the evolution of Swarm.  These are
+            all identical to the reasons that the GNU/Linux operating
+            system has grown so fast (and is so robust)
+            <citation>DiBona et. al. 1999</citation>.  As Swarm grows,
+            more programmers, and technically curious modellers are
+            becoming involved in the project.</para>
+          </formalpara>
+        </listitem>
+      </itemizedlist>
+
+    </para>
+
+    <para>The development work is being done by the <ulink
+                                                           url="http://www.swarm.org">Swarm Development Group</ulink>,
+      located in Santa Fe, New Mexico.  (The Swarm project relocated
+      from the SFI at the end of October 1999).  Their results are
+      periodically released on the Internet and users have access to
+      the source code.  The creators fully intended for users to take
+      the code, experiment with it, and propose changes and
+      enhancements.  This open source strategy is designed to capture
+      the contributions of a lively research community. When users
+      make improvements in the libraries, they are encouraged to
+      announce them to the community and make them available.  As a
+      result of the interaction of the community and the Swarm team,
+      the Swarm libraries are constantly being revised.</para>
+    
+    <para>To get an idea of how much things change, consider the brief
+      history of the project. Swarm was originally intended for Unix
+      operating systems that support the X Windows System.  The first
+      beta version of Swarm was released in 1995.  In January 1997,
+      version 1.0 was released to the public.  It would run on Solaris
+      and Linux operating systems.  Quickly after that, minor releases
+      followed that opened up Swarm to the DEC Alpha platform and
+      other flavors of Unix.  In April 1998, the reach of Swarm again
+      broadened, as version 1.1 was released and, with the help of the
+      Cygnus Win32 package, Swarm could be used on the Microsoft
+      Windows 95/NT (and now 98) operating systems.  In late 1999 the
+      Swarm releases 2.0 and 2.0.1 introduced a Java layer for Swarm
+      to enable Java programmers to access Swarm libraries and enabled
+      the export of data through the HDF5 binary data format from
+      NSCA.</para>
+
+    <para>Because Swarm does grow and change as a result of the
+      complex interaction within a research community, its precise
+      path for development is not predictable.  Current priorities for
+      the Swarm team at the SDG include the further generalization of
+      Swarm to be useful on a broader array of platforms and in
+      conjunction with additional computer languages.  Prototype XML
+      and Scheme layers for Swarm have been tested, for example.
+    </para>
+
+  </sect1>
+
+  <sect1 id="swarm.user.user1.01-prereq.sect1">
+    <title>Prerequisites for Success with Swarm.</title>
+
+    <para>Swarm was originally conceived as a set of standardized
+      methods for the design of multi-agent simulation models. One
+      need not be a highly accomplished computer program to user the
+      Swarm libraries.  In fact, as the installation process for Swarm
+      becomes increasingly streamlined, it is quite easy for anyone
+      with suitable hardware to test some of the sample
+      applications. For people who have Windows 98/NT or Linux
+      operating systems, compiled versions of the Swarm libraries are
+      available and installation is quite painless</para>
+
+    <para>However, it is not easy to create new Swarm
+      applications. Doing so requires the creation of a computer
+      program.  While one need not be an expert programmer, one must
+      have a rudimentary understanding of vital computing
+      concepts. The required knowledge will vary with the sort of
+      model that one is intending to create, of course, but,<emphasis>
+      at the bare minumum</emphasis>, users must have:
+
+    <itemizedlist>
+        <listitem>
+          <para> a basic understanding of computer programming</para>
+        </listitem>
+        <listitem>
+          <para> and, at the time of writing, either of the two
+      object-oriented programming languages, Java or Objective C
+      <footnote> <para>in the Objective C case, an understanding of
+      the C computer language, is also helpful, since Objective C is a
+      superset of the C language</para>
+            </footnote>
+          </para>
+        </listitem>
+      </itemizedlist>
+    </para>
+    
+    <para>Java is a straightforward language to learn, and has the
+      advantage of being a mainstream, well-supported language in
+      terms of both tools and documentation.  Objective-C is, well,
+      truly elegant and fun to use and people who know C say it is
+      fairly easy to learn (C is also a highly useful language and it
+      is relatively easy to learn).</para>
+        
+    <para> People who have not done computer
+      programming will thus need to do some background preparation
+      before they try to make a serious effort at building a Swarm
+      model.</para>  
+
+
+    <para>If you choose to implement your models in Objective C, we
+      suggest that the first step is to find one of the many
+      elementary guides to computing with C, such as <citetitle
+      pubwork="book">The C Programming Language</citetitle>,
+      <citation>Kernighan & Ritchie, 1988</citation>.  Written by the
+      authors of C, <author> <firstname>Brian</firstname>
+      <surname>Kernighan</surname> </author> and <author>
+      <firstname>Dennis</firstname> <surname> Ritchie</surname>
+      </author>, it is a truly readable and informative manual that
+      all users ought to investigate.</para>
+
+    <para>If you choose to implement your models in Java, there are
+    literally thousands of introductory programming-in-Java resources
+    on the market, both in paper and electronic form (see <xref
+    linkend="swarm.user.tech-resources.sect1"> for some starting
+    points).</para>
+
+    <para>A manual with examples and exercises is vital.  These will
+      teach the basics about writing code and compiling it into
+      programs.</para>
+
+    <para>The Objective-C language is best learned from the online
+      book <citetitle>Object Oriented Programming and the Objective C
+      Language</citetitle> <citation>NeXT, 1993</citation>.</para></sect1>
+
+</chapter>
+<!--
+Local Variables:
+sgml-parent-document:("userbook.sgml" "CHAPTER")
+End:
+-->
+ 

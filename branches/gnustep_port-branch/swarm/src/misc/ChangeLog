@@ -1,3 +1,24 @@
+2004-01-21  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* argp.h: MacOS X 10.3.x has getopt.h but no argp.
+
+2004-01-21  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* makefile.am: use @LTLIBOBJS@ for consistency with
+	   AM_DEPENDENCIES.
+	* getopt.h: renamed getopt functions to prevent clashes
+	  with BSD getopt functions.
+
+2003-09-15  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* xmalloc.c: conditionalised use of weak attribute not supported
+	on Mach-O objects.
+
+2003-03-25    <pauljohn@234.81.cm.sunflower.com>
+
+	* argp.h: Cygwin defines errno_t and sets __ERRNO_H__, so check
+	for that before declaring again.
+
 2002-04-14  Alex Lancaster  <alex@swarm.org>
 
 	* misc.h: Change copyright statement to canonical version as

@@ -1,0 +1,37 @@
+include @swarm_prefix@/etc/swarm/Makefile.common
+
+LIBRARY = lib$(LIBNAME).a
+INCFILE = $(LIBNAME).h
+
+RANLIB = @RANLIB@
+
+INCLUDES = -I$(includedir) -I.
+
+.PHONY: install-headers install-lib
+
+all: symlink $(LIBRARY)
+
+symlink:
+	test -d $(LIBNAME) || ln -s . $(LIBNAME)
+
+install: install-headers install-lib
+
+install-headers: 
+	$(INSTALL_DATA) $(INCFILE) $(includedir)
+	test -d $(includedir)/$(LIBNAME) || mkdir $(includedir)/$(LIBNAME)
+	$(INSTALL_DATA) $(HEADERS) $(includedir)/$(LIBNAME)
+
+install-lib: $(LIBRARY)
+	$(INSTALL_DATA) $(LIBRARY) $(libdir)
+
+clean:
+	-rm -f core $(OBJECTS) $(OTHERCLEAN)
+
+$(LIBRARY): $(OBJECTS)
+	-rm -f $@
+	ar q $@ $(OBJECTS)
+	$(RANLIB) $(LIBRARY)  
+
+# Local variables:
+# mode: makefile
+# end:

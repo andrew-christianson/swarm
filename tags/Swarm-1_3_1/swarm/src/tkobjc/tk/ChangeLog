@@ -1,0 +1,25 @@
+1998-07-21  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* tkWinPort.h: Go ahead and include string.h, now that String has
+	been renamed.
+
+1998-07-20  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* tkWinPort.h (gettimeofday): Don't declare.
+
+1998-06-24  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* Makefile.am (noinst_HEADERS): New file.
+	
+	* tkInt.h: Include "tk/tkPort.h" instead of <tkPort.h>.
+
+	* tkWinPort.h: Don't include string.h.
+
+1998-04-10  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* tkInt.h (TkpClipMask, TkpCreateNativePixmap,
+	TkpGetNativeAppBitmap, TkSetPixmapColormap): Use X11Pixmap instead
+	of Pixmap.
+
+
+

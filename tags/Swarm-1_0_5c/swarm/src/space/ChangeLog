@@ -1,0 +1,33 @@
+1998-01-13  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Object2dDisplay.m ([Object -makeProbeAtX:Y:]): Use
+	CREATE_PROBE_DISPLAY instead of calling createProbeDisplayFor
+	method.
+
+1997-12-17  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Discrete2d.h: Constify toFile argument to setDiscrete2d.
+	Reformatting throughout.
+	
+	* Discrete2d.m ([Discrete2d -setDiscrete2d: toFile]): Constify
+	toFile argument.  Reformatting throughout.
+
+1997-12-11  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Int2dFiler.m ([Int -fileTo:aFileName]): Constify argument.
+	Reformatting throughout.
+
+	* Int2dFiler.h: Constify argument to fileTo.
+	Reformatting throughout.
+
+1997-12-10  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Object2dDisplay.m: Include tkobjc/control.h.
+	([Object -makeProbeAtX:Y:]):  Use new wrapper function tkobjc_ringBell.
+
+Mon Dec  8 22:40:48 1997  glen e. p. ropella  <gepr@swarm.com>
+
+	* Int2dFiler.h, Object2dDisplay.h, Discrete2d.h: replaced 
+	all instances of swarmobject.h with objectbase.h and 
+	swarmobject/ with objectbase/.
+

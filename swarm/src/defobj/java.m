@@ -1537,6 +1537,7 @@ swarm_directory_java_associate_objects (jobject swarmEnvironment)
   }
 
 #ifndef DISABLE_GUI
+#ifndef GNUSTEP
   if (swarmGUIMode)
     {
       extern id probeDisplayManager;
@@ -1552,6 +1553,7 @@ swarm_directory_java_associate_objects (jobject swarmEnvironment)
       ASSOCIATE (ControlStateQuit);
       ASSOCIATE (ControlStateNextTime);
     }
+#endif
 #endif
   
   {

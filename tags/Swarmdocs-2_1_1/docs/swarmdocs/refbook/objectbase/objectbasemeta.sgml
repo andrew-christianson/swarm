@@ -1,0 +1,20 @@
+<DOCINFO>
+
+  <TITLE>Objectbase Library</TITLE>
+
+  <ABSTRACT>
+    <TITLE>Documentation and Implementation Status</TITLE>
+    
+    <PARA></PARA>
+    
+  </ABSTRACT>
+  
+  &objectbaserevhistory.sgml;
+
+</DOCINFO>
+
+<!--
+Local Variables:
+sgml-parent-document:("objectbasecont.sgml" "DOCINFO")
+End:
+-->

@@ -1,0 +1,36 @@
+<!DOCTYPE BOOK PUBLIC "-//Davenport//DTD DocBook V3.0//EN" [
+
+<!entity % global.entities PUBLIC "-//SFI Hive//ENTITIES Globals//EN">
+%global.entities;
+
+<!entity % versions.entities PUBLIC "-//SFI Hive//ENTITIES Versions//EN">
+%versions.entities;
+
+<!entity % install.entities PUBLIC "-//SFI Hive//ENTITIES Install List//EN">
+%install.entities;
+
+<!entity % figures.entities PUBLIC "-//SFI Hive//ENTITIES Figure List//EN">
+%figures.entities;
+
+<!entity % local.notation.class "| JPEG">
+<!notation jpeg system>
+]>
+
+<BOOK ID="installbook">
+
+<TITLE>Getting Started with Swarm</TITLE>
+
+&installcont.sgml;
+
+</BOOK>
+
+
+
+
+
+
+
+
+
+
+

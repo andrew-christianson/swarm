@@ -1,0 +1,43 @@
+1998-06-17  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* Makefile.am: Include from refbook/ instead of src/.
+
+1998-06-17  Alex Lancaster  <alex@santafe.edu>
+
+	* guimeta.sgml: Removed redundant text from ABSTRACT.
+
+	* gui00.sgml: Added objectbase.h to list of dependencies.
+
+1998-06-15  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* Makefile.am (MODULE): New variable.  Include Makefile.rules 
+	from src.  Remove everything else.
+
+1998-06-12  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* gui00.sgml, guicont.sgml: Update IDs to SWARM.module.SGML.type.
+
+1998-06-06  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* gui.ent: Use public identifiers.
+
+1998-06-05  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* Makefile.am (swarm_ChangeLog): Add.
+
+1998-05-27  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* gui.ent.in: Fix typo in revhistory.
+
+1998-05-23  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* Makefile.am: New file.
+
+	* gui.ent.in: New file.
+
+	* gui.ent: Removed.
+
+1998-05-22  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* Begin revision log.
+

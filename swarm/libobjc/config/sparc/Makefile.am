@@ -1,1 +1,0 @@
-EXTRA_DIST = compiler-info-solaris2.h mframe-generic.h mframe-solaris2.h mframe-sunos4.1.3.h

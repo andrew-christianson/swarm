@@ -153,28 +153,34 @@ make_string_ref_type (void)
   
   if ((memtid = H5Tcopy (H5T_STD_REF_OBJ)) < 0)
     raiseEvent (LoadError, "Unable to copy H5T_STD_REF_OBJ");
+#if 0
   // this must be set otherwise we can get 8 byte pointers on some 
   // architectures!
   if (H5Tset_size (memtid, sizeof (const char *)) < 0)
     raiseEvent (LoadError, "unable to set size of reference type");
+#endif
   return memtid;
 }    
 
 static void
 suppress_messages (void (*func) ())
 {
-  void *client_data;
-  H5E_auto_t errfunc;
+ //  void *client_data;
+//   H5E_auto_t errfunc;
 
-  herr_t quiet_errfunc (void *client_data)
-    {
-      return 0;
-    }
+//   herr_t quiet_errfunc (void *client_data)
+//     {
+//       return 0;
+//     }
 
-  H5Eget_auto (&errfunc, &client_data);
-  H5Eset_auto (quiet_errfunc, NULL);
-  func ();
-  H5Eset_auto (errfunc, client_data);  
+//   H5Eget_auto (&errfunc, &client_data);
+//   H5Eset_auto (quiet_errfunc, NULL);
+  H5E_BEGIN_TRY {
+   func ();
+   }H5E_END_TRY;
+
+
+  // H5Eset_auto (errfunc, client_data);  
 }
   
 static unsigned
@@ -223,24 +229,27 @@ get_attribute_string_list (hid_t oid,
       
       if (rank == 1 && class == H5T_STRING)
         {
-          void *ptr;
-
-          retcount = dims[0];
-
           if (strings)
             {
               size_t refsize = H5Tget_size (str_ref_tid);
-              size_t size = sizeof (const char *) * retcount;
+              size_t datasize = H5Tget_size (tid);
+	      size_t size = refsize > datasize ? refsize : datasize;
+	      void *ptr, *buf;
+	      retcount = dims[0];
+	      unsigned i;
 
-              if (refsize > size)
-                size = refsize;
-
-              ptr = [scratchZone alloc: size];
+              buf = [scratchZone alloc: size * retcount];
+	      ptr = [scratchZone alloc: sizeof (const char *) * retcount];
               
-              if (H5Aread (aid, str_ref_tid, ptr) < 0)
+              if (H5Aread (aid, str_ref_tid, buf) < 0)
                 raiseEvent (LoadError,
                             "unable to read attribute `%s'",
                         attrName);
+
+	      for (i = 0; i < retcount; i++)
+		((const char **) ptr)[i] = ((const char **) buf)[i];
+
+	      [scratchZone free: buf];
               *strings = ptr;
             }
         }
@@ -1752,7 +1761,7 @@ PHASE(Using)
   
   for (i = 0; i < rank; i++)
     dims[i] = [self getDatasetDimension: i];
-  
+
   buf = [getZone (self)
                  alloc: 
                    (object_getVariableElementCount (obj,
@@ -1914,8 +1923,10 @@ hdf5_store_attribute (hid_t did,
       if ((memtid = H5Tcopy (H5T_STD_REF_OBJ)) < 0)
         raiseEvent (SaveError, "unable to copy reference type");
 
+#if 0
       if ((H5Tset_size (memtid, sizeof (const char *))) < 0)
         raiseEvent (SaveError, "unable to set size of reference type");
+#endif
 
       if ((tid = H5Tcopy (H5T_C_S1)) < 0)
         raiseEvent (SaveError, "unable to copy string type");
@@ -2048,7 +2059,9 @@ hdf5_store_attribute (hid_t did,
 - (void)loadDataset: (void *)ptr
 {
 #ifdef HAVE_HDF5
-  hid_t sid, tid, memtid;
+  hid_t sid, tid, memtid = 0;
+  void *buf;
+  size_t size = 0;
 
   if ((sid = H5Dget_space (loc_id)) < 0)
     raiseEvent (LoadError, "cannot get dataset space");
@@ -2063,16 +2076,38 @@ hdf5_store_attribute (hid_t did,
       raiseEvent (LoadError, "cannot get class of type");
     
     if (class == H5T_STRING)
-      memtid = make_string_ref_type ();
-    else
-      memtid = tid_for_fcall_type (fcall_type_for_tid (tid));
+      {
+	memtid = make_string_ref_type ();
+	size_t memsize = H5Tget_size (memtid);
+	size_t datasize = H5Tget_size (tid);
+	size_t unitsize = memsize > datasize ? memsize : datasize;
+	unsigned i, rank = [self getDatasetRank];
+      
+	size = 1;
+	for (i = 0; i < rank; i++)
+	  size *= [self getDatasetDimension: i];
 
-    if (H5Dread (loc_id, memtid, sid, sid, H5P_DEFAULT, ptr) < 0)
+	buf = [getZone (self) alloc: size * unitsize];
+      }
+    else
+      {
+	memtid = tid_for_fcall_type (fcall_type_for_tid (tid));
+	buf = ptr;
+      }
+
+    if (H5Dread (loc_id, memtid, sid, sid, H5P_DEFAULT, buf) < 0)
       raiseEvent (LoadError, "cannot read dataset");
-    
+
     if (class == H5T_STRING)
-      if (H5Tclose (memtid) < 0)
-        raiseEvent (LoadError, "cannot close dataset mem type");
+      {
+	unsigned i;
+
+	for (i = 0; i < size; i++)
+	  ((const char **) ptr)[i] = ((const char **) buf)[i];
+	[getZone (self) free: buf];
+	if (H5Tclose (memtid) < 0)
+	  raiseEvent (LoadError, "cannot close dataset mem type");
+      }
   }
   
   if (H5Tclose (tid) < 0)
@@ -2191,9 +2226,10 @@ hdf5_store_attribute (hid_t did,
 #ifdef HAVE_HDF5
   hid_t aid, sid;
   hid_t memtid = make_string_ref_type ();
+  hid_t dtid;
   int rank;
   hsize_t dims[1];
-  const char **buf;
+  char **outbuf;
 
   if ((aid = H5Aopen_name (loc_id, ROWNAMES)) < 0)
     raiseEvent (LoadError, "could not get row names attribute");
@@ -2203,7 +2239,10 @@ hdf5_store_attribute (hid_t did,
   
   if ((rank = H5Sget_simple_extent_ndims (sid)) < 0)
     raiseEvent (LoadError, "could not get row names space rank");
-  
+
+  if ((dtid = H5Aget_type (aid)) < 0)
+    raiseEvent (LoadError, "could not get row names type");
+
   if (rank != 1)
     raiseEvent (LoadError, "row names space rank should be 1");
   
@@ -2213,10 +2252,23 @@ hdf5_store_attribute (hid_t did,
   if (c_count != dims[0])
     raiseEvent (LoadError, "row names vector different size from table");
 
-  buf = [getZone (self) alloc: sizeof (const char *) * c_count];
+  {
+    unsigned i;
+    size_t datasize = H5Tget_size (dtid);
+    size_t memsize = H5Tget_size (memtid);
+    size_t size = datasize > memsize ? datasize : memsize;
+    char *buf = [getZone (self) alloc: size * c_count];
 
-  if (H5Aread (aid, memtid, buf) < 0)
-    raiseEvent (LoadError, "could not get row names vecotr");
+    outbuf = [getZone (self) alloc: sizeof (char *) * c_count];
+    
+    if (H5Aread (aid, memtid, buf) < 0)
+      raiseEvent (LoadError, "could not get row names vector");
+    
+    for (i = 0; i < c_count; i++)
+      outbuf[i] = ((char **) buf)[i];
+    
+    [getZone (self) free: buf];
+  }
   
   if (H5Aclose (aid) < 0)
     raiseEvent (LoadError, "could not close row names attribute");
@@ -2227,7 +2279,10 @@ hdf5_store_attribute (hid_t did,
   if (H5Tclose (memtid) < 0)
     raiseEvent (LoadError, "could not close reference type");
 
-  return buf;
+  if (H5Tclose (dtid) < 0)
+    raiseEvent (LoadError, "could not close reference type");
+
+  return (const char **) outbuf;
 #else
   hdf5_not_available ();
   return NULL;

@@ -41,7 +41,12 @@ Library:      defobj
 #include <misc.h> // strcpy, strlen, sprintf, isDigit
 #include <collections/predicates.h> // arrayp, keywordp, archiver_list_p, stringp
 
+#ifdef GNUSTEP
+#include <Foundation/NSMethodSignature.h>
+#include <mframe.h>
+#else
 #include <objc/mframe.h>
+#endif
 
 #ifdef HAVE_JDK
 #include "java.h"

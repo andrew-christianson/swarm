@@ -116,3 +116,10 @@ extern unsigned object_getVariableElementCount (id obj,
                                                 fcall_type_t itype,
                                                 unsigned irank,
                                                 unsigned *idims);
+
+#ifdef GNUSTEP
+/* TODO: Long double not in objc runtime yet */
+#ifndef _C_LNG_DBL
+#define _C_LNG_DBL  'X'
+#endif
+#endif

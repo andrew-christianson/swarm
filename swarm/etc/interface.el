@@ -150,8 +150,6 @@
       "-removeRef:" ; ref_t parameter
       "+conformsTo:" ; Protocol* parameter
       "-conformsTo:" ; Protocol* parameter
-      "-lispStoreIntegerArray:Keyword:Rank:Dims:Stream:"; pointer to int arg
-      "-lispStoreDoubleArray:Keyword:Rank:Dims:Stream:"; pointer to double arg
 
       ;; Zone
       "-alloc:" ; void* return

@@ -332,8 +332,6 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 //
 - (void)dropAllocations: (BOOL)componentAlloc
 {
-   extern id baseDrop (id, SEL) asm ("-[Object_s drop]");
-
   if (getBit (zbits, BitComponentAlloc) && !componentAlloc)
     raiseEvent (InvalidOperation,
                 "object was allocated as a component allocation but dropAllocations: "
@@ -344,7 +342,10 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
                 "object was allocated as a free-standing object but dropAllocations: "
                 "requested drop as a component allocation\n");
   
-   baseDrop (self, M(drop)) ;
+  // execute internal drop method directly, to avoid any version of drop
+  // method in subclasses (temporary hack until this whole method eliminated)
+  
+  _i_Object_s__drop (self, M(drop));
 }
 
 //
@@ -1060,22 +1061,6 @@ initDescribeStream (void)
         
     }
   map_object_ivars (self, store_object);
-}
-
-- (void)lispStoreIntegerArray: (int *)ptr Keyword: (const char *)keyword Rank: (unsigned)rank Dims: (unsigned *)dims Stream: stream 
-{
-  [stream catSeparator];
-  [stream catKeyword: keyword];
-  [stream catSeparator];
-  lisp_process_array (rank, dims,fcall_type_sint,ptr,NULL,stream,NO);
-}
-
-- (void)lispStoreDoubleArray: (double *)ptr Keyword: (const char *)keyword Rank: (unsigned)rank Dims: (unsigned *)dims Stream: stream
-{
-  [stream catSeparator];
-  [stream catKeyword: keyword];
-  [stream catSeparator];
-  lisp_process_array (rank, dims,fcall_type_double,ptr,NULL,stream,NO);
 }
 
 - (void)_lispOut_: stream deep: (BOOL)deepFlag

@@ -55,19 +55,13 @@ PHASE(Using)
 
 - (void)step
 {
-  currentValue = [self doubleDynamicCallOn: dataFeed];
   if (file)
     {
-      [file putDouble: currentValue];
+      [file putDouble: [self doubleDynamicCallOn: dataFeed]];
       [file putNewLine];
     }
   else
-    [hdf5Dataset addDoubleToVector: currentValue];
-}
-
-- (double)getCurrentValue
-{
-  return currentValue;
+    [hdf5Dataset addDoubleToVector: [self doubleDynamicCallOn: dataFeed]];
 }
 
 - (void)drop

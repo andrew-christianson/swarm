@@ -145,12 +145,12 @@ fi
 rm -f conftest*
 ])
 if test $cl_cv_prog_as_underscore = yes; then
-  ASS_UNDERSCORE=true
+  AS_UNDERSCORE=true
   AC_DEFINE(ASM_UNDERSCORE)
 else
-  ASS_UNDERSCORE=false
+  AS_UNDERSCORE=false
 fi
-AC_SUBST(ASS_UNDERSCORE)dnl
+AC_SUBST(AS_UNDERSCORE)dnl
 ])dnl
 dnl
 AC_DEFUN(CL_PROG_RANLIB, [AC_CHECK_PROG(RANLIB, ranlib, ranlib, true)])dnl

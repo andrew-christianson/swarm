@@ -153,10 +153,10 @@ make_string_ref_type (void)
   
   if ((memtid = H5Tcopy (H5T_STD_REF_OBJ)) < 0)
     raiseEvent (LoadError, "Unable to copy H5T_STD_REF_OBJ");
-  // this must be set otherwise we can get 8 byte pointers on some 
-  // architectures!
+#if 0
   if (H5Tset_size (memtid, sizeof (const char *)) < 0)
     raiseEvent (LoadError, "unable to set size of reference type");
+#endif
   return memtid;
 }    
 
@@ -947,16 +947,14 @@ PHASE(Creating)
   obj->datasetFlag = NO;
   obj->parent = nil;
   obj->baseTypeObject = nil;
-  obj->name = NULL;
 #ifdef HAVE_HDF5
   obj->c_rnnlen = 0;
   obj->c_rnmlen = 0;
   obj->loc_id = 0;
+  obj->vector_type = fcall_type_void;
   obj->c_count = 0;
   obj->c_sid = -1;
   obj->plist = 0;
-  obj->vector_buf = NULL;
-  obj->vector_type = fcall_type_void;
 #endif
   return obj;
 }
@@ -1042,14 +1040,15 @@ ref_string (hid_t sid, hid_t did, H5T_cdata_t *cdata,
             void *buf, void *bkg,
             hid_t dset_xfer_plid)
 {
-  if (cdata->command == H5T_CONV_INIT)
-    cdata->need_bkg = H5T_BKG_TEMP;
-  else if (cdata->command == H5T_CONV_CONV)
+  if (cdata->command == H5T_CONV_CONV)
     {
-      const char **recptr = buf;
-      char *destbuf = bkg;
+      const char *srcbuf[count];
+      char *destbuf = buf;
+      const char **recptr = srcbuf;
       size_t i;
       size_t maxlen = H5Tget_size (did);
+
+      memcpy (srcbuf, buf, sizeof (srcbuf));
 
       for (i = 0; i < count; i++)
         {
@@ -1057,7 +1056,6 @@ ref_string (hid_t sid, hid_t did, H5T_cdata_t *cdata,
           recptr++;
           destbuf += maxlen;
         }
-      memcpy (buf, bkg, count * maxlen);
     }
   return 0;
 }
@@ -1067,21 +1065,18 @@ string_ref (hid_t sid, hid_t did, H5T_cdata_t *cdata,
             count_size_t count, size_t stride, size_t bkg_stride,
             void *buf, void *bkg, hid_t xfer_plid)
 {
-  if (cdata->command == H5T_CONV_INIT)
-    cdata->need_bkg = H5T_BKG_TEMP;
-  else if (cdata->command == H5T_CONV_CONV)
+  if (cdata->command == H5T_CONV_CONV)
     {
       size_t size = H5Tget_size (sid);
-      unsigned char *srcptr = buf;
+      unsigned char srcbuf[size * count], *srcptr = srcbuf;
       size_t i;
-
+      
+      memcpy (srcbuf, buf, sizeof (srcbuf));
       for (i = 0; i < count; i++)
         {
-          const char *str = SSTRDUP (srcptr);
-          ((const char **) bkg)[i] = str;
+          ((const char **) buf)[i] = SSTRDUP (srcptr);
           srcptr += size;
         }
-      memcpy (buf, bkg, count * sizeof (const char *));
     }
   return 0;
 }
@@ -1131,7 +1126,7 @@ hdf5_reopen_dataset (id parent, const char *name, hid_t tid, hid_t sid,
                                tid,
                                sid,
                                plist)) < 0)
-        raiseEvent (SaveError, "unable to create reopened dataset `%s'", name);
+        raiseEvent (SaveError, "unable to create reopened dataset");
     }
   return loc_id;
 }
@@ -1141,26 +1136,11 @@ hdf5_reopen_dataset (id parent, const char *name, hid_t tid, hid_t sid,
 
 #ifdef HAVE_HDF5
 static hid_t
-chunk_deflate_plist (unsigned rank, unsigned *dims)
+chunk_deflate_plist (hsize_t chunkSize)
 {
   hid_t plist;
-  hsize_t chunks[rank];
+  hsize_t chunk_size[1] = { chunkSize };
 
-  unsigned i;
-
-  if (dims)
-    {
-      for (i = 0; i < rank; i++)
-        {
-          if (dims[i] > VECTOR_BLOCK_SIZE * CHUNK_RATIO)
-            chunks[i] = dims[i] / CHUNK_RATIO;
-          else
-            chunks[i] = dims[i];
-        }
-    }
-  else
-    chunks[0] = VECTOR_BLOCK_SIZE;
-      
   if ((plist = H5Pcreate (H5P_DATASET_CREATE)) < 0)
     raiseEvent (SaveError,
                 "unable to create (vector) property list");
@@ -1168,7 +1148,7 @@ chunk_deflate_plist (unsigned rank, unsigned *dims)
   if (H5Pset_layout (plist, H5D_CHUNKED) < 0)
     raiseEvent (SaveError, "unable to set chunking");
   
-  if (H5Pset_chunk (plist, rank, chunks) < 0)
+  if (H5Pset_chunk (plist, 1, chunk_size) < 0)
     raiseEvent (SaveError, "unable to set chunk sizes");
   
   if (H5Pset_deflate (plist, 6) < 0)
@@ -1247,7 +1227,7 @@ chunk_deflate_plist (unsigned rank, unsigned *dims)
                         raiseEvent (SaveError,
                                     "unable to create (vector) space");
 
-                      plist = chunk_deflate_plist (1, NULL);
+                      plist = chunk_deflate_plist (VECTOR_BLOCK_SIZE);
                       loc_id = hdf5_open_dataset (parent,
                                                   name,
                                                   vector_tid,
@@ -1913,9 +1893,10 @@ hdf5_store_attribute (hid_t did,
       
       if ((memtid = H5Tcopy (H5T_STD_REF_OBJ)) < 0)
         raiseEvent (SaveError, "unable to copy reference type");
-
+#if 0
       if ((H5Tset_size (memtid, sizeof (const char *))) < 0)
         raiseEvent (SaveError, "unable to set size of reference type");
+#endif
 
       if ((tid = H5Tcopy (H5T_C_S1)) < 0)
         raiseEvent (SaveError, "unable to copy string type");
@@ -1950,7 +1931,18 @@ hdf5_store_attribute (hid_t did,
           hid_t tid = tid_for_fcall_type (type);
           hid_t _plist;
 
-          _plist = chunk_deflate_plist (rank, dims);
+          unsigned maxDim = 0, i, chunkSize;
+          
+          for (i = 0; i < rank; i++)
+            if (dims[i] > maxDim)
+              maxDim = dims[i];
+          chunkSize = maxDim / CHUNK_RATIO;
+          if (chunkSize < VECTOR_BLOCK_SIZE)
+            chunkSize = VECTOR_BLOCK_SIZE;
+          if (chunkSize > maxDim)
+            chunkSize = maxDim;
+          
+          _plist = chunk_deflate_plist (chunkSize);
           
           store (sid, tid, tid, _plist);
 
@@ -2311,6 +2303,10 @@ hdf5_store_attribute (hid_t did,
     {
       if (compoundType)
         {
+          if (c_sid != psid)
+            if (H5Sclose (c_sid) < 0)
+              raiseEvent (InvalidArgument, "Failed to close (compound) space");
+
           if (H5Dclose (loc_id) < 0)
             raiseEvent (SaveError, "Failed to close (compound) dataset");
           
@@ -2331,7 +2327,7 @@ hdf5_store_attribute (hid_t did,
               if (H5Gclose (loc_id) < 0)
                 raiseEvent (SaveError, "Failed to close HDF5 group");
             }
-          else if (((HDF5_c *) parent)->loc_id != loc_id)
+          else
             {
               if (H5Dclose (loc_id) < 0)
                 raiseEvent (SaveError, "Failed to close HDF5 dataset");

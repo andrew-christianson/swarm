@@ -180,7 +180,7 @@ PHASE(Creating)
 - _setupObjcVarProbe_
 {
   IvarList_t ivarList;
-  int i;
+  unsigned i;
   
   ivarList = probedClass->ivars;
   

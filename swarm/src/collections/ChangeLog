@@ -1,27 +1,3 @@
-2002-10-19    <pauljohn@dv253s74.lawrence.ks.us>
-
-	* Makefile.am (install-data-local): $(DESTDIR) added
-
-2002-09-13    <pjohnson@localhost.localdomain>
-
-	* Array.m ([Array_c -_lispOut_:deep:]): i must be unsigned
-
-2002-05-14  Marcus G. Daniels  <mgd@condor>
-
-	* collections.h (Array, List, Map): Adopt Serialization.
-
-	* List_GEN.m (TARGET), OrderedSet.m (OrderedSet_c), Stream.m
-	(ArchiverList): Add Setting phase marker for above.
-
-2002-04-23  Marcus G. Daniels  <mgd@condor>
-
-	* Array.m ([Array_c -lispInCreate:,-lispIn:]): Implement.
-
-	* List_HDF5out.m: Don't do anything with nil.
-
-	* List.h, Array.h, Map.h, Collection.h: Explicit includes of
-	defobj.h for Serialization protocol.
-
 2002-04-14  Alex Lancaster  <alex@swarm.org>
 
 	* Array.h, Array.m, Collection.h, Collection.m, InputStream.h,

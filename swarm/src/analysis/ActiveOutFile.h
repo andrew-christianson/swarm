@@ -25,7 +25,6 @@
 {
   id file;
   id dataFeed;
-  double currentValue;
 @public
   id <HDF5> hdf5Dataset;
 }
@@ -34,5 +33,4 @@
 - setHDF5Dataset: (id <HDF5>)hdf5Obj;
 - setDataFeed: d;
 - (void)step;
-- (double)getCurrentValue;
 @end

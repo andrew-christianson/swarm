@@ -1,0 +1,117 @@
+1998-10-14  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* installbook.tex.in: Use top_dossrcdir instead of top_srcdir.
+
+1998-10-09  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* installbook.tex.in: Include tex/macros.tex.
+
+1998-10-06  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* installmeta.sgml: Make more conservative.  Remove statements
+	of intent.
+
+	* install01.sgml: Update library version facts, compatibility, etc.
+	Add URLs for both versions and general package information.
+
+1998-07-17  Alex Lancaster  <alex@santafe.edu>
+
+	* install02.sgml: Fixed ID of ARTICLE to `INSTALLBOOK' rather than
+	`INSTALL'.
+
+	* install01.sgml (SIMPLESECT): Updated ULINK http and ftp
+	locations for download of Tcl/Tk to `scriptics.com'.  `smli.com'
+	is now out-of-date.  Also changed link to BLT to ftp location,
+	rather than the webpage.
+	(ARTICLE): Added missing ID.
+
+1998-06-25  Alex Lancaster  <alex@santafe.edu>
+
+	* install01.sgml: Updated installation instruction to reflect new
+	`configure' process.
+
+1998-06-17  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* Makefile.am (GENERATED_SGML): Use $(NAME)revhistory.sgml instead of
+	installrevhistory.sgml. 
+	(EXTRA_DIST): Use installbook.ent instead of install.ent.
+	
+	* installmeta.sgml: Use installbookrevhistory.sgml instead of
+	installrevhistory.sgml.  Scale graphic to 100%.
+
+1998-06-16  Alex Lancaster  <alex@santafe.edu>
+
+	* install01.sgml: Updated `Supported Systems' to make mention of
+	Windows NT.  Updated `Prerequisite Libraries' to mention libraries
+	required as of Swarm 1.1/1.2.
+
+1998-06-15  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* Makefile.am: Include $(top_srcdir)/Makefile.common.
+	(EXTRA_DIST): New variable.
+
+1998-06-15  Alex Lancaster  <alex@santafe.edu>
+
+	* install.ent: Removed install00.sgml from list of ENTITIES.
+	
+	* installbook.sgml: Added new JPEG notation class and notation.
+
+	* Makefile.am (SGML): Removed install00.sgml.
+
+	* installcont.sgml: Removed include of install00.sgml.
+
+	* install02.sgml: Removed links to 'reference book' elements -
+	made all linkends be FORMALPARAs.
+
+	* install01.sgml: Commented-out LINK to reference book 'debug'
+	section.  Moved original PREFACE material in install00.sgml into
+	new SIDEBAR.  
+
+	* install00.sgml: Removed.
+
+1998-06-12  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* installbook.sgml: Include versions and figures entities.
+
+	* installmeta.sgml: Scale graphic to 75%.
+
+	* install00.sgml, install01.sgml, install02.sgml,
+	installmeta.sgml: Update all IDs to SWARM.module.SGML.type.
+
+1998-06-11  Alex Lancaster  <alex@santafe.edu>
+
+	* install.ent: Made all SYSTEM identifiers PUBLIC (listed in
+	catalog now).
+
+	* Makefile.am (GENERATED_SGML): Added for revhistory.
+	(noinst_DATA): Added.
+	(SGML, SGML_FILES): Separated out generated/non-gen files.
+
+	* install.ent: Created installrevhistory.sgml entity.
+
+	* installmeta.sgml: Replaced hardcoded revhistory with the new
+	entity installrevhistory.sgml.
+
+1998-06-09  Alex Lancaster  <alex@santafe.edu>
+
+	* installmeta.sgml: Changed corpauthor to be inserted from Global
+	public identifiers.
+
+1998-06-08  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* installbook.sgml: Use public identifiers.
+
+1998-05-23  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* installbook.tex.in: New file.
+
+	* Makefile.am: New file.
+
+	* installbook.sgml: Make ID of book be "installbook".
+
+	* Makefile: Remove.
+
+1998-05-22  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* Begin revision log.
+

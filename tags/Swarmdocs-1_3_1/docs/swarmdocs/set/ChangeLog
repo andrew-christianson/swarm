@@ -1,0 +1,56 @@
+1998-10-14  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* set.tex.in: Use top_dossrcdir instead of top_srcdir.
+
+1998-10-09  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* set.tex.in: Include tex/macros.tex.
+
+1998-06-17  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* set.sgml: Use refbook.ent instead of src.ent.
+
+1998-06-15  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* Makefile.am: Include $(top_srcdir)/Makefile.common.
+
+1998-06-11  Alex Lancaster  <alex@santafe.edu>
+
+	* setmeta.sgml: Removed BIBLIOSET element - moved TITLE,
+	CORPAUTHOR, bibliodata up to under the SETINFO element.
+
+	* Makefile.am (GENERATED_SGML): Added for revhistory.
+        (noinst_DATA): Added.
+        (SGML, SGML_FILES): Separated out generated/non-gen files.
+
+	* setmeta.sgml: Replaced REVHISTORY with setrevhistory entity.
+
+	* set.sgml: Added reference to setrevhistory.sgml.  Changed local
+	notion class to JPEG.
+
+	* set.sgml (entity): Included versions.ent, figs.ent and updated
+	all entity references to be consistent with filenames.
+
+1998-06-09  Alex Lancaster  <alex@santafe.edu>
+
+	* setmeta.sgml: Used global SFI entity 'corpauthor' in CORPAUTHOR
+	SGML tag.
+
+1998-06-08  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* set.sgml: Use public identifiers (file renamed from set.sgml.in).
+
+1998-05-23  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* set.sgml.in: Make ID of set be "set".
+
+	* set.sgml.in, set.tex.in: New files.
+
+	* Makefile.am: New file.
+
+	* Makefile: Remove.
+
+1998-05-22  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* Begin revision log.
+

@@ -1,0 +1,74 @@
+1998-10-14  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* overbook.tex.in: Use top_dossrcdir instead of top_srcdir.
+
+1998-10-09  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* over04.sgml: Remove duplicated "Scheduling a Model Swarm"
+	section.
+
+	* overbook.tex.in: Include tex/macros.tex.
+
+1998-06-17  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* overmeta.sgml: Use overbookrevhistory.sgml instead of
+	overrevhistory.sgml.  Scale graphic to 100%.
+
+	* Makefile.am (GENERATED_SGML): Use $(NAME)revhistory.sgml
+	instead of overrevhistory.sgml.
+	(EXTRA_DIST): over.ent renamed to overbook.ent.
+
+1998-06-15  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* overbook.sgml: Add JPEG notation.
+
+	* Makefile.am: Include $(top_srcdir)/Makefile.common.
+
+1998-06-12  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* overbook.sgml: Include versions entity.
+
+	* overmeta.sgml: Scale graphic to 75%.
+
+1998-06-11  Alex Lancaster  <alex@santafe.edu>
+
+	* over.ent: Made all SYSTEM identifiers PUBLIC (listed in catalog
+	now).
+
+	* Makefile.am (GENERATED_SGML): Added for revhistory.
+	(noinst_DATA): Added.
+	(SGML, SGML_FILES): Separated out generated/non-gen files.
+
+	* over.ent: Created overrevhistory.sgml entity.
+
+	* overmeta.sgml: Replaced hardcoded revhistory with the new
+	entity overrevhistory.sgml.
+
+1998-06-09  Alex Lancaster  <alex@santafe.edu>
+
+	* overmeta.sgml: Changed corpauthor to be inserted from Global
+	public identifiers.
+
+1998-06-08  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* overbook.sgml: Use public identifiers.
+
+1998-06-04  Alex Lancaster  <alex@santafe.edu>
+
+	* over02.sgml, over03.sgml, over04.sgmL: Fixed inappropriately
+	positioned PARA tags.
+
+1998-05-23  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* Makefile.am: New file.
+
+	* Makefile: Remove.
+
+	* overbook.tex.in: New file.
+
+	* overbook.sgml: Set ID of book to "overbook".
+
+1998-05-22  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* Begin revision log.
+

@@ -26,7 +26,9 @@
 #import <objectbase.h>
 #import <simtools.h>
 #ifndef DISABLE_GUI
+#ifndef GNUSTEP
 #import <simtoolsgui.h>
+#endif
 #endif
 
 #import <objectbase/probing.h> // initProbing
@@ -34,7 +36,9 @@
 #import <defobj/Arguments.h> // Arguments_c
 
 #ifndef DISABLE_GUI
+#ifndef GNUSTEP
 #import <gui.h> // GUI_EVENT_ASYNC
+#endif
 #endif
 
 #include <swarmconfig.h>
@@ -147,8 +151,10 @@ PHASE(Creating)
   initRandom (arguments);
 
 #ifndef DISABLE_GUI  
+#ifndef GNUSTEP
   if (swarmGUIMode)
     initSimtoolsGUI ();
+#endif
 #endif
 
 #ifdef HAVE_JDK
@@ -227,6 +233,7 @@ PHASE(Using)
 }
 
 #ifndef DISABLE_GUI
+#ifndef GNUSTEP
 - (void)createProbeDisplay: obj
 {
   CREATE_PROBE_DISPLAY (obj);
@@ -268,11 +275,10 @@ PHASE(Using)
 
 - (void)updateDisplay
 {
-#ifndef GNUSTEP
   while (GUI_EVENT_ASYNC ()) {}
-#endif
 }
-#endif
+#endif // GNUSTEP
+#endif // DISABLE_GUI
 
 - (void)xprint: obj
 {
@@ -314,9 +320,11 @@ _initSwarm_ (int argc, const char **argv, const char *appName,
              BOOL inhibitExecutableSearchFlag)
 {
   id env;
+#ifndef GNUSTEP
   void __objc_exec_class_for_all_initial_modules ();
 
   __objc_exec_class_for_all_initial_modules ();
+#endif
   env = [SwarmEnvironment createBegin];
 
 #if DEBUG

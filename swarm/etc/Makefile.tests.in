@@ -1,6 +1,7 @@
 include $(top_builddir)/etc/Makefile.common
 
-INCLUDES = $(foreach module,. $(SWARMMODULES),-I$(top_srcdir)/src/$(module) -I$(top_builddir)/src/$(module)) -I$(top_srcdir)/src/gui/ -I$(top_builddir)/libobjc -I$(top_srcdir)/libobjc
+INCLUDES = $(foreach module,. $(SWARMMODULES),-I$(top_srcdir)/src/$(module) -I$(top_builddir)/src/$(module)) -I$(top_srcdir)/src/gui/ $(GNUSTEPLIBINCLUDES)
+#INCLUDES = $(foreach module,. $(SWARMMODULES),-I$(top_srcdir)/src/$(module) -I$(top_builddir)/src/$(module)) -I$(top_srcdir)/src/gui/ -I$(top_builddir)/libobjc -I$(top_srcdir)/libobjc
 
 builddir = $(shell cd ../../src; pwd)
 libobjcdir = $(shell cd ../../libobjc; pwd)
@@ -9,9 +10,9 @@ CPPFLAGS += -DAPPNAME=$(basename $@) -DBUGADDRESS=bug-swarm@swarm.org -DAPPVERSI
 
 SWARMBUILDLDFLAGS = -L$(builddir) -R $(builddir) -L$(libobjcdir) -R $(libobjcdir)
 
-LDFLAGS = $(SWARMBUILDLDFLAGS) $(EXTRALDFLAGS)
+LDFLAGS = $(SWARMBUILDLDFLAGS) $(EXTRALDFLAGS) $(GNUSTEPLIBLDFLAGS)
 
-LIBS = $(SWARMLIBS) $(OBJCLIBS) $(EXTRALIBS)
+LIBS = $(SWARMLIBS) $(OBJCLIBS) $(EXTRALIBS) $(GNUSTEPLIBLIBS)
 
 # Local Variables:
 # mode: makefile

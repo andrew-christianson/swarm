@@ -1,0 +1,91 @@
+<sect1 id="swarm.user.user2.06.sect1">
+  <title>Building schedules</title>
+
+<sect2>
+ <title>Step III: Building schedules </title> 
+
+    <programlisting>-buildActions 
+{
+
+ modelSchedule=[Schedule createBegin: self];
+ [modelSchedule setRepeatInterval: 1];
+ modelSchedule = [modelSchedule createEnd];
+
+ [modelSchedule at: 0 createActionTo: aBug message: M(step)];
+
+ return self;
+}
+</programlisting>
+
+</sect2>
+
+<sect2>
+ <title>Schedules</title> 
+
+    <para>Schedules define event in terms of:
+      <itemizedlist>
+        <listitem><para>Time of first invocation</para></listitem>
+        <listitem><para>Target object           </para></listitem>
+        <listitem><para>Method to call          </para></listitem>
+        <listitem><para>Repeat interval         </para></listitem>
+      </itemizedlist>
+
+      <programlisting>
+t=1
+t=2
+t=3
+[bug eat]
+[bug eat]
+[schedule at:  t createActionTo: agent message: M(method)]
+</programlisting>
+
+    </para>
+
+</sect2>
+
+<sect2>
+ <title>ActivityGroups</title> 
+
+    <para>ActivityGroups group together events at same timestep. Schedule then 
+      <emphasis>executes</emphasis> group
+      <programlisting>t=1
+t=2
+t=3
+[bug eat]
+[bug eat]
+[bug sleep]
+[food grow]
+</programlisting>
+    </para>
+
+</sect2>
+
+<sect2>
+ <title>Implementation</title> 
+
+    <programlisting>
+schedule1=[Schedule createBegin: [self getZone]];
+[schedule1 setRepeatInterval: 2];
+schedule1=[schedule1 createEnd];
+[schedule1 at: 1 createActionTo: bug message: M(eat)];
+
+actionGroup=[ActionGroup createBegin: [self getZone]];
+[actionGroup createEnd];
+[actionGroup createActionTo: bug message: M(sleep)];
+[actionGroup createActionTo: food message: M(grow)];
+schedule2=[Schedule createBegin: [self getZone]];
+schedule2=[schedule2 createEnd];
+[schedule2 at: 2 createAction: actionGroup];
+
+t=1
+t=2
+t=3
+</programlisting>
+
+</sect2>
+</sect1>
+<!--
+Local Variables:
+sgml-parent-document:("userbook.sgml" "SECT1")
+End:
+-->

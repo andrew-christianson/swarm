@@ -1,0 +1,174 @@
+<sect1 id="swarm.user.user2.02.sect1">
+  <title>From C to Objective C</title>
+
+<sect2>
+ <title>Bug in C</title> 
+
+    <programlisting>#import &lt;simtools.h&gt;
+
+void main (int argc, const char **argv) 
+
+{
+  int worldXSize = 80;			// Maximum X value
+  int worldYSize = 80;			// Maximum Y value
+  int xPos = 40;			// Bug's starting position
+  int yPos = 40;
+  int i;
+
+  initSwarm(argc,argv);
+
+  printf("I started at X = %d Y = %d \n\n", xPos, yPos);
+
+  for(i = 0; i &#060 100; i++) {
+
+    // Random movement in X and Y (possibly 0)
+    xPos = xPos + [uniformIntRand getIntegerWithMin: -1 withMax: 1];
+    yPos = yPos + [uniformIntRand getIntegerWithMin: -1 withMax: 1];
+
+    // Take move modulo maximum coordinate values
+    xPos = (xPos+ worldXSize) % worldXSize;
+    yPos = (yPos + worldYSize) % worldYSize;
+
+    printf( "I moved to X = %d Y = %d \n", xPos, yPos);
+  }
+  return 0;
+}
+</programlisting>
+ 
+
+</sect2>
+
+<sect2>
+ <title>Bug in C - explanations</title> 
+
+
+    <formalpara><title>Importing header file gives us access 
+        to random number obj.</title>
+      <para></para></formalpara>
+
+    <formalpara><title>Each C program must have main function, which can 
+        take 2 args:</title><para>
+
+        <itemizedlist>
+        <listitem><para>argc : # of command line args   </para></listitem>
+        <listitem><para>argv: value of command line args</para></listitem>
+        </itemizedlist>
+      </para></formalpara>
+
+    <formalpara><title>initSwarm() function checks command line args 
+        and revs up Swarm engine</title>
+
+      <para>
+      </para></formalpara>
+
+    <formalpara><title>The program uses default random number distributions to 
+        choose new location for bug</title><para>
+      </para></formalpara> 
+
+</sect2>
+
+<sect2>
+ <title>What the C program does</title> 
+
+    <procedure>
+      <step>
+        <para>Print "I started at X=$1 Y = $2ö, $1=xPos, $2=yPos"</para>
+      </step>
+      <step>
+        <para>For i=0 To i=100</para>
+        <substeps>
+
+          <step><para>Select Random x in {-1,0,1}</para></step>
+            
+          <step><para>Select Random y in {-1,0,1}</para></step>
+          
+          <step><para>xPos =xPos +x</para></step>
+          
+          <step>
+            <para>If xPos  &lt; worldSizeX Then xPos =0</para>
+            <substeps>
+              <step><para>yPos =yPos +y</para></step>
+            </substeps>
+          </step>
+
+          <step>
+            <para>If yPos  &#062 worldSizeY Then yPos =0</para>
+            <substeps>
+              <step><para>yPos =yPos +y</para></step>
+            </substeps>
+          </step>
+          
+          <step><para>Print "I moved to X=$1  Y=$2ö, $1=xPos, $2=yPos"</para></step>
+          
+        </substeps>
+      </step>
+    </procedure>
+
+</sect2>
+
+<sect2>
+ <title>Bug in ObjC</title> 
+
+    <formalpara><title>The simplest version of an Objective-C program</title>
+      <para>
+        <itemizedlist>
+          <listitem><para>A main( ) function             </para></listitem>
+          <listitem><para>One class and one instance: Bug</para></listitem>
+        </itemizedlist>
+        </para>
+    </formalpara>
+
+    <formalpara><title>main( ) imports base library of Swarm and fires up 
+        initSwarm( ) which gives us libraries for memory allocation etc.</title>
+
+      <para>
+        <itemizedlist>
+          <listitem><para>
+            xPos, yPos, worldXSize, worldYSize - Instance variables</para></listitem>
+          <listitem><para>
+            -setX: Y:
+            -setWorldSizeX: Y:
+            -step
+            Methods
+          </para></listitem>
+
+        </itemizedlist>
+        
+
+      </para>
+
+    </formalpara>
+
+</sect2>
+
+<sect2>
+ <title>Bug in ObjC: The bug as object</title> 
+
+    <para>Inheriting from the ObjectBase class Bug knows these tricks:
+
+      <itemizedlist>
+        <listitem><para>create: Allocate memory</para></listitem>        
+        <listitem><para>drop: Deallocate and die</para></listitem>
+      </itemizedlist>
+    </para>
+      
+    <para>
+      First instruct class to create instance of itself. 
+      Associate instance with aBug</para>
+
+    <para>aBug=[Bug create:globalZone];</para>
+
+    <para>Then set parameters in the instance, aBug</para>
+    
+    <literallayout><literal>
+        [aBug setX: xPos Y: yPos];
+        [aBug setWorldXSize: worldXSize Y: worldYSize];
+      </literal></literallayout>
+
+</sect2>
+</sect1>
+<!--
+Local Variables:
+sgml-parent-document:("userbook.sgml" "SECT1")
+End:
+-->

@@ -1,0 +1,249 @@
+<sect1 id="swarm.user.user3.03.sect1">
+  <title>Activity Library</title>
+
+<sect2>
+ <title>Major Activity classes</title> 
+
+    <formalpara>
+      <title>Ordered Set, ActionGroup</title>
+      <para> -- Creates a set of actions which
+        should be invoked at the <emphasis>same time</emphasis>
+      </para>
+    </formalpara>
+
+    <formalpara><title>Schedule</title><para>
+        A set of actions or action groups</para>
+    </formalpara>
+
+    <formalpara><title>Swarm</title><para>
+        Activates schedules -- Controls one level of model world
+      </para>
+    </formalpara>
+
+    <literallayout>Collection
+Schedule
+Action Group 
+Keyed Collection 
+Map
+Swarm Process 
+Swarm
+Defobj
+</literallayout>
+
+</sect2>
+
+<sect2>
+ <title>PPT Slide</title> 
+
+    <programlisting> schedule = [Schedule createBegin: zone];
+ [schedule  setRepeatInterval: n];
+ schedule = [schedule createEnd];
+ [schedule at: t createActionTo: bug message: M(eat)] 
+</programlisting>
+
+    <formalpara>
+      <title>Schedules</title>
+      <para> Schedules define event in terms of:
+
+        <itemizedlist>
+          <listitem><para>Repeat interval                         </para></listitem>
+          <listitem><para>Time within schedule of first invocation</para></listitem>
+          <listitem><para>Agent name or action group              </para></listitem>
+          <listitem><para>Method to call, skip for action group   </para></listitem>
+        </itemizedlist>
+
+        <programlisting>
+  t
+...
+t+n
+[bug eat]
+[bug eat]
+</programlisting>
+      </para>
+    </formalpara>
+
+</sect2>
+
+<sect2>
+ <title>Meaning of time in Schedules</title> 
+
+
+    <formalpara><title>Times in schedule can be</title><para>
+        <itemizedlist>
+
+          <listitem><formalpara><title>relative to activation
+              </title><para>Use setRelativeTime: 1</para>
+            </formalpara>
+          </listitem>
+
+          <listitem><formalpara><title>relative to base time
+              </title><para>Use setRelativeTime: 0</para>
+            </formalpara>
+          </listitem>
+        </itemizedlist></para></formalpara>
+
+    <formalpara><title>If all schedules are activated at beginning doesn't
+        matter much</title>
+
+      <para>
+        <literallayout> 
+        Schedule activated at t=1 with 4 events, after which it stops
+        Schedule activated at t=2 with 1 event and repeat interval 2
+        Schedule activated at t=0 with event at t=1 and repeat intvl 1
+        </literallayout>      
+</para></formalpara>
+
+</sect2>
+
+<sect2>
+ <title>Implementing these 3 schedules</title> 
+
+    <literallayout>
+(activate at t=1) [schedule setRepeatInterval: 1]
+ [schedule at: 1 createActionTo: obj message: M(message)] 
+(activate at t=3) [schedule at: 0 createActionTo: obj1 message:M(message1)]
+ ...
+ [schedule at: 4 createActionTo: obj4 message:M(message4)] 
+(activate at t=2) [schedule setRepeatInterval: 2]
+ [schedule at: 0 createActionTo: obj message: M(message)] 
+</literallayout>
+
+</sect2>
+
+<sect2>
+ <title>Another example</title> 
+
+    <programlisting> repeatSchedule=[Schedule createBegin: zone]; [repeatSchedule setRepeatInterval: 3];
+ repeatSchedule=[repeatSchedule createEnd];
+ [repeatSchedule at: 0 createActionTo: firm message:M(do)];
+ 
+ mainSchedule=[Schedule createBegin: zone];
+ [mainSchedule at:20 createActionTo: repeatSchedule 
+                            message: M(activateIn:):aSwarm];
+ [mainSchedule activateIn: aSwarm];
+</programlisting> 
+
+    <programlisting>
+[firm do]
+[firm do]
+[firm do]
+    </programlisting>
+
+    <para>Purpose: A schedule which executes the <literal>do</literal>
+      method on an object called <literal>firm</literal> every 3
+      periods, starting at t=20 </para>
+
+</sect2>
+
+<sect2>
+ <title>ActionGroups</title> 
+
+    <formalpara><title>ActionGroups group together actions for agents or
+        collections which should happen at same time step</title>
+      <para>
+
+        <programlisting> 
+ 
+ actionGroup=[ActionGroup createBegin: zone]; [actionGroup createEnd];
+ [actionGroup createActionTo: agent1 message: M(youDo1)];
+ ...
+ [actionGroup createActionTo: agentN message: M(youDoN)];
+ 
+ [actionGroup createActionForEach: group1 message: M(allDo1)];
+ ...
+ [actionGroup createActionForEach: groupN message: M(allDoN)];
+ 
+ [schedule at: t createAction: actionGroup];  
+</programlisting>
+
+      </para>
+    </formalpara> 
+
+</sect2>
+
+<sect2>
+ <title>Dynamic Scheduling</title> 
+
+    <programlisting> 
+[growthSchedule at: time+interval  createActionTo: foodSpace  message: M(putValue:atX:Y:):1:x:y]; 
+</programlisting>
+
+    <formalpara><title>We can use dynamic scheduling to schedule
+        regrowth of food at future timestep after food is eaten by
+        Simplebugs</title><para>
+
+        <literallayout>
+food
+bug
+Model Swarm 
+</literallayout>
+
+        <programlisting> 
+ [foodSpace eatX: xPos Y: yPos];
+ [self putValue: 0 atX: x Y: y];  
+ [model scheduleGrowthAtX: x Y: y];
+</programlisting> 
+
+      </para>
+    </formalpara>       
+
+</sect2>
+
+<sect2>
+ <title>Schedule activation</title> 
+
+    <formalpara><title>A Schedule has to be activated in a Swarm, otherwise it 
+        will not do anything</title><para></para></formalpara>
+
+    <formalpara><title>Sub-swarms are activated in top-level Swarm and then 
+        schedules in each Swarm</title><para>
+
+        <literallayout>
+Sub-Swarm
+Schedule
+Sub-sub-Swarm
+Top Swarm    
+</literallayout>
+
+      </para>
+    </formalpara> 
+</sect2>
+
+<sect2>
+ <title>Activating Schedules & Swarms</title> 
+
+    <programlisting>
+ [observerSwarm activateIn: nil]; 
+</programlisting>
+
+    <programlisting> 
+- activateIn: swarmContext 
+{
+  [super activateIn: swarmContext];
+  [displaySchedule activateIn:self];
+  [modelSwarm activateIn: self];
+  return [self getSwarmActivity];
+}
+</programlisting> 
+
+    <programlisting> 
+- activateIn: swarmContext 
+{
+  [super activateIn: swarmContext];
+  [modelSchedule activateIn:self];
+  return [self getSwarmActivity];
+}
+</programlisting>
+
+    <literallayout>main
+Observer
+Model
+</literallayout>
+
+</sect2>
+</sect1>
+<!--
+Local Variables:
+sgml-parent-document:("userbook.sgml" "SECT1")
+End:
+-->

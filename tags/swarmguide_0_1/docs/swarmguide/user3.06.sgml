@@ -1,0 +1,149 @@
+<sect1 id="swarm.user.user3.06.sect1">
+  <title>Analysis Library</title>
+
+<sect2>
+ <title>Major Analysis classes</title> 
+
+    <formalpara><title>EZGraph</title>
+      <para>Combines several objects to gather and display data on line graph</para>
+    </formalpara>
+
+    <formalpara><title>EZBin</title><para>
+        Does same for histogram</para>
+    </formalpara>
+
+    <formalpara><title>Averager,Entropy and EZDistribution</title>
+      <para>Collect statistics from collection of objects</para>
+    </formalpara> 
+
+</sect2>
+
+<sect2>
+ <title>Using EZGraph</title> 
+
+    <formalpara><title>EZGraph is a wrapper around several
+        objects</title> <para></para></formalpara>
+
+    <formalpara><title>Allows creation and setup to be achieved in 
+        one fell swoop</title><para></para></formalpara>
+
+    <formalpara><title>After setting title and labels must add one or
+        more sequences</title><para></para></formalpara>
+
+    <para>Necessary steps:</para>
+
+    <procedure>
+      <step><para>create an instance        </para></step>
+      <step><para>setTitle: titleString     </para></step>
+      <step><para>setAxisLabelsX: str Y: str</para></step>
+      <step><para>Add sequence(s)           </para></step>
+    </procedure>
+
+    <para>With feed from object</para>
+
+    <para>Or feed from collection:
+      <literal>AverageSequence TotalSequence
+        MinSequence MaxSequence</literal>
+    </para>
+
+</sect2>
+
+<sect2>
+ <title>Creating an EZGraph</title> 
+
+    <para>A sequence with feed from collection is created with:
+
+      <programlisting>
+- createASequence: aString withFeedFrom: collection andSelector: M(method)
+      </programlisting>
+
+      where A is one of Average, Total, Min, Max or Count aString
+    </para>
+
+    <para>The title, made with:
+      <literal>-setTitle: aString</literal>
+    </para>
+
+    <para>The axis labels, set with
+      <literal>-setAxisLabelsX: str Y: str</literal>
+    </PARA>
+</sect2>
+
+<sect2>
+ <title>Using EZBin</title> 
+
+    <formalpara><title>EZBin, is also a wrapper around several
+        objects</title><para> </para></formalpara>
+
+    <formalpara><title>This type of graph needs to be told the number of
+        bins for histogram and interval in which values
+        lie</title><para></para></formalpara>
+
+    <para>Necessary steps:</para>
+
+    <procedure>
+      <step><para> create an instance</para></step>
+      <step><para> setTitle: titleString</para></step>
+      <step><para>setCollection: collection          </para></step>
+      <step><para>setProbedSelector:M(method)        </para></step>
+      <step><para> setBinNum: n                      </para></step>
+      <step><para> setUpperBound:  and setLowerBound:</para></step>
+    </procedure>
+
+</sect2>
+
+<sect2>
+ <title>Creating an EZBin</title> 
+
+    <para>Data is fed into Histogram by
+      <literal>-setCollection: collection</literal> and
+      <literal>-setProbedSelector:M(method)</literal>
+    </para>
+
+    <para>The title, made with:
+      <literal>-setTitle: aString</literal>
+    </para>
+
+    <para>The axis labels, set with
+      <literal>-setAxisLabelsX: str Y: str</literal>
+    </para>
+
+    <para>The number of bins is determined with
+      <literal>-setNumBins: num</literal>
+      and the range of values by
+      <literal>-setUpperBound: -setLowerBound:</literal>
+    </para>
+
+</sect2>
+
+<sect2>
+ <title>Other utility objects in Analysis</title> 
+
+    <formalpara><title>Averager</title>
+      <para>Gets feed from collection and calculates:
+        <literallayout>
+Average
+Total
+Min
+Max
+Count</literallayout>
+      </para>
+    </formalpara>
+
+    <formalpara><title>Entropy</title>
+      <para>Gets feed from collection and calculates entropy assuming data is 
+        probabilities</para>
+    </formalpara>
+
+    <formalpara><title>EZDistribution</title>
+      <para>Subclass of EZBin, gives acces to underlying distribution of data
+      </para>
+    </formalpara> 
+
+</sect2>
+</sect1>
+<!--
+Local Variables:
+sgml-parent-document:("userbook.sgml" "SECT1")
+End:
+-->

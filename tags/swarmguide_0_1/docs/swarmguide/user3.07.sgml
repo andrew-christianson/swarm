@@ -1,0 +1,220 @@
+<sect1 id="swarm.user.user3.07.sect1">
+  <title>GUI and Simtools Libraries</title>
+
+<sect2>
+ <title>Raster and Object2dDisplay</title> 
+
+    <literallayout>Discrete2d
+Raster
+Holds x,y
+
+locations of agents
+Object2dDisplay
+XColormap
+ModelSwarm
+ObserverSwarm
+</literallayout>
+
+    <para>Main purpose of Object2dDisplay to catch messages from
+      Raster widget on a mouse-click. It then opens up a probe to the
+      object that at this location.
+    </para>
+
+    <literallayout>Agent
+    </literallayout>
+</sect2>
+
+<sect2>
+ <title>The classes in Space</title> 
+
+    <para>Space</para>
+
+<!-- image -->
+
+    <literallayout>Discrete2d
+DblBuffer2d
+Grid2d
+ConwayLife
+Ca2d
+Diffuse2d
+Object2dDisplay
+Value2dDisplay
+Int2dFiler
+</literallayout>
+
+</sect2>
+
+<sect2>
+ <title>The basic 2d classes</title> 
+
+    <para>Space</para>
+
+    <literallayout>Discrete2d
+DblBuffer2d
+Grid2d
+</literallayout>
+
+    <formalpara><title>Discrete2d </title>
+      <para>Provides basic 2d lattice functions</para>
+    </formalpara>
+
+    <formalpara><title>Subclasses
+     </title><para>
+        <itemizedlist>
+          <listitem><formalpara><title>Grid2d</title><para>Doesn't allow you to
+                overwrite members</para>
+            </formalpara>
+          </listitem>
+
+          <listitem><formalpara><title>DblBuffer2d </title><para>Writes go to a
+                buffer, Then updates all at once</para>
+            </formalpara>
+          </listitem>
+
+        </itemizedlist>
+      </para>
+    </formalpara>
+
+</sect2>
+
+<sect2>
+ <title>Some basic Discrete2d syntax</title> 
+
+    <formalpara><title>setSizeX: i Y: j </title><para>
+        Set the world size. 
+      </para>
+    </formalpara>
+
+    <formalpara><title>getSizeX, getSizeY</title>
+      <para>Get the dimensions of the lattice
+      </para>
+    </formalpara>
+
+    <formalpara><title>fillWithValue: val, fillWithObject: obj</title>
+      <para>puts same value or object at each site </para>
+    </formalpara>
+
+    <formalpara><title>setDiscrete2d: o  toFile: filename</title>
+      <para>Reads a PGM formatted file and fills lattice with values</para>
+    </formalpara>
+
+    <formalpara><title>copyDiscrete2d: a toDiscrete2d: b</title>
+      <para>Fills lattice b with values from a
+      </para>
+    </formalpara> 
+</sect2>
+
+<sect2>
+ <title>More basic Discrete2d syntax</title> 
+
+    <formalpara><title>getObjectAtX: Y:</title>
+      <para>Return object at x,y. </para>
+    </formalpara>
+
+    <formalpara><title>getValueAtX: Y: </title>
+      <para>Return value at x,y. </para></formalpara>
+
+    <formalpara><title>putObject:o atX:Y:</title>
+      <para>Put obj at x,y and overwrite present obj </para>
+    </formalpara>
+
+    <formalpara><title>putValue: v atX:Y:</title>
+      <para>Put val v at x,y </para>
+    </formalpara> 
+</sect2>
+
+<sect2>
+ <title>Some classes in Simtools</title> 
+
+    <formalpara><title>ObjectLoader / Saver</title><para>
+        Loads/Saves instance variable values from file</para>
+    </formalpara>
+
+    <formalpara><title>NSelect</title>
+      <para>Selects N members from collection </para>
+    </formalpara>
+
+    <formalpara><title>QSort</title>
+      <para>QuickSort for collection</para>
+    </formalpara>
+
+<!-- note to Paul J - we should really reconsider just what we choose to
+  say about these classes, I've found them to be next-to-useless -->
+
+    <formalpara><title>OutFile [DEPRECATED!!]</title>
+      <para>Substitute for opening outfiles C style</para>
+    </formalpara>
+
+    <formalpara><title>InFile [DEPRECATED!!]</title> 
+      <para>Opens file and understand
+      basic operations, getString, getInt, next etc.
+      </para></formalpara>
+
+</sect2>
+
+<sect2>
+ <title>OutFile and InFile</title> 
+
+
+    <para>Should consider using standard C I/O library, rather than
+      these classes, the stdio.h library is flexible and well-known to
+      previous C programmers</para>
+
+    <formalpara><title>Basic idea that InFile opens file and 'gets'
+        strings and OutFile opens file and puts
+        same</title><para></para></formalpara>
+
+    <formalpara><title>Both can deal with any var type (only String
+      and Int shown) </title><para></para></formalpara>
+
+    <formalpara><title>In addition methods to insert delimiter
+    ('tab'), skip line, go to next line etc.</title><para>
+        Some methods in InFile:
+
+        <literallayout>
+- (int)getWord: (char *)aWord 
+- (int)getInt: (int *)anInt; 
+- (int)skipLine 
+...and OutFile:
+- putString: (char *)aString 
+- putInt: (int)anInt 
+- putTab: (char)aChar 
+- putNewLine</literallayout> 
+      </para>
+    </formalpara>
+
+</sect2>
+
+<sect2>
+ <title>Major GUI classes</title> 
+
+
+    <formalpara><title>ZoomRaster</title><para>Resizeable raster</para>
+    </formalpara>
+
+    <formalpara><title>BLTGraph</title><para>Basic display of graph</para>
+    </formalpara>
+
+    <formalpara><title>Histogram</title><para>Display of histogram</para>
+    </formalpara>
+
+    <formalpara><title>Colormap</title>
+      <para>Map between integer values and colors</para>
+    </formalpara>
+
+    <literallayout>
+Raster
+BLTGraph
+Histo
+Widget
+ZoomRaster
+Colormap
+    </literallayout>
+
+</sect2>
+</sect1>
+<!--
+Local Variables:
+sgml-parent-document:("userbook.sgml" "SECT1")
+End:
+-->

@@ -1,0 +1,73 @@
+1999-09-08  Alex Lancaster  <alex@santafe.edu>
+
+	* Makefile.am ($(NAME)/index.html): Add `-hide' option to ensure
+	that non-creatable (but RETURNABLE) classes don't appear in the
+	final output.
+
+1999-09-03  Alex Lancaster  <alex@santafe.edu>
+
+	* Makefile.am (htmldir, html_DATA): Installation directory and
+	target for html.
+	(install-data-local): Use tar to install the html into the
+	installation directory.
+	(dvidir, dvi_DATA): Installation directory and file to be
+	installed for dvi.
+	(psdir): Likewise for PostScript (ps).
+	(uninstall-local): Remove all html and subdirs in $(htmldir),
+	since no specific targets for each file.
+	(.PHONY): Add rtf and rtfdist (so recursion from top level
+	directory works).
+	(psdist): Direct ps filename into $(GZIP) rather than passing as
+	an argument.
+
+1999-07-08  Alex Lancaster  <alex@santafe.edu>
+
+	* Makefile.am ($(NAME)/index.html): Add `-noclassdetail' and
+	`-splitindex' command-line arguments to javadoc.
+
+1999-07-06  Alex Lancaster  <alex@santafe.edu>
+
+	* Makefile.am (STANDARD_JAVADOC_OPTIONS): Use GNU make $(wildcard)
+	function for generating dependencies on the java source files in
+	the Swarm distribution.
+
+1999-07-05  Alex Lancaster  <alex@santafe.edu>
+
+	* Makefile.am (java-stub.elc): Depend on
+	$(abs_top_builddir)/protocol.elc.
+	($(NAME).tex): Add `-nosummary', `-docauthor' command-line
+	arguments to LateDoclet.
+
+1999-06-21  Alex Lancaster  <alex@santafe.edu>
+
+	* Makefile.am (DISTNAME): Generate distname with version.
+	(.PHONY): Add htmldist, dvidist, psdist.
+	(all): Add dvi, ps.
+	(alldist): htmldist, dvidist, psdist.
+	(dvi): Depend on $(NAME).dvi.
+	(ps): Depend on $(NAME).ps
+	(dvidist, htmldist, psdist): New rule for generating distributions.
+	($(NAME).{dvi,ps}): New rules for generating dvi and ps files.
+	(MOSTLYCLEANFILES): More clean targets.
+	(GZIP): Set to `gzip --best'.
+
+1999-06-17  Alex Lancaster  <alex@santafe.edu>
+
+	* Makefile.am (NAME): Set to `refbook-java'. Use throughout.
+	(STUBS): Generate a list of generated stub directories and
+	`package.html' file to make stub generation only happen on demand,
+	not perfect, but better than forcing each run.
+	($(STUBS)): New rule for actually generating the stubs, formerly
+	`stubs'.
+	(latex): New rule to generate a LaTeX version of the
+	documentation.  Depend on $(NAME).tex and the
+	latex/LatexDoclet.class file.
+	(html): Depend on $(NAME)/index.html and html/swarm-doclet.jar.
+	($(NAME)/index.html): Run javadoc here for html output. Create a
+	$(NAME) subdirectory to place all the generated html from the
+	javadoc run.  Depend on $(STUBS)
+	($(NAME).tex): Likewise for LaTeX output.  Depend on $(STUBS)
+	(MOSTLYCLEANFILES, clean-local): Macros for cleanup.
+	(SUBDIRS): New subdirectories `html' and `latex' for the
+	respective javadoc doclets.
+

@@ -1,0 +1,90 @@
+1999-09-08  Alex Lancaster  <alex@santafe.edu>
+
+	* HelpWriter.java (printHelpFileContents): Customize the contents
+	with additional text clarifying API changes which result from the
+	run of this doclet.
+
+	* swarm-doclet.jar: Regenerated.
+
+	* Makefile.am (ORIG_DOCLET): Set to Java source that was included
+	in the original standard doclet.
+	(OVERRIDDEN_DOCLET): Set to the Java source that was copied from
+	com.sun.tools.doclets.
+	(NAMES): Set to ORIG_DOCLET and OVERRIDEN_DOCLET.
+
+	* IndexBuilder.java: New file, likewise copied from
+	com.sun.tools.doclets.
+	(shouldAddToIndexMap): Set to false if @hide tag and corresponding
+	command-line option set.
+
+	* ClassTree.java: New file, copied from com.sun.tools.doclets.
+	(buildTree): Don't generate class in tree if @hide tag and
+	corresponding command-line option set.
+
+	* PackageWriter.java (generateClassKindListing): Emulate
+	deprecated tag supression, but for the @hide tag.
+
+	* PackageFrameWriter.java (generateClassKindListing): Likewise.
+
+	* Standard.java (generateClassCycle): Likewise.
+
+	* ClassUseMapper.java: Don't import
+	com.sun.tools.doclets.ClassTree, conflicts with local version.
+
+1999-07-13  Alex Lancaster  <alex@santafe.edu>
+
+	* swarm-doclet.jar: Regenerated.
+
+	* ClassWriter.java (printAllMembers()): Add conditional to use
+	non-standard, Swarm-specific doclet methods, only when we are at
+	least two-deep in the class hierarchy, i.e. `swarm.Selector', will
+	be treated as per the standard, but
+	`swarm.defobj.LispArchiverImpl' will use the Swarm-specific
+	formatting.
+
+1999-07-10  Alex Lancaster  <alex@santafe.edu>
+
+	* swarm-doclet.jar: Regenerated.
+
+	* Makefile.am (JAVASOURCE): Generate names to all the Java source
+	files.
+	(NAMES): Source files, without the .java extension.
+	(CLASSES): Generate the class names.
+	(EXTRA_DIST): Add $(JAVASOURCE).
+	(MAINTAINTER_MODE): Add conditional rules to regenerate the
+	swarm-doclet.jar file, only in maintainer-mode.
+	($(CLASSES)): Rule for generating class files.
+	($(srcdir)/swarm-doclet.jar): Run jar.
+	(clean-local): Remove generated class and jar files.
+	(all): Force regeneration if swarm-doclet.jar has changed.
+
+	* ConfigurationStandard.java (noclassdetails, hide): Two new
+	fields for command-line arguments to doclet, set both to false, by
+	default.
+	(setSpecificDocletOptions()): Set options.
+	(specificDocletOptionLength()): Likewise for length.
+	
+	* AbstractSubWriter.java (printMembersSummary()): Only respect @hide
+	directive if `-hide' command line has been set.
+	(printMembers()): Likewise.
+	
+	* ClassWriter.java (printAllMembers()): Call
+	MethodSubWriter.printImplementedMembersSummary, rather than the
+	default printMembersSummary, when dealing with a class, to reduce
+	the amount of redundant detailed method documentation.  If
+	noclassdetail flag set, don't print detailed method information
+	for classes.
+
+	* MethodSubWriter.java (composeImplementedMethodMap()): New
+	method. Make the underlying for the given interface.
+	(getMethodMapForInterface()): New method. Use above, recursively
+	search interfaces to generate the whole Map
+	(printImplementedMembersInfo()): New method. Given a key in the
+	member Map - keyed to interface name - generate the summary table,
+	with links to the detailed *interface* documentation for the
+	method, not the supressed detail for method in the class.
+	(printImplementedMembersSummary()): New method.  Use above to
+	generate the entire list of methods in class, with pointers to the
+	which methods in the interfaces, which they implement.
+
+	

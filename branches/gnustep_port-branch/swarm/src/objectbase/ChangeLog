@@ -1,3 +1,10 @@
+2003-04-06  Scott Christley <schristley@mac.com>
+
+	* Makefile.am (INCLUDES): Use libobjc definition.  Add GNUstep
+	includes.
+
+	* swarm_rts_routines.m: Include internal.h.
+
 2002-09-13    <pjohnson@localhost.localdomain>
 
 	* VarProbe.m ([VarProbe -_setupObjcVarProbe_]): Change i from unsigned

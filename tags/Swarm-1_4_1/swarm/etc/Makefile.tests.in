@@ -1,0 +1,15 @@
+include $(top_builddir)/etc/Makefile.common
+
+INCLUDES = $(foreach module,. $(SWARMMODULES),-I$(top_srcdir)/src/$(module) -I$(top_builddir)/src/$(module))
+
+builddir = $(shell cd ../../src; pwd)
+
+SWARMBUILDLDFLAGS = $(foreach module,$(SWARMMODULES),-L$(builddir)/$(module)/.libs -rpath $(builddir)/$(module)/.libs)
+
+LDFLAGS = $(SWARMBUILDLDFLAGS) $(SUPPORTLDFLAGS)
+
+LIBS = $(SWARMLIBS) $(SYSLIBS) @LIBS@
+
+# Local Variables:
+# mode: makefile
+# End:

@@ -37,7 +37,9 @@
 #import <objectbase.h>
 #import <swarmconfig.h>
 #ifndef DISABLE_GUI
+#ifndef GNUSTEP
 #import <gui.h> // Raster, Colormap
+#endif
 #endif
 
 @protocol GridData
@@ -227,6 +229,7 @@ USING
 @end
 
 #ifndef DISABLE_GUI
+#ifndef GNUSTEP
 @protocol Value2dDisplay <SwarmObject, CREATABLE>
 //S: Value2dDisplay displays 2d arrays of values.
 
@@ -258,6 +261,7 @@ USING
 //M: this is a nice trick that you might want to look at. 
 - display;
 @end
+#endif
 #endif
 
 @protocol ConwayLife2d <Ca2d, CREATABLE>
@@ -338,6 +342,7 @@ USING
 @end
 
 #ifndef DISABLE_GUI
+#ifndef GNUSTEP
 @protocol Object2dDisplay <SwarmObject, CREATABLE>
 //S: Object2dDisplay displays 2d arrays of objects.
 
@@ -380,6 +385,7 @@ USING
 - makeProbeAtX: (unsigned)x Y: (unsigned)y;
 @end
 #endif
+#endif
 
 @protocol Int2dFiler <SwarmObject, CREATABLE>
 //S: Saves the state of a Discrete2d object [DEPRECATED].
@@ -419,9 +425,13 @@ USING
 @class Discrete2d;
 @class DblBuffer2d;
 @class Ca2d;
-@class Value2dDisplay;
 @class ConwayLife2d;
 @class Diffuse2d;
 @class Grid2d;
+#ifndef DISABLE_GUI
+#ifndef GNUSTEP
 @class Object2dDisplay;
+@class Value2dDisplay;
+#endif
+#endif
 @class Int2dFiler;

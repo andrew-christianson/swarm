@@ -1,0 +1,186 @@
+1998-08-25  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* acobjclibs.m4: Store libraries in OBJCLIBS; don't modify LIBS.
+
+	* acguilibs.m4 (GUILIBS): Don't prevent expansion of X_EXTRA_LIBS.
+
+1998-08-24  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* actcltk.m4: Re-evaluate directories before testing for files.
+
+1998-08-21  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Makefile.am (EXTRA_DIST): Add aclinkflags.m4.
+
+	* aclinkflags.m4: New file.
+
+1998-08-20  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Makefile.am (EXTRA_DIST): Add acexesuffix.m4 and acguilibs.m4.
+	
+	* acexesuffix.m4, acguilibs.m4: New files.
+
+1998-08-17  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Makefile.am (EXTRA_DIST): Add acinstall.m4.
+
+	* acinstall.m4: New file.
+
+1998-08-14  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* actcltk.m4 (md_FIND_BLT): Loop over BLT, BLT8.0 and BLT80
+	as possible libraries names.
+
+	* acfind.m4 (md_FIND_LIB): Re-evaluate directory variable before 
+	using it to check the library.
+	(md_FIND_INCLUDE): Likewise.
+
+	* acffi.m4: Re-evaluate directory variable before using it to
+	check for the presence of libffi.{so,a}.  Use same value for
+	checking ffi.h.  Likewise for avcall.
+
+1998-08-13  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* acffi.m4: Use (unexpanded) ${ffidir} not ${dir}.
+
+1998-08-12  Alex Lancaster  <alex@santafe.edu>
+
+	* acswarm.m4 (al_SWARM_LOAD): Search for config.swarm in
+	$(swarmdir)/etc/swarm not $(swarmdir)/etc.
+	
+1998-08-12  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* acffi.m4: Assign to ffidir even when ffcall is specified.
+
+	* acbuiltinapply.m4, acobjcmalloc.m4: New files.
+
+	* Makefile.am (EXTRA_DIST): Add acbuiltinapply.m4, acfind.m4,
+	acnextstep.m4, and acobjcmalloc.m4.
+
+	* acffi.m4: Correct FFIINCLUDES for non-/usr/include case.
+
+1998-08-11  Marcus G. Daniels  <mgd@helen.santafe.edu>
+
+	* acffi.m4: Check for libffi in /usr. 
+	(FFIINCLUDES): New variable.  Set to be empty if include
+	directory is /usr/include.
+
+1998-08-10  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* actcltk.m4: Remove md_FIND_TCLOBJC_{HEADERS,LIBRARIES}.
+
+	* acnextstep.m4: New file.
+
+	* acobjclibs.m4: Check for objc_malloc and substitute
+	OBJC_MALLOC_OBJ.  Define preprocessor HAVE_OBJC_MALLOC symbol
+	when objc_malloc already exists in Objective C runtime.
+
+1998-07-30  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* acffi.m4: Rename AC_DEFINE of USE_FFCALL to USE_AVCALL.
+
+1998-07-24  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Makefile.am (EXTRA_DIST): Add acpointerfmt.m4.
+
+	* acpointerfmt.m4: New file.
+
+1998-07-23  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Makefile.am (EXTRA_DIST): Add acobjclibs.m4 and acreplacefuncs.m4.
+
+	* acobjclibs.m4: New file.
+
+1998-07-21  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* acreplacefuncs.m4: New file.  Like AC_REPLACE_FUNCS, but 
+	uses .lo suffix.
+
+1998-07-19  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* acinline.m4: New file.  
+
+	* Makefile.am: Add acinline.m4 to EXTRA_DIST.
+
+1998-07-18  Alex Lancaster  <alex@santafe.edu>
+
+	* acffi.m4: Make FFI{LIBS, LDFLAGS} variables use curly-braces rather
+	than round-braces to ensure that shell scripts variables can be
+	assigned these extracted variables.
+
+	* actcltk.m4 : Likewise for {TK,TCL,TCLOBJ}LDFLAGS.
+
+	* acfind.m4: Likewise for _ldflags.
+
+1998-07-13  Alex Lancaster  <alex@santafe.edu>
+
+	* acswarm.m4: Add file.  Add two new m4 macros al_{SWARM_LOAD,
+	SWARM_INIT} to search for current Swarm config for applications and
+	libraries.
+
+	* Makefile.am (EXTRA_DIST): Add acswarm.m4.
+
+1998-07-06  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* actcltk.m4 (md_FIND_BLT): Don't set default bltlibname to BLT8.0.
+
+1998-06-30  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* acfind.m4: Use $$1libdir, not $$libdir.
+
+	* actcltk.m4 (INCPLACES, LIBPLACES): Add tcl8.1 and tk8.1.
+	(md_FIND_TCL_LIBRARIES, md_FIND_TK_LIBRARIES): Add 81 and 8.1 for
+	Tcl library versions.  Clear t{cl,k}libdir before checking.
+	(bltlibdir): Substitute.
+
+	* acfind.m4: New file.
+
+	* acpng.m4: Move md_FIND_{LIB,INCLUDE} to acfind.m4.
+
+	* actcltk.m4: Use md_FIND_LIB in md_FIND_BLT.
+
+1998-06-25  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* acpng.m4: Use zliblibdir and pnglibdir instead of zlibdir and
+	pngdir.
+
+1998-06-24  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* actcltk.m4 (INCPLACES, LIBPLACES): Add cygwin paths.
+	
+	* actcltk.m4, acpng.m4: Loop over .so and .a within directories.
+
+	* acpng.m4 (md_FIND_LIB, md_FIND_INCLUDE): New macros.  Use both
+	in md_FIND_ZLIB and md_FIND_PNG.
+
+	* actcltk.m4: Rename {TCL,TK}LIBNAME to {tcl,tk}libname.
+
+	* Makefile.am:  New file.
+
+1998-06-23  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* actcltk.m4: Don't clear tkincludedir or tclincludedir before
+	scanning directories.  First check any previous setting.
+
+1998-06-22  Marcus G. Daniels  <mgd@ute.santafe.edu>
+
+	* actcltk.m4 (INCPLACES, LIBPLACES): Use defaultdir instead of
+	prefix.  Update for Tcl, Tk, and BLT for shared libraries.  Set
+	and substitute TCLLIB, TKLIB, BLTLIB, TCLLDFLAGS, TKLDFLAGS, and
+	BLTLDFLAGS.
+	(md_FIND_TCLOBJC_HEADERS): Use defaultdir instead of prefix.
+	(md_FIND_TCLOBJC_LIBRARIES): Set and substitute TCLOBJCLIB and
+	TCLOBJCLDFLAGS.
+	(md_FIND_TCL_LIBRARIES): Check first in tcllibdir.
+	(md_FIND_TK_LIBRARIES): Check first in tklibdir.
+
+	* acpng.m4: Set and substitute ZLIBLDFLAGS.  Update PNG for
+	shared libraries.  Set and substitute PNGLDFLAGS.
+
+	* acffi.m4: Update for shared libraries. Set and substitute
+	FFILDFLAGS and FFILIB.
+
+	* acpng.m4: Correct error messages to report --with-{zlib,png}dir 
+	not just --with{zlib,png}.
+	
+

@@ -1,3 +1,18 @@
+2003-03-25  Scott Christley <schristley@mac.com>
+
+	* Makefile.appl.in: Add GNUstep libraries and flags; remove libobjc.
+
+	* Makefile.common.in: Likewise.
+
+	* Makefile.rules: Likewise.
+
+	* Makefile.tests.in: Likewise.
+
+	* swarm.make: New file.  This file defines the Swarm libraries
+	with the GNUstep make system.
+
+	* Makefile.am: Install swarm.make.
+
 2003-01-08  northcob  <northcob@allele2>
 
 	* Makefile.common.in: Remove FFILIB from SYSLIBS - not needed and

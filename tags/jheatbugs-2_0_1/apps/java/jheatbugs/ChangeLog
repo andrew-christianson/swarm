@@ -1,0 +1,40 @@
+1999-09-18  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* Initial release.
+
+1999-09-16  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* HeatbugBatchSwarm.java: Add disabled code for loading from
+	lispAppArchiver.
+
+	* HeatbugModelSwarm.java (buildActions): Add Randomized ForEach
+	ordering.
+
+1999-09-16    <mgd@HELEN>
+
+	* HeatbugObserverSwarm.java: Add drop method to disable
+	destroy notification for unhappyGraph and worldRaster.
+
+1999-09-14  Alex Lancaster  <alex@santafe.edu>
+
+	* HeatbugObserverSwarm.java (buildObjects): Pass windowGeometry
+	name to ZoomRaster creation
+
+1999-09-12  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* HeatbugObserverSwarm.java: Add geometry record names
+	to all archived ProbeDisplay calls, worldRaster, and unhappyGraph.
+
+	* StartHeatbugs.java: Add app name, version, and bug address
+	arguments to initSwarm.
+	(StartHeatbugs): Add name argument to setWindowGeometryRecordName.
+
+	* HeatbugObserverSwarm.java (buildObjects): Pass windowGeometry
+	name to EZGraph creation.
+
+1999-09-08  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* HeatbugBatchSwarm.java: Activate stopSchedule.
+
+	* HeatSpace.java: Use ArrayList instead of Swarm List.
+

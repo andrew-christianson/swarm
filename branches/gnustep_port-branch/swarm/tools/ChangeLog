@@ -1,3 +1,7 @@
+2003-03-31  Scott Christley <schristley@mac.com>
+
+	* Makefile.am (INCLUDES): Add GNUstep includes.
+
 2002-09-13    <pjohnson@localhost.localdomain>
 
 	* findImp.m (main): argn and i have to be an int to allow

@@ -1,0 +1,35 @@
+#!/bin/sh
+
+swarm_prefix="@swarm_prefix@"
+_JAVACLASSES='@JAVACLASSES@'
+
+if test @USEDOSCLASSPATH@ = yes; then
+  PS=';'
+  PD='\'
+  swarmclassdir=`cygpath -w "@swarm_datadir@"`
+  JAVACLASSES=''
+  for path in `echo $_JAVACLASSES | tr ':' '\012'`; do
+    path=`eval echo $path`
+    JAVACLASSES="${JAVACLASSES}`cygpath -w "$path"`;"
+  done
+else
+  JAVACLASSES=$_JAVACLASSES
+  PS=:
+  PD=/
+  swarmclassdir="@swarm_datadir@"
+fi
+
+
+JAVA_CLASSES_INSTALLED_AS=@JAVA_CLASSES_INSTALLED_AS@
+
+if test x$JAVA_CLASSES_INSTALLED_AS = xjar; then
+  classpath=".${PS}${swarmclassdir}${PD}swarm${PD}swarm.jar${PS}${JAVACLASSES}${PS}$CLASSPATH"
+else
+  classpath=".${PS}${swarmclassdir}${PS}${JAVACLASSES}${PS}$CLASSPATH"
+fi
+
+jdkdir="@jdkdir@"
+JAVAC="@JAVAC@"
+
+eval "$JAVAC -classpath '$classpath' $*"
+

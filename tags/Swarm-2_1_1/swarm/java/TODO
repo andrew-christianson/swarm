@@ -1,0 +1,11 @@
+String conversion from MessageProbes will leak memory -- it's entered
+in the directory and points to strdupped stuff on the heap. [mgd]
+
+Add either stubbing for string array conversions (e.g. Histogram) or
+add alternative interfaces that use objects.
+
+Write and integrate a runtime query program to determine IMP functions
+for Java stubs; eliminate method dispatch overhead.
+
+javacswarm and javaswarm grab jdkdatadir which isn't inverted back
+to SWARMROOT.  For 2.0.1, I've edited it by hand.

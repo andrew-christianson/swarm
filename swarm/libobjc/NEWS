@@ -1,5 +1,0 @@
-libobjc NEWS --- history of major changes to libobjc.  -*- text -*-
-
-* Release Notes for libobjc  1.2
-** Repackaged as a standalone automake / libtool package
-** Added mframe support

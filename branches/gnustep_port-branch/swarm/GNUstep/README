@@ -1,0 +1,113 @@
+README
+======
+
+When it comes to integrating Swarm and GNUstep, the expected gain is
+to take advantage of the GNUstep classes for easier construction of
+Swarm applications.  However, Swarm must be fit into the GNUstep
+Makefile System because only it knows how to properly create a GNUstep
+application; which is essentially what a Swarm application will become.
+The goal is to minimize changes to Swarm's internal Makefile system;
+while allowing an installed Swarm to act as a 3rd party library within
+the GNUstep Makefile System.
+
+There are several milestones and some long-term goals:
+
+* ween Swarm from its own libobjc.  Figure out mframe stuffage, move
+  to gcc?
+
+* Get a GNUstep application to link with Swarm libraries.  
+
+* Replace tcl/tk/blt interface with GNUstep one.
+
+* Analyze what Swarm internal implementations can be replaced with
+  GNUstep base/gui classes.
+
+* Swarm running within NSThread, multi-threaded issues, gcc.  Possibly
+  finish out Swarm's ability to dynamically load code using NSBundle,
+  and/or package Swarm agent classes into NSBundles.
+
+* Allow Swarm classes/agents to be palette in GORM.
+
+
+Current Progress
+----------------
+
+I've managed to meet the first two milestones that I've set; that is,
+ween Swarm from its own libobjc, and get a GNUstep app to run heatbugs
+in batch mode.  For that I'm going to checkin my code.  My GNUstep
+application is Calculator :-) from the examples; it writes out the
+unhappiness.output file produced by the batch heatbugs.  This cannot
+be written into a real application until the GNUstep gui is integrated
+into Swarm.
+
+There are issues with heatbugs searching for its heatbugs.scm file
+because its looking under the share directory of SWARMHOME instead of
+the current application directory.
+
+mframe issues still need to be figured out as all of the Swarm tests
+pass except for the forwarding test; it gets a nil pointer exception.
+
+For the next milestone to replace the tcl/tk/blt gui with GNUstep,
+I'm going to first just write the grid display that heatbugs show, so that
+I can get a somewhat working heatbugs as soon as possible.  The
+control panel will be replaced by NSMenu, and the probe map will
+require some thought about how best to implement.
+
+
+System Setup
+------------
+
+I have a SUSE 6.4 GNU/Linux system, it comes with a gcc 2.95.2
+installed; but I upgraded to gcc 3.2.2 without problem.  Though, I
+have to investigate why threads are not working; I might need to
+compile a new threads library.
+
+* compile and install GNUstep.  I got the GNUstep source with anon cvs
+  at :pserver:anoncvs@subversions.gnu.org:/cvsroot/gnustep; their HEAD
+  branch is the latest stable releases.  Then review the compile-all
+  in core and the GNUstep-HOWTO in core/make.
+
+* compile and install Swarm.
+  libtool 1.4.3
+  autoconf 2.5.2
+  automake 1.5
+  tcl8.4.1
+  tk8.4.1
+  blt2.4z
+
+The gdb on the system seg faults when loading my application; I
+downloaded gdb-5.3 which seems to recognize objc methods, but it gives
+garbage for the values of variable...which makes it pretty useless.  I
+was reduced to printf's in the Swarm code...
+
+
+Replacing Swarm Internals
+-------------------------
+A list of possible areas to consider for replacing Swarm's internal
+implementation with a GNUstep version.
+
+* Defaults put into GNUstep defaults.
+
+* Collections.
+
+
+Eventual Merge with CVS HEAD Branch
+-----------------------------------
+
+I've created a gnustep_port branch because with the great amount of
+work required; I wanted to checkin all my changes after some
+milestones.  My expectation is that this branch will be merged back
+into HEAD once I better figure out how to code some of the changes.
+
+In anticipation of this merge, I'm mainly commenting out changes until
+I figure out how to handle merging the differences.  One main
+unresolved issue is libobjc which is inactive with GNUstep and active
+without GNUstep.
+
+
+
+Authors
+-------
+Scott Christley
+<schristley@mac.com>
+March 26, 2003

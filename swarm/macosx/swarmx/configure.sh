@@ -2,16 +2,25 @@
 
 cd $BUILT_PRODUCTS_DIR/
 
-# This must the path to GNU sed.  Will be done by autoconf shortly.
-export SED=/usr/bin/gsed
 export MACOSX_DEPLOYMENT_TARGET=10.2
 
-../../../configure \
-CC=/usr/local/gcc3.3/bin/gcc \
---prefix=/usr/local/swarm2.1 \
---with-tcldir=/usr/local/tcl8.4.1 \
---with-tkdir=/usr/local/tk8.4.1 \
+# Edit this configure command to reflect local 
+# library installation paths.
+# Optimise for G4 or G5 by adding stuff like -fast
+# -mcpuG5 -mtuneG5 etc to CFLAGS. (not tested!)
+
+../../../configure CC=cc \
+CFLAGS="-ggdb -O2 -Wno-long-double" \
+--prefix=/usr/local/swarm2.2p \
+--with-tcldir=/usr/local/tcl8.4.4 \
+--with-tkdir=/usr/local/tk8.4.4 \
 --with-bltdir=/usr/local/blt2.4z \
---without-jdkdir \
---disable-static \
---without-hdf5dir
+--with-pngdir=/usr/local/png_1.2.5 \
+--with-hdf5dir=/usr/local/hdf5_1.4.5p2 \
+--with-jdkdir=/System/Library/Frameworks/JavaVM.framework \
+--disable-fast-install \
+--enable-onelib \
+--disable-static 
+
+# --disable-onelib \
+# --without-jdkdir \

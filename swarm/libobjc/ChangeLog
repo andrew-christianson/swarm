@@ -1,3 +1,62 @@
+2004-02-15  Marcus G. Daniels <mgd@santafe.edu>
+
+        * configure.in: Move wn_PROG_OBJC below AC_PROG_CC.
+
+2004-01-21  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* configure.in: remove obsolete attempt to AC_SUBST
+	  OBJCDEPMODE.  All now done by new wn_PROG_OBJC
+	  macro, ACLIBOBJ and AM_DEPENDENCIES.
+
+2003-08-12  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* configure.in: allow libjavaswarm to build against combined
+	libswarm. 
+
+2003-08-11  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* m4/aclibtool.m4: provide appropriate libtool macros for
+	libtool-1.4.3+.
+
+2003-06-29  Marcus Daniels  <mgd@mac>
+
+	* misc.c: Don't use xmalloc, etc. so that this library can be fully
+	linked, and -no-undefined can be used unconditionally on all platforms.
+
+2003-06-29  mgd  <mgd@drone>
+
+	* Makefile.am (libswarmobjc_la_LDFLAGS): Add -no-undefined.
+	(libswarmobjc_la_LIBADD): Remove -lgcc.
+	(install-data-local): Disable rule.
+
+2003-06-21  Marcus G. Daniels  <mgd@santafe.edu>
+
+	* init.c (__objc_exec_class_for_all_initial_modules): 
+	Do nothing if called a second time.
+
+2003-05-22  Marcus G. Daniels  <mgd@xserve.santafe.edu>
+
+	* config.guess, config.sub, ltmain.sh: Update to latest.
+
+	* init.c (__objc_exec_class_real): Renamed from __objc_exec_class.
+	(initialComplete, moduleCount, MAX_CACHE, modules): Add.
+	(__objc_exec_class): Becomes a function that caches to variables above.
+	(__objc_exec_class_for_all_initial_modules): New function.
+
+2003-05-10  Marcus Daniels  <mgd@mac>
+
+	* Makefile.am (EXTRA_LTLIBRARIES, lib{swarm}objc_*, DLLOBJS,
+	objc.dll, install-data-local): Change from libobjc to
+	libswarmobjc.
+
+	* configure.in (LIBOBJC_LA): Change to libobjcswarm.la.
+
+2003-02-26  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* complete conversion to libtool 1.4.3
+	autoconfigure SED in configure.in
+	nil_method.c incorporate code from defobj/internal.m
+
 2003-01-08  Bill Northcott <W.Northcott@unsw.edu.au>
 
 	* depcomp: Update depcomp from automake 1.6.1

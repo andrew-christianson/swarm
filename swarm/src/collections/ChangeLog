@@ -1,3 +1,11 @@
+2003-03-31  Scott Christley <schristley@mac.com>
+
+	* Makefile.am (INCLUDES): Add GNUstep includes.
+
+	* InputStream.m: Include internal.h for long double definition
+	required for GNUstep.  No long double encoding support in the
+	libobjc library.
+
 2002-10-19    <pauljohn@dv253s74.lawrence.ks.us>
 
 	* Makefile.am (install-data-local): $(DESTDIR) added

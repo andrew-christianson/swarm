@@ -38,5 +38,6 @@ AUXILIARY_TOOL_LIBS += -lswarm
 AUXILIARY_INCLUDE_DIRS += -I$(SWARMHOME)/include
 AUXILIARY_CPPFLAGS += -DAPPNAME=heatbugs -DAPPVERSION=2.1.1 \
 		   -DBUGADDRESS=bug-swarm@swarm.org
+AUXILIARY_OBJCFLAGS += -Wno-import
 
 endif

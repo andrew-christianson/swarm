@@ -86,14 +86,14 @@ ifeq ($(USEDLL),yes)
 		DLLCPPFLAGS = -DDLL
 	endif
 	SWARMLIBS = -lswarm
-	OBJCLIBS = -lswarmobjc
+	OBJCLIBS = @LIBOBJCLIB@
 else
 	ifeq ($(ONELIB),yes)
 		SWARMLIBS = -lswarm
 		OBJCLIBS =
 	else
 		SWARMLIBS = -lswarm
-		OBJCLIBS = -lswarmobjc
+		OBJCLIBS = @LIBOBJCLIB@
 	endif
 endif
 

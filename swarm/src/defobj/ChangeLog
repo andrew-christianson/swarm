@@ -1,70 +1,29 @@
-2004-02-25  Marcus G. Daniels <mgd@santafe.edu>
+2003-04-06  Scott Christley <schristley@mac.com>
 
-	* HDF5Object.m (get_attribute_string_list, [HDF5_c loadDataset:]):
-	Like 02-19.
+	* Makefile.am (INCLUDES): Use libobjc definition.
 
-2004-02-23  Marcus G. Daniels <mgd@santafe.edu>
+2003-03-26  Scott Christley <schristley@mac.com>
 
-	* HDF5Object.m (store_string): Disable call to 
-	H5Tset_size for reference type.
+	* java.m: Use GNUstep mframe for GNUstep.
 
-2004-02-19  Marcus G. Daniels <mgd@santafe.edu>
+	* internal.h: Define _C_LNG_DBL for GNUstep.
 
-	* HDF5Object.m (readRowNames): Accomodate
-	the possibility of a memory ref_type that is larger than the
-	native type.  Needed for change below.
+	* defobj.h ([FArguments -addObject:]): Definition conflicts with
+	NSArray, so use NSArray definition for GNUstep.
 
-2004-01-02  glen e. p. ropella  <gepr@tempusdictum.com>
+	* Makefile.am (INCLUDES): Add GNUstep include directories.
 
-	* HDF5Object.m (make_string_ref_type): Re-disable H5Tset_size
-	call.  HDF5 1.5 doesn't like it.  Somehow this cpp block was 
-	removed circa 2002-10-29.
+	* FCall.m: Use GNUstep mframe for GNUstep.
 
-2003-09-15  Bill Northcott  <w.northcott@unsw.edu.au>
+	* DefObject.m: Use GNUstep mframe for GNUstep.
 
-	* make-h2x : Add configured SED to allow for bad default sed.
-
-2003-09-03  Alex Lancaster  <alex@swarm.org>
-
-	* defobj.h: Use '//E:' syntax instead of '//M:' to tag examples
-	which are intended to be inline elements of code.  In this way
-	ampersands which cause problems for the XML DocBook backend are
-	escaped properly.
-
-2003-08-11  Paul E. Johnson  <pauljohn@pjdell.pols.ukans.edu>
-
-	* HDF5Object.m (suppress_messages): adjust this function to
-	use macros as per advice in HDF5's header file H5Epublic.h.
-	This applies for HDF5-1.4.5 and 1.6.0 and after (AFAIK).
-
-2003-05-10  Paul E. Johnson  <pauljohn@ku.edu>
-
-	* defobj.h: inserted headers and explanation for all methods listed 
-	in next entries.
-
-	* DefObject.[hm]: New methods to facilitate
-	serialization. Explanation will be inserted into defobj.h.
-	-lispSaveStream:{Boolean,Char,Short,UnsignedShort,Integer,Unsigned,
-	Long,UnsignedLong,LongLong,UnsignedLongLong,Float,Double}:Value:
-	-lispStore{Boolean,Char,Short,Unsigned,Long,UnsignedLong,LongLong,
-	UnsingedLongLong,Float,Double}Array:Keyword:Rank:Dims:Stream:
-	
-2003-05-01    <mgd@arrow.santafe.edu>
-
-	* DefObject.m ([Object_s -dropAllocations:]): Use DROP again;
-	remove baseDrop lookup.
-	
-	* macros.h: Enable method functions by default, but use the new
-	computed swarm_* function pointers instead of compiler symbols.
+	* COM.m: Use GNUstep mframe for GNUstep.
 
 2003-03-05  Scott Christley <schristley@mac.com>
 
 	* DefObject.m ([Object_s -dropAllocations:]): Replace asm code
 	with static field for drop selector.
 
-2003-02-26  Bill Northcott <W.Northcott@unsw.edu.au>
-
-	* internal.m move nil_method to libobjc/nil_method.c
 
 2003-02-14  Bill Northcott <W.Northcott@unsw.edu.au>
 

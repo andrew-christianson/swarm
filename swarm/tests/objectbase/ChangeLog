@@ -1,6 +1,6 @@
-2004-02-25  Marcus G. Daniels <mgd@santafe.edu>
+2004-03-13  Scott Christley <schristl@nd.edu>
 
-        * ProbeTest.m (TestObject): Make ivars public.
+	* ProbeTest.m (TestObject): Declare instance variables as public.
 
 2000-03-28    <mgd@nest.swarm.org>
 

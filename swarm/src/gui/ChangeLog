@@ -1,9 +1,6 @@
-2003-06-23  Paul E. Johnson  <pauljohn@pjdell.pols.ukans.edu>
+2003-04-06  Scott Christley <schristley@mac.com>
 
-	* gui.h: declare ZoomRaster method - (void)fillCenteredRectangleX0:
-	(int)x0 Y0: (int)y0 X1: (int)x1 Y1: (int)y1 Color: (Color)color;
-	In case users want to draw rectangles whose position does not change
-	when zooming rasters.
+	* gui.h (GUI_*): Exclude tk macros for GNUstep.
 
 2001-05-13  Marcus G. Daniels  <mgd@drone.swarm.org>
 

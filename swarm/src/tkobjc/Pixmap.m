@@ -306,7 +306,7 @@ PHASE(Using)
 - (void)setRaster: theRaster
 {
   raster = theRaster;
-  tkobjc_pixmap_update_raster (self, (Raster *)raster);
+  tkobjc_pixmap_update_raster (self, raster);
 }
 
 - (unsigned)getWidth
@@ -321,7 +321,7 @@ PHASE(Using)
 
 - (void)drawX: (int)x Y: (int)y
 {
-  tkobjc_pixmap_draw (self, x, y, (Raster *)raster);
+  tkobjc_pixmap_draw (self, x, y, raster);
 }
 
 - (void)save: (const char *)path

@@ -80,30 +80,6 @@ run_constructors (void)
 }
 #endif 
 
-struct Zone_c;
-struct ComponentZone_c;
-struct Object_s;
-
-id (*_swarm_i_Zone_c__allocIVarsComponent_) (struct Zone_c *, struct objc_selector *, Class);
-void (*_swarm_i_Zone_c__freeIVarsComponent_) (struct Zone_c *, struct objc_selector *, id);
-void * (*_swarm_i_Zone_c__allocBlock_) (struct Zone_c *, struct objc_selector *, size_t);
-void (*_swarm_i_Zone_c__freeBlock_blockSize_) (struct Zone_c *, struct objc_selector *, void *, size_t);
-id (*_swarm_i_ComponentZone_c__allocIVars_) (struct ComponentZone_c *, struct objc_selector *, Class);
-id (*_swarm_i_Object_s__drop) (struct Object_s *, struct objc_selector *);   
-
-// static void predispatch () __attribute__ ((constructor));
-
-static void predispatch ()
-{
-  (IMP) _swarm_i_Zone_c__allocIVarsComponent_ = get_imp (objc_lookup_class ("Zone_c"), M(allocIVarsComponent:));
-  (IMP) _swarm_i_Zone_c__freeIVarsComponent_ = get_imp (objc_lookup_class ("Zone_c"), M(freeIVarsComponent:));
-  (IMP) _swarm_i_Zone_c__allocBlock_ = get_imp (objc_lookup_class ("Zone_c"), M(allocBlock:));
-  (IMP) _swarm_i_Zone_c__freeBlock_blockSize_ = get_imp (objc_lookup_class ("Zone_c"), M(freeBlock:blockSize:));
-  (IMP) _swarm_i_ComponentZone_c__allocIVars_ = get_imp (objc_lookup_class ("ComponentZone_c"), M(allocIVars:));
-  (IMP) _swarm_i_Object_s__drop = get_imp (objc_lookup_class ("Object_s"), M(drop));
-}
-
-
 @implementation SwarmEnvironment
 PHASE(Creating)
 + createBegin
@@ -111,7 +87,6 @@ PHASE(Creating)
 #ifdef hpux
   run_constructors ();
 #endif
-  predispatch ();
   initModule (activity);
   return [self createBegin: globalZone];
 }
@@ -262,7 +237,9 @@ PHASE(Using)
 
 - (void)updateDisplay
 {
+#ifndef GNUSTEP
   while (GUI_EVENT_ASYNC ()) {}
+#endif
 }
 
 - (void)xfprint: obj
@@ -299,12 +276,12 @@ _initSwarm_ (int argc, const char **argv, const char *appName,
              BOOL forceBatchMode,
              BOOL inhibitExecutableSearchFlag)
 {
-  id env;
-  void __objc_exec_class_for_all_initial_modules ();
+  id env = [SwarmEnvironment createBegin];
 
-  __objc_exec_class_for_all_initial_modules ();
-  env = [SwarmEnvironment createBegin];
-
+#if DEBUG
+  fprintf(stderr, "Swarm Environment\n");
+  fprintf(stderr, "argc argv[0]: %d %s\n", argc, argv[0]);
+#endif
   [env setArguments:
          [(id) argumentsClass ?: (id) [Arguments_c class]
                          createArgc: argc

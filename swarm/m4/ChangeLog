@@ -1,37 +1,11 @@
-2003-02-02  Bill Northcott <W.Northcott@unsw.edu.au>
+2004-03-13  Scott Christley  <schristl@nd.edu>
 
-	* acffi.m4: fix build problems with external avcall.
+	* acgnustep.m4 (GNUSTEPLIB{INCLUDES,LDFLAGS}): New GNUStep directory layout.
+	(GNUSTEPLIB{LIBS,DEBUGLIBS}): Add gui library.
 
-2004-01-31  Bill Northcott  <w.northcott@unsw.edu.au>
+2003-08-08  Scott Christley  <schristley@mac.com>
 
-	* actcl.m4: allow for g suffix on tcl/tk debug
-	and more persistent search for BLT.  
-
-2004-01-21  Bill Northcott  <w.northcott@unsw.edu.au>
-
-	* acobjc.m4: new file for compatability with AC_LIBOBJ
-	 and AM_DEPENDENCIES.  
-	* acargp.m4: replaced direct assignment to LIBOBJ with
-	  AC_LIBOBJ.  
-
-2003-08-12  Bill Northcott  <w.northcott@unsw.edu.au>
-
-	* acjdk.m4: added variable MACOSJAVA for apple JDK.
-
-2003-08-11  Bill Northcott  <w.northcott@unsw.edu.au>
-
-	* aclibtool.m4: added libtool macros to configure sed.
-
-2003-08-01  Bill Northcott  <w.northcott@unsw.edu.au>
-
-	* acffi.m4: restore FFILIB as libtool object.  Previous version
-	  breaks static or convenience builds of libdefobj.
-
-2003-05-22  Marcus G. Daniels  <mgd@xserve.santafe.edu>
-
-	* acffi.m4: Use -L and -l instead of full path to avcall.
-
-	* acjdk.m4: Add support for finding Apple MacOS X JVM.
+	* acgnustep.m4: New file.
 
 2003-01-04  Bill Northcott <W.Northcott@unsw.edu.au>
 

@@ -49,7 +49,6 @@ SHELL = /bin/sh
 
 # Needed by $(LIBTOOL).
 top_builddir = .
-SED = @SED@
 
 OBJECTS = avcall.lo structcpy.lo
 ifeq ($(OS),cygwin)
@@ -131,8 +130,9 @@ avcall-rs6000.lo : $(srcdir)/avcall-rs6000-aix.old.s $(srcdir)/avcall-rs6000-aix
           darwin*) syntax=darwin;; \
 	  *) syntax=sysv4;; \
 	esac; \
-	cp $(srcdir)/avcall-rs6000-$${syntax}.s avcall-rs6000.s ; rm -f avcall-rs6000.lo ; \
-	$(LIBTOOL_COMPILE) $(CC) @GCC_X_NONE@ -c avcall-rs6000.s 
+	$(LIBTOOL_COMPILE) $(CC) @GCC_X_NONE@ -c $(srcdir)/avcall-rs6000-$${syntax}.s ; \
+	cp avcall-rs6000-$${syntax}.lo avcall-rs6000.lo ; rm -f avcall-rs6000-$${syntax}.lo ; \
+	if test -f avcall-rs6000-$${syntax}.o; then mv avcall-rs6000-$${syntax}.o avcall-rs6000.o; fi
 
 avcall-m88k.lo : $(srcdir)/avcall-m88k.s
 	$(LIBTOOL_COMPILE) $(CC) @GCC_X_NONE@ -c $(srcdir)/avcall-m88k.s

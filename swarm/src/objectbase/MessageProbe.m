@@ -357,7 +357,7 @@ copy_to_nth_colon (const char *str, int n)
 
   if (call)
     {
-      fc = (FCall_c *)call;
+      fc = call;
       updateTarget (fc, target);
     }
   else

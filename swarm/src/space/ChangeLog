@@ -1,7 +1,10 @@
-2003-09-05  Marcus G. Daniels <mgd@santafe.edu>
+2003-04-06  Scott Christley <schristley@mac.com>
 
-	* Value2dDisplay.m (-display): Don't derference drawPointImp to
-	check for NULL.
+	* Makefile.am (INCLUDES): Use libobjc definition.  Add GNUstep
+	includes.
+
+	* Object2dDisplay.m ([Object2dDisplay -makeProbeAtX:Y:]): Do not
+	call GUI_BEEP for GNUstep.
 
 2002-04-14  Alex Lancaster  <alex@swarm.org>
 

@@ -1,17 +1,9 @@
 #include <misc.h>
 
-// weak attribute only for ELF targets not Mach-O.
-#ifdef __MACH__
-void *GC_malloc_atomic_uncollectable (size_t);
-void *GC_malloc_uncollectable (size_t);
-void *GC_realloc (void *buf, size_t size);
-void GC_free (void *buf);
-#else
-void *GC_malloc_atomic_uncollectable (size_t); __attribute__ ((weak));
-void *GC_malloc_uncollectable (size_t); __attribute__ ((weak));
-void *GC_realloc (void *buf, size_t size); __attribute__ ((weak));
-void GC_free (void *buf); __attribute__ ((weak));
-#endif
+void *GC_malloc_atomic_uncollectable (size_t) __attribute__ ((weak));
+void *GC_malloc_uncollectable (size_t) __attribute__ ((weak));
+void *GC_realloc (void *buf, size_t size) __attribute__ ((weak));
+void GC_free (void *buf) __attribute__ ((weak));
 
 void *
 GC_malloc_uncollectable (size_t size)

@@ -1449,10 +1449,6 @@ convert_from_string (fcall_type_t type,
     FREEBLOCK (probedVariable);
   if (dims)
     FREEBLOCK (dims);
-  if (floatFormat) 
-     FREEBLOCK (floatFormat);
-  if (baseType)
-     [globalZone free: baseType];
   [super drop];
 }
 

@@ -1,15 +1,14 @@
-2003-06-11  Paul E. Johnson  <pauljohn@pjdell.pols.ukans.edu>
+2003-04-06  Scott Christley <schristley@mac.com>
 
-	* Permutation.m ([Permutation_c -setLastPermutation:]): Cast as
-	(Permutation_c *) to stop compiler warning.
+	* Makefile.am (INCLUDES): Use libobjc definition.
 
-	* Collection.m ([PermutedIndex_c -remove]): cast collection as
-	(Collection_any *) to stop compiler warning about wrong type
-	pointer.
+2003-03-31  Scott Christley <schristley@mac.com>
 
-2003-05-05    <mgd@arrow.santafe.edu>
+	* Makefile.am (INCLUDES): Add GNUstep includes.
 
-	* InputStream.m ([InputStream -getExpr]): Treat #() like #1().
+	* InputStream.m: Include internal.h for long double definition
+	required for GNUstep.  No long double encoding support in the
+	libobjc library.
 
 2002-10-19    <pauljohn@dv253s74.lawrence.ks.us>
 

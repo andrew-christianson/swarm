@@ -40,7 +40,6 @@ main (int argc, const char **argv)
   int argn; 
 
   initSwarmBatch (1, argv);
-  swarm_force_references ();
 
   impClass = objc_lookup_class (argv[1]);
   if (!impClass)

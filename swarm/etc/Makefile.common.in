@@ -26,10 +26,13 @@ CFLAGS = @CFLAGS@
 CPPFLAGS = @CPPFLAGS@
 EXPORT_EXTERN = @EXPORT_EXTERN@
 IMPORT_EXTERN = @IMPORT_EXTERN@
-SED = @SED@
 
 OBJC=@OBJC@
 OBJCFLAGS=@OBJCFLAGS@ $(EXTRAOBJCFLAGS)
+
+GNUSTEPLIBINCLUDES = @GNUSTEPLIBINCLUDES@
+GNUSTEPLIBLDFLAGS = @GNUSTEPLIBLDFLAGS@
+GNUSTEPLIBLIBS = @GNUSTEPLIBLIBS@
 
 SWARMINCLUDES = -I$(includedir)
 
@@ -75,25 +78,19 @@ SYSLIBS = $(BLTLIB) $(TKLIB) $(TCLLIB) $(XPMLIB) $(PNGLIB) $(HDF5LIB) $(ZLIBLIB)
 SWARMMODULES = $(shell cat $(top_srcdir)/etc/modules)
 
 USEDLL=@USEDLL@
-ONELIB=@ONELIB@
 
-ifeq ($(USEDLL),yes) 
-	ifneq ($(USESTATIC),)
-			SWARMLIBS = -lswarm
-			OBJCLIBS = -lswarmobjc
-		else
-			SWARMLIBS = -lswarmdll -lobjcdll
-			OBJCLIBS = 
-			DLLCPPFLAGS = -DDLL
-	endif
+ifeq ($(USEDLL),yes)
+ifneq ($(USESTATIC),)
+SWARMLIBS = -lswarm
+OBJCLIBS = -lobjc
 else
-	ifeq ($(ONELIB),yes)
-		SWARMLIBS = -lswarm
-		OBJCLIBS =
-	else
-		SWARMLIBS = -lswarm
-		OBJCLIBS = -lswarmobjc
-	endif
+SWARMLIBS = -lswarmdll -lobjcdll
+OBJCLIBS = 
+DLLCPPFLAGS = -DDLL
+endif
+else
+SWARMLIBS = -lswarm
+OBJCLIBS = -lobjc
 endif
 
 # Local variables:

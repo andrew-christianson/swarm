@@ -567,7 +567,7 @@ PHASE(Using)
 
 - (void)setActiveOutFile: (id <ActiveOutFile>)anActiveOutFile
 {
-  activeOutFile = (ActiveOutFile *)anActiveOutFile;
+  activeOutFile = anActiveOutFile;
 }
 
 - (void)setActiveGrapher: (id <ActiveGraph>)aGrapher

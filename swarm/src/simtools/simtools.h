@@ -424,12 +424,9 @@ USING
               APPNAME_STRING, \
               version, bugAddress, Nil, options, optionFunc, YES, NO)
 
-extern void __objc_exec_class_for_all_initial_modules ();
-
 //#: Like initSwarm, but specifies what class to use for argument
 //#: parsing, typically this will be a subclass of Arguments.
 #define initSwarmArguments(argc, argv, argumentsClass) \
- __objc_exec_class_for_all_initial_modules (); \
  _initSwarm_ (argc, argv, \
               APPNAME_STRING, \
               APPVERSION_STRING, \
@@ -440,7 +437,6 @@ extern void __objc_exec_class_for_all_initial_modules ();
 //#: Like initSwarmApp, but specifies what class to use for argument
 //#: parsing, typically this will be a subclass of Arguments.
 #define initSwarmAppArguments(argc, argv, version, bugAddress, argumentsClass) \
- __objc_exec_class_for_all_initial_modules (); \
  _initSwarm_ (argc, argv, \
               APPNAME_STRING, \
               version, bugAddress, argumentsClass, NULL, NULL, NO, NO)

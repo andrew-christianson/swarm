@@ -32,6 +32,7 @@ Library:      collections
 #include <objc/objc-api.h> // type definitions
 #include <misc.h> // errno, fputs, isDigit, isSpace
 #include <collections/predicates.h>
+#include "internal.h"
 
 @implementation InputStream_c
 
@@ -185,22 +186,19 @@ readString (id inStream, char terminator)
                         setKeywordName: [newObj getC]]
                        createEnd];
             }
-          else if ((c2 >= '0' && c2 <= '9') || c2 == '(')
+          else if (c2 >= '0' && c2 <= '9')
             {
               unsigned rank;
 
-	      ungetc (c2, fileStream);
-	      if (c2 == '(')
-		rank = 1;
-	      else
-		{
-		  int ret = fscanf (fileStream, "%u", &rank);
-		  
-		  if (ret != 1)
-		    raiseEvent (InvalidArgument,
-				"Unable to scan array dimensions [ret = %d]", ret);
-		}
-	      
+              ungetc (c2, fileStream);
+              {
+                int ret = fscanf (fileStream, "%u", &rank);
+            
+                if (ret != 1)
+                  raiseEvent (InvalidArgument,
+                              "Unable to scan array dimensions [ret = %d]", ret);
+              }
+          
               {
                 id newObj = [self getExpr];
             

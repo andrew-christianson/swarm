@@ -23,6 +23,8 @@
 #import <objectbase/swarm_rts_routines.h>
 #include <misc.h> // abort, isDigit
 
+#include "internal.h"
+
 const char*
 skip_type_qualifiers (const char *type)
 {
@@ -110,12 +112,9 @@ skip_typespec (const char *type)
       return ++type;
       
     case _C_PTR:
-      ++type;
       /* Just skip the following typespec */
-      if (isDigit (*type))
-        return type;
-      else
-        return skip_typespec (type);
+      
+      return skip_typespec (++type);
       
     default:
       abort();

@@ -282,7 +282,6 @@ USING
 - (void)setRangesXMin: (double)minx Max:(double)maxx YMin: (double)miny Max: (double)maxy;
 @end
 
-
 @protocol Histogram <ArchivedGeometryWidget, CREATABLE>
 //S: Histogram display tool.
 
@@ -644,18 +643,6 @@ USING
 //M: Get the current zoom factor.
 - (unsigned)getZoomFactor;
 
-
-//M: Special method for ZoomRasters. Like
-//M: fillRectangleX0:Y0:X1:Y1:Color: in Raster, it will fill a rectangle
-//M: of given geometry and color. This method makes sure that zooming the
-//M: window does not change the logical position of the rectangle in
-//M: relation to the logical coordinates.  In other words, if a rectangle
-//M: includes point (10,10) at one zoom factors, then that same point is
-//M: included for all zoom factors.
-
-- (void)fillCenteredRectangleX0: (int)x0 Y0: (int)y0 X1: (int)x1 Y1: (int)y1 Color: (Color)color;
-
-
 //M: Set the zoom factor.
 - setZoomFactor: (unsigned)z;
 
@@ -923,6 +910,7 @@ CREATING
 #define GUI_INIT(arguments)  initAWTObjc (arguments)
 #endif
 
+#ifndef GNUSTEP
 #ifndef USE_JAVA
 #import <tkobjc/common.h>
 extern void initTkObjc (id arguments);
@@ -945,6 +933,7 @@ extern void initTkObjc (id arguments);
 
 #define GUI_INIT(arguments) initTkObjc (arguments)
 #endif
+#endif // !GNUSTEP
 
 @class Button;
 @class ButtonPanel;

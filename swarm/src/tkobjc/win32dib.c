@@ -282,19 +282,9 @@ dib_get_color (dib_t *dib, void *object, unsigned color, BYTE *red, BYTE *green,
     }
   else if (depth == 24)
     {
-      unsigned colorValue;
       int index = dib_paletteIndexForObject (dib, object);
       unsigned colorOffset = (index == -1) ? 0 : dib->colormapOffsets[index];
-      if (colorOffset + color < dib->colormapSize)
-        colorValue = dib->colormap[colorOffset + color];
-      else
-        {
-#if 0
-          fprintf (stderr, "color %u out of range (>= %u + %u = %u\n",
-                   color, colorOffset, color, dib->colormapSize);
-#endif
-          colorValue = 0;
-        }
+      unsigned colorValue = dib->colormap[colorOffset + color];
 
       *blue = colorValue >> 16;
       *green = (colorValue >> 8) & 0xff;

@@ -1,29 +1,10 @@
-2003-06-11  Paul E. Johnson  <pauljohn@pjdell.pols.ukans.edu>
+2003-04-06  Scott Christley <schristley@mac.com>
 
-	* SwarmProcess.m ([CSwarmProcess -activateIn:]): cast 4th argument
-	 activity = [mergeSchedule _activateIn_: swarmContext
-                            : id_SwarmActivity_c
-                            : id_ScheduleIndex_c
-                            : (Zone_c *)activityZone];
-	
-	([CSwarmProcess -_performPlan_]): cast: newActivity = 
-	(Activity_c *)[self activateIn: nil];
+	* Makefile.am (INCLUDES): Use libobjc definition.
 
-	* Schedule.m: To eliminate compiler warnings, throughout this
-	class, several variables were cast:
+2003-03-31  Scott Christley <schristley@mac.com>
 
-	 (ScheduleIndex_c *)newActivity->currentIndex
-
-	3rd argument here:
-	   _activity_insertAction (self, tVal, (CAction *)newAction)
-	
-	(ActionConcurrent_c*)actionAtIndex;
-	 
-	(ScheduleIndex_c *)activity->swarmActivity->currentIndex;
-	activity = (ScheduleActivity_c *)theActivity;
-
-	([ActionChanged_c -_performAction_:]): schedIndex =
-	(ScheduleIndex_c *)((Activity_c *) anActivity)->currentIndex;
+	* Makefile.am (INCLUDES): Add GNUstep includes.
 
 2002-10-19    <pauljohn@dv253s74.lawrence.ks.us>
 

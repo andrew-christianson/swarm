@@ -26,11 +26,11 @@ noinst_LTLIBRARIES = @noinst_LIBS@
 lib_LTLIBRARIES = @inst_LIBS@
 EXTRA_LTLIBRARIES = libswarmgstep.la
 
-SRC = GNUstepSwarm.m Raster.m ZoomRaster.m swarmgstep.m
+SRC = GNUstepSwarm.m Raster.m ZoomRaster.m swarmgstep.m Additions.m
 
 libswarmgstep_la_SOURCES = $(SRC)
 libswarmgstep_la_LDFLAGS = @inst_LDFLAGS@
 
-swarmgstep_HEADERS = GNUstepSwarm.h Raster.h ZoomRaster.h
+swarmgstep_HEADERS = GNUstepSwarm.h Raster.h ZoomRaster.h Additions.h
 
 swarmgstep.lo: $(foreach f, $(TCLFILES), $(basename $(f))_tcl.x)

@@ -1,4 +1,11 @@
-2004-03-13  Scott Christley  <schristl@nd.edu>
+2004-07-24  Scott Christley  <schristley@mac.com>
+
+	* Makefile.in (SRC): Add new file.
+	(swarmgstep_HEADERS): Likewise.
+	* Additions.h: New file.
+	* Additions.m: New file.
+
+2004-03-13  Scott Christley  <schristley@mac.com>
 
 	* ChangeLog: New file.
 	* Makefile.am: New file.

@@ -1,12 +1,17 @@
-2003-04-06  Scott Christley <schristley@mac.com>
+2004-07-16  Scott Christley <schristley@mac.com>
 
-	* Makefile.am (INCLUDES): Use libobjc definition.
+	* Makefile.am (INCLUDES): Use libobjc definition. Add GNUstep includes.
 	(findImp__EXEEXT__LDFLAGS): Use libobjc definition.  Add GNUstep
 	library flags.
 
-2003-03-31  Scott Christley <schristley@mac.com>
+2003-08-13  Marcus Daniels  <mgd@dhcp159.santafe.edu>
 
-	* Makefile.am (INCLUDES): Add GNUstep includes.
+	* findImp.m (main): Call swarm_force_references so that any
+	requested class will be available.
+
+2003-02-26  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* Makefile.am modify findImp__EXEEXT__LDFLAGS to find the right libobjc
 
 2002-09-13    <pjohnson@localhost.localdomain>
 

@@ -1,0 +1,94 @@
+1998-01-15  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* HeatbugObserverSwarm.m ([HeatbugObserverSwarm -buildObjects]): Use
+	SET_WINDOW_GEOMETRY_RECORD_NAME for worldRaster and unhappyGraph.
+
+	* main.m (main): Likewise, but for theTopLevelSwarm.
+
+1998-01-14  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* HeatbugObserverSwarm.m ([HeatbugObserverSwarm -graphBug:]): 
+	Don't do anything if unhappyGraph has been destroyed.
+
+1998-01-13  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* HeatbugObserverSwarm.m ([HeatbugObserverSwarm -buildObjects]): 
+	Use CREATE_ARCHIVED_PROBE_DISPLAY to create probe displays for
+	heatbugModelSwarm and heatbugObserverSwarm.
+
+	* Makefile (SWARMHOME): Default is swarm-1.0.5.
+
+1998-01-12  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* HeatbugObserverSwarm.m ([HeatbugObserverSwarm -buildObjects]):
+	Remove inline configuration of the ActionCache and ControlPanel;
+	GUISwarm's buildObjects is now more intelligent.
+	([HeatbugObserverSwarm -buildObjects]): Add call to
+	enableDestroyNotification to configure handling of widget kills
+	by the window manager.
+	([HeatbugObserverSwarm -_updateDisplay_]): New method (calls
+	display on heatDisplay and heatbugDisplay, and then drawSelf
+	on worldRaster).
+	([HeatbugObserverSwarm -buildActions]): Only create action
+	to _updateDisplay, instead of the three above.
+
+	* main.m (main): Use setWindowGeometryRecordName to set a *base*
+	name for internal derived-names in the GUISwarm.
+
+1998-01-06  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* HeatbugObserverSwarm.m ([HeatbugObserverSwarm -buildObjects]):
+	Adjust for renamed setWindowGeometryRecordName (from
+	setControlPanelGeometryRecordName).
+
+1998-01-06  Alex Lancaster  <alex@wijiji.santafe.edu>
+
+	* HeatbugObserverSwarm.m ([HeatbugObserverSwarm -buildObjects]):
+	Rename call to setGraphWindowGeometryRecordName to 
+	setWindowGeometry to conform with changes to interface.
+
+1997-12-19  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* HeatbugObserverSwarm.m ([HeatbugObserverSwarm -buildObjects]): 
+	Do ControlPanel and ActionCache initialization inline (pending
+	probable API changes).
+
+	* main.m (main): Don't use now-absent feature of GUISwarm
+	to passthru a name for geometry archiving.
+
+1997-12-12  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Makefile (SWARMHOME): Don't define if already defined.
+
+1997-12-11  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* main.m: Remove import of Archiver.h (not needed).
+
+1997-12-10  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* HeatbugObserverSwarm.m ([HeatbugObserverSwarm -buildObjects]):
+	Switch probeMap from being ProbeMap * to id <ProbeMap>.
+
+	* HeatbugModelSwarm.m ([HeatbugModelSwarm +createBegin:aZone]):
+	Likewise.
+
+1997-12-07  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	([HeatbugObserverSwarm -buildActions]): Direct createActionTo call
+	for doTkEvents to actionCache, not controlPanel (API change).
+
+1997-11-29  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* main.m (main): Add create-time call to
+	setControlPanelGeometryRecordName for HeatBugOversverSwarm.
+
+	* HeatbugObserverSwarm.m ([HeatbugObserverSwarm -buildObjects]):
+	Use setWindowGeometryRecordName argument of createProbeDisplayFor
+	(set archive key name for heatbugModelSwarm and observerSwarm).
+	([HeatbugObserverSwarm -buildObjects]): Add create-time call to
+	setWindowGeometryRecordName for worldRaster.
+	([HeatbugObserverSwarm -buildObjects]): Add create-time call to
+	setGraphWindowGeometryRecordName to EZGraph.
+
+
+	

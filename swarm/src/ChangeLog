@@ -1,3 +1,14 @@
+2004-07-24  Scott Christley  <schristley@mac.com>
+
+	* Makefile.am (classList.m): Remove class for GNUstep.
+
+	* SwarmEnvironment.h: #ifndef GNUSTEP methods not applicable
+	when GNUstep is enabled.
+
+	* SwarmEnvironment.m: Likewise.
+
+	* swarm.h: Likewise.
+
 2004-07-21  Scott Christley  <schristley@mac.com>
 
 	* Makefile.am (SUBDIRS): Parameterize simtoolsgui and gui.

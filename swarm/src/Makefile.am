@@ -71,8 +71,16 @@ swarm.dll: swarm.dll.c $(OBJS)
 #	ranlib $(DESTDIR)$(libdir)/libswarmdll.a
 endif
 
+if ENABLE_GNUSTEP
+classList.m:
+	find $(foreach module,$(SWARMMODULES),$(srcdir)/$(module)) -name \*.h | grep -v random/test | xargs cat | egrep -v 'TARGET|TINDEX|List|ActiveGraph|EZBin|EZDistribution|EZGraph|EZSequence|EZAverageSequence|FunctionGraph' | sed -n 's/^@interface  *\(.*\) *:.*/\1/p' > classList
+	cat classList | sed 's/.*/@class &;/' > classList.m
+	(echo 'void swarm_force_references () {' ; cat classList | sed 's/.*/  [& self];/'; echo '}') >> classList.m
+	$(RM) classList
+else
 classList.m:
 	find $(foreach module,$(SWARMMODULES),$(srcdir)/$(module)) -name \*.h | grep -v random/test | xargs cat | egrep -v 'TARGET|TINDEX|List' | sed -n 's/^@interface  *\(.*\) *:.*/\1/p' > classList
 	cat classList | sed 's/.*/@class &;/' > classList.m
 	(echo 'void swarm_force_references () {' ; cat classList | sed 's/.*/  [& self];/'; echo '}') >> classList.m
 	$(RM) classList
+endif

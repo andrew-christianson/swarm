@@ -1,0 +1,27 @@
+2001-02-06  Marcus G. Daniels  <mgd@forager.swarm.org>
+
+	* swarm-hdf5.spec.in, swarm.spec.in (BuildPrereq): Remove libffi
+	dependency for ppc.
+	(Requires): Likewise.
+
+	* swarm.rules (CFLAGS): For ppc, remove --with-ffidir.
+
+	* configure.in (version, date_version): Bump.
+
+2001-01-24  Marcus G. Daniels  <mgd@forager.swarm.org>
+
+	* swarm.macros (SWARM_SRC_DIR): Use %{date_version}.
+
+	* swarm.spec.in, swarm-hdf5.spec.in (Source): Use date_version
+	for tarball suffix.
+	(%date_version): New macro.
+	(%setup): Use -n %date_version.
+
+	* configure.in (version): Update to 2.1.31.
+	(date_version): Add and substitute.
+	(base_requires): Change to gcc.
+
+2000-03-28    <mgd@nest.swarm.org>
+
+	* configure.in: Bump version to 2.1.1.
+

@@ -1,0 +1,82 @@
+<BOOKINFO>
+ <TITLE>Swarm User Guide</TITLE>
+ 
+<!--
+  <GRAPHIC ENTITYREF="booktitlelogo" ALIGN="CENTER"></GRAPHIC>
+-->
+
+  <COPYRIGHT><YEAR>1999-2000</YEAR><HOLDER>&orgname;</HOLDER></COPYRIGHT>
+
+  <RELEASEINFO>&swarm-guide-release-number;</RELEASEINFO>  
+  <PUBDATE>&pubdate;</PUBDATE>
+
+  &doc-legalnotice;
+
+  <BOOKBIBLIO>
+
+    <CORPAUTHOR>&corpauthor;</CORPAUTHOR>
+
+    <AUTHORGROUP>
+      
+      <AUTHOR>
+        <FIRSTNAME>Paul</FIRSTNAME><SURNAME>Johnson</SURNAME>
+        <AFFILIATION>
+          <ORGNAME>University of Kansas</ORGNAME>
+          <ORGDIV>Department of Political Science</ORGDIV>
+          <ADDRESS><EMAIL>pauljohn@ukans.edu</EMAIL></ADDRESS>
+        </AFFILIATION>
+      </AUTHOR>
+
+      <AUTHOR>
+        <FIRSTNAME>Alex</FIRSTNAME><SURNAME>Lancaster</SURNAME>
+        <AFFILIATION>
+          <ORGNAME>Santa Fe Institute</ORGNAME>
+          <ADDRESS><EMAIL>alex@santafe.edu</EMAIL></ADDRESS>
+        </AFFILIATION>
+      </AUTHOR>
+      
+      <AUTHOR>
+        <FIRSTNAME>Benedikt</FIRSTNAME><SURNAME>Stefansson</SURNAME>
+        <AFFILIATION>
+          <ORGNAME>CASA Inc.</ORGNAME>
+          <ADDRESS><EMAIL>bs@lacasa.com</EMAIL></ADDRESS>
+        </AFFILIATION>
+      </AUTHOR>
+
+    </AUTHORGROUP>
+
+    <ABSTRACT>
+
+      <TITLE>A User's Guide for the Swarm Simulation System</TITLE>
+      
+      <PARA> This document began with the Swarm Tutorial presented at
+        SwarmFests 1998 and 1999 by Benedikt Stefansson of CASA
+        Inc. (formerly of UCLA Department of Economics). The Swarm
+        Toolkit is discussed in three stages of increasing detail.
+        The first part provides an introductory treatment and
+        description of Swarm. The second part provides a deeper survey
+        of the anatomy of a swarm program. The third part goes into
+        significantly greater detail on some elements of programming
+        in Swarm that users are likely to enounter as they build
+        programs with Swarm. Users are encouraged to explore the Swarm
+        sample programs and to visit the Swarm homepage, where they
+        can find out the latest news and join the Swarm e-mail
+        community.
+      </PARA>
+
+      <PARA>Paul Johnson's effort on this project was supported in part
+      by a grant from the National Science Foundation (SBR-9709404).
+       </PARA>
+
+    </ABSTRACT>
+
+  </BOOKBIBLIO> 
+  
+</BOOKINFO>
+
+<!--
+Local Variables:
+sgml-parent-document:("userbook.sgml" "BOOKINFO")
+End:
+-->
+

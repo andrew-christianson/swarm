@@ -1,0 +1,58 @@
+<PREFACE ID="SWARM.REFERENCE.SGML.PREFACE">
+  <TITLE>Preface</TITLE>
+
+    <SIMPLESECT>
+      <TITLE>The Swarm Hive</TITLE>
+
+      <PARA>
+        The &swarm-webpage; is the place to obtain both new software
+        releases and documentation for Swarm.  We welcome comments
+        about Swarm and it's documentation.
+       </PARA>
+
+      <PARA>
+        Send comments to the Swarm team at: &swarm-program;</PARA>
+
+      <PARA>
+        You can also mail comments to the <LITERAL>Swarm
+        Support</LITERAL> mailing list.  See the &swarm-mailing-lists;
+        for instructions on how to join this list.
+      </PARA>
+    </SIMPLESECT>
+
+    <SIMPLESECT>
+      <TITLE>Acknowledgments</TITLE>
+
+      <PARA>
+        The Swarm project was initiated by Chris Langton, formerly of
+        the Santa Fe Institute now at the Swarm Corporation, New
+        Mexico.  The current Swarm team is Roger Burkhart (John
+        Deere), Marcus Daniels (SFI), Vladimir Jojic (SFI) and Alex
+        Lancaster (SFI).  Irene Lee (also formerly of SFI) continues
+        to be involved in documentation and Swarm user community
+        efforts such as SwarmFest.  Much of the early development of
+        Swarm was done by Nelson Minar, who is now at the MIT Media
+        Lab, and Manor Askenazi and Glen Ropella (Swarm Corporation),
+        both formerly of the SFI.  The random library was written by
+        Sven Thommesen and graciously contributed.  Eric Carr and JJ
+        Merelo have been patient Swarm users and developers.  Howard
+        Gutowitz and David Hiebeler have participated in the design
+        process.  (David is also the implementor of the original Swarm
+        prototype.)  And, many thanks to Simon Fraser, Swarm graphic
+        designer extraordinaire.  Finally, many thanks go out to the
+        Swarm user community, particularly those who have stuck with
+        us from the beginning.
+      </PARA>
+
+    </SIMPLESECT>
+
+<!--  </SECT1> -->
+
+</PREFACE>
+
+
+<!--
+Local Variables:
+sgml-parent-document:("refbook.sgml" "PREFACE")
+End:
+-->

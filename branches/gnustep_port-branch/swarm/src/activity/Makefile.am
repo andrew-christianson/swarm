@@ -7,7 +7,8 @@ JAVAINCLUDES = @JAVAINCLUDES@
 
 include $(top_srcdir)/src/Makefile.rules
 
-INCLUDES = -I.. -I$(srcdir)/.. -I$(top_builddir) -I$(top_builddir)/libobjc -I$(top_srcdir)/libobjc -I$(srcdir)/../collections -I$(srcdir)/../defobj -I$(srcdir)/../misc $(JAVAINCLUDES) $(FFIINCLUDES)
+INCLUDES = -I.. -I$(srcdir)/.. -I$(top_builddir) -I$(srcdir)/../collections -I$(srcdir)/../defobj -I$(srcdir)/../misc $(JAVAINCLUDES) $(FFIINCLUDES) $(GNUSTEPLIBINCLUDES)
+#INCLUDES = -I.. -I$(srcdir)/.. -I$(top_builddir) -I$(top_builddir)/libobjc -I$(top_srcdir)/libobjc -I$(srcdir)/../collections -I$(srcdir)/../defobj -I$(srcdir)/../misc $(JAVAINCLUDES) $(FFIINCLUDES)
 
 noinst_LTLIBRARIES = @noinst_LIBS@
 lib_LTLIBRARIES = @inst_LIBS@

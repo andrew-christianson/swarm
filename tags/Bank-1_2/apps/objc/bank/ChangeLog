@@ -1,0 +1,162 @@
+1998-04-23  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* BankObserverSwarm.m: Include analysis.h.
+
+	* BankObserverSwarm.h (BankObserverSwarm): Instead of being
+	statically typed, make investorEntropy,
+	and borrowerEntropy objects that conform to the analysis 
+	Entropy protocol.
+
+1998-04-22  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* BankBatchSwarm.m: Include activity.h instead of collections.h.
+
+	* BankBatchSwarm.h: Don't include objectbase.h, activity.h,
+	collections.h, simtools.h, or stdio.h.  Include objectbase/Swarm.h.
+
+	* BankModelSwarm.h: Include objectbase/Swarm.h instead of
+	objectbase.h.
+
+1998-03-26  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* BLink.[hm], BankBatchSwarm.[hm], BankModelSwarm.[hm],
+	BankObserverSwarm.[hm], FEntity.[hm], FLink.[hm], FNet.[hm],
+	ILink.[hm], main.m: Add copyright headers.  Minor reformatting.
+
+1998-03-14  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* ILink.m: Don't Include tkobjc.h.  Reformatting throughout.
+
+	* FNet.m: Don't include string.h, stdio.h, stdlib.h, or tkobjc.h.
+
+1998-02-26  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* FEntity.[hm]: (investingIn:borrowingFrom:,incident) now return BOOL.
+	Constify argument to setEntityName:.
+
+	* FEntity.m: Don't include string.h, stdio.h, stdlib.h,
+	tkobjc.h, or simtools.h.
+
+	* BankObserverSwarm.m: Don't include collections.h or objectbase.h.
+	Include simtoolsgui.h.
+
+	* BankObserverSwarm.h: Don't include objectbase.h, activity.h,
+	collections.h, simtools.h, or gui.h.  Include simtoolsgui.h
+	and simtools/GUISwarm.h.
+
+	* BankModelSwarm.m: Don't include stdlib.h or simtools.h.  Include
+	random.h and misc.h.
+	([BankModelSwarm +createBegin:]): Use YES instead of 1 for
+	setHideResult.
+	Reformatting throughout.
+
+	* BankModelSwarm.h: Don't include activity.h or collections.h.
+	Reformatting throughout.
+
+1998-02-25  Alex Lancaster  <alex@santafe.edu>
+
+	* BankObserverSwarm.m ([BankObserverSwarm -buildObjects]): Removed
+	reference to globalTkInterp for Canvas creation with ([graphCanvas
+	packFillLeft:1]) and the GUI_UPDATE_IDLE_TASKS() macro which
+	removes any remaining explicit Tk GUI references.
+
+1998-01-27  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* BankObserverSwarm.m ([BankObserverSwarm -buildObjects]): Use
+	Graph instead of BLTGraph for investorGraph.
+
+	* main.m (main): Constify argv.
+
+1998-01-24  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* FLink.h: Reformatting throughout.
+
+	* BankObserverSwarm.m ([BankObserverSwarm -buildObjects]): Send
+	waitForControlEvent to actionCache, not controlPanel.
+	([BankObserverSwarm -buildObjects]): Use renamed setTitle and
+	setAxisLabelsX:Y: methods.
+
+	* BankObserverSwarm.h: Include gui.h.
+	(BankObserverSwarm): Make graphCanvas conform to the Graph
+	protocol instead of being statically typed to BLTGraph.  Make
+	investorData and borrorerData conform to the GraphElement protocol
+	instead of being statically typed to GraphElement.  Make
+	investorGrapher and borrowerGrapher conform to ActiveGraph instead
+	of being statically typed to ActiveGraph.
+	Reformatting throughout.
+
+	* BLink.m: Don't include tkobjc.h.
+	Reformatting throughout.
+
+	* BLink.h: Reformatting throughout.
+
+1998-01-16  Alex Lancaster  <alex@santafe.edu>
+
+	* readme.txt: Updated.
+
+1998-01-15  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* BankObserverSwarm.m ([BankObserverSwarm -buildObjects]): Use
+	SET_WINDOW_GEOMETRY_RECORD_NAME for graphCanvas, activeBanks, and 
+	investorGraph.
+	
+	* main.m (main): Likewise, but for observerSwarm.
+	
+1998-01-14  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* FEntity.m ([FEntity -setCanvas:]): New method.  Keep all the
+	component canvases in sync.
+
+	* BankObserverSwarm.m ([BankObserverSwarm -_graphCanvasDeath_:]): 
+	New method; drops the canvas and clears the bankModelSwarm canvas.
+	([BankObserverSwarm -buildObjects]): Call enableDestroyNotification
+	on self with method above.
+
+	* BankModelSwarm.m: ([BankModelSwarm -setGraphCanvas:]): If theFNet
+	has been initialized, set it's canvas with the argument too.
+
+1998-01-13  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* BankObserverSwarm.m ([BankObserverSwarm -buildObjects]): 
+	Use CREATE_ARCHIVED_PROBE_DISPLAY to create bankModelSwarm and
+	bankObserverSwarm probe displays.
+
+	* Makefile (SWARMHOME): Default to 1.0.5.
+
+1998-01-12  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* main.m (main): Set basename of observerSwarm.  Minor reformatting.
+
+	* BankObserverSwarm.m ([BankObserverSwarm -buildObjects]): Eliminate
+	inline configuration of GUISwarm.
+
+1998-01-06  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* BankObserverSwarm.m ([BankObserverSwarm -buildObjects]): Adjust
+	for renamed setWindowGeometryRecordName (from
+	setControlPanelGeometryRecordName).
+
+1998-01-06  Alex Lancaster  <alex@wijiji.santafe.edu>
+
+	* BankObserverSwarm.m ([BankObserverSwarm -buildObjects]): Renamed
+	setGraphWindowGeometryRecordName to setWindowGeometryRecordName.
+
+1998-01-05  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* BankObserverSwarm.m ([BankObserverSwarm -buildObjects]): Create
+	controlPanel and actionCache so that the archive name can be set.
+	Use the	setWindowGeometryRecordName version of createProbeDisplayFor
+	for BankModelSwarm and BankObserverSwarm.
+	Call setWindowGeometryRecordName for graphCanvas, investorGraph.
+	Call setGraphWindowGeometryRecordName for activeBanks.
+	Reformatting throughout.
+
+1997-12-12  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* Makefile: Don't define SWARMHOME if it already exists.
+
+	* FNet.m: Use #import instead of #include for tkobjc.h.
+
+	* FEntity.m: Use #import instead of #include for tkobjc.h and
+	simtools.h.
+

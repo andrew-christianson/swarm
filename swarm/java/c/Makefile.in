@@ -49,6 +49,11 @@ all: $(JAVASWARM_DLL) $(LIBJAVASWARM_LA)
 
 $(libjavaswarmstubs_la_OBJECTS): $(top_srcdir)/src/defobj/directory.h
 
+clean:
+	-rm -rf .libs _libs
+	-rm -f *.lo
+	-rm -f *.o
+
 USEDLL = @USEDLL@
 ifeq ($(USEDLL),no)
 install: install-la

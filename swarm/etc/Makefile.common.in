@@ -26,6 +26,7 @@ CFLAGS = @CFLAGS@
 CPPFLAGS = @CPPFLAGS@
 EXPORT_EXTERN = @EXPORT_EXTERN@
 IMPORT_EXTERN = @IMPORT_EXTERN@
+SED = @SED@
 
 OBJC=@OBJC@
 OBJCFLAGS=@OBJCFLAGS@ $(EXTRAOBJCFLAGS)
@@ -75,22 +76,25 @@ SUPPORTLDFLAGS = $(HDF5LDFLAGS) $(FFILDFLAGS) $(PNGLDFLAGS) $(ZLIBLDFLAGS) $(BLT
 
 SYSLIBS = $(BLTLIB) $(TKLIB) $(TCLLIB) $(XPMLIB) $(PNGLIB) $(HDF5LIB) $(ZLIBLIB) $(GUILIBS) -lm $(DLLIB)
 
-SWARMMODULES = $(shell cat $(top_srcdir)/etc/modules)
+SWARMMODULES = $(shell cat $(top_builddir)/etc/modules)
 
 USEDLL=@USEDLL@
+ONELIB=@ONELIB@
 
-ifeq ($(USEDLL),yes)
-ifneq ($(USESTATIC),)
-SWARMLIBS = -lswarm
-OBJCLIBS = -lobjc
+ifeq ($(USEDLL),yes) 
+	ifneq ($(USESTATIC),)
+		DLLCPPFLAGS = -DDLL
+	endif
+	SWARMLIBS = -lswarm
+	OBJCLIBS = -lswarmobjc
 else
-SWARMLIBS = -lswarmdll -lobjcdll
-OBJCLIBS = 
-DLLCPPFLAGS = -DDLL
-endif
-else
-SWARMLIBS = -lswarm
-OBJCLIBS = -lobjc
+	ifeq ($(ONELIB),yes)
+		SWARMLIBS = -lswarm
+		OBJCLIBS =
+	else
+		SWARMLIBS = -lswarm
+		OBJCLIBS = -lswarmobjc
+	endif
 endif
 
 # Local variables:

@@ -1,0 +1,25 @@
+MODULE = space
+CURRENT = 2
+REVISION = 1
+AGE = 0
+spacedir = $(includedir)/space
+
+include $(top_srcdir)/src/Makefile.rules
+
+INCLUDES = $(LIBOBJCINCLUDES) -I$(srcdir)/../collections -I$(srcdir)/../defobj -I$(srcdir)/../activity -I$(srcdir)/../objectbase -I$(srcdir)/../random $(GUIDIRINCLUDE) -I$(srcdir)/../simtools $(SIMTOOLSGUIINCLUDE) -I$(srcdir)/../misc -I.. -I$(srcdir)/.. $(JAVAINCLUDES) $(GNUSTEPLIBINCLUDES)
+
+noinst_LTLIBRARIES = @noinst_LIBS@
+lib_LTLIBRARIES = @inst_LIBS@
+EXTRA_LTLIBRARIES = libspace.la
+
+if DISABLE_GUI
+SRC = Ca2d.m ConwayLife2d.m DblBuffer2d.m Diffuse2d.m Discrete2d.m Grid2d.m Int2dFiler.m
+else
+SRC = Ca2d.m ConwayLife2d.m DblBuffer2d.m Diffuse2d.m Discrete2d.m Grid2d.m Int2dFiler.m Object2dDisplay.m Value2dDisplay.m
+endif
+
+libspace_la_SOURCES = $(SRC)
+libspace_la_LDFLAGS = @inst_LDFLAGS@
+
+space_HEADERS = Ca2d.h ConwayLife2d.h DblBuffer2d.h Diffuse2d.h Discrete2d.h Grid2d.h Int2dFiler.h Object2dDisplay.h Value2dDisplay.h
+

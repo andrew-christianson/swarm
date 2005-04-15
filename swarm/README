@@ -1,11 +1,12 @@
 Welcome to the Swarm distribution.  Full documentation (both online
-and downloadable) can be found at:
-http://www.swarm.org/wiki/Swarm:_documentation
+and downloadable) can be found at: http://www.swarm.org/release-docs.html.
 
-Further information on Swarm can be found at the Swarm website, which
-is now a wiki at:
+Further information on Swarm can be found at the Swarm website at:
 
-  http://www.swarm.org/
+  http://www.swarm.org
+  this is being replaced by the Swarm wiki at:
+  
+  http://wiki.swarm.org
  
 * MacOS X users: 
   please see macosx/README.MacOSX
@@ -93,13 +94,13 @@ to the following format:
 
 SWARMHOME=<path to where Swarm is installed>
 
-For example, on a local system the line may look like this:
+For example, on my system the line looks like this:
 
-SWARMHOME=/home/username/Swarm/swarm-2.2
+SWARMHOME=/net/user/gepr/Swarm/swarm-1.3
 
 if the system admin has installed Swarm it may be:
 
-SWARMHOME=/usr/local/swarm-2.2
+SWARMHOME=/usr/local/swarm-1.3
 
 This points `make' to the Makefile.appl (in the case of applications)
 or Makefile.lib (in the case of libraries) file in the directory in
@@ -115,25 +116,19 @@ an executable found in the current directory.
 B. Binary installation with accompanying source 
 -----------------------------------------------
 
-Binary distributions of Swarm made available for different platforms
-from time-to-time as resources permit.  In the past we have included
-binaries for the following platforms (the relevant package manager
-needed for installing the binary packages on these systems are noted
-in parentheses):
+Binary distributions of Swarm are available for the following
+platforms, the relevant package manager needed for installing the
+binary packages on these systems are noted in parentheses.
 
-* Red Hat/Fedora Core GNU/Linux (rpm)
 * Debian GNU/Linux (dpkg)
+* RedHat GNU/Linux (rpm)
 * Sparc Solaris (pkgadd etc.)
-* Win32 (Cygwin package)
-* MacOS X (Mac installer)
 
-As of early 2005, only Fedora (RPM), Win32 (Cygwin) and MacOS X
-binaries were being actively maintained.  For a list of current
-binaries available, please consult the Swarm release page:
+Please consult the Swarm release page:
 
-  http://www.swarm.org/wiki/Swarm_software
+  http://www.swarm.org/release.html
 
-This has latest information on the operating system versions that are
+for the latest information on the operating system versions that are
 supported and download information.
 
 Details of how to configure your Swarm installation just so, are now

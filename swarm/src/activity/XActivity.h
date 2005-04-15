@@ -64,7 +64,7 @@ Library:      activity
 - (id <Activity>)getControllingActivity;
 - (id <Activity>)getTopLevelActivity;
 - (id <SwarmActivity>)getSwarmActivity;
-- (id <Activity>)getScheduleActivity;
+- (id <ScheduleActivity>)getScheduleActivity;
 - getSubactivities;
 - (void)setSerialMode: (BOOL)serialMode;
 - (BOOL)getSerialMode;

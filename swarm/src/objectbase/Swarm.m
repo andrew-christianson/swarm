@@ -44,7 +44,7 @@ PHASE(Using)
 //   [super activateIn: swarmContext];
 //   [myFancySchedule activateIn: self];
 //   return [self getSwarmActivity];
-- (id <Activity>)activateIn:  swarmContext
+- activateIn:  swarmContext
 {
   [super activateIn: swarmContext];
   return [self getSwarmActivity];

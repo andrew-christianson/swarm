@@ -36,7 +36,7 @@
   long *offsets;
 }
 
-+ create: (id <Zone>)aZone setSizeX: (unsigned)x Y: (unsigned)y;
++ create: aZone setSizeX: (unsigned)x Y: (unsigned)y;
 - setSizeX: (unsigned)x Y: (unsigned)y;
 - createEnd;
 - makeOffsets;
@@ -69,8 +69,8 @@
 - hdf5InCreate: hdf5Obj;
 - hdf5In: hdf5Obj;
 - (void)hdf5OutShallow: hdf5Obj;
-- (void)hdf5OutDeep: (id <OutputStream>)hdf5Obj;
-- (void)lispOutShallow: (id <OutputStream>)stream;
+- (void)hdf5OutDeep: hdf5Obj;
+- (void)lispOutShallow: stream;
 - (void)lispOutDeep: stream;
 @end
 

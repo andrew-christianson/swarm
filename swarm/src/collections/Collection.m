@@ -76,7 +76,7 @@ PHASE(Creating)
 
 PHASE(Using)
 
-- (id <Index>)begin: (id <Zone>)aZone
+- begin: aZone
 {
   raiseEvent (SubclassMustImplement, "begin: not implemented");
   return nil;
@@ -99,7 +99,7 @@ PHASE(Using)
     getField (bits, IndexFromMemberLoc_Shift, IndexFromMemberLoc_Mask) - 2044;
 }
 
-- (id <PermutedIndex>)beginPermuted: (id <Zone>)aZone
+- beginPermuted: aZone
 {
   return [[[PermutedIndex_c createBegin: aZone]
 	    setCollection: self] createEnd];
@@ -437,7 +437,7 @@ PHASE(Creating)
   return obj;
 }
 
-- setCollection: (id <Collection>)aCollection
+- setCollection: aCollection
 {
   [(id <Permutation>) collection setCollection: aCollection];
   return self;

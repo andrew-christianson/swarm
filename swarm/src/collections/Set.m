@@ -147,7 +147,7 @@ PHASE(Using)
   [self forEach: (SEL)aSelector: arg1 : arg2];
 }
 
-- (id <Index>)begin: (id <Zone>)aZone
+- begin: aZone
 {
   SetIndex_c *newIndex;
 

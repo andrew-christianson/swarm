@@ -48,7 +48,7 @@ Library:      collections
 - (void)setIndexFromMemberLoc: (int)byteOffset;
 - (BOOL)getReplaceOnly;
 - (int)getIndexFromMemberLoc;
-- (id <PermutedIndex>)beginPermuted: (id <Zone>)aZone;
+- beginPermuted: aZone;
 - (unsigned)getCount;
 - atOffset: (unsigned)offset;
 - atOffset: (unsigned)offset put: anObject;
@@ -69,7 +69,7 @@ Library:      collections
 - _lispOutAttr_: stream;
 - (BOOL)_lispInAttr_: index;
 - copy: aZone;
-- (id <Index>)begin: (id <Zone>)aZone;
+- begin: aZone;
 @end
 
 @interface Index_any: Object_s <Index>
@@ -99,7 +99,7 @@ Library:      collections
   BOOL nextFlag;
 }
 + createBegin: aZone;
-- setCollection: (id <Collection>)aCollection;
+- setCollection: collection;
 - setUniformRandom: rnd;
 - createEnd;
 - reshuffle;

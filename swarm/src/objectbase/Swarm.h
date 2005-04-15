@@ -27,7 +27,7 @@
 // Override these methods to make useful Swarm subclasses.
 - buildObjects;
 - buildActions;
-- (id <Activity>)activateIn: swarmContext;
+- activateIn: swarmContext;
 // You may also want to override createBegin and createEnd.
 
 // These methods are copied over from SwarmObject - probe support.

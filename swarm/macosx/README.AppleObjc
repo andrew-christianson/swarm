@@ -1,0 +1,48 @@
+README
+======
+
+This document describes the apple_port-branch which replaces the GNU
+ObjC runtime with the Apple ObjC runtime.  This is the first step to
+allow Swarm to be built natively on Mac OSX which opens up the Apple
+Cocoa APIs to be used by Swarm applications.
+
+There are several milestones and some long-term goals:
+
+* Rewrite Create-phase protocol implementation to work with Apple's
+  ObjC runtime.  Done!  Almost, probes still need to be investigated.
+
+* Get Heatbugs running.  Similar to the GNUstep port, I will need classes
+  for Raster and etc.  Hopefully I can use the same code.
+
+* Incorporate (Narrative) graph and plotting classes to replace tcl/tk
+  graphics.
+
+* Swarm running within NSThread, multi-threaded issues, gcc.  Possibly
+  finish out Swarm's ability to dynamically load code using NSBundle,
+  and/or package Swarm agent classes into NSBundles.
+
+* Allow Swarm classes/agents to be palette in GORM.
+
+* Archiving of Swarm objects.
+
+
+Current Progress
+----------------
+
+With the help of many hacks, I am able to compile Swarm and a minimal
+batch version of heatbugs.  Heatbugs currently isn't writing an output
+file so I don't know if it running correctly.  It is also very slow
+because one of my hacks is extremely inefficient, but it ends up being
+called alot.  Next steps are to go through and clean up all the hacks.
+
+
+System Setup
+------------
+
+My development platform is a PowerPC G4 with OSX 10.4.4 with Xcode 2.1.
+
+Authors
+-------
+Scott Christley
+<schristley@mac.com>
+January 22, 2005

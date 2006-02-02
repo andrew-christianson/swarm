@@ -171,8 +171,10 @@ PHASE(Creating)
 {
   id obj = [SwarmEnvironment createBegin];
 
+#if !SWARM_OSX /* TODO */
   if (COM_init_p ())
     swarmDirectory = [Directory create: globalZone];
+#endif
   return [obj _init_: appName version: version bugAddress: bugAddress argCount: count args: args];
 }
 
@@ -314,9 +316,11 @@ _initSwarm_ (int argc, const char **argv, const char *appName,
              BOOL inhibitExecutableSearchFlag)
 {
   id env;
+#if !SWARM_OSX /* TODO */
   void __objc_exec_class_for_all_initial_modules ();
 
   __objc_exec_class_for_all_initial_modules ();
+#endif
   env = [SwarmEnvironment createBegin];
 
 #if DEBUG

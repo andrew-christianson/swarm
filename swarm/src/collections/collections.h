@@ -987,7 +987,7 @@ USING
 - (void)catC: (const char *)cstring;
 
 //M: Writes a boolean to stream in Lisp archiver format
-- (void)catBoolean: (BOOL)bool;
+- (void)catBoolean: (BOOL)aBool;
 
 //M: Writes a character to stream in Lisp archiver format
 - (void)catChar: (char)ch;
@@ -1232,4 +1232,8 @@ CREATING
 - setUniformRandom: rnd;
 @end
 
+#if SWARM_OSX
+#import <collections_types.h>
+#else
 #import <collections/types.h>
+#endif

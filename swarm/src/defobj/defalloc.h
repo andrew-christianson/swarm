@@ -24,7 +24,11 @@ Library:      defobj
 */
 
 #include <swarmconfig.h> // PTRUINT
+#if SWARM_OSX
+#import <defobj_classes.h> // id_Zone_c
+#else
 #import <defobj/classes.h> // id_Zone_c
+#endif
 
 //
 // getZone() --
@@ -42,11 +46,16 @@ Library:      defobj
 //   components
 //
 
+#if SWARM_OSX /* TODO */
+  // yuck, hard-coded reference
+#define getCZone(aZone) (*_obj_getClassData(getClass (aZone))->classID == id_Zone_c ? (((id *)(aZone))[3 + sizeof(struct objc_class)/4]) : aZone)
+#else
 #if 0
 #define getCZone(aZone) \
 ( _obj_debug ? [(aZone) getComponentZone] : ((id *)(aZone))[3] )
 #else
 #define getCZone(aZone) (getClass (aZone) == id_Zone_c ? (((id *)(aZone))[3]) : aZone)
+#endif
 #endif
 
 //

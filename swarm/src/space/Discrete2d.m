@@ -95,6 +95,7 @@ PHASE(Creating)
 
 - hdf5InCreate: hdf5Obj
 {
+#if !SWARM_OSX /* TODO: HDF5 */
   if ([hdf5Obj checkDatasetName: "lattice"])
     {
       id latticeDataset = [[[[[[HDF5 createBegin: [hdf5Obj getZone]]
@@ -158,6 +159,7 @@ PHASE(Creating)
       if (!gotY)
         raiseEvent (InvalidArgument, "missing ysize");
     }
+#endif
   return self;
 }
 
@@ -176,6 +178,7 @@ PHASE(Setting)
 
 - hdf5In: hdf5Obj
 {
+#if !SWARM_OSX /* TODO: HDF5 */
   id aZone = getZone (self);
 
   if ([hdf5Obj checkDatasetName: "lattice"])
@@ -250,6 +253,7 @@ PHASE(Setting)
         }
       [hdf5Obj iterate: process_ivar];
     }
+#endif
   return self;
 }
 
@@ -498,6 +502,7 @@ lispOutLatticeValues (Discrete2d *self, id stream)
 
 - (void)hdf5OutShallow: hdf5Obj
 {
+#if !SWARM_OSX /* TODO: HDF5 */
 
   if (objectFlag)
     {
@@ -579,10 +584,12 @@ lispOutLatticeValues (Discrete2d *self, id stream)
 	[group drop];
       }
     }
+#endif
 }
 
 - (void)hdf5OutDeep: hdf5Obj
 {
+#if !SWARM_OSX /* TODO: HDF5 */
   unsigned x, y;
   id hdf5Zone = [hdf5Obj getZone];
   id latticeHdf5Group;
@@ -616,6 +623,7 @@ lispOutLatticeValues (Discrete2d *self, id stream)
           }
       }
   [latticeHdf5Group drop];
+#endif
 }
   
 // Read in a file in PGM format and load it into a discrete 2d.

@@ -66,10 +66,15 @@ setListClass (id obj, id aClass)
 
   if (getBit (getClass (obj)->info, _CLS_DEFINEDCLASS))
     nextPhase = ((BehaviorPhase_s *) getClass (obj))->nextPhase;
-  
+
   if (nextPhase == id_List_any)
     nextPhase = aClass;
-  
+  else {
+    classData_t classData = _obj_getClassData(nextPhase);
+    if (classData && *classData->classID == id_List_any)
+      nextPhase = aClass;
+  }
+
   setClass (obj, nextPhase);
 }
 

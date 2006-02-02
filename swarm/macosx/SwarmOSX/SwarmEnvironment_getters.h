@@ -1,0 +1,35 @@
+- (id <Arguments>)getArguments;
+- (id <Symbol>)getStart;
+- (id <Symbol>)getMember;
+- (id <Symbol>)getEnd;
+- (id <Symbol>)getInitialized;
+- (id <Symbol>)getRunning;
+- (id <Symbol>)getStopped;
+- (id <Symbol>)getHolding;
+- (id <Symbol>)getReleased;
+- (id <Symbol>)getTerminated;
+- (id <Symbol>)getCompleted;
+- (id <Symbol>)getRandomized;
+- (id <Symbol>)getSequential;
+- (id <Symbol>)getControlStateRunning;
+- (id <Symbol>)getControlStateStopped;
+- (id <Symbol>)getControlStateStepping;
+- (id <Symbol>)getControlStateQuit;
+- (id <Symbol>)getControlStateNextTime;
+- (id <Zone>)getScratchZone;
+- (id <Zone>)getGlobalZone;
+- (id <MT19937gen>)getRandomGenerator;
+- (id <UniformIntegerDist>)getUniformIntRand;
+- (id <UniformDoubleDist>)getUniformDblRand;
+- (id <ProbeLibrary>)getProbeLibrary;
+#if !SWARM_OSX /* TODO */
+- (id <ProbeDisplayManager>)getProbeDisplayManager;
+#endif
+- (id <Archiver>)getHdf5Archiver;
+- (id <Archiver>)getLispArchiver;
+- (id <Archiver>)getHdf5AppArchiver;
+- (id <Archiver>)getLispAppArchiver;
+- (BOOL)getGuiFlag;
+- (id <Symbol>)getLanguageCOM;
+- (id <Symbol>)getLanguageJava;
+- (id <Symbol>)getLanguageObjc;

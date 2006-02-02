@@ -67,6 +67,10 @@ struct message {
   char  *types;
 };
 
+#if SWARM_OSX /* DONE */
+Class *osx_classes = NULL;
+#endif
+
 //
 // _obj_initAlloc() -- allocate memory during initial module definition
 //
@@ -94,22 +98,42 @@ initModules (void)
   Class moduleSuper, class;
   void *enumState, **modules, **module;
   id *nextmod;
+#if SWARM_OSX /* DONE */
+  unsigned i;
+  int numClasses, newNumClasses;
+#endif
 
   // trigger initialization of superclass links and get module superclass
 
   moduleSuper = [Module_super_ self];
 
   // loop through classes to count their number and to chain module objects
+#if SWARM_OSX /* DONE */
+    // get a list of all the classes.
+    numClasses = 0, newNumClasses = objc_getClassList(NULL, 0);
+    while (numClasses < newNumClasses) {
+        numClasses = newNumClasses;
+        osx_classes = realloc(osx_classes, sizeof(Class) * numClasses);
+        newNumClasses = objc_getClassList(osx_classes, numClasses);
+    }
+    printf("# of classes: %d\n", numClasses);
+    _obj_nclasses = numClasses;
 
+    modules = NULL;
+    for (i = 0;i < numClasses; ++i)
+    {
+        class = osx_classes[i];
+#else
   for (modules = NULL, enumState = NULL;
         (class = objc_next_class (&enumState));
        _obj_nclasses++)
     {
+#endif
       if (class->super_class == moduleSuper)
         {
           _obj_nmodules++;
           // get uninitialized module object
-          module = (void **) [class initialize]; 
+          module = (void **) [(Module_super_ *)class initialize]; 
           module[0] = (void *) modules;
           modules = module;
         }
@@ -158,16 +182,22 @@ initModules (void)
 
   _obj_getClassData (id_CreateDrop_s)->classID = &id_CreateDrop_s;
   _obj_getClassData (id_Customize_s)->classID = &id_Customize_s;
-  _obj_getClassData (id_EventType_c)->classID = &id_EventType_c;
+  _obj_getClassData (id_SwarmEventType_c)->classID = &id_SwarmEventType_c;
   _obj_getClassData (id_Symbol_c)->classID = &id_Symbol_c;
   _obj_getClassData (id_Warning_c)->classID = &id_Warning_c;
   _obj_getClassData (id_Error_c)->classID = &id_Error_c;
 
   _obj_splitPhases (id_Error_c);
 
+//#if SWARM_OSX
+//  Symbol  = _obj_getClassData (id_Symbol_c)->initialPhase->isa;
+//  Warning = _obj_getClassData (id_Warning_c)->initialPhase->isa;
+//  Error   = _obj_getClassData (id_Error_c)->initialPhase->isa;
+//#else
   Symbol  = _obj_getClassData (id_Symbol_c)->initialPhase;
   Warning = _obj_getClassData (id_Warning_c)->initialPhase;
   Error   = _obj_getClassData (id_Error_c)->initialPhase;
+//#endif
 
   // initialize 
 
@@ -175,11 +205,11 @@ initModules (void)
 
   // initialize standard allocation zones
 
-  _obj_globalZone  = [Zone create: _obj_initZone];
-  _obj_sessionZone = [Zone create: _obj_initZone];
-  _obj_scratchZone = [Zone create: _obj_initZone];
+  _obj_globalZone  = [SwarmZone create: _obj_initZone];
+  _obj_sessionZone = [SwarmZone create: _obj_initZone];
+  _obj_scratchZone = [SwarmZone create: _obj_initZone];
 
-  _obj_GCFixedRootZone = [Zone createBegin: _obj_initZone];
+  _obj_GCFixedRootZone = [SwarmZone createBegin: _obj_initZone];
   [_obj_GCFixedRootZone setGCFixedRootFlag: YES];
   _obj_GCFixedRootZone = [_obj_GCFixedRootZone createEnd];
 
@@ -474,6 +504,13 @@ PHASE(Using)
 //
 
 @implementation Module_super_
+
+#if SWARM_OSX /* DONE */
++ initialize
+{
+  return self;
+}
+#endif
 
 + self
 {

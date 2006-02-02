@@ -45,6 +45,7 @@ PHASE(Creating)
   [probes setCompareFunction: &p_compare];
   probes = [probes createEnd];
 
+#if !SWARM_OSX
   if (probedObject && !probedClass)
     {
       COMobject cObj = SD_COM_FIND_OBJECT_COM (probedObject);
@@ -55,6 +56,7 @@ PHASE(Creating)
           return self;
         }
     }
+#endif
 #ifdef HAVE_JDK
   if ([probedClass respondsTo: M(isJavaProxy)])
     { 

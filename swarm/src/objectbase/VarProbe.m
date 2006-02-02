@@ -164,9 +164,11 @@ PHASE(Creating)
 
 - _setupCOMVarProbe_
 {
+#if !SWARM_OSX /* TODO */
   probedType =
     objc_type_for_fcall_type (COM_method_param_fcall_type (getterMethod, 0));
   [self _typeSetup_];
+#endif
   return self;
 }
 
@@ -179,7 +181,11 @@ PHASE(Creating)
 
 - _setupObjcVarProbe_
 {
+#if SWARM_OSX /* DONE */
+  struct objc_ivar_list *ivarList;
+#else
   IvarList_t ivarList;
+#endif
   int i;
   
   ivarList = probedClass->ivars;
@@ -454,6 +460,9 @@ static int
 COM_probe_as_int (COMobject cObj,
                   COMmethod getterMethod)
 {
+#if SWARM_OSX /* TODO */
+  return 0;
+#else
   void *params = COM_create_params (1);
   int ret = 0;
   val_t val;
@@ -465,6 +474,7 @@ COM_probe_as_int (COMobject cObj,
   
   COM_free_params (params);
   return  ret;
+#endif
 }
 
 static int
@@ -472,10 +482,12 @@ JS_probe_as_int (COMobject cObj, const char *variableName)
 {
   val_t val;
   int ret = 0;
-  
+
+#if !SWARM_OSX /* TODO */  
   JS_probe_variable (cObj, variableName, &val);
   
   JS_CONVERT (int);
+#endif
   return ret;
 }
 
@@ -496,6 +508,7 @@ objc_probe_as_int (const char *probedType, const types_t *p)
       raiseEvent (WarningMessage,
                   "VarProbe for class %s tried on class %s\n",
                   [probedClass name], [anObject name]);
+#if !SWARM_OSX /* TODO */
   if (language == LanguageCOM)
     return COM_probe_as_int (SD_COM_FIND_OBJECT_COM (anObject),
                              getterMethod);
@@ -508,7 +521,9 @@ objc_probe_as_int (const char *probedType, const types_t *p)
                               java_fieldObject,
                               SD_JAVA_FIND_OBJECT_JAVA (anObject));
 #endif
-  else if (language == LanguageObjc)
+  else
+#endif
+   if (language == LanguageObjc)
     return objc_probe_as_int (probedType, (types_t *) (((void *) anObject) + dataOffset));
   else
     abort ();
@@ -547,6 +562,9 @@ java_probe_as_double (jobject fieldType, jobject field, jobject object)
 static double
 COM_probe_as_double (COMobject cObj, COMmethod getterMethod)
 {
+#if SWARM_OSX /* TODO */
+  return 0.0;
+#else
   void *params = COM_create_params (1);
   val_t val;
   double ret = 0.0;
@@ -558,6 +576,7 @@ COM_probe_as_double (COMobject cObj, COMmethod getterMethod)
 
   COM_free_params (params);
   return ret;
+#endif
 }
 
 static double
@@ -566,9 +585,11 @@ JS_probe_as_double (COMobject cObj, const char *variableName)
   val_t val;
   double ret = 0.0;
 
+#if !SWARM_OSX /* TODO */
   JS_probe_variable (cObj, variableName, &val);
 
   JS_CONVERT (double);
+#endif
   return ret;
 }
 
@@ -591,6 +612,7 @@ objc_probe_as_double (const char *probedType, const types_t *p)
                   [probedClass name],
                   [anObject name]);
   
+#if !SWARM_OSX /* TODO */
   if (language == LanguageCOM)
     return COM_probe_as_double (SD_COM_FIND_OBJECT_COM (anObject),
                                 getterMethod);
@@ -603,7 +625,9 @@ objc_probe_as_double (const char *probedType, const types_t *p)
                                  java_fieldObject,
                                  SD_JAVA_FIND_OBJECT_JAVA (anObject));
 #endif  
-  else if (language == LanguageObjc)
+  else
+#endif
+   if (language == LanguageObjc)
     return objc_probe_as_double (probedType,
                                  (const types_t *)
                                  (((const void *) anObject) + dataOffset));
@@ -744,6 +768,7 @@ COM_probe_as_string (COMobject cObj,
                      id <Symbol> stringReturnType,
                      char *buf)
 {
+#if !SWARM_OSX /* TODO */
   void *params = COM_create_params (1);
   val_t ret;
 
@@ -758,6 +783,7 @@ COM_probe_as_string (COMobject cObj,
                   buf);
 
   COM_free_params (params);
+#endif
 }
 
 static void
@@ -766,6 +792,7 @@ JS_probe_as_string (COMobject cObj, const char *variableName,
                     id <Symbol> stringReturnType,
                     char *buf)
 {
+#if !SWARM_OSX /* TODO */
   val_t val;
 
   JS_probe_variable (cObj, variableName, &val);
@@ -775,6 +802,7 @@ JS_probe_as_string (COMobject cObj, const char *variableName,
                   fmt, precision,
                   stringReturnType,
                   buf);
+#endif
 }
 
 - (const char *)probeAsString: anObject
@@ -789,6 +817,7 @@ JS_probe_as_string (COMobject cObj, const char *variableName,
       sprintf (buf, "VarProbe for class %s tried on class %s\n",
                [probedClass name], [anObject name]);
   
+#if !SWARM_OSX /* TODO */
   if (language == LanguageCOM)
     COM_probe_as_string (SD_COM_FIND_OBJECT_COM (anObject),
                          getterMethod,
@@ -809,7 +838,9 @@ JS_probe_as_string (COMobject cObj, const char *variableName,
                           fmt, precision,
                           buf);
 #endif
-  else if (language == LanguageObjc)
+  else
+#endif
+   if (language == LanguageObjc)
     {
       if (probedType[0] == _C_ARY_B)
         strcpy (buf, "[..]");
@@ -861,6 +892,9 @@ static id
 COM_probe_as_object (COMobject cObj,
                      COMmethod getterMethod)
 {
+#if SWARM_OSX /* TODO */
+  return nil;
+#else
   void *params = COM_create_params (1);
   types_t retBuf;
   id ret;
@@ -872,16 +906,21 @@ COM_probe_as_object (COMobject cObj,
   
   COM_free_params (params);
   return ret;
+#endif
 }
 
 static id
 JS_probe_as_object (COMobject cObj, const char *variableName)
 {
+#if SWARM_OSX /* TODO */
+  return nil;
+#else
   val_t val;
 
   JS_probe_variable (cObj, variableName, &val);
 
   return SD_COM_ENSURE_OBJECT_OBJC (val.val.object);
+#endif
 }
 
 
@@ -892,6 +931,7 @@ JS_probe_as_object (COMobject cObj, const char *variableName)
                 "Invalid type `%s' to retrieve as an object",
                 probedType);
 
+#if !SWARM_OSX /* TODO */
   if (language == LanguageCOM)
     return COM_probe_as_object (SD_COM_FIND_OBJECT_COM (anObject),
                                 getterMethod);
@@ -904,7 +944,9 @@ JS_probe_as_object (COMobject cObj, const char *variableName)
                                  java_fieldObject,
                                  SD_JAVA_FIND_OBJECT_JAVA (anObject));
 #endif
-  else if (language == LanguageObjc)
+  else
+#endif
+   if (language == LanguageObjc)
     return *(id *) [self probeRaw: anObject];
   else
     abort ();
@@ -1335,6 +1377,7 @@ convert_from_string (fcall_type_t type,
 
   if (language == LanguageCOM)
     {
+#if !SWARM_OSX /* TODO */
       void *params = COM_create_params (1);
       val_t val;
       fcall_type_t type = COM_method_param_fcall_type (setterMethod, 0);
@@ -1344,15 +1387,18 @@ convert_from_string (fcall_type_t type,
       COM_set_arg (params, 0, &val);
       COM_method_invoke (setterMethod, SD_COM_FIND_OBJECT_COM (anObject), params);
       COM_free_params (params);
+#endif
     }
   else if (language == LanguageJS)
     {
+#if !SWARM_OSX /* TODO */
       val_t val = [self guessValue: s];
 
       JS_set_variable (SD_COM_FIND_OBJECT_COM (anObject),
                        probedVariable,
                        &val);
       ret = YES;
+#endif
     }
 #ifdef HAVE_JDK
   else if (language == LanguageJava)
@@ -1389,6 +1435,7 @@ convert_from_string (fcall_type_t type,
 
   if (language == LanguageCOM)
     {
+#if !SWARM_OSX /* TODO */
       void *params = COM_create_params (1);
       val_t arg;
       fcall_type_t type = COM_method_param_fcall_type (setterMethod, 0);
@@ -1403,9 +1450,11 @@ convert_from_string (fcall_type_t type,
                          SD_COM_FIND_OBJECT_COM (anObject),
                          params);
       COM_free_params (params);
+#endif
     }
   else if (language == LanguageJS)
     {
+#if !SWARM_OSX /* TODO */
       val_t arg;
 
       arg.type = fcall_type_double;
@@ -1414,6 +1463,7 @@ convert_from_string (fcall_type_t type,
       JS_set_variable (SD_COM_FIND_OBJECT_COM (anObject),
                        probedVariable,
                        &arg);
+#endif
     }
 #ifdef HAVE_JDK
   else if (language == LanguageJava)

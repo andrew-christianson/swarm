@@ -27,7 +27,11 @@ Library:      collections
 #import <defobj/defalloc.h>
 
 #import <collections/List_linked.h>
+#if SWARM_OSX
+#import <collections_classes.h>
+#else
 #import <collections/classes.h>
+#endif
 
 #include <objc/objc-api.h> // object_get_class
 #include <collections/predicates.h> // keywordp, stringp
@@ -236,7 +240,7 @@ PHASE(Setting)
       else if (pairp (member))
         {
           id pair = member;
-          id keyExpr = [pair getCar];
+          id <Copy> keyExpr = [pair getCar];
           id valueExpr = [pair getCdr];
           id key, value;
           
@@ -268,6 +272,7 @@ PHASE(Setting)
 
 - hdf5In: hdf5Obj
 {
+#if !SWARM_OSX /* HDF5 */
   id aZone = getZone (self);
 
   if ([hdf5Obj getDatasetFlag])
@@ -380,6 +385,7 @@ PHASE(Setting)
           [hdf5Obj iterate: process_object];
         }
     }
+#endif
   return self;
 }
 
@@ -877,6 +883,7 @@ hdf5_store_compare_function_attribute (id hdf5Obj, compare_t compareFunc)
 
 - (void)hdf5OutDeep: (id <HDF5>)hdf5Obj 
 {
+#if !SWARM_OSX /* HDF5 */
   id aZone = getZone (self);
   id key, value;
   BOOL keyStringFlag = NO;
@@ -991,10 +998,12 @@ hdf5_store_compare_function_attribute (id hdf5Obj, compare_t compareFunc)
       else 
         abort ();
     }
+#endif
 }
   
 - (void)hdf5OutShallow: (id <HDF5>)hdf5Obj
 {
+#if !SWARM_OSX /* HDF5 */
   if (![self allSameClass])
     raiseEvent (SaveError,
                 "shallow HDF5 serialization on Map must be same type");
@@ -1058,6 +1067,7 @@ hdf5_store_compare_function_attribute (id hdf5Obj, compare_t compareFunc)
       [mi drop];
       [compoundType drop];
     }
+#endif
 }
 
 @end

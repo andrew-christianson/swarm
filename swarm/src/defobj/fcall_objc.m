@@ -23,14 +23,20 @@
 
 #include <swarmconfig.h>
 
+#if !SWARM_OSX /* TODO */
 #ifdef USE_AVCALL
 #include <avcall.h>
+#endif
 
 void
 objc_setup_call (FArguments_c *fa, id obj, SEL sel)
 {
+#if SWARM_OSX /* TODO */
+  printf("objc_setup_call\n");
+#else
   av_ptr (fa->objc_avalist, id, obj);
   av_ptr (fa->objc_avalist, SEL, sel);
+#endif
 }
 
 #define OBJC

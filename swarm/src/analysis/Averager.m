@@ -82,13 +82,23 @@ PHASE(Creating)
     {
       id protoIndex = [target begin: getCZone (getZone (self))];
 
+#if SWARM_OSX /* TODO: method */
+      nextImp = [protoIndex methodForSelector: M(next)];
+      getLocImp = [protoIndex methodForSelector: M(getLoc)];
+#else
       nextImp = [protoIndex methodFor: M(next)];
       getLocImp = [protoIndex methodFor: M(getLoc)];
+#endif
     
       [protoIndex drop];
     }
-  callImp = [self methodFor: M(doubleDynamicCallOn:)];
-  addImp = [self methodFor: M(addValueToAverage:)];
+#if SWARM_OSX /* TODO: method */
+  callImp = [self methodForSelector: M(doubleDynamicCallOn:)];
+  addImp = [self methodForSelector: M(addValueToAverage:)];
+#else
+  callImp = [self methodForSelector: M(doubleDynamicCallOn:)];
+  addImp = [self methodForSelector: M(addValueToAverage:)];
+#endif
   
   setMappedAlloc (self);
   return [super createEnd];

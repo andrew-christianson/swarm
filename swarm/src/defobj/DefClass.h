@@ -23,8 +23,12 @@ Description:  class with variables and/or methods defined at runtime
 Library:      defobj
 */
 
-#import <objc/Object.h>
+#if SWARM_OSX
+#include <objc/objc-runtime.h>
+#else
 #import <objc/objc-api.h>
+#endif
+#import <objc/Object.h>
 
 //
 // type declarations
@@ -38,6 +42,18 @@ typedef struct methodDefs *methodDefs_t;
 @interface Class_s: Object
 {
 @public
+#if SWARM_OSX
+	struct objc_class *superclass;	
+	const char *name;		
+	long version;
+	long info;
+	long instanceSize;
+	struct objc_ivar_list *ivars;
+	struct objc_method_list **methodLists;
+	struct objc_cache *cache;
+ 	struct objc_protocol_list *protocols;
+  Class classPointer;
+#else
   Class_s *superclass;    // object for [super ...] dispatch
   const char *name;       // character string name for class
   long version;           // for archiving (unused)
@@ -46,6 +62,7 @@ typedef struct methodDefs *methodDefs_t;
   void *ivarList;         // compiler-generated list of local ivars
   void *methodList;       // compiler-generated list of local methods
   struct sarray  *dtable; // dispatch table
+#endif
 }
 
 /*** methods in Class_s (inserted from .m file by m2h) ***/
@@ -55,6 +72,20 @@ typedef struct methodDefs *methodDefs_t;
 // _obj_getClassData() -- function to get class data extension structure
 //
 extern classData_t _obj_getClassData (Class_s *class);
+
+#if SWARM_OSX
+//
+// _obj_printMethods() -- function to print instance and class methods for a class
+//
+void _obj_printMethods(char *className);
+
+//
+// _obj_createClass() -- function to add new class to Mac OSX ObjC runtime
+//
+void _obj_createClass(Class_s *aClass);
+void _obj_addInstanceMethodList(methodDefs_t methodDefs, char *name);
+void _obj_addClassMethodList(methodDefs_t methodDefs, char *name);
+#endif
 
 //
 // _obj_initMethodInterfaces() -- generate chain of methods by interface
@@ -99,7 +130,11 @@ void _obj_initMethodInterfaces (Class_s *class);
 @end
 
 // info bit to mark as class created at runtime
+#if SWARM_OSX
+#define _CLS_DEFINEDCLASS  0x400
+#else
 #define _CLS_DEFINEDCLASS  0x100
+#endif
 
 //
 // classData -- extension data for compiled class (accessed by class number)
@@ -118,6 +153,13 @@ struct classData {
 struct methodDefs {
   methodDefs_t  next;
   id interfaceID;
+#if SWARM_OSX /* DONE */
+  Method firstEntry;
+  int count;
+  Method firstClassEntry;
+  int classCount;
+#else
   Method_t firstEntry;
   int count;
+#endif
 };

@@ -17,7 +17,7 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <swarm.h>
+#import "swarmenv.h"
 
 #import <defobj.h>
 #import <collections.h>

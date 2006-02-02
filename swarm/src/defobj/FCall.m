@@ -34,7 +34,9 @@ Library:      defobj
 #ifndef USE_AVCALL
 #undef PACKAGE
 #undef VERSION
+#if !SWARM_OSX /* TODO: ffi */
 #include <ffi.h>
+#endif
 #undef PACKAGE
 #undef VERSION
 #else
@@ -176,6 +178,7 @@ defobj_init_java_call_tables (void *jEnv)
 static void 
 fillHiddenArguments (FCall_c *self)
 {
+#if !SWARM_OSX /* TODO: ffi */
   FArguments_c *fargs = self->fargs;
 
   switch (self->callType)
@@ -229,10 +232,11 @@ fillHiddenArguments (FCall_c *self)
       break;
 #endif
     }
-
+#endif
 }
 
 #ifndef USE_AVCALL
+#if !SWARM_OSX /* TODO: ffi */
 static ffi_type *ffi_types[FCALL_TYPE_COUNT] = {
   &ffi_type_void,
   &ffi_type_uchar, /* boolean */
@@ -255,6 +259,7 @@ static ffi_type *ffi_types[FCALL_TYPE_COUNT] = {
   &ffi_type_pointer 
 };
 #endif
+#endif
 
 static void
 add_ffi_types (FCall_c *fc)
@@ -262,6 +267,7 @@ add_ffi_types (FCall_c *fc)
   unsigned i;
   FArguments_c *fa = fc->fargs;
 
+#ifndef SWARM_OSX /* TODO: ffi */
   if (fc->callType == COMcall)
     {
       fc->COM_params = COM_create_params (fa->assignedArgumentCount + 1);
@@ -328,6 +334,7 @@ add_ffi_types (FCall_c *fc)
         }
 #endif
     }
+#endif
 }
 
 #define UPDATEMETHODNAME(value) { if (methodName) FREEBLOCK (methodName); methodName = STRDUP (value); }
@@ -390,6 +397,9 @@ PHASE(Creating)
 
 - setMethodFromName: (const char *)theMethodName inObject: obj
 {
+#if SWARM_OSX
+  printf("setMethodFromName:\n");
+#else
   COMobject cObj = SD_COM_FIND_OBJECT_COM (obj);
 
   if (cObj)
@@ -420,11 +430,17 @@ PHASE(Creating)
 #endif
       [self setMethodFromSelector: sel inObject: obj];
     }
+#endif
   return self;
 }
 
 - setMethodFromSelector: (SEL)sel inObject: obj
 {
+#if 0 /* SWARM_OSX */
+  targetObject = obj;
+  targetSelector = sel;
+  return self;
+
   COMselector cSel = SD_COM_FIND_SELECTOR_COM (sel);
   
   if (cSel)
@@ -437,6 +453,7 @@ PHASE(Creating)
         UPDATEMETHODNAME (sel_get_name (sel));
       return self;
     }
+#endif
 #ifdef HAVE_JDK
   else if ([fargs getLanguage] == LanguageJava)
     {
@@ -543,6 +560,7 @@ PHASE(Creating)
 #endif
   add_ffi_types (self);
 #ifndef USE_AVCALL
+#if !SWARM_OSX /* TODO: ffi */
   if (callType != COMcall && callType != JScall)
     {
       unsigned res;
@@ -557,6 +575,7 @@ PHASE(Creating)
         raiseEvent (SourceMessage,
                     "Failed while preparing foreign function call\n"); 
     }
+#endif
 #endif
   setMappedAlloc (self);
   setNextPhase (self);
@@ -603,6 +622,7 @@ updateTarget (FCall_c *self, id target)
       updateJavaTarget (self, jObj);
     }
 #endif
+#if !SWARM_OSX /* TODO */
   else if (self->fargs->language == LanguageCOM)
     {
       COMobject cObj = SD_COM_FIND_OBJECT_COM (target);
@@ -610,6 +630,7 @@ updateTarget (FCall_c *self, id target)
        self->gc_fobject = cObj;
       add_ffi_types (self);
     }
+#endif
 }
 
 #ifdef HAVE_JDK
@@ -638,6 +659,16 @@ PHASE(Using)
   return fargs;
 }
 
+- (SEL)getTargetSelector
+{
+  return targetSelector;
+}
+
+- (SEL)getTargetObject
+{
+  return targetObject;
+}
+
 - (void)performCall
 {
 #ifdef HAVE_JDK
@@ -648,6 +679,7 @@ PHASE(Using)
       fargs->pendingGlobalRefFlag = NO;
     }
 #endif
+#ifndef SWARM_OSX
   if (callType == COMcall)
     COM_method_invoke ((COMmethod) fmethod,
                        (COMobject) gc_fobject,
@@ -661,8 +693,8 @@ PHASE(Using)
                      fargs->assignedArgumentCount,
                      &fargs->retVal);
     }
-#ifndef USE_AVCALL
   else
+#ifndef USE_AVCALL
     {
       types_t ret;
       
@@ -781,6 +813,7 @@ PHASE(Using)
 	  fargs->pendingGlobalRefFlag = YES;
 	}
     }
+#endif
 #endif
 }
 
@@ -1029,10 +1062,12 @@ PHASE(Using)
 
 - (void)dropAllocations: (BOOL)componentAlloc
 {
+#if !SWARM_OSX /* TODO */
   if (callType == COMcall)
     COM_free_params (COM_params);
   else if (callType == JScall)
     JS_free_params (COM_params);
+#endif
 #ifdef HAVE_JDK
   else if (callType == javacall)
     {

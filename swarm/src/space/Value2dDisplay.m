@@ -44,7 +44,12 @@ PHASE(Creating)
   displayWidget = r;
   colormap = c;
   
+#if SWARM_OSX /* TODO: method */
+  drawPointImp = [(Object *)r methodForSelector: @selector (drawPointX:Y:Color:)];
+#else
   drawPointImp = [(Object *)r methodFor: @selector (drawPointX:Y:Color:)];
+#endif
+
   return self;
 }
 

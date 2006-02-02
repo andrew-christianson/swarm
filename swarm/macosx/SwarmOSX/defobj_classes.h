@@ -1,0 +1,34 @@
+externvar id id_Archiver_c;
+externvar id id_Application;
+externvar id id_LispArchiver_c;
+externvar id id_Arguments_c;
+externvar id id_CreateDrop_s;
+externvar id id_CreateDrop;
+externvar id id_Customize_s;
+externvar id id_CreateBy_c;
+externvar id id_Create_bycopy;
+externvar id id_Create_bysend;
+externvar id id_Create_byboth;
+externvar id id_Class_s;
+externvar id id_CreatedClass_s;
+externvar id id_BehaviorPhase_s;
+externvar id id_Object_s;
+#if HAVE_HDF5
+externvar id id_HDF5Archiver_c;
+externvar id id_HDF5CompoundType_c;
+externvar id id_HDF5_c;
+#endif
+externvar id id_Type_c;
+externvar id id_ProgramModule_c;
+externvar id id_Module_super_;
+externvar id id_Symbol_c;
+externvar id id_SwarmEventType_c;
+externvar id id_Warning_c;
+externvar id id_Error_c;
+externvar id id_Zone_c;
+externvar id id_ComponentZone_c;
+externvar id id_FCall_c;
+externvar id id_FArguments_c;
+externvar id id_JavaProxy;
+externvar id id_JavaCollection;
+externvar id id_JavaCollectionIndex;

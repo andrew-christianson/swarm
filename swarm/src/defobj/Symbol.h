@@ -37,13 +37,13 @@ Library:      defobj
 - (void)describe: outputCharStream;
 @end
 
-@interface EventType_c: Symbol_c
+@interface SwarmEventType_c: Symbol_c
 /*** methods in EventType_c (inserted from .m file by m2h) ***/
 - (void)raiseEvent;
 - (void)raiseEvent: (const void *)msgString, ...;
 @end
 
-@interface Warning_c: EventType_c
+@interface Warning_c: SwarmEventType_c
 {
 @public
    const char *messageString;

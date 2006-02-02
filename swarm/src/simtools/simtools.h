@@ -22,7 +22,11 @@
 //D: A collection of tools that are only loosely related to each other.
 //D: the class hierarchy is virtually flat.
 
+#ifdef SWARM_OSX
+#import <swarmenv.h>
+#else
 #import <swarm.h>
+#endif
 #import <objectbase.h>
 
 @protocol UName <SwarmObject, CREATABLE>

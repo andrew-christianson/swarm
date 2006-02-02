@@ -30,7 +30,8 @@ Library:      defobj
 // interface marker for methods in class which implement an interface of a type
 //
 #define PHASE(phase_name) \
--(id)_I_##phase_name { return phase_name; }
+-(id)_I_##phase_name { return phase_name; } \
++(id)_C_##phase_name { return phase_name; }
 
 //
 // specific defined interfaces

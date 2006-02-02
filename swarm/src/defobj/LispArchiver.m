@@ -75,7 +75,7 @@ lispProcessPairs (id aZone,
             raiseEvent (InvalidArgument, "Expecting a pair object");
 
           {
-            id key = [consObject getCar];
+            id <Copy> key = [consObject getCar];
             
             if (quotedp (key))
               key = [key getQuotedObject];
@@ -84,7 +84,7 @@ lispProcessPairs (id aZone,
             
             if (archiver_list_p (key))
               {
-                id first = [key getFirst];
+                id <Copy> first = [key getFirst];
                 id last = [key getLast];
                 
                 if (!stringp (first))
@@ -143,9 +143,15 @@ lispProcessApplicationPairs (id aZone,
 
       if (app == nil)
         {
+#if SWARM_OSX
+          app = [Application createBegin: aZone];
+          [app setName: [key getC]];
+          app = [app createEnd];
+#else
           app = [[[Application createBegin: aZone]
                    setName: [key getC]]
                   createEnd];
+#endif
           [applicationMap at: key insert: app];
         }
       else
@@ -194,7 +200,7 @@ PHASE(Creating)
       // Create zone for easy destruction of expressions,
       // but don't drop it yet, since we will be doing
       // lazy evaluation on the saved pairs
-      inStreamZone = [Zone create: getZone (self)];
+      inStreamZone = [SwarmZone create: getZone (self)];
       [self _load_];
     }
   else
@@ -210,9 +216,15 @@ PHASE(Setting)
   
   if ((app = [applicationMap at: appKey]) == nil)
     {
+#if SWARM_OSX
+      app = [Application createBegin: getZone (self)];
+      [app setName: [appKey getC]];
+      [app createEnd];
+#else
       app = [[[Application createBegin: getZone (self)]
                setName: [appKey getC]]
               createEnd];
+#endif
       
       [applicationMap at: appKey insert: app];
     }

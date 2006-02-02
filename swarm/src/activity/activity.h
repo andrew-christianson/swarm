@@ -1009,4 +1009,8 @@ externvar BOOL (*_activity_trace) (id);
 //
 // include automatically generated definitions for activity package
 //
+#if SWARM_OSX
+#import <activity_types.h>
+#else
 #import <activity/types.h>
+#endif

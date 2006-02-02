@@ -29,10 +29,14 @@
   if (currentCount == TESTCASE) // no instantiation chosen:
   [InvalidCombination raiseEvent:
   "%s not Initialized with a Seed!\n", genName];
- 
+
+#if SWARM_OSX /* TODO: method */
+  getUnsignedSample =
+    (unsigned (*) (id, SEL))[self methodForSelector: M(getUnsignedSample)];
+#else
   getUnsignedSample =
     (unsigned (*) (id, SEL))[self methodFor: M(getUnsignedSample)];
-
+#endif
 
 
   return [super createEnd];

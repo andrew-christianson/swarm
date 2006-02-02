@@ -63,15 +63,17 @@ externvardef id id_JavaClassProxy;
 void
 _defobj_implement (void)
 {
-  [id_Zone_c setTypeImplemented: Zone];
+  [id_Zone_c setTypeImplemented: SwarmZone];
   [id_Symbol_c setTypeImplemented: Symbol];
   [id_Warning_c setTypeImplemented: Warning];
   [id_Error_c setTypeImplemented: Error];
   [id_Arguments_c setTypeImplemented: Arguments];
   [id_LispArchiver_c setTypeImplemented: LispArchiver];
+#if !SWARM_OSX /* TODO: HDF5 */
   [id_HDF5Archiver_c setTypeImplemented: HDF5Archiver];
   [id_HDF5_c setTypeImplemented: HDF5];
   [id_HDF5CompoundType_c setTypeImplemented: HDF5CompoundType];
+#endif
   [id_FCall_c setTypeImplemented: FCall];
   [id_FArguments_c setTypeImplemented: FArguments];
 }
@@ -157,10 +159,16 @@ findTypeOrLocalClass (const char *name)
 void
 initDefobj (id <Arguments> _arguments)
 {
+#if !SWARM_OSX /* TODO */
   id_JavaClassProxy = [JavaClassProxy self];
+#endif
 
   arguments = _arguments;
+#if SWARM_OSX /* TODO */
+  printf("initDefObj()\n");
+#else
   _objc_lookup_class = findTypeOrLocalClass;
+#endif
   {
     BOOL inhibitLoadFlag =
       ([arguments getInhibitArchiverLoadFlag] |

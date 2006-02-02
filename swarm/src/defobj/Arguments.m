@@ -117,11 +117,14 @@ static error_t
 parse_opt (int key, const char *arg, struct argp_state *state)
 {
   id arguments = state->input;
-
   // This is here because objc_lookup_class doesn't check for
   // foreign targets.  It is one of the few cases where Swarm
   // sends a message outside of the Action framework.
 
+#if SWARM_OSX
+  printf("TODO: Arguments.m: parse_opt\n");
+  error_t ret = 0;
+#else
   id fa = [FArguments createBegin: getCZone (scratchZone)];
   id fc;
   error_t ret;
@@ -150,6 +153,7 @@ parse_opt (int key, const char *arg, struct argp_state *state)
   ret = ((types_t *) [fc getResult])->sint;
   [fc drop];
   [fa drop];
+#endif
   return ret;
 }
 

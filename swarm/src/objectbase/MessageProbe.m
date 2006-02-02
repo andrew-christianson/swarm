@@ -70,6 +70,7 @@ PHASE(Creating)
   
   [super createEnd];
 
+#if !SWARM_OSX /* TODO */
   probedSelector = sel_get_any_typed_uid (probedMethodName);
   if (probedObject)
     {
@@ -78,6 +79,7 @@ PHASE(Creating)
       dynamicArgumentsFlag = COM_is_javascript (cObject);
       probedType = NULL;
     }
+#endif
   if (!dynamicArgumentsFlag)
     {
       if (!probedSelector)
@@ -86,6 +88,7 @@ PHASE(Creating)
           [self drop]; 
           return nil;
         }
+#if !SWARM_OSX /* TODO */
       if (!sel_get_type (probedSelector))
         {
           raiseEvent (WarningMessage, "Type for selector does not exist");
@@ -93,6 +96,7 @@ PHASE(Creating)
           return nil;
         }
       probedType = GSTRDUP (sel_get_type (probedSelector));
+#endif
     }
   {
     unsigned argCount = [self getArgCount];
@@ -170,11 +174,13 @@ nth_type (const char *type, unsigned which)
     return get_number_of_arguments (probedType) - 2;
   else if (probedObject)
     {
+#if !SWARM_OSX /* TODO */
       COMobject cObj = SD_COM_FIND_OBJECT_COM (probedObject);
       
       if (COM_is_javascript (cObj))
         return JS_method_arg_count (cObj, probedMethodName);
       else
+#endif
         abort ();
     }
   else

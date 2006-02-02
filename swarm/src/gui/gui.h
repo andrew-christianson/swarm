@@ -979,7 +979,9 @@ extern void initTkObjc (id arguments);
 @class ZoomRaster;
 
 @class Circle;
+#if !SWARM_OSX /* TODO */
 @class Line;
+#endif
 @class NodeItem;
 @class Rectangle;
 @class ScheduleItem;

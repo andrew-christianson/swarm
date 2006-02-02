@@ -37,6 +37,10 @@
 #import "java.h"
 #endif
 
+#if SWARM_OSX
+#import <defobj/FCall.h>
+#endif
+
 void
 ADD_PRIMITIVE (FArguments_c *fa, fcall_type_t type, void *val)
 {
@@ -116,9 +120,15 @@ ADD_PRIMITIVE (FArguments_c *fa, fcall_type_t type, void *val)
     }
 }
 
+#if 0 /* SWARM_OSX */ /* TODO */
 void
 SET_RETURN_TYPE (FCall_c *fc)
 {
+#else
+void
+SET_RETURN_TYPE (FCall_c *fc)
+{
+  printf("SWARM_OSX SET_RETURN_TYPE\n");
   FArguments_c *fa = fc->fargs;
   void (*func) (void) = fc->ffunction;
 
@@ -190,11 +200,16 @@ SET_RETURN_TYPE (FCall_c *fc)
       av_start_ptr (AVALIST (fa), func, void *, &fa->retVal.val.object);
       break;
     }
+#endif
 }
 
 
 void
 AV_CALL (FArguments_c *fa)
 {
+#if SWARM_OSX /* TODO */
+  printf("SWARM_OSX AV_CALL\n");
+#else
   av_call (AVALIST (fa));
+#endif
 }

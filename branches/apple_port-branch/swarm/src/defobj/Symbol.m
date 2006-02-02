@@ -71,7 +71,7 @@ PHASE(Using)
 @end
 
 
-@implementation EventType_c
+@implementation SwarmEventType_c
 
 - (void) raiseEvent
 {

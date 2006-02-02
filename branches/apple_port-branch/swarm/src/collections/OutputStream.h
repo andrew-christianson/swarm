@@ -43,7 +43,7 @@ Library:     collections
 - getExpr;
 - (void)catC: (const char *)cstring;
 - (void)catLiteral: (const char *)cstring;
-- (void)catBoolean: (BOOL)bool;
+- (void)catBoolean: (BOOL)aBool;
 - (void)catChar: (char)ch;
 - (void)catFloat: (float)flt;
 - (void)catDouble: (double)dbl;

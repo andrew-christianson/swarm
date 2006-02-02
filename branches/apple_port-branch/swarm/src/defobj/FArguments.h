@@ -29,8 +29,10 @@ Library:      defobj
 #import "internal.h"
 
 #include <swarmconfig.h>
+#if !SWARM_OSX /* TODO */
 #ifdef USE_AVCALL
 #include <avcall.h>
+#endif
 #endif
 
 #define MAX_ARGS 10
@@ -52,8 +54,13 @@ Library:      defobj
    void *ffiArgTypes[MAX_TOTAL];
    void *ffiReturnType;
 #else
+#if SWARM_OSX /* TODO */
+   void *java_avalist;
+   void *objc_avalist;
+#else
    av_alist java_avalist;
    av_alist objc_avalist;
+#endif
 #endif
    void *result;
    const char *javaSignature; 

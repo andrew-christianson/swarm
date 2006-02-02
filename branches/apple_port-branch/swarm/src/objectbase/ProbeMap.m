@@ -33,7 +33,9 @@
 #import "../defobj/java.h" // SD_JAVA_ENSURE_SELECTOR_OBJC, SD_JAVA_FIND_OBJECT_JAVA, java_field_usable_p
 #import "../defobj/javavars.h" // m_*, c_*
 #endif
+#if !SWARM_OSX /* TODO */
 #import "../defobj/COM.h" // SD_COM_ENSURE_CLASS_COM, COM_collect_methods
+#endif
 
 @implementation ProbeMap
 PHASE(Creating)
@@ -167,6 +169,7 @@ PHASE(Creating)
 
 - setProbedObject: anObject
 {
+#if !SWARM_OSX /* TODO */
   COMobject cObj = SD_COM_FIND_OBJECT_COM (anObject);
 
   probedObject = anObject;
@@ -174,6 +177,7 @@ PHASE(Creating)
   if (cObj && COM_is_javascript (cObj))
     probedClass = Nil;
   else
+#endif
     [self setProbedClass: SD_GETCLASS (anObject)];
   return self;
 }
@@ -250,9 +254,11 @@ PHASE(Creating)
                setter: (COMmethod)setter
 {
   VarProbe *varProbe = [VarProbe createBegin: getZone (self)];
-  
+
+#if !SWARM_OSX /* TODO */  
   [varProbe setProbedVariable: COM_method_name (getter)];
   [varProbe setProbedClass: SD_COM_ENSURE_CLASS_OBJC (cClass)];
+#endif
   [varProbe setProbedCOMgetter: getter setter: setter];
 
   [self _finishVarProbe_: varProbe];
@@ -397,7 +403,8 @@ PHASE(Creating)
 #endif
 
 - (void)addObjcFields: (Class)aClass
-{ 
+{
+#if !SWARM_OSX /* TODO */
   IvarList_t ivarList;
 
   if ((ivarList = aClass->ivars))
@@ -408,10 +415,12 @@ PHASE(Creating)
           [self _addVarProbeForClass_: aClass
                 variableName: ivarList->ivar_list[i].ivar_name];
     }
+#endif
 }
 
 - (void)addObjcMethods: (Class)aClass
 {
+#if !SWARM_OSX /* TODO */
   MethodList_t methodList;
 
   if ((methodList = aClass->methods))
@@ -422,10 +431,12 @@ PHASE(Creating)
         [self _addMessageProbe_: aClass
               selector: methodList->method_list[i - 1].method_name];
     }
+#endif
 }
 
 - (void)addCOMFields: (COMclass)cClass
 {
+#if !SWARM_OSX /* TODO */
   void collect_variable (COMmethod getterMethod, COMmethod setterMethod)
     {
       [self _addVarProbe_: cClass
@@ -437,10 +448,12 @@ PHASE(Creating)
     abort ();
 
   COM_collect_variables (cClass, collect_variable);
+#endif
 }
 
 - (void)addCOMMethods: (COMclass)cClass
 {
+#if !SWARM_OSX /* TODO */
   void collect_method (COMmethod method)
     {
       COMselector cSel = COM_selector_create (method);
@@ -453,26 +466,31 @@ PHASE(Creating)
     abort ();
   
   COM_collect_methods (cClass, collect_method);
+#endif
 }
 
 - (void)addJSFields: (COMobject)cObj
 {
+#if !SWARM_OSX /* TODO */
   void collect (const char *variableName)
     {
       [self _addVarProbeForObject_: SD_COM_ENSURE_OBJECT_OBJC (cObj)
             variableName: variableName];
     }
   JS_collect_variables (cObj, collect);
+#endif
 }
 
 - (void)addJSMethods: (COMobject)cObj
 {
+#if !SWARM_OSX /* TODO */
   void collect (const char *methodName)
     {
       [self _addMessageProbe_: SD_COM_ENSURE_OBJECT_OBJC (cObj)
             methodName: methodName];
     }
   JS_collect_methods (cObj, collect);
+#endif
 }
   
 - createEnd
@@ -493,6 +511,7 @@ PHASE(Creating)
   [probes setCompareFunction: &p_compare];
   probes = [probes createEnd];  
 
+#if !SWARM_OSX /* TODO */
   if (COM_init_p ())
     {
       if (probedClass)
@@ -536,6 +555,7 @@ PHASE(Creating)
     }
 #endif
   else
+#endif
     {
       [self addObjcFields: probedClass];
       [self addObjcMethods: probedClass];

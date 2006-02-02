@@ -24,7 +24,9 @@
 #import <space/Object2dDisplay.h>
 #import <space/Discrete2d.h> // discrete2dSiteAt
 #import <gui.h> // GUI_BEEP
+#if !SWARM_OSX /* TODO */
 #import <simtoolsgui.h> // CREATE_PROBE_DISPLAY
+#endif
 #import <defobj.h> // ProtocolViolation
 
 @implementation Object2dDisplay
@@ -127,11 +129,13 @@ PHASE(Using)
       && y < [discrete2d getSizeY])
     {
       obj = [discrete2d getObjectAtX: x Y: y];
+#if !SWARM_OSX /* TODO */
       if (obj)
         CREATE_PROBE_DISPLAY (obj);
 #ifndef GNUSTEP
       else
         GUI_BEEP ();
+#endif
 #endif
     }
   else

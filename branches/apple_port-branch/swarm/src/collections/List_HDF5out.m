@@ -16,11 +16,14 @@
 	  
 	  sprintf (buf, "%u", rn);
 	  
+#if SWARM_OSX
+#else
 	  itemGroup = [[[[[HDF5 createBegin: getCZone (getZone (self))]
 			   setParent: hdf5Obj]
 			  setWriteFlag: YES]
 			 setName: buf]
 			createEnd];
+#endif
 	  
 	  [member hdf5OutDeep: itemGroup];
 	  [itemGroup drop];
@@ -37,10 +40,14 @@
   else
     {
       id memberProto = [self getFirst];
+#if SWARM_OSX
+      id hdf5CompoundType;
+      id hdf5ObjDataset;
+#else
       id hdf5CompoundType = [[[HDF5CompoundType createBegin: getCZone (getZone (self))]
                                setPrototype: memberProto]
                               createEnd];
-      
+
       id hdf5ObjDataset =
         [[[[[[[HDF5 createBegin: getCZone (getZone (self))]
                setName: [hdf5Obj getHDF5Name]]
@@ -49,6 +56,7 @@
             setCompoundType: hdf5CompoundType]
            setCount: [self getCount]]
           createEnd];
+#endif
       
       [hdf5ObjDataset storeTypeName: [self getTypeName]];
       [hdf5ObjDataset storeComponentTypeName: [memberProto getTypeName]];

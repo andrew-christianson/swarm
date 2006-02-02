@@ -272,10 +272,16 @@ checkArchiver (id aZone, BOOL hdf5Flag, BOOL deepFlag, BOOL updateFlag)
   return ret;
 }
 
+#if SWARM_OSX
+int
+test_archiving()
+{
+#else
 int
 main (int argc, const char **argv)
 {
   initSwarmBatch (argc, argv);
+#endif
 
   if (checkArchiver (globalZone, NO, NO, YES) == NO)
     raiseEvent (InternalError, 

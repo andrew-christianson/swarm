@@ -172,6 +172,8 @@ PHASE(Using)
   Object_s *newObject;
   size_t size = aClass->instance_size;
 
+  if (!size) printf("ERROR: instance size is zero: %s\n", aClass->name);
+  
   //!! need to guarantee that class inherits from Object_s, to define slot
   //!! for zbits
 
@@ -243,8 +245,13 @@ PHASE(Using)
   size = getClass (anObject)->instance_size;
   index = MLIST_CREATEINDEX_FROMMEMBER (population, getCZone (scratchZone), anObject);
   MLIST_INDEX_REMOVE (index);
+#if SWARM_OSX /* TODO: DROP */
   DROP (index);
   populationTotal -= size;
+#else
+  DROP (index);
+  populationTotal -= size;
+#endif
 
 
   if (_obj_debug)

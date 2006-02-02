@@ -207,10 +207,16 @@ readString (id inStream, char terminator)
             
                 if (newObj == nil)
                   [self _unexpectedEOF_];
-            
+
+#if SWARM_OSX
+                id anObj = [ArchiverArray createBegin: aZone];
+                [anObj setArray: newObj];
+                return [anObj createEnd];
+#else
                 return [[[ArchiverArray createBegin: aZone]
                           setArray: newObj]
                          createEnd];
+#endif
               }
             }
           else if (c2 == '\\')

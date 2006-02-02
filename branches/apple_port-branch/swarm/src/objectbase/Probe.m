@@ -131,6 +131,7 @@ PHASE(Using)
 
 - setProbedObject: anObject
 {
+#if !SWARM_OSX /* TODO */
   COMobject cObj = SD_COM_FIND_OBJECT_COM (anObject);
 
   probedObject = anObject;
@@ -141,6 +142,7 @@ PHASE(Using)
       language = LanguageJS;
     }
   else
+#endif
     [self setProbedClass: SD_GETCLASS (anObject)];
   return self;
 }

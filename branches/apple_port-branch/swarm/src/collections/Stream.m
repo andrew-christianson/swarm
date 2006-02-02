@@ -288,7 +288,7 @@ PHASE(Creating)
 - setBoolean: (BOOL)val
 {
   type = fcall_type_boolean;
-  value.bool = val;
+  value.b = val;
   return self;
 }
 
@@ -398,7 +398,7 @@ PHASE(Using)
   switch (type)
     {
     case fcall_type_boolean:
-      [stream catBoolean: value.bool];
+      [stream catBoolean: value.b];
       break;
     case fcall_type_schar: case fcall_type_uchar:
       [stream catChar: value.ch];

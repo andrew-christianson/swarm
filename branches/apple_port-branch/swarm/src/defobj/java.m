@@ -1980,6 +1980,7 @@ swarm_directory_java_ensure_selector (jobject jsel)
             (*jniEnv)->DeleteLocalRef (jniEnv, lref);
           }
       
+#if !SWARM_OSX /* TODO */
         sel = sel_get_any_typed_uid (name);
         {
           BOOL needSelector = NO;
@@ -1996,7 +1997,6 @@ swarm_directory_java_ensure_selector (jobject jsel)
 #endif
                   needSelector = YES;
                 }
-              
             }
           else
             needSelector = YES;
@@ -2009,6 +2009,7 @@ swarm_directory_java_ensure_selector (jobject jsel)
               sel = sel_register_typed_name (name, type);
             }
         }
+#endif              
       }
       
       SD_JAVA_ADD_SELECTOR (jsel, sel);

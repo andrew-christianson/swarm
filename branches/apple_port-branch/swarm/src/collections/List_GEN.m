@@ -240,7 +240,11 @@ PHASE(UsingOnly)
 {
   TINDEX *newIndex;
 
+#if SWARM_OSX
+  newIndex = [aZone allocIVars: [TINDEX self]];
+#else
   newIndex = [aZone allocIVars: TINDEXCLASS];
+#endif
   newIndex->collection = self;
   newIndex->link = (link_t) Start;
   newIndex->position = 0;

@@ -43,7 +43,7 @@
     double d;
     float f;
     long long ll;
-    BOOL bool;
+    BOOL b;
     char ch;
     id obj;
     Class class;

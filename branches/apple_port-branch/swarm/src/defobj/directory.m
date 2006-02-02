@@ -37,7 +37,9 @@
 #ifdef HAVE_JDK
 #import "java.h" // swarm_directory_java_{hash_code,find_class_named}, SD_JAVA_FIND_OBJECT_JAVA
 #endif
+#if !SWARM_OSX /* TODO */
 #import "COM.h" // SD_COM_FIND_OBJECT_COM
+#endif
 
 Directory *swarmDirectory = nil;
 
@@ -70,6 +72,7 @@ swarm_directory_entry_drop (DirectoryEntry *entry)
 {
   if (type == foreign_COM)
     {
+#if !SWARM_OSX /* TODO */
       const char *className = COM_class_name (foreignObject.COM);
       
       [outputCharStream catC: "  COM: "];
@@ -78,6 +81,7 @@ swarm_directory_entry_drop (DirectoryEntry *entry)
       [outputCharStream catPointer: foreignObject.COM];
       [outputCharStream catC: "\n"];
       FREECLASSNAME (className);
+#endif
     }
 #ifdef HAVE_JDK
   else if (type == foreign_java)
@@ -343,6 +347,7 @@ Class
 swarm_directory_ensure_class_named (const char *className)
 {
   Class objcClass = Nil;
+#if !SWARM_OSX /* TODO */
   COMclass cClass;
 
   if (swarmDirectory)
@@ -355,6 +360,7 @@ swarm_directory_ensure_class_named (const char *className)
 #endif
     }
   if (!objcClass)
+#endif
     objcClass = objc_lookup_class (className);
   return objcClass;
 }
@@ -366,6 +372,7 @@ swarm_directory_swarm_class (id object)
   
   if (entry)
     {
+#if !SWARM_OSX /* TODO */
       if (entry->type == foreign_COM)
         {
           COMobject cObj = SD_COM_FIND_OBJECT_COM (object);
@@ -376,6 +383,7 @@ swarm_directory_swarm_class (id object)
           else
             return Nil; // JavaScript or non-Swarm objects
         }
+#endif
 #ifdef HAVE_JDK
       if (entry->type == foreign_java)
         {
@@ -394,8 +402,10 @@ swarm_directory_swarm_class (id object)
 Class
 swarm_directory_superclass (Class class)
 {
+#if !SWARM_OSX /* TODO */
   if (SD_COM_FIND_CLASS_COM (class))
     abort ();
+#endif
 #ifdef HAVE_JDK
   else
     {
@@ -433,11 +443,13 @@ swarm_directory_language_independent_class_name_for_objc_object  (id oObj)
     {
       if (entry->type == foreign_COM)
         {
+#if !SWARM_OSX /* TODO */
           COMobject cObj;
           
           if ((cObj = SD_COM_FIND_OBJECT_COM (oObj)))
             // already copied
             return COM_class_name (cObj);
+#endif
         }
 #ifdef HAVE_JDK
       else if (entry->type == foreign_java)
@@ -494,12 +506,14 @@ language_independent_class_name_for_objc_class (Class oClass)
 
   if ([(id) oClass isInstance])
     {
+#if !SWARM_OSX /* TODO */
       // It should be there.  SD_COM_FIND_CLASS_COM would recurse.
       COMclass cClass = SD_COM_FIND_OBJECT_COM (oClass); 
 
       if (cClass)
         className = SSTRDUP (COM_get_class_name (cClass));
       else
+#endif
 #ifdef HAVE_JDK
         {
           // Likewise.

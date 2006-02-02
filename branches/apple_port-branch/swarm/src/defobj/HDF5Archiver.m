@@ -42,6 +42,21 @@ hdf5_create_app_group (const char *appKey, id hdf5Obj)
     {
       *modeKey = '\0';
       modeKey++;
+#if SWARM_OSX
+      hdf5AppObj = [[[HDF5 createBegin: [hdf5Obj getZone]]
+                        setWriteFlag: YES]
+                       setParent: hdf5Obj];
+      [hdf5AppObj setName: newAppKey];
+      hdf5AppObj = [hdf5AppObj createEnd];
+    }
+  else
+    raiseEvent (InvalidArgument, "expecting composite app/mode key");
+  id obj = [[HDF5 createBegin: [hdf5AppObj getZone]]
+              setParent: hdf5AppObj];
+  [obj setName: modeKey];
+  return [[obj setWriteFlag: YES]
+           createEnd];
+#else
       hdf5AppObj = [[[[[HDF5 createBegin: [hdf5Obj getZone]]
                         setWriteFlag: YES]
                        setParent: hdf5Obj]
@@ -55,6 +70,7 @@ hdf5_create_app_group (const char *appKey, id hdf5Obj)
              setName: modeKey]
             setWriteFlag: YES]
            createEnd];
+#endif
 }
 
 PHASE(Creating)
@@ -90,11 +106,19 @@ PHASE(Creating)
   
   [super createEnd];
 
+#if SWARM_OSX
+  appFile = [[[HDF5 createBegin: getZone (self)]
+                 setWriteFlag: NO]
+                setParent: nil];
+  [appFile setName: path];
+  [appFile createEnd];
+#else
   appFile = [[[[[HDF5 createBegin: getZone (self)]
                  setWriteFlag: NO]
                 setParent: nil]
                setName: path]
               createEnd];
+#endif
   [self ensureApp: appFile];
   return self;
 }
@@ -152,11 +176,19 @@ PHASE(Using)
           [hdf5Obj drop];
         }
     }
+#if SWARM_OSX
+  hdf5Obj = [[[HDF5 createBegin: getZone (self)]
+                 setWriteFlag: YES]
+                setParent: nil];
+  [hdf5Obj setName: path];
+  hdf5Obj = [hdf5Obj createEnd];
+#else
   hdf5Obj = [[[[[HDF5 createBegin: getZone (self)]
                  setWriteFlag: YES]
                 setParent: nil]
                setName: path]
               createEnd];
+#endif
   
   if (systemArchiverFlag)
     hdf5Obj = hdf5_create_app_group ([currentApplicationKey getC], hdf5Obj);
@@ -167,11 +199,19 @@ PHASE(Using)
 
 - (void)putDeep: (const char *)key object: object
 {
+#if SWARM_OSX
+  id group = [[[HDF5 createBegin: getZone (self)]
+                  setWriteFlag: YES]
+                 setParent: [self getWritableController]];
+  [group setName: key];
+  group = [group createEnd];
+#else
   id group = [[[[[HDF5 createBegin: getZone (self)]
                   setWriteFlag: YES]
                  setParent: [self getWritableController]]
                 setName: key]
                createEnd];
+#endif
 
   if (!group)
     abort ();
@@ -181,12 +221,21 @@ PHASE(Using)
 
 - (void)putShallow: (const char *)key object: object
 {
+#if SWARM_OSX
+  id dataset = [[[[HDF5 createBegin: getZone (self)]
+                     setWriteFlag: YES]
+                    setParent: [self getWritableController]]
+                   setDatasetFlag: YES];
+  [dataset setName: key];
+  dataset = [dataset createEnd];
+#else
   id dataset = [[[[[[HDF5 createBegin: getZone (self)]
                      setWriteFlag: YES]
                     setParent: [self getWritableController]]
                    setDatasetFlag: YES]
                   setName: key]
                  createEnd];
+#endif
   if (!dataset)
     abort ();
   [object hdf5OutShallow: dataset];
@@ -200,11 +249,19 @@ PHASE(Using)
   
   if (parent)
     {
+#if SWARM_OSX
+      id <HDF5> hdf5Obj = [[[HDF5 createBegin: getZone (self)]
+                               setParent: parent]
+                              setDatasetFlag: [parent checkDatasetName: key]];
+      [hdf5Obj setName: key];
+      hdf5Obj = [hdf5Obj createEnd];
+#else
       id <HDF5> hdf5Obj = [[[[[HDF5 createBegin: getZone (self)]
                                setParent: parent]
                               setDatasetFlag: [parent checkDatasetName: key]]
                              setName: key]
                             createEnd];
+#endif
       
       if (hdf5Obj)
         {

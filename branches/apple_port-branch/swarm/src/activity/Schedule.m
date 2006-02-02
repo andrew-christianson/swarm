@@ -26,7 +26,11 @@ Library:      activity
 #import <activity/Schedule.h>
 #import <activity/ActionGroup.h>
 #import <defobj/defalloc.h>
+#if SWARM_OSX
+#import <activity_classes.h>
+#else
 #import <activity/classes.h>
+#endif
 #include <misc.h> // abort
 
 #import <collections/List_mlinks.h> // beginMlinksList
@@ -514,9 +518,15 @@ _activity_insertAction (Schedule_c *self, timeval_t tVal, CAction *anAction)
   id  removedAction, emptyAction;
 
 #ifndef FAST
+#if SWARM_OSX
+  if (_obj_debug && ![anAction conformsToProtocol: @protocol (Action)])
+    raiseEvent (InvalidArgument,
+                "> object to be removed from schedule is not an action\n");
+#else
   if (_obj_debug && ![anAction conformsTo: @protocol (Action)])
     raiseEvent (InvalidArgument,
                 "> object to be removed from schedule is not an action\n");
+#endif
 #endif
 
   if (((CAction *) anAction)->owner == (id) self)
@@ -525,12 +535,18 @@ _activity_insertAction (Schedule_c *self, timeval_t tVal, CAction *anAction)
     {
       // concurrent group
 #ifndef FAST
+#if SWARM_OSX
+      if (_obj_debug && ![((CAction *) anAction)->owner conformsToProtocol: @protocol (ConcurrentGroup)])
+        raiseEvent (InvalidArgument,
+                    "> action to be removed from schedule does not belong to schedule\n");
+#else
       if (_obj_debug && ![((CAction *) anAction)->owner conformsTo: @protocol (ConcurrentGroup)])
         raiseEvent (InvalidArgument,
                     "> action to be removed from schedule does not belong to schedule\n");
 #endif
+#endif
       
-      removedAction = [(id) ((CAction *) anAction)->owner remove: anAction];
+      removedAction = [(id <Collection>) ((CAction *) anAction)->owner remove: anAction];
       
       emptyAction =
         [(id) ((CAction *) anAction)->owner _getEmptyActionConcurrent_];
@@ -1297,12 +1313,22 @@ PHASE(Using)
       // Avoid leaving behind invalid owners in mergeAction
       // `owner' is used in [Schedule remove:], for example
       // first do some common cases before expensive conformsTo
+#if SWARM_OSX
+#ifdef FAST
+      if (class != id_Schedule_c)
+        if (class == id_ActivationOrder_c || class == id_ConcurrentSchedule_c
+            || [collection conformsToProtocol: @protocol (ConcurrentSchedule)])
+#else
+      if ([collection conformsToProtocol: @protocol (ConcurrentSchedule)])
+#endif
+#else
 #ifdef FAST
       if (class != id_Schedule_c)
         if (class == id_ActivationOrder_c || class == id_ConcurrentSchedule_c
             || [collection conformsTo: @protocol (ConcurrentSchedule)])
 #else
       if ([collection conformsTo: @protocol (ConcurrentSchedule)])
+#endif
 #endif
 {
           removedAction->owner =

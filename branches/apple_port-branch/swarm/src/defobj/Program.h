@@ -40,6 +40,10 @@ extern void _obj_setTypeImplemented (id, id);
   id *typeID;          // global id variable containing type
   id implementation;   // class that implements create phase, if any
   id supertypes;       // other types from which type inherits
+#if SWARM_OSX
+  id filler1;
+  id filler2;
+#endif
 }
 /*** methods in Type_c (inserted from .m file by m2h) ***/
 - (BOOL)getCreatable;
@@ -70,5 +74,8 @@ id defobj_lookup_type (const char *typename);
 
 @interface Module_super_
 /*** methods in Module_super_ (inserted from .m file by m2h) ***/
+#if SWARM_OSX /* DONE */
++ initialize;
+#endif
 + self;
 @end

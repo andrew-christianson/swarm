@@ -80,6 +80,10 @@ typedef struct {
 #import <defobj/deftype.h>
 #include <externvar.h>
 
+#if SWARM_OSX /* DONE */
+#include "objc-gnu2next.h"
+#endif
+
 //S: Standard objects for GNU Objective C extensions
 
 //D: The defobj library supports the style of object-oriented programming
@@ -727,7 +731,7 @@ CREATING
 #define defsymbol(name) name = [Symbol create: globalZone setName: #name]
 @end
 
-@protocol EventType <Symbol>
+@protocol SwarmEventType <Symbol>
 //S: A report of some condition detected during program execution.
 
 //D: A report of some condition detected during program execution.
@@ -741,13 +745,18 @@ USING
 - (void)raiseEvent: (const void *)eventData, ...;
 
 //#: macro to raise Warning or Error with source location strings
+#if SWARM_OSX /* TODO */
+#define raiseEvent( eventType, formatString, args... ) \
+printf(formatString, ## args)
+#else
 #define raiseEvent( eventType, formatString, args... ) \
 [eventType raiseEvent: \
 "\r", __FUNCTION__, __FILE__, __LINE__, formatString , ## args]
+#endif
 @end
 
 
-@protocol Warning <EventType, CREATABLE>
+@protocol Warning <SwarmEventType, CREATABLE>
 //S: A condition of possible concern to a program developer.
 
 //D: A condition of possible concern to a program developer.
@@ -1423,7 +1432,11 @@ extern id defobj_lookup_type (const char *name);
 //
 // type objects generated for module
 //
+#if SWARM_OSX
+#import <defobj_types.h>
+#else
 #import <defobj/types.h>
+#endif
 
 extern void initDefobj (id <Arguments> arguments);
 

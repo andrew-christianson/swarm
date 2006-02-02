@@ -1,0 +1,4 @@
+#define SWARM_VERSION "2.1.1"
+#define SWARM_MAJOR 2
+#define SWARM_MINOR 1
+#define SWARM_SUBMINOR 1

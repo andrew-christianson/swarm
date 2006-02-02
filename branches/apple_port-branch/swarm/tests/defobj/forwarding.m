@@ -11,7 +11,15 @@
 #include <Foundation/NSAutoreleasePool.h>
 #include <mframe.h>
 #else
+#ifdef SWARM_OSX
+#include <Foundation/NSMethodSignature.h>
+#include <Foundation/NSInvocation.h>
+#include <Foundation/NSAutoreleasePool.h>
+
+#import <defobj/Create.h>
+#else
 #include <objc/mframe.h>
+#endif
 #endif
 
 @interface AnotherObject: CreateDrop
@@ -38,6 +46,7 @@
   p = stpcpy (p, ">");
   return buf;
 }
+
 @end
 
 @interface DelegateObject: CreateDrop
@@ -160,6 +169,14 @@
   return result;
 }
 
+#if SWARM_OSX
+// inherit from NSObject not Object
+- (const char *)name
+{
+  return getClass(self)->name;
+}
+#endif
+
 - (const char *)testObject
 {
   return [self name];
@@ -255,7 +272,53 @@ strip_type_sig (const char *sig)
 
   [anInvocation invokeWithTarget: delegateObject];
 }
+
+#else
+
+#ifdef SWARM_OSX
+#if 1
+- (NSMethodSignature*) methodSignatureForSelector: (SEL)aSelector
+{
+  const char* aName = sel_getName(aSelector);
+  printf("selector: %s\n", aName);
+
+  NSMethodSignature *sig = nil;
+  if (delegateObject)
+    sig = [delegateObject methodSignatureForSelector: aSelector];
+  
+  if (sig) return sig;
+  sig = [super methodSignatureForSelector: aSelector];
+
+  return sig;
+}
 #endif
+#if 1
+- (void) forwardInvocation: (NSInvocation*)anInvocation
+{
+  //id fa, fc;
+  SEL aSel = [anInvocation selector];
+  //const char *type = sel_get_type (aSel);
+  //NSArgumentInfo info;  
+  //types_t val;
+  //const char *stripped_type;
+
+  fprintf(stderr, "Apple forwardInvocation: \n");
+  //fprintf(stderr, "type %s\n", type);
+
+  [anInvocation invokeWithTarget: delegateObject];
+}
+#endif
+#if 1
+- forward: (SEL)aSel : (marg_list)argFrame
+{
+  id ret;
+  
+  printf("forward:\n");
+  return [delegateObject performv: aSel : argFrame];
+}
+#endif
+
+#else
 
 - (retval_t)forward: (SEL)aSel :(arglist_t)argFrame
 {
@@ -314,13 +377,27 @@ strip_type_sig (const char *sig)
     return ret;
   }
 }
+#endif
+#endif
 
 @end
 
+#if 0
+// Forwarding of messages using Apple's NSInvocation requires methodSignatureForSelector:
+// and for some reason the methods have to be see-able by NSObject to get a correct
+// method signature, so hack em in.
+@implementation NSObject (SwarmExtensions)
+- testObject { return self; }
+- testObject: anArg { return self; }
+- testObject: anArg0 : anArg1 { return self; }
+- testObject: anArg0 : anArg1 : anArg2 { return self; }
+@end
+#endif
+
+#ifndef SWARM_OSX
 int
 main (int argc, const char **argv)
 {
-  id obj;
 #ifdef GNUSTEP
   NSAutoreleasePool *pool;
 #endif
@@ -331,7 +408,12 @@ main (int argc, const char **argv)
   pool = [NSAutoreleasePool new];
 #endif
 
-  obj = [[BaseObject createBegin: globalZone]
+#else
+
+int test_forwarding()
+{
+#endif
+  id obj = [[BaseObject createBegin: globalZone]
              setDelegateObject: [DelegateObject create: globalZone]];
 
   if (strcmp ([obj m1: 1 float: 2.0 double: 3.0], "1 2.00 3.00") != 0)
@@ -379,16 +461,89 @@ main (int argc, const char **argv)
   if ([obj dm1i: 6] != 11.0)
     return 1;
 
+#if 1 //SWARM_OSX
   {
-    id anObject0 = [[[AnotherObject createBegin: globalZone]
-                      setName: "anObject0"]
-                     createEnd];
-    id anObject1 = [[[AnotherObject createBegin: globalZone]
-                      setName: "anObject1"]
-                     createEnd];
-    id anObject2 = [[[AnotherObject createBegin: globalZone]
-                      setName: "anObject2"]
-                     createEnd];
+    const char *ret;
+
+    id aDelegate = [DelegateObject createBegin: globalZone];
+    aDelegate = [aDelegate createEnd];
+    
+    id anObject0 = [AnotherObject createBegin: globalZone];
+    [anObject0 setName: "anObject0"];
+    anObject0 = [anObject0 createEnd];
+    
+    id anObject1 = [AnotherObject createBegin: globalZone];
+    [anObject1 setName: "anObject1"];
+    anObject1 = [anObject1 createEnd];
+
+    id anObject2 = [AnotherObject createBegin: globalZone];
+    [anObject2 setName: "anObject2"];
+    anObject2 = [anObject2 createEnd];
+
+    //NSInvocation *i1 = [[NSInvocation alloc] initWithSelector: M(testObject)];
+    NSInvocation *i1 = [NSInvocation invocationWithMethodSignature:
+            [obj methodSignatureForSelector: M(testObject)]];
+    NSInvocation *i2 = [NSInvocation invocationWithMethodSignature:
+            [obj methodSignatureForSelector: M(testObject:)]];
+    NSInvocation *i3 = [NSInvocation invocationWithMethodSignature:
+            [obj methodSignatureForSelector: M(testObject::)]];
+    NSInvocation *i4 = [NSInvocation invocationWithMethodSignature:
+            [obj methodSignatureForSelector: M(testObject:::)]];
+
+    //NSInvocation *i2 = [[NSInvocation alloc] initWithSelector: M(testObject:)];
+    //NSInvocation *i3 = [[NSInvocation alloc] initWithSelector: M(testObject::)];
+    //NSInvocation *i4 = [[NSInvocation alloc] initWithSelector: M(testObject:::)];
+
+    printf("Here\n");
+    [i1 setSelector: M(testObject)];
+    [i1 invokeWithTarget: obj];
+    [i1 getReturnValue: &ret];
+    printf ("[testObject] `%s'\n", ret);
+    if (strcmp (ret, "DelegateObject") != 0)
+      return 1;
+
+    [i2 setSelector: M(testObject:)];
+    [i2 setArgument: &anObject0 atIndex: 2];
+    [i2 invokeWithTarget: obj];
+    [i2 getReturnValue: &ret];
+    printf ("[testObject:] `%s'\n", ret);
+    if (strcmp (ret, "<anObject0>") != 0)
+      return 1;
+    
+    [i3 setSelector: M(testObject::)];
+    [i3 setArgument: &anObject0 atIndex: 2];
+    [i3 setArgument: &anObject1 atIndex: 3];
+    [i3 invokeWithTarget: obj];
+    [i3 getReturnValue: &ret];
+    printf ("[testObject::] `%s'\n", ret);
+    if (strcmp (ret, "<anObject0>,<anObject1>") != 0)
+      return 1;
+
+    [i4 setSelector: M(testObject:::)];
+    [i4 setArgument: &anObject0 atIndex: 2];
+    [i4 setArgument: &anObject1 atIndex: 3];
+    [i4 setArgument: &anObject2 atIndex: 4];
+    [i4 invokeWithTarget: obj];
+    [i4 getReturnValue: &ret];
+    printf ("[testObject:::] `%s'\n", ret);
+    if (strcmp (ret, "<anObject0>,<anObject1>,<anObject2>") != 0)
+      return 1;
+  }
+#endif
+
+  {
+    id anObject0 = [AnotherObject createBegin: globalZone];
+    [anObject0 setName: "anObject0"];
+    anObject0 = [anObject0 createEnd];
+
+    id anObject1 = [AnotherObject createBegin: globalZone];
+    [anObject1 setName: "anObject1"];
+    anObject1 = [anObject1 createEnd];
+
+    id anObject2 = [AnotherObject createBegin: globalZone];
+    [anObject2 setName: "anObject2"];
+    anObject2 = [anObject2 createEnd];
+
     const char *ret;
 
     ret = (const char *) [obj perform: M(testObject)];

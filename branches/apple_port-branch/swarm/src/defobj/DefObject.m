@@ -36,7 +36,11 @@ Library:      defobj
 #import <defobj/macros.h>
 
 #import <objc/objc-api.h>
+#if SWARM_OSX /* TODO */
+#include <objc-gnu2next.h>
+#else
 #import <objc/sarray.h>
+#endif
 
 #include <misc.h> // strcpy, strlen, sprintf, isDigit
 #include <collections/predicates.h> // arrayp, keywordp, archiver_list_p, stringp
@@ -126,6 +130,7 @@ PHASE(Setting)
   return self;
 }
 
+#if !SWARM_OSX /* TODO: HDF5 */
 - hdf5In: (id <HDF5>)hdf5Obj
 {
   if ([hdf5Obj getDatasetFlag])
@@ -141,6 +146,7 @@ PHASE(Setting)
     }
   return self;
 }
+#endif
 
 PHASE(Using)
 
@@ -172,11 +178,19 @@ PHASE(Using)
 
 + (BOOL)conformsTo: (Protocol *)protocol
 {
+#if SWARM_OSX
+  if (getBit (((Class) self)->info, _CLS_DEFINEDCLASS))
+    return [((CreatedClass_s *) self)->definingClass
+                                     conformsToProtocol: protocol];
+  else
+    return [super conformsToProtocol: protocol];
+#else
   if (getBit (((Class) self)->info, _CLS_DEFINEDCLASS))
     return [((CreatedClass_s *) self)->definingClass
                                      conformsTo: protocol];
   else
     return [super conformsTo: protocol];
+#endif
 }
 
 //
@@ -527,7 +541,13 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 //
 + (IMP)getMethodFor: (SEL)aSel
 {
+#if SWARM_OSX /* TODO */
+  printf("getMethodFor: %s\n", aSel);
+  Method m = class_getClassMethod([self class], aSel);
+  return m->method_imp;
+#else
   return sarray_get (((Class) self)->dtable, (size_t) aSel->sel_id);
+#endif
 }  
 
 //
@@ -578,12 +598,18 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 //   for optional inheritance from the Object superclass, and to define the
 //   three-argument form
 //
-
+#if SWARM_OSX
+#else
 - perform: (SEL)aSel
 {
   IMP  mptr;
 
+#if SWARM_OSX /* TODO */
+  printf("perform: %s\n", aSel);
   mptr = objc_msg_lookup (self, aSel);
+#else
+  mptr = objc_msg_lookup (self, aSel);
+#endif
   if (!mptr)
     raiseEvent (InvalidArgument, "> message selector not valid\n");
   return mptr (self, aSel);
@@ -593,7 +619,12 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 {
   IMP  mptr;
   
+#if SWARM_OSX /* TODO */
+  printf("perform:with: %s\n", aSel);
   mptr = objc_msg_lookup (self, aSel);
+#else
+  mptr = objc_msg_lookup (self, aSel);
+#endif
   if (!mptr)
     raiseEvent (InvalidArgument, "> message selector not valid\n");
   return mptr (self, aSel, anObject1);
@@ -603,7 +634,12 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 {
   IMP  mptr;
   
+#if SWARM_OSX /* TODO */
+  printf("perform:with:with: %s\n", aSel);
   mptr = objc_msg_lookup (self, aSel);
+#else
+  mptr = objc_msg_lookup (self, aSel);
+#endif
   if (!mptr)
     raiseEvent (InvalidArgument, "> message selector not valid\n");
   return mptr (self, aSel, anObject1, anObject2);
@@ -613,11 +649,33 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 {
   IMP  mptr;
   
+#if SWARM_OSX /* TODO */
+  printf("perform:with:with:with: %s\n", aSel);
   mptr = objc_msg_lookup (self, aSel);
+#else
+  mptr = objc_msg_lookup (self, aSel);
+#endif
   if (!mptr)
     raiseEvent (InvalidArgument, "> message selector not valid\n");
   return mptr (self, aSel, anObject1, anObject2, anObject3);
 }
+#endif
+
+#if SWARM_OSX /* TODO */
+#if 0
+- perform: (SEL)aSel with: anObject1 with: anObject2 with: anObject3
+{
+  return objc_msgSend(self, aSel, anObject1, anObject2, anObject3);
+}
+
+- forward: (SEL)aSel : (marg_list)argFrame
+{
+    printf("forward:\n");
+    return nil;
+}
+#endif
+
+#else
 
 #ifdef USE_MFRAME
 - (retval_t)forward: (SEL)aSel : (arglist_t)argFrame
@@ -738,6 +796,7 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
       return NULL;
     }
 }
+#endif
 #endif
 
 //
@@ -1048,6 +1107,7 @@ initDescribeStream (void)
 
 - (void)lispOutVars: stream deep: (BOOL)deepFlag
 {
+#if !SWARM_OSX /* TODO */
   void store_object (const char *name, fcall_type_t type,
                      void *ptr, unsigned rank, unsigned *dims)
     {
@@ -1067,6 +1127,7 @@ initDescribeStream (void)
         
     }
   map_object_ivars (self, store_object);
+#endif
 }
 
 // Sometimes the desired effect is not found by saving all variables
@@ -1308,6 +1369,7 @@ initDescribeStream (void)
 
 - (void)hdf5OutDeep: hdf5Obj
 {
+#if !SWARM_OSX /* TODO: HDF5 */
   void store_object (const char *name,
                      fcall_type_t type,
                      void *ptr,
@@ -1337,10 +1399,12 @@ initDescribeStream (void)
     }
   [hdf5Obj storeTypeName: [self getTypeName]];
   map_object_ivars (self, store_object);
+#endif
 }
 
 - (void)hdf5OutShallow: hdf5Obj
 {
+#if !SWARM_OSX /* TODO: HDF5 */
   if ([hdf5Obj getCompoundType])
     [hdf5Obj shallowStoreObject: self];
   else
@@ -1368,6 +1432,7 @@ initDescribeStream (void)
       [cDataset drop];
       [cType drop];
     }
+#endif
 }
 
 - (void)updateArchiver: archiver
@@ -1418,6 +1483,29 @@ initDescribeStream (void)
   [(id) self describeForEachID: describeStream];
 }
 
+#if SWARM_OSX
+#if 0
+- (NSMethodSignature*) methodSignatureForSelector: (SEL)aSelector
+{
+  const char* aName = sel_getName(aSelector);
+  printf("selector: %s\n", aName);
+
+  NSMethodSignature *sig = [self methodSignatureForSelector: aSelector];
+
+  return sig;
+}
+#endif
+
+#if 0
+- (void) forwardInvocation: (NSInvocation*)anInvocation
+{
+  printf("forwardInvocation:\n");
+  SEL aSel = [anInvocation selector];
+  [self doesNotRecognize: aSel];
+}
+#endif
+#endif
+
 @end
 
 //
@@ -1426,7 +1514,16 @@ initDescribeStream (void)
 BOOL
 respondsTo (id anObject, SEL aSel)
 {
+#if SWARM_OSX /* TODO */
+  printf("respondsTo()\n");
+  return [anObject respondsToSelector: aSel];
+
+//  return ((object_is_instance (anObject)
+//           ? class_getInstanceMethod (anObject->isa, aSel)
+//           : class_getClassMethod (anObject->isa, aSel)) != NULL);
+#else
   return sarray_get (getClass (anObject)->dtable, (size_t) aSel->sel_id) != 0;
+#endif
 }
 
 //
@@ -1436,7 +1533,18 @@ respondsTo (id anObject, SEL aSel)
 IMP
 getMethodFor (Class aClass, SEL aSel)
 {
+#if SWARM_OSX /* TODO */
+  printf("getMethodFor(%s, %s)\n", aClass->name, aSel);
+  Method m = class_getInstanceMethod(aClass, aSel);
+  if (m == NULL)
+    m = class_getClassMethod(aClass, aSel);
+
+  if (m == NULL)
+    printf("getMethodFor(%s, %s) not found\n", aClass->name, aSel);
+  return m->method_imp;
+#else
   return sarray_get (aClass->dtable, (size_t) aSel->sel_id);
+#endif
 }
 
 //
@@ -1573,3 +1681,14 @@ xfexec (id anObject, const char *msgName)
     fprintf (_obj_xdebug, "object is nil");
 }
 
+//
+// GNUstep extensions
+//
+#if 0
+
+@implementation Object_s (MacOSXExtensions)
+
+
+@end
+
+#endif

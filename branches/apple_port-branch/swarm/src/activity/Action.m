@@ -35,7 +35,12 @@ Library:      activity
 #import <defobj/defalloc.h> // getZone
 #include <misc.h> // abort in ActionForEachHomogeneous
 
+#ifdef SWARM_OSX
+#define PERFORM(call) objc_msgSend (call, selector)
+#include <objc-gnu2next.h>
+#else
 #define PERFORM(call) perform_imp (call, M(performCall))
+#endif
 
 extern id uniformUnsRand;
 @protocol _MinimalRandom
@@ -69,7 +74,12 @@ PHASE(Creating)
 {
   [super createEnd];
 
+#if SWARM_OSX /* TODO: method */
+  perform_imp = [FCall_c instanceMethodForSelector: M(performCall)];
+#else
   perform_imp = [FCall_c instanceMethodFor: M(performCall)];
+#endif
+
   return self;
 }
 
@@ -120,7 +130,11 @@ PHASE(Using)
 
 - (void)_performAction_: (id <Activity>)anActivity
 {
+#if SWARM_OSX
+  printf("[PFAction _performAction_:]\n");
+#else
   PERFORM (call);
+#endif
 }
 
 - (void)describe: outputCharStream
@@ -187,8 +201,12 @@ PHASE(Using)
 {
   if (target) // in the case of FActionForEach
     updateTarget (call, target);
-  
+
+#if SWARM_OSX
+  printf("[FAction _performAction_:]\n");
+#else  
   PERFORM (call);
+#endif
 }
 
 - (void)describe: outputCharStream
@@ -297,6 +315,10 @@ PHASE(Setting)
 
 - _createCall_: theTarget
 {
+#if SWARM_OSX /* TODO */
+  printf("ActionTo_c _createCall_:\n");
+  return nil;
+#else
   id <FArguments> arguments =
     [FArguments createBegin: getCZone (getZone (self))];
   
@@ -312,6 +334,7 @@ PHASE(Setting)
                 target: theTarget
                 selector: selector
                 arguments: arguments];
+#endif
 }
 PHASE(Using)
 
@@ -320,15 +343,23 @@ PHASE(Using)
   if (call)
     {
       updateTarget (call, target);
+#if SWARM_OSX
+      objc_msgSend(target, selector);
+#else
       PERFORM (call);
+#endif
     }
   else
     {
+#if SWARM_OSX
+      objc_msgSend(target, selector);
+#else
       id fc = [self _createCall_: target];
 
       PERFORM (fc);
       [[fc getArguments] dropAllocations: YES];
       [fc dropAllocations: YES];
+#endif
     }
 }
 
@@ -498,7 +529,11 @@ PHASE(Using)
 #define ACTION_HOMOGENEOUS_TYPE FActionForEachHomogeneous_c
 #undef SETUPCALL
 #define UPDATEOBJCTARGET(target) updateTarget (call, target)
+#if SWARM_OSX
+#define PERFORMOBJCCALL(target) SEL selector = [call getTargetSelector]; PERFORM (call)
+#else
 #define PERFORMOBJCCALL(target) PERFORM (call)
+#endif
 #ifdef HAVE_JDK
 #define UPDATEJAVATARGET(jtarget) updateJavaTarget (call, jtarget)
 #define PERFORMJAVACALL(target) PERFORM (call)

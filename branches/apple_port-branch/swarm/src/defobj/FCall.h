@@ -29,7 +29,9 @@ Library:      defobj
 #ifndef USE_AVCALL
 #undef PACKAGE
 #undef VERSION
+#if !SWARM_OSX /* TODO: ffi */
 #include <ffi.h>
+#endif
 #undef PACKAGE
 #undef VERSION
 #endif
@@ -51,7 +53,9 @@ void updateJavaTarget (id self, JOBJECT target);
    call_t callType;
    FArguments_c *fargs; 
 #ifndef USE_AVCALL
+#if !SWARM_OSX
    ffi_cif cif;
+#endif
 #endif
    void *COM_params;
    func_t ffunction;
@@ -59,6 +63,10 @@ void updateJavaTarget (id self, JOBJECT target);
    void *fmethod;
    const char *methodName;
    BOOL fobjectPendingGlobalRefFlag;
+#ifdef SWARM_OSX
+   id targetObject;
+   SEL targetSelector;
+#endif
 }
 + createBegin: aZone;
 + create: aZone target: obj
@@ -80,6 +88,8 @@ void updateJavaTarget (id self, JOBJECT target);
 - (retval_t)getRetVal: (retval_t)retVal buf: (types_t *)buf;
 - (func_t)getFunctionPointer;
 - (call_t)getCallType;
+- (SEL)getTargetSelector;
+- (SEL)getTargetObject;
 - (void)dropAllocations: (BOOL)componentAlloc;
 - (void)drop;
 @end

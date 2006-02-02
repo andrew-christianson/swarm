@@ -114,12 +114,12 @@ PHASE(Using)
     [self catC: string];
 }
 
-- (void)catBoolean: (BOOL)bool
+- (void)catBoolean: (BOOL)aBool
 {
   if (exprStack)
-    ADDVALUE (Boolean, bool);
+    ADDVALUE (Boolean, aBool);
   else
-    [self catC: bool ? "#t" : "#f"];
+    [self catC: aBool ? "#t" : "#f"];
   
 }
 
@@ -393,10 +393,18 @@ PHASE(Using)
 
 - (void)catEndArray
 {
+#if SWARM_OSX
+  if (exprStack) {
+    id anObj = [ArchiverArray createBegin: getZone (self)];
+    [anObj setArray: [[exprStack getFirst] removeLast]];
+    ADDEXPR ([anObj createEnd]);
+  }
+#else
   if (exprStack)
     ADDEXPR ([[[ArchiverArray createBegin: getZone (self)]
                 setArray: [[exprStack getFirst] removeLast]]
                createEnd]);
+#endif
 }
 
 - (void)catArrayType: (const char *)type

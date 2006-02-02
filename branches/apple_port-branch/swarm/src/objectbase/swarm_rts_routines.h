@@ -19,7 +19,11 @@
 
 #import <objc/objc.h>
 #import <objc/objc-api.h>
+#if SWARM_OSX /* TODO: DONE */
+#include <objc-gnu2next.h>
+#else
 #import <objc/encoding.h>
+#endif
 
 const char *skip_type_qualifiers (const char* type);
 const char *skip_typespec (const char* type);

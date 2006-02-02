@@ -31,9 +31,17 @@ Library:      defobj
 @class ObjectEntry;
 
 #ifdef INHERIT_OBJECT
-@interface Object_s: Object <DefinedClass, Serialization, GetName>
+@interface Object_s: NSObject <DefinedClass, Serialization, GetName>
 {
 @public
+#if SWARM_OSX /* TODO: Memory */
+  // if an Object_s is allocated which is actually a class structure
+  // then enough filler must be in place so that the class structure
+  // is complete and usable by the Apple ObjC runtime.  e.g. zbits
+  // below was in the super_class field and Apple needs to use that
+  // field for sending messages.
+  struct objc_class _filler;
+#endif
   // Word that contains zone in which object allocated, plus
   // additional bits about the memory allocations for the object.
   PTRUINT zbits;
@@ -153,11 +161,18 @@ extern id lispInKeyword (id index);
 // This macro is similar to the macro CALL_METHOD_IN_CLASS in
 // GNU libobjects-0.1.19/src/behavior.h, by Andrew McCallum.
 //
+#if SWARM_OSX /* TODO: direct method call */
+// Need to lookup instance method, get the method imp and call it
+#define callMethodInClass(aClass, aMessage, args...) \
+  ({ Method aMethod= class_getInstanceMethod(aClass, (SEL)aMessage); \
+     aMethod->method_imp (self, aMethod->method_imp , ## args); })
+#else
 #define callMethodInClass(aClass, aMessage, args...) \
   ({ SEL _sel_ = (aMessage); \
      get_imp ((aClass), _sel_) (self, _sel_ , ## args); })
 
 extern IMP get_imp (Class class, SEL sel);  // function used by macro
+#endif
 
 //
 // respondsTo() -- function to test if object responds to message  

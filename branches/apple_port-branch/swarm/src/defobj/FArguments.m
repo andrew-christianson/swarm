@@ -30,6 +30,10 @@ Library:      defobj
 #include <misc.h> // stpcpy
 #include <swarmconfig.h> // HAVE_JDK
 
+#if SWARM_OSX /* TODO */
+#include "objc-gnu2next.h"
+//#include <ffi.h>
+#else
 #ifndef USE_AVCALL
 #undef PACKAGE
 #undef VERSION
@@ -38,6 +42,7 @@ Library:      defobj
 #undef VERSION
 #else
 #include <avcall.h>
+#endif
 #endif
 
 #import <defobj/directory.h>
@@ -63,7 +68,9 @@ PHASE(Creating)
   newArguments->assignedArgumentCount = 0;
   newArguments->hiddenArgumentCount = 0;
 #ifndef USE_AVCALL
+#if !SWARM_OSX
   newArguments->ffiReturnType = &ffi_type_void;
+#endif
 #endif
   newArguments->retVal.type = 0;
   newArguments->result = NULL;
@@ -82,6 +89,7 @@ PHASE(Creating)
 
 - setSelector: (SEL)selector
 {
+#if !SWARM_OSX /* TODO */
   const char *type = sel_get_type (selector);
 
   if (!type)
@@ -100,11 +108,13 @@ PHASE(Creating)
     
     if ((cSel = SD_COM_FIND_SELECTOR_COM (selector)))
       {
+#if !SWARM_OSX /* TODO */
         language = LanguageCOM;
         if (COM_selector_is_boolean_return (cSel))
           [self setBooleanReturnType];
         else
           [self setObjCReturnType: *type];
+#endif
       }
 #ifdef HAVE_JDK
     else if ((jSel = SD_JAVA_FIND_SELECTOR_JAVA (selector)))
@@ -132,12 +142,19 @@ PHASE(Creating)
         [self setObjCReturnType: *type];
       }
   }
+#endif
   return self;
 }
 
 + create: aZone setSelector: (SEL)aSel
 {
+#if SWARM_OSX
+  id obj = [self createBegin: aZone];
+  [obj setSelector: aSel];
+  return [obj createEnd];
+#else
   return [[[self createBegin: aZone] setSelector: aSel] createEnd];
+#endif
 }
 
 

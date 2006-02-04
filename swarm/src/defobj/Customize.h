@@ -23,8 +23,8 @@ Description:  superclass impleemntation of create-phase customization
 Library:      defobj
 */
 
-#import <defobj/DefClass.h> // BehaviorPhase_s
-#import <defobj/DefObject.h>
+#import "DefClass.h" // BehaviorPhase_s
+#import "DefObject.h"
 
 //
 // interface marker for methods in class which implement an interface of a type

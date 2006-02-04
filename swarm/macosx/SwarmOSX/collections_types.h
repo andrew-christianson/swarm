@@ -35,7 +35,7 @@ externvar id Permutation;
 
 #ifdef DEFINE_CLASSES
 #if SWARM_OSX
-#import <collections_classes.h>
+#import "collections_classes.h"
 #else
 #import <collections/classes.h>
 #endif

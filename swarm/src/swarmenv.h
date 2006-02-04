@@ -17,13 +17,13 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <defobj.h>
-#import <random.h>
-#import <objectbase.h>
+#import "defobj.h"
+#import "random.h"
+#import "objectbase.h"
 #ifndef DISABLE_GUI
-#import <simtoolsgui.h>
+#import "simtoolsgui.h"
 #endif
-#import <externvar.h>
+#import "externvar.h"
 
 //S: Top-level Swarm module
 

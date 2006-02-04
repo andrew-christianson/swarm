@@ -19,8 +19,8 @@
 
 // 2d buffered space.
 
-#import <space.h>
-#import <space/Discrete2d.h>
+#import "space.h"
+#import "Discrete2d.h"
 
 @interface DblBuffer2d: Discrete2d <DblBuffer2d>
 {

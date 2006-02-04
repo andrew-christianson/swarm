@@ -34,10 +34,10 @@
 //D: addition, other types of spaces are desired: continuous coordinates,
 //D: other dimensions, arbitrary graphs, etc.
 
-#import <objectbase.h>
-#import <swarmconfig.h>
+#import "objectbase.h"
+#import "swarmconfig.h"
 #ifndef DISABLE_GUI
-#import <gui.h> // Raster, Colormap
+#import "gui.h" // Raster, Colormap
 #endif
 
 @protocol GridData

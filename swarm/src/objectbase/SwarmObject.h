@@ -20,8 +20,8 @@
 // base class for all Swarm objects: gives creation and debugging
 // protocol, basic implementation.
 
-#import <defobj/Create.h>
-#import <objectbase.h>
+#import "Create.h"
+#import "objectbase.h"
 
 @interface SwarmObject: CreateDrop <SwarmObject>
 {

@@ -24,11 +24,11 @@
 //D: values or displaying distributions as well as more specific
 //D: measurement tools (such as Average, Entropy). 
 
-#import <objectbase.h>
-#import <swarmconfig.h>
+#import "objectbase.h"
+#import "swarmconfig.h"
 #ifndef DISABLE_GUI
-#import <simtoolsgui.h> // GUIComposite
-#import <gui.h> // GraphElement
+#import "simtoolsgui.h" // GUIComposite
+#import "gui.h" // GraphElement
 #endif
 
 @protocol Averager <MessageProbe, CREATABLE>

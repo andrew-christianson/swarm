@@ -28,7 +28,7 @@ externvar id Serialization;
 
 #ifdef DEFINE_CLASSES
 #if SWARM_OSX
-#import <defobj_classes.h>
+#import "defobj_classes.h"
 #else
 #import <defobj/classes.h>
 #endif

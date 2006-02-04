@@ -17,8 +17,8 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <objectbase.h> // MessageProbe, val_t
-#import <objectbase/Probe.h>
+#import "objectbase.h" // MessageProbe, val_t
+#import "Probe.h"
 
 @interface MessageProbe: Probe <MessageProbe>
 {

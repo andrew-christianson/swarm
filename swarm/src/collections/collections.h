@@ -23,8 +23,8 @@ Description:  standard collection types
 Library:      collections
 */
 
-#import <defobj.h>
-#include <externvar.h>
+#import "defobj.h"
+#include "externvar.h"
 
 //S: Standard collection types
 
@@ -1233,7 +1233,7 @@ CREATING
 @end
 
 #if SWARM_OSX
-#import <collections_types.h>
+#import "collections_types.h"
 #else
 #import <collections/types.h>
 #endif

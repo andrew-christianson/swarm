@@ -65,8 +65,8 @@ Relative speed:	| Speed 0.453 (time 2.206) relative to MT19937 getUnsignedSample
 */
 
 
-#import <objectbase/SwarmObject.h>
-#import <random.h>
+#import "SwarmObject.h"
+#import "random.h"
 
 // NOTE: this distribution draws doubles from its generator.
 // There is no point in using 'fat' doubles for this purpose here.

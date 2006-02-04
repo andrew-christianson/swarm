@@ -18,7 +18,7 @@
 // http://www.swarm.org/
 
 #import "JavaProxy.h"
-#include <swarmconfig.h>
+#include "swarmconfig.h"
 
 @interface JavaCollection: JavaProxy <Serialization>
 {

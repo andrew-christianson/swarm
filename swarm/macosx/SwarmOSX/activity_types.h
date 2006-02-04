@@ -43,5 +43,5 @@ externvar id ConcurrentSchedule;
 externvar id ActivationOrder;
 
 #ifdef DEFINE_CLASSES
-#import <activity_classes.h>
+#import "activity_classes.h"
 #endif

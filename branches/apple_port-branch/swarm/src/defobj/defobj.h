@@ -77,8 +77,8 @@ typedef struct {
 #ifdef __cplusplus
 }
 #else
-#import <defobj/deftype.h>
-#include <externvar.h>
+#import "deftype.h"
+#include "externvar.h"
 
 #if SWARM_OSX /* DONE */
 #include "objc-gnu2next.h"
@@ -1433,7 +1433,7 @@ extern id defobj_lookup_type (const char *name);
 // type objects generated for module
 //
 #if SWARM_OSX
-#import <defobj_types.h>
+#import "defobj_types.h"
 #else
 #import <defobj/types.h>
 #endif

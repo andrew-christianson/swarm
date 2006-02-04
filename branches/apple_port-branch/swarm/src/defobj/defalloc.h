@@ -23,9 +23,9 @@ Description:  additional interfaces for block-level memory allocation
 Library:      defobj
 */
 
-#include <swarmconfig.h> // PTRUINT
+#include "swarmconfig.h" // PTRUINT
 #if SWARM_OSX
-#import <defobj_classes.h> // id_Zone_c
+#import "defobj_classes.h" // id_Zone_c
 #else
 #import <defobj/classes.h> // id_Zone_c
 #endif

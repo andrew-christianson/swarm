@@ -20,8 +20,8 @@
 // NSelect -> select exactly N elements from a collection 
 // without repetition! The target collection must be provided.
 
-#import <simtools.h> // NSelect
-#import <objectbase/SwarmObject.h>
+#import "simtools.h" // NSelect
+#import "SwarmObject.h"
 
 @interface NSelect: SwarmObject <NSelect>
 {

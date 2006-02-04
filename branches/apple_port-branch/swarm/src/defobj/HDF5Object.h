@@ -17,7 +17,7 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#include <swarmconfig.h>
+#include "swarmconfig.h"
 
 #ifdef HAVE_HDF5
 #define id hdf5id
@@ -25,8 +25,8 @@
 #undef id
 #endif
 
-#import <defobj/Create.h>
-#import <collections.h> // Map
+#import "Create.h"
+#import "collections.h" // Map
 #import "internal.h" // fcall_type_t
 
 #define ATTRIB_TYPE_NAME "type"

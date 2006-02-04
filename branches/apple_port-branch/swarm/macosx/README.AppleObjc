@@ -11,6 +11,11 @@ There are several milestones and some long-term goals:
 * Rewrite Create-phase protocol implementation to work with Apple's
   ObjC runtime.  Done!  Almost, probes still need to be investigated.
 
+* Get tests running.  All the tests are written as individual command line
+  programs, but this is cumbersome running tests in Xcode, so I want to put
+  the tests into functions.  Then there can be a single program which runs
+  all of the tests.
+
 * Get Heatbugs running.  Similar to the GNUstep port, I will need classes
   for Raster and etc.  Hopefully I can use the same code.
 
@@ -40,6 +45,34 @@ System Setup
 ------------
 
 My development platform is a PowerPC G4 with OSX 10.4.4 with Xcode 2.1.
+
+
+Building
+--------
+
+Open macosx/SwarmOSX/SwarmOSX.xcodeproj in Xcode.
+Select the SwarmOSX target.
+Click build to compile SwarmOSX.framework
+
+There are a Heatbugs and SwarmTests targets.  Heatbugs will not build as
+that application shouldn't be part of the Swarm core source, so I haven't
+committed the files for it.  Eventually, the heatbugs application in
+Swarm apps will be updated.  SwarmTests will stay to be a compilation of
+all the tests; it should compile but will fail with errors if run.
+
+If you want to install the SwarmOSX.framework so that you can work on
+applications then you need to build and install from the command line.
+Go to the macosx/SwarmOSX directory.
+
+xcodebuild DSTROOT=/ install
+
+This will put the framework in your home directory under Library/Frameworks.
+If you are working on Swarm source and need to install multiple times, then
+you need to manually delete the framework first.
+
+chmod -R +w ~/Library/Frameworks/SwarmOSX.framework
+rm -rf ~/Library/Frameworks/SwarmOSX.framework
+
 
 Authors
 -------

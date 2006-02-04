@@ -23,8 +23,8 @@ Description:  metaobjects to describe loaded elements of a program
 Library:      defobj
 */
 
-#import <defobj/DefObject.h>
-#import <defobj/Symbol.h>
+#import "DefObject.h"
+#import "Symbol.h"
 
 extern id *_obj_classes;
 extern unsigned _obj_nclasses;

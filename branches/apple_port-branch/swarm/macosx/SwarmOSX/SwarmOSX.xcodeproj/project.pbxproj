@@ -33,7 +33,7 @@
 		D615D76A08C6C13800E2534C /* getopt1.c in Sources */ = {isa = PBXBuildFile; fileRef = D615D73E08C6C13800E2534C /* getopt1.c */; };
 		D615D76B08C6C13800E2534C /* gettimeofday.c in Sources */ = {isa = PBXBuildFile; fileRef = D615D73F08C6C13800E2534C /* gettimeofday.c */; };
 		D615D76D08C6C13800E2534C /* mem.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D74108C6C13800E2534C /* mem.h */; };
-		D615D77108C6C13800E2534C /* misc.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D74508C6C13800E2534C /* misc.h */; };
+		D615D77108C6C13800E2534C /* misc.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D74508C6C13800E2534C /* misc.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D77208C6C13800E2534C /* quicksort.c in Sources */ = {isa = PBXBuildFile; fileRef = D615D74608C6C13800E2534C /* quicksort.c */; };
 		D615D77408C6C13800E2534C /* stpcpy.c in Sources */ = {isa = PBXBuildFile; fileRef = D615D74808C6C13800E2534C /* stpcpy.c */; };
 		D615D77708C6C13800E2534C /* strdup.c in Sources */ = {isa = PBXBuildFile; fileRef = D615D74B08C6C13800E2534C /* strdup.c */; };
@@ -41,7 +41,7 @@
 		D615D77B08C6C13800E2534C /* strnlen.c in Sources */ = {isa = PBXBuildFile; fileRef = D615D74F08C6C13800E2534C /* strnlen.c */; };
 		D615D77E08C6C13800E2534C /* strtoll.c in Sources */ = {isa = PBXBuildFile; fileRef = D615D75208C6C13800E2534C /* strtoll.c */; };
 		D615D77F08C6C13800E2534C /* xmalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = D615D75308C6C13800E2534C /* xmalloc.c */; };
-		D615D78708C6C28900E2534C /* swarmconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D78608C6C28900E2534C /* swarmconfig.h */; };
+		D615D78708C6C28900E2534C /* swarmconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D78608C6C28900E2534C /* swarmconfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D7F708C6C6CB00E2534C /* Archiver.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7B908C6C6CB00E2534C /* Archiver.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D7F808C6C6CB00E2534C /* Archiver.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D7BA08C6C6CB00E2534C /* Archiver.m */; };
 		D615D7F908C6C6CB00E2534C /* Arguments.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7BB08C6C6CB00E2534C /* Arguments.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -72,7 +72,7 @@
 		D615D81708C6C6CB00E2534C /* HDF5Archiver.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D7D908C6C6CB00E2534C /* HDF5Archiver.m */; };
 		D615D81808C6C6CB00E2534C /* HDF5Object.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7DA08C6C6CB00E2534C /* HDF5Object.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D81908C6C6CB00E2534C /* HDF5Object.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D7DB08C6C6CB00E2534C /* HDF5Object.m */; };
-		D615D81A08C6C6CB00E2534C /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7DC08C6C6CB00E2534C /* internal.h */; };
+		D615D81A08C6C6CB00E2534C /* internal.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7DC08C6C6CB00E2534C /* internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D81B08C6C6CB00E2534C /* internal.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D7DD08C6C6CB00E2534C /* internal.m */; };
 		D615D81C08C6C6CB00E2534C /* java.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7DE08C6C6CB00E2534C /* java.h */; };
 		D615D81D08C6C6CB00E2534C /* java.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D7DF08C6C6CB00E2534C /* java.m */; };
@@ -110,12 +110,12 @@
 		D615D8FE08C6C6E500E2534C /* C3MWCgen.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D84208C6C6E400E2534C /* C3MWCgen.m */; };
 		D615D8FF08C6C6E500E2534C /* C4LCGXgen.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D84308C6C6E400E2534C /* C4LCGXgen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D90008C6C6E500E2534C /* C4LCGXgen.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D84408C6C6E400E2534C /* C4LCGXgen.m */; };
-		D615D90208C6C6E500E2534C /* distributions.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D84608C6C6E400E2534C /* distributions.h */; };
+		D615D90208C6C6E500E2534C /* distributions.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D84608C6C6E400E2534C /* distributions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D90308C6C6E500E2534C /* ExponentialDist.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D84808C6C6E400E2534C /* ExponentialDist.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D90408C6C6E500E2534C /* ExponentialDist.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D84908C6C6E400E2534C /* ExponentialDist.m */; };
 		D615D90508C6C6E500E2534C /* GammaDist.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D84A08C6C6E400E2534C /* GammaDist.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D90608C6C6E500E2534C /* GammaDist.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D84B08C6C6E400E2534C /* GammaDist.m */; };
-		D615D90708C6C6E500E2534C /* generators.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D84C08C6C6E400E2534C /* generators.h */; };
+		D615D90708C6C6E500E2534C /* generators.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D84C08C6C6E400E2534C /* generators.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D91108C6C6E500E2534C /* LCGgen.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D85608C6C6E400E2534C /* LCGgen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D91208C6C6E500E2534C /* LCGgen.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D85708C6C6E400E2534C /* LCGgen.m */; };
 		D615D91308C6C6E500E2534C /* LogNormalDist.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D85808C6C6E400E2534C /* LogNormalDist.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -140,8 +140,8 @@
 		D615D92708C6C6E500E2534C /* random.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D86C08C6C6E400E2534C /* random.m */; };
 		D615D92808C6C6E500E2534C /* RandomBitDist.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D86D08C6C6E400E2534C /* RandomBitDist.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D92908C6C6E500E2534C /* RandomBitDist.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D86E08C6C6E400E2534C /* RandomBitDist.m */; };
-		D615D92A08C6C6E500E2534C /* randomdefs.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D86F08C6C6E400E2534C /* randomdefs.h */; };
-		D615D92B08C6C6E500E2534C /* randomvars.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D87008C6C6E400E2534C /* randomvars.h */; };
+		D615D92A08C6C6E500E2534C /* randomdefs.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D86F08C6C6E400E2534C /* randomdefs.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D615D92B08C6C6E500E2534C /* randomvars.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D87008C6C6E400E2534C /* randomvars.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D92E08C6C6E500E2534C /* RWC2gen.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D87308C6C6E400E2534C /* RWC2gen.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D92F08C6C6E500E2534C /* RWC2gen.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D87408C6C6E400E2534C /* RWC2gen.m */; };
 		D615D93008C6C6E500E2534C /* RWC8gen.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D87508C6C6E400E2534C /* RWC8gen.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -240,24 +240,24 @@
 		D615DA5E08C6C73F00E2534C /* SwarmProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = D615DA4C08C6C73F00E2534C /* SwarmProcess.m */; };
 		D615DA5F08C6C73F00E2534C /* XActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DA4D08C6C73F00E2534C /* XActivity.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615DA6008C6C73F00E2534C /* XActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = D615DA4E08C6C73F00E2534C /* XActivity.m */; };
-		D615DA6208C6C7B300E2534C /* externvar.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DA6108C6C7B300E2534C /* externvar.h */; };
-		D615DA9508C6CD5600E2534C /* defobj_types.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DA9408C6CD5600E2534C /* defobj_types.h */; };
-		D615DAA108C9103700E2534C /* objc-gnu2next.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DAA008C9103700E2534C /* objc-gnu2next.h */; };
-		D615DAB208C913F400E2534C /* collections_types.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DAB108C913F400E2534C /* collections_types.h */; };
-		D615DAB508C9144700E2534C /* collections_classes.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DAB408C9144700E2534C /* collections_classes.h */; };
-		D615DACA08C91A8900E2534C /* defobj_classes.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DAC908C91A8900E2534C /* defobj_classes.h */; };
+		D615DA6208C6C7B300E2534C /* externvar.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DA6108C6C7B300E2534C /* externvar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D615DA9508C6CD5600E2534C /* defobj_types.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DA9408C6CD5600E2534C /* defobj_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D615DAA108C9103700E2534C /* objc-gnu2next.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DAA008C9103700E2534C /* objc-gnu2next.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D615DAB208C913F400E2534C /* collections_types.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DAB108C913F400E2534C /* collections_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D615DAB508C9144700E2534C /* collections_classes.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DAB408C9144700E2534C /* collections_classes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D615DACA08C91A8900E2534C /* defobj_classes.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DAC908C91A8900E2534C /* defobj_classes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615DACC08C91A9100E2534C /* defobj.xm in Resources */ = {isa = PBXBuildFile; fileRef = D615DACB08C91A9100E2534C /* defobj.xm */; };
 		D615DACF08C91AC800E2534C /* version.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DACE08C91AC800E2534C /* version.h */; };
-		D615DB7908CA092B00E2534C /* activity_types.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DB7808CA092B00E2534C /* activity_types.h */; };
+		D615DB7908CA092B00E2534C /* activity_types.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DB7808CA092B00E2534C /* activity_types.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615DB7B08CA093300E2534C /* activity.xm in Resources */ = {isa = PBXBuildFile; fileRef = D615DB7A08CA093300E2534C /* activity.xm */; };
-		D615DB7D08CA094300E2534C /* activity_classes.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DB7C08CA094300E2534C /* activity_classes.h */; };
+		D615DB7D08CA094300E2534C /* activity_classes.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DB7C08CA094300E2534C /* activity_classes.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615DB9D08CA57AC00E2534C /* collections.xm in Resources */ = {isa = PBXBuildFile; fileRef = D615DB9C08CA57AC00E2534C /* collections.xm */; };
 		D615DD3208CAA37F00E2534C /* modulemap.c in Sources */ = {isa = PBXBuildFile; fileRef = D615DD3108CAA37F00E2534C /* modulemap.c */; };
 		D615DECF08CAB04C00E2534C /* AppendFile.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DEBA08CAB04C00E2534C /* AppendFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615DED008CAB04C00E2534C /* AppendFile.m in Sources */ = {isa = PBXBuildFile; fileRef = D615DEBB08CAB04C00E2534C /* AppendFile.m */; };
 		D615DED208CAB04C00E2534C /* InFile.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DEBD08CAB04C00E2534C /* InFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615DED308CAB04C00E2534C /* InFile.m in Sources */ = {isa = PBXBuildFile; fileRef = D615DEBE08CAB04C00E2534C /* InFile.m */; };
-		D615DED408CAB04C00E2534C /* initSwarm.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DEBF08CAB04C00E2534C /* initSwarm.h */; };
+		D615DED408CAB04C00E2534C /* initSwarm.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DEBF08CAB04C00E2534C /* initSwarm.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615DED508CAB04C00E2534C /* Makefile.am in Resources */ = {isa = PBXBuildFile; fileRef = D615DEC008CAB04C00E2534C /* Makefile.am */; };
 		D615DED608CAB04C00E2534C /* NSelect.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DEC108CAB04C00E2534C /* NSelect.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615DED708CAB04C00E2534C /* NSelect.m in Sources */ = {isa = PBXBuildFile; fileRef = D615DEC208CAB04C00E2534C /* NSelect.m */; };
@@ -291,15 +291,11 @@
 		D615DF1108CAB09700E2534C /* space.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DEFB08CAB09700E2534C /* space.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615DF2408CAB1FB00E2534C /* gui.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DF2108CAB1FB00E2534C /* gui.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615DF2508CAB1FB00E2534C /* Makefile.am in Resources */ = {isa = PBXBuildFile; fileRef = D615DF2208CAB1FB00E2534C /* Makefile.am */; };
-		D615E15608CBE7E600E2534C /* Heatbug.m in Sources */ = {isa = PBXBuildFile; fileRef = D615E14608CBE7E500E2534C /* Heatbug.m */; };
-		D615E15708CBE7E600E2534C /* HeatbugBatchSwarm.m in Sources */ = {isa = PBXBuildFile; fileRef = D615E14808CBE7E500E2534C /* HeatbugBatchSwarm.m */; };
-		D615E15808CBE7E600E2534C /* HeatbugModelSwarm.m in Sources */ = {isa = PBXBuildFile; fileRef = D615E14A08CBE7E500E2534C /* HeatbugModelSwarm.m */; };
-		D615E15B08CBE7E600E2534C /* HeatSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = D615E14F08CBE7E500E2534C /* HeatSpace.m */; };
-		D615E17A08CBE8AF00E2534C /* analysis.h in Headers */ = {isa = PBXBuildFile; fileRef = D615E16708CBE8AF00E2534C /* analysis.h */; };
-		D615E1D208CBEA7F00E2534C /* simtoolsgui.h in Headers */ = {isa = PBXBuildFile; fileRef = D615E1AE08CBEA7F00E2534C /* simtoolsgui.h */; };
+		D615E17A08CBE8AF00E2534C /* analysis.h in Headers */ = {isa = PBXBuildFile; fileRef = D615E16708CBE8AF00E2534C /* analysis.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D615E1D208CBEA7F00E2534C /* simtoolsgui.h in Headers */ = {isa = PBXBuildFile; fileRef = D615E1AE08CBEA7F00E2534C /* simtoolsgui.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615E1FB08CBECD100E2534C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D615E1F808CBECD100E2534C /* main.m */; };
 		D615E1FC08CBECD100E2534C /* mainSwarm.m in Sources */ = {isa = PBXBuildFile; fileRef = D615E1FA08CBECD100E2534C /* mainSwarm.m */; };
-		D615E37F08CBF32C00E2534C /* swarmenv.h in Headers */ = {isa = PBXBuildFile; fileRef = D615E37C08CBF32C00E2534C /* swarmenv.h */; };
+		D615E37F08CBF32C00E2534C /* swarmenv.h in Headers */ = {isa = PBXBuildFile; fileRef = D615E37C08CBF32C00E2534C /* swarmenv.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615E38008CBF32C00E2534C /* SwarmEnvironment.h in Headers */ = {isa = PBXBuildFile; fileRef = D615E37D08CBF32C00E2534C /* SwarmEnvironment.h */; };
 		D615E38108CBF32C00E2534C /* SwarmEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = D615E37E08CBF32C00E2534C /* SwarmEnvironment.m */; };
 		D6657AA9097AA5F8004D8FB5 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = D6657AA7097AA5F8004D8FB5 /* MainMenu.nib */; };
@@ -663,21 +659,6 @@
 		D615DF2208CAB1FB00E2534C /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
 		D615E13A08CBE6C600E2534C /* Heatbugs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heatbugs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D615E13C08CBE6CA00E2534C /* Heatbugs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Heatbugs-Info.plist"; sourceTree = "<group>"; };
-		D615E14208CBE7E500E2534C /* ant.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ant.png; sourceTree = "<group>"; };
-		D615E14308CBE7E500E2534C /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
-		D615E14408CBE7E500E2534C /* COPYING */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
-		D615E14508CBE7E500E2534C /* Heatbug.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Heatbug.h; sourceTree = "<group>"; };
-		D615E14608CBE7E500E2534C /* Heatbug.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Heatbug.m; sourceTree = "<group>"; };
-		D615E14708CBE7E500E2534C /* HeatbugBatchSwarm.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HeatbugBatchSwarm.h; sourceTree = "<group>"; };
-		D615E14808CBE7E500E2534C /* HeatbugBatchSwarm.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = HeatbugBatchSwarm.m; sourceTree = "<group>"; };
-		D615E14908CBE7E500E2534C /* HeatbugModelSwarm.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HeatbugModelSwarm.h; sourceTree = "<group>"; };
-		D615E14A08CBE7E500E2534C /* HeatbugModelSwarm.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = HeatbugModelSwarm.m; sourceTree = "<group>"; };
-		D615E14B08CBE7E500E2534C /* HeatbugObserverSwarm.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HeatbugObserverSwarm.h; sourceTree = "<group>"; };
-		D615E14C08CBE7E500E2534C /* HeatbugObserverSwarm.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = HeatbugObserverSwarm.m; sourceTree = "<group>"; };
-		D615E14D08CBE7E500E2534C /* heatbugs.scm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = heatbugs.scm; sourceTree = "<group>"; };
-		D615E14E08CBE7E500E2534C /* HeatSpace.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HeatSpace.h; sourceTree = "<group>"; };
-		D615E14F08CBE7E500E2534C /* HeatSpace.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = HeatSpace.m; sourceTree = "<group>"; };
-		D615E15208CBE7E600E2534C /* README */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		D615E16308CBE8AF00E2534C /* ActiveGraph.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ActiveGraph.h; sourceTree = "<group>"; };
 		D615E16408CBE8AF00E2534C /* ActiveGraph.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ActiveGraph.m; sourceTree = "<group>"; };
 		D615E16508CBE8AF00E2534C /* ActiveOutFile.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ActiveOutFile.h; sourceTree = "<group>"; };
@@ -759,6 +740,7 @@
 		D6EAF8520981BE7600EE3B51 /* README.Random-0.75 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "README.Random-0.75"; sourceTree = "<group>"; };
 		D6EAF9A70981E3ED00EE3B51 /* SwarmTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwarmTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6EAF9B30981E49600EE3B51 /* SwarmTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwarmTests.m; sourceTree = SOURCE_ROOT; };
+		D6FB9B950991AFFD004483CF /* README.AppleObjc */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = README.AppleObjc; path = ../README.AppleObjc; sourceTree = SOURCE_ROOT; };
 		D6FDC034097CF25B00C67EFC /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		D6FDC040097CF2D200C67EFC /* ActionGroup.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ActionGroup.m; sourceTree = "<group>"; };
 		D6FDC041097CF2D200C67EFC /* ActionGroup_test.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ActionGroup_test.h; sourceTree = "<group>"; };
@@ -878,6 +860,7 @@
 		089C1665FE841158C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D6FB9B950991AFFD004483CF /* README.AppleObjc */,
 				8DC2EF5A0486A6940098B216 /* Info.plist */,
 				089C1666FE841158C02AAC07 /* InfoPlist.strings */,
 			);
@@ -897,7 +880,6 @@
 				D615DEE708CAB09700E2534C /* space */,
 				D615DF1F08CAB1FB00E2534C /* gui */,
 				D615E18F08CBEA7F00E2534C /* simtoolsgui */,
-				D615E14108CBE7E500E2534C /* heatbugs */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -985,39 +967,39 @@
 		D615D7B708C6C6CB00E2534C /* defobj */ = {
 			isa = PBXGroup;
 			children = (
+				D615D7B908C6C6CB00E2534C /* Archiver.h */,
+				D615D7BB08C6C6CB00E2534C /* Arguments.h */,
 				D6EAF8450981BDFA00EE3B51 /* COM.h */,
-				D6EAF8460981BDFA00EE3B51 /* COM.m */,
 				D6EAF8470981BDFA00EE3B51 /* COMProxy.h */,
+				D615D7C208C6C6CB00E2534C /* Create.h */,
+				D615D7C408C6C6CB00E2534C /* Customize.h */,
+				D615D7C608C6C6CB00E2534C /* defalloc.h */,
+				D615D7C708C6C6CB00E2534C /* DefClass.h */,
+				D615D7C908C6C6CB00E2534C /* defobj.h */,
+				D615DAC908C91A8900E2534C /* defobj_classes.h */,
+				D615DA9408C6CD5600E2534C /* defobj_types.h */,
+				D615D7CB08C6C6CB00E2534C /* DefObject.h */,
+				D615D7CD08C6C6CB00E2534C /* deftype.h */,
+				D615D7CE08C6C6CB00E2534C /* directory.h */,
+				D615D7D008C6C6CB00E2534C /* FArguments.h */,
+				D615D7D208C6C6CB00E2534C /* FCall.h */,
+				D615D7D408C6C6CB00E2534C /* fcall_java.h */,
+				D6EAF8460981BDFA00EE3B51 /* COM.m */,
 				D6EAF8480981BDFA00EE3B51 /* COMProxy.m */,
 				D615DD3108CAA37F00E2534C /* modulemap.c */,
 				D615DACB08C91A9100E2534C /* defobj.xm */,
-				D615DAC908C91A8900E2534C /* defobj_classes.h */,
-				D615DA9408C6CD5600E2534C /* defobj_types.h */,
 				D615D7B808C6C6CB00E2534C /* _fcall.m */,
-				D615D7B908C6C6CB00E2534C /* Archiver.h */,
 				D615D7BA08C6C6CB00E2534C /* Archiver.m */,
-				D615D7BB08C6C6CB00E2534C /* Arguments.h */,
 				D615D7BC08C6C6CB00E2534C /* Arguments.m */,
 				D615D7BD08C6C6CB00E2534C /* ChangeLog */,
-				D615D7C208C6C6CB00E2534C /* Create.h */,
 				D615D7C308C6C6CB00E2534C /* Create.m */,
-				D615D7C408C6C6CB00E2534C /* Customize.h */,
 				D615D7C508C6C6CB00E2534C /* Customize.m */,
-				D615D7C608C6C6CB00E2534C /* defalloc.h */,
-				D615D7C708C6C6CB00E2534C /* DefClass.h */,
 				D615D7C808C6C6CB00E2534C /* DefClass.m */,
-				D615D7C908C6C6CB00E2534C /* defobj.h */,
 				D615D7CA08C6C6CB00E2534C /* defobj.m */,
-				D615D7CB08C6C6CB00E2534C /* DefObject.h */,
 				D615D7CC08C6C6CB00E2534C /* DefObject.m */,
-				D615D7CD08C6C6CB00E2534C /* deftype.h */,
-				D615D7CE08C6C6CB00E2534C /* directory.h */,
 				D615D7CF08C6C6CB00E2534C /* directory.m */,
-				D615D7D008C6C6CB00E2534C /* FArguments.h */,
 				D615D7D108C6C6CB00E2534C /* FArguments.m */,
-				D615D7D208C6C6CB00E2534C /* FCall.h */,
 				D615D7D308C6C6CB00E2534C /* FCall.m */,
-				D615D7D408C6C6CB00E2534C /* fcall_java.h */,
 				D615D7D508C6C6CB00E2534C /* fcall_java.m */,
 				D615D7D608C6C6CB00E2534C /* fcall_objc.h */,
 				D615D7D708C6C6CB00E2534C /* fcall_objc.m */,
@@ -1333,28 +1315,6 @@
 			name = gui;
 			path = ../../src/gui;
 			sourceTree = SOURCE_ROOT;
-		};
-		D615E14108CBE7E500E2534C /* heatbugs */ = {
-			isa = PBXGroup;
-			children = (
-				D615E14208CBE7E500E2534C /* ant.png */,
-				D615E14308CBE7E500E2534C /* ChangeLog */,
-				D615E14408CBE7E500E2534C /* COPYING */,
-				D615E14508CBE7E500E2534C /* Heatbug.h */,
-				D615E14608CBE7E500E2534C /* Heatbug.m */,
-				D615E14708CBE7E500E2534C /* HeatbugBatchSwarm.h */,
-				D615E14808CBE7E500E2534C /* HeatbugBatchSwarm.m */,
-				D615E14908CBE7E500E2534C /* HeatbugModelSwarm.h */,
-				D615E14A08CBE7E500E2534C /* HeatbugModelSwarm.m */,
-				D615E14B08CBE7E500E2534C /* HeatbugObserverSwarm.h */,
-				D615E14C08CBE7E500E2534C /* HeatbugObserverSwarm.m */,
-				D615E14D08CBE7E500E2534C /* heatbugs.scm */,
-				D615E14E08CBE7E500E2534C /* HeatSpace.h */,
-				D615E14F08CBE7E500E2534C /* HeatSpace.m */,
-				D615E15208CBE7E600E2534C /* README */,
-			);
-			path = heatbugs;
-			sourceTree = "<group>";
 		};
 		D615E16208CBE8AF00E2534C /* analysis */ = {
 			isa = PBXGroup;
@@ -2053,10 +2013,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D615E15608CBE7E600E2534C /* Heatbug.m in Sources */,
-				D615E15708CBE7E600E2534C /* HeatbugBatchSwarm.m in Sources */,
-				D615E15808CBE7E600E2534C /* HeatbugModelSwarm.m in Sources */,
-				D615E15B08CBE7E600E2534C /* HeatSpace.m in Sources */,
 				D615E1FB08CBECD100E2534C /* main.m in Sources */,
 				D615E1FC08CBECD100E2534C /* mainSwarm.m in Sources */,
 				D6FDC118097D1A8100C67EFC /* forwarding.m in Sources */,
@@ -2177,10 +2133,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"/usr/local/gcc-4.0.2/lib",
-					/opt/local/lib,
-				);
+				LIBRARY_SEARCH_PATHS = "";
 				LIBRARY_STYLE = DYNAMIC;
 				PREBINDING = NO;
 				PRODUCT_NAME = SwarmOSX;
@@ -2192,12 +2145,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PREPROCESSOR_DEFINITIONS = "SWARM_OSX=1";
-				HEADER_SEARCH_PATHS = (
-					../../src,
-					/opt/local/include,
-				);
-				LIBRARY_SEARCH_PATHS = /opt/local/lib;
-				OTHER_LDFLAGS = "";
+				HEADER_SEARCH_PATHS = ../../src;
 			};
 			name = Debug;
 		};

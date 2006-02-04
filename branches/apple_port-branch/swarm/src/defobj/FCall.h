@@ -24,8 +24,8 @@ Library:      defobj
 */
 
 
-#import <defobj/FArguments.h>
-#include <swarmconfig.h>
+#import "FArguments.h"
+#include "swarmconfig.h"
 #ifndef USE_AVCALL
 #undef PACKAGE
 #undef VERSION
@@ -36,7 +36,7 @@ Library:      defobj
 #undef VERSION
 #endif
 
-#import <defobj.h> // JOBJECT
+#import "defobj.h" // JOBJECT
 
 #ifdef HAVE_JDK
 void defobj_init_java_call_tables (void *jEnv);

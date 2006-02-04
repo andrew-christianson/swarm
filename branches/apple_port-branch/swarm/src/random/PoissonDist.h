@@ -66,8 +66,8 @@ Relative speed:	|
 */
 
 
-#import <objectbase/SwarmObject.h>
-#import <random.h>
+#import "SwarmObject.h"
+#import "random.h"
 
 
 @interface PoissonDist: SwarmObject <PoissonDist>

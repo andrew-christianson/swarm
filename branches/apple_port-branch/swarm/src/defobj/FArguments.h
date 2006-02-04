@@ -23,12 +23,12 @@ Description:  used for packing arguments to a foreign call
 Library:      defobj
 */
 
-#import <defobj.h>
-#import <defobj/Create.h>
+#import "defobj.h"
+#import "Create.h"
 #include <objc/objc.h> // retval_t
 #import "internal.h"
 
-#include <swarmconfig.h>
+#include "swarmconfig.h"
 #if !SWARM_OSX /* TODO */
 #ifdef USE_AVCALL
 #include <avcall.h>

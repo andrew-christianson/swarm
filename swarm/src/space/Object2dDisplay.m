@@ -23,8 +23,8 @@
 
 #import <space/Object2dDisplay.h>
 #import <space/Discrete2d.h> // discrete2dSiteAt
+#ifndef SWARM_OSX
 #import <gui.h> // GUI_BEEP
-#if !SWARM_OSX /* TODO */
 #import <simtoolsgui.h> // CREATE_PROBE_DISPLAY
 #endif
 #import <defobj.h> // ProtocolViolation
@@ -33,7 +33,11 @@
 
 PHASE(Creating)
 
+#ifndef SWARM_OSX
 + create: aZone setDisplayWidget: (id <Raster>)r setDiscrete2dToDisplay: (id <GridData>)c setDisplayMessage: (SEL)s
+#else
++ create: aZone setDisplayWidget: (id)r setDiscrete2dToDisplay: (id <GridData>)c setDisplayMessage: (SEL)s
+#endif
 {
   Object2dDisplay *obj = [self createBegin: aZone];
 
@@ -44,7 +48,11 @@ PHASE(Creating)
   return [obj createEnd];
 }
 
+#ifndef SWARM_OSX
 - setDisplayWidget: (id <Raster>)r
+#else
+- setDisplayWidget: (id)r
+#endif
 {
   displayWidget = r;
 
@@ -62,19 +70,32 @@ PHASE(Creating)
 {
   displayMessage = s;
 
+  if (displayInvocation)
+    [displayInvocation release];
+
+  displayInvocation = [[NSInvocation alloc] initWithSelector: displayMessage];
+  [displayInvocation setSelector: displayMessage];
+
   return self;
 }
 
 - createEnd
 {
   [super createEnd];
+#ifndef SWARM_OSX
   if (displayWidget == nil || discrete2d == nil || displayMessage == (SEL) nil)
     raiseEvent (InvalidCombination, "Object display improperly initialized\n");
+#endif
 
   return self;
 }
 
 PHASE(Using)
+
+- (id <GridData>)discrete2d
+{
+  return discrete2d;
+}
 
 // An optional collection of objects to display. If you give us one, then
 // on display we'll just forEach through the objects. Otherwise we have to
@@ -82,6 +103,33 @@ PHASE(Using)
 - setObjectCollection: objects
 {
   objectCollection = objects;
+
+  return self;
+}
+
+- (void)displayOn: (NSImage *)anImage
+{
+  if (objectCollection)
+    [objectCollection forEach: displayMessage : anImage];
+}
+
+- displayX:(int)xPos Y:(int)yPos inRect:(NSRect)aRect;
+{
+  id obj = [discrete2d getObjectAtX: xPos Y: yPos];
+  if (obj)
+    {
+      if (displayMessage) {
+#if 0
+	NSInvocation *i = [[NSInvocation alloc] initWithSelector: displayMessage];
+	[i setSelector: displayMessage];
+#endif
+	[displayInvocation setArgument: &aRect atIndex: 2];
+	[displayInvocation invokeWithTarget: obj];
+      } else
+	[obj drawRect: aRect];
+    }
+  else
+    return nil;
 
   return self;
 }
@@ -129,13 +177,11 @@ PHASE(Using)
       && y < [discrete2d getSizeY])
     {
       obj = [discrete2d getObjectAtX: x Y: y];
-#if !SWARM_OSX /* TODO */
+#ifndef SWARM_OSX
       if (obj)
         CREATE_PROBE_DISPLAY (obj);
-#ifndef GNUSTEP
       else
         GUI_BEEP ();
-#endif
 #endif
     }
   else

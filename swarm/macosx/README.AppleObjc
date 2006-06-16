@@ -73,6 +73,15 @@ you need to manually delete the framework first.
 chmod -R +w ~/Library/Frameworks/SwarmOSX.framework
 rm -rf ~/Library/Frameworks/SwarmOSX.framework
 
+If you want to make SwarmOSX.framework available to all users then
+build and install into /Library/Frameworks.
+
+sudo xcodebuild install -configuration Release DSTROOT=/ INSTALL_PATH=/Library/Frameworks DEPLOYMENT_LOCATION=YES
+
+If you want to install a debug version instead:
+
+sudo xcodebuild install -configuration Debug DSTROOT=/ INSTALL_PATH=/Library/Frameworks DEPLOYMENT_LOCATION=YES
+
 
 Authors
 -------

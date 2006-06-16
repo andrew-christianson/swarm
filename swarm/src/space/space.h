@@ -35,10 +35,6 @@
 //D: other dimensions, arbitrary graphs, etc.
 
 #import "objectbase.h"
-#import "swarmconfig.h"
-#ifndef DISABLE_GUI
-#import "gui.h" // Raster, Colormap
-#endif
 
 @protocol GridData
 //S: Methods used by Value2dDisplay and Object2dDisplay for display
@@ -140,12 +136,9 @@ CREATING
 //M: caches the multiplication by ysize. See the discrete2dSiteAt macro. 
 - makeOffsets;
 
-
 SETTING
 - setLattice: (id *)lattice;
 
-//M: When objectFlag is true, indicates that this lattice is intended only for objects.
-- setObjectFlag: (BOOL)objectFlag;
 USING
 //M: Put the given pointer to (x,y) overwriting whatever was there.
 - putObject: anObject atX: (unsigned)x Y: (unsigned)y;
@@ -226,7 +219,6 @@ USING
 - stepRule;
 @end
 
-#ifndef DISABLE_GUI
 @protocol Value2dDisplay <SwarmObject, CREATABLE>
 //S: Value2dDisplay displays 2d arrays of values.
 
@@ -236,10 +228,10 @@ USING
 
 CREATING
 //M: Convenience constructor for Value2dDisplay
-+ create: (id <Zone>)aZone setDisplayWidget: (id <Raster>)r colormap: (id <Colormap>)c setDiscrete2dToDisplay: (id <GridData>)d;
++ create: (id <Zone>)aZone setDisplayWidget: r colormap: c setDiscrete2dToDisplay: (id <GridData>)d;
 
 //M: Set the display widget and the colourmap to use to draw the value array. 
-- setDisplayWidget: (id <Raster>)r colormap: (id <Colormap>)c;
+- setDisplayWidget: r colormap: c;
 
 //M: Set which array to draw. 
 - setDiscrete2dToDisplay: (id <GridData>)c;
@@ -258,7 +250,6 @@ USING
 //M: this is a nice trick that you might want to look at. 
 - display;
 @end
-#endif
 
 @protocol ConwayLife2d <Ca2d, CREATABLE>
 //S: Classic 2d Conway's Life CA.
@@ -337,7 +328,6 @@ USING
 - setOverwriteWarnings: (BOOL)b;
 @end
 
-#ifndef DISABLE_GUI
 @protocol Object2dDisplay <SwarmObject, CREATABLE>
 //S: Object2dDisplay displays 2d arrays of objects.
 
@@ -350,10 +340,10 @@ USING
 
 CREATING
 //M: Convenience constructor for Object2dDisplay
-+ create: (id <Zone>)aZone setDisplayWidget: (id <Raster>)r setDiscrete2dToDisplay: (id <GridData>)c setDisplayMessage: (SEL)s;
++ create: (id <Zone>)aZone setDisplayWidget: r setDiscrete2dToDisplay: (id <GridData>)c setDisplayMessage: (SEL)s;
 
 //M: Set the display widget to use for drawing.
-- setDisplayWidget: (id <Raster>)r;
+- setDisplayWidget: r;
 
 //M: Set the 2d array to draw.
 - setDiscrete2dToDisplay: (id <GridData>)c;
@@ -379,7 +369,6 @@ USING
 //M: Make a probe for an object at a specific point.
 - makeProbeAtX: (unsigned)x Y: (unsigned)y;
 @end
-#endif
 
 @protocol Int2dFiler <SwarmObject, CREATABLE>
 //S: Saves the state of a Discrete2d object [DEPRECATED].

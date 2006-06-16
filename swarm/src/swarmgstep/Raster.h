@@ -20,7 +20,11 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
+#if SWARM_OSX
+#import <Cocoa/Cocoa.h>
+#else
 #include <AppKit/AppKit.h>
+#endif
 
 @interface Raster : NSView
 {

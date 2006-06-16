@@ -136,6 +136,21 @@ void _obj_initMethodInterfaces (Class_s *class);
 #define _CLS_DEFINEDCLASS  0x100
 #endif
 
+#if SWARM_OSX
+#ifndef HOST_BITS_PER_LONG
+#define HOST_BITS_PER_LONG  (sizeof(long)*8)
+#endif 
+
+#define __SWARMCLS_VERSION(cls) ((cls)->version)
+#define __SWARMCLS_SETVERSION(cls, mask) (__SWARMCLS_VERSION(cls) |= mask)
+
+#define SWARMCLS_GETNUMBER(cls) (__SWARMCLS_VERSION(cls) >> (HOST_BITS_PER_LONG/2))
+#define SWARMCLS_SETNUMBER(cls, num) \
+  ({ (cls)->version <<= (HOST_BITS_PER_LONG/2); \
+     (cls)->version >>= (HOST_BITS_PER_LONG/2); \
+     __SWARMCLS_SETVERSION(cls, (((unsigned long)num) << (HOST_BITS_PER_LONG/2))); })
+#endif
+
 //
 // classData -- extension data for compiled class (accessed by class number)
 //

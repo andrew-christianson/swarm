@@ -17,9 +17,13 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <space.h> // Discrete2d
-#import <objectbase/SwarmObject.h>
+#import "space.h" // Discrete2d
+#import "SwarmObject.h"
+#ifndef SWARM_OSX
 #import <gui.h> // Raster
+#else
+#import <Cocoa/Cocoa.h>
+#endif
 
 // generic object to handle display 2d objects
 // hand it a 2d raster widget, tell it what message to send, and it sends it.
@@ -27,14 +31,26 @@
 
 @interface Object2dDisplay: SwarmObject <Object2dDisplay>
 {
+#ifndef SWARM_OSX
   id <Raster> displayWidget;
+#else
+  id displayWidget;
+  NSInvocation *displayInvocation;
+#endif
   id <GridData> discrete2d;
   SEL displayMessage;
   id objectCollection;
 }
+#ifndef SWARM_OSX
 + create: aZone setDisplayWidget: (id <Raster>)r setDiscrete2dToDisplay: (id <GridData>)c setDisplayMessage: (SEL)s;
 - setDisplayWidget: (id <Raster>)r;
+#else
++ create: aZone setDisplayWidget: (id)r setDiscrete2dToDisplay: (id <GridData>)c setDisplayMessage: (SEL)s;
+- setDisplayWidget: (id)r;
+- displayX:(int)xPos Y:(int)yPos inRect:(NSRect)aRect;
+#endif
 - setDiscrete2dToDisplay: (id <GridData>)c;
+- (id <GridData>)discrete2d;
 - setDisplayMessage: (SEL)s;
 - setObjectCollection: objects;			  // optional collection
 - createEnd;

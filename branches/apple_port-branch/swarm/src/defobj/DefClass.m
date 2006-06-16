@@ -54,6 +54,15 @@ _obj_getClassData (Class_s *class)
   classData_t classData;
 
 #if SWARM_OSX /* DONE: OPTIMIZE! */
+#if 1
+  printf("_obj_getClassData (%s, %d)\n", class->name, SWARMCLS_GETNUMBER(class) - 1);
+  classData = (classData_t)_obj_classes[SWARMCLS_GETNUMBER (class) - 1];
+  if (!classData)
+    {
+      classData = _obj_initAlloc (sizeof *classData);
+      _obj_classes[SWARMCLS_GETNUMBER (class) - 1] = (id) classData;
+    }
+#else
   int i;
   int len = strlen(class->name);
   
@@ -88,6 +97,7 @@ _obj_getClassData (Class_s *class)
     classData = _obj_initAlloc (sizeof *classData);
     _obj_classes[i] = (id) classData;
   }
+#endif
 #else
   classData = (classData_t)_obj_classes[CLS_GETNUMBER (class) - 1];
   if (!classData)
@@ -474,6 +484,7 @@ PHASE(CreatingOnly)
   definingClass = aClass;
   info = ((Class_s *) aClass)->info;
   instanceSize = ((Class_s *) aClass)->instanceSize;
+  version = ((Class_s *) aClass)->version;
 #if SWARM_OSX
   ivars = ((Class_s *) aClass)->ivars;
   methodLists = ((Class_s *) aClass)->methodLists;

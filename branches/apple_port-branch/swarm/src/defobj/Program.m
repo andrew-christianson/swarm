@@ -119,6 +119,11 @@ initModules (void)
     printf("# of classes: %d\n", numClasses);
     _obj_nclasses = numClasses;
 
+    // assign class numbers
+    for (i = 0;i < numClasses; ++i) {
+      SWARMCLS_SETNUMBER(osx_classes[i], i+1);
+    }
+
     modules = NULL;
     for (i = 0;i < numClasses; ++i)
     {

@@ -304,6 +304,18 @@
 		D6EAF9B40981E49600EE3B51 /* SwarmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D6EAF9B30981E49600EE3B51 /* SwarmTests.m */; };
 		D6EAF9BC0981E58200EE3B51 /* forwarding.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC064097CF2D200C67EFC /* forwarding.m */; };
 		D6EAF9C40981E67300EE3B51 /* archiver.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC062097CF2D200C67EFC /* archiver.m */; };
+		D6FB9EFB099522A0004483CF /* GNUstepSwarm.h in Headers */ = {isa = PBXBuildFile; fileRef = D6FB9EF1099522A0004483CF /* GNUstepSwarm.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D6FB9EFC099522A0004483CF /* GNUstepSwarm.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FB9EF2099522A0004483CF /* GNUstepSwarm.m */; };
+		D6FB9EFE099522A0004483CF /* Raster.h in Headers */ = {isa = PBXBuildFile; fileRef = D6FB9EF4099522A0004483CF /* Raster.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D6FB9EFF099522A0004483CF /* Raster.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FB9EF5099522A0004483CF /* Raster.m */; };
+		D6FB9F00099522A0004483CF /* swarmgstep.h in Headers */ = {isa = PBXBuildFile; fileRef = D6FB9EF6099522A0004483CF /* swarmgstep.h */; };
+		D6FB9F01099522A0004483CF /* swarmgstep.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FB9EF7099522A0004483CF /* swarmgstep.m */; };
+		D6FB9F02099522A0004483CF /* ZoomRaster.h in Headers */ = {isa = PBXBuildFile; fileRef = D6FB9EF8099522A0004483CF /* ZoomRaster.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D6FB9F03099522A0004483CF /* ZoomRaster.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FB9EF9099522A0004483CF /* ZoomRaster.m */; };
+		D6FB9FAA09953A6F004483CF /* Object2dDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = D615DEFA08CAB09700E2534C /* Object2dDisplay.m */; };
+		D6FB9FAB09953A72004483CF /* Object2dDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DEF908CAB09700E2534C /* Object2dDisplay.h */; };
+		D6FB9FAC09953A72004483CF /* Value2dDisplay.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DEFC08CAB09700E2534C /* Value2dDisplay.h */; };
+		D6FB9FAD09953A75004483CF /* Value2dDisplay.m in Sources */ = {isa = PBXBuildFile; fileRef = D615DEFD08CAB09700E2534C /* Value2dDisplay.m */; };
 		D6FDC118097D1A8100C67EFC /* forwarding.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC064097CF2D200C67EFC /* forwarding.m */; };
 /* End PBXBuildFile section */
 
@@ -741,6 +753,16 @@
 		D6EAF9A70981E3ED00EE3B51 /* SwarmTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwarmTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6EAF9B30981E49600EE3B51 /* SwarmTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwarmTests.m; sourceTree = SOURCE_ROOT; };
 		D6FB9B950991AFFD004483CF /* README.AppleObjc */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = README.AppleObjc; path = ../README.AppleObjc; sourceTree = SOURCE_ROOT; };
+		D6FB9EF0099522A0004483CF /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
+		D6FB9EF1099522A0004483CF /* GNUstepSwarm.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = GNUstepSwarm.h; sourceTree = "<group>"; };
+		D6FB9EF2099522A0004483CF /* GNUstepSwarm.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = GNUstepSwarm.m; sourceTree = "<group>"; };
+		D6FB9EF3099522A0004483CF /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
+		D6FB9EF4099522A0004483CF /* Raster.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Raster.h; sourceTree = "<group>"; };
+		D6FB9EF5099522A0004483CF /* Raster.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Raster.m; sourceTree = "<group>"; };
+		D6FB9EF6099522A0004483CF /* swarmgstep.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = swarmgstep.h; sourceTree = "<group>"; };
+		D6FB9EF7099522A0004483CF /* swarmgstep.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = swarmgstep.m; sourceTree = "<group>"; };
+		D6FB9EF8099522A0004483CF /* ZoomRaster.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ZoomRaster.h; sourceTree = "<group>"; };
+		D6FB9EF9099522A0004483CF /* ZoomRaster.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ZoomRaster.m; sourceTree = "<group>"; };
 		D6FDC034097CF25B00C67EFC /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		D6FDC040097CF2D200C67EFC /* ActionGroup.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ActionGroup.m; sourceTree = "<group>"; };
 		D6FDC041097CF2D200C67EFC /* ActionGroup_test.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ActionGroup_test.h; sourceTree = "<group>"; };
@@ -870,6 +892,7 @@
 		08FB77AEFE84172EC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				D6FB9EEF0995229F004483CF /* swarmgstep */,
 				D615D7B708C6C6CB00E2534C /* defobj */,
 				D615D9A808C6C70200E2534C /* objectbase */,
 				D615D9ED08C6C71200E2534C /* collections */,
@@ -1385,6 +1408,24 @@
 			path = ../../src/simtoolsgui;
 			sourceTree = SOURCE_ROOT;
 		};
+		D6FB9EEF0995229F004483CF /* swarmgstep */ = {
+			isa = PBXGroup;
+			children = (
+				D6FB9EF0099522A0004483CF /* ChangeLog */,
+				D6FB9EF1099522A0004483CF /* GNUstepSwarm.h */,
+				D6FB9EF2099522A0004483CF /* GNUstepSwarm.m */,
+				D6FB9EF3099522A0004483CF /* Makefile.am */,
+				D6FB9EF4099522A0004483CF /* Raster.h */,
+				D6FB9EF5099522A0004483CF /* Raster.m */,
+				D6FB9EF6099522A0004483CF /* swarmgstep.h */,
+				D6FB9EF7099522A0004483CF /* swarmgstep.m */,
+				D6FB9EF8099522A0004483CF /* ZoomRaster.h */,
+				D6FB9EF9099522A0004483CF /* ZoomRaster.m */,
+			);
+			name = swarmgstep;
+			path = ../../src/swarmgstep;
+			sourceTree = SOURCE_ROOT;
+		};
 		D6FDC03E097CF2D200C67EFC /* tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1649,6 +1690,12 @@
 				D615E38008CBF32C00E2534C /* SwarmEnvironment.h in Headers */,
 				D6EAF9A00981D86A00EE3B51 /* SwarmEnvironment_getters.h in Headers */,
 				D6EAF9A30981D87400EE3B51 /* SwarmEnvironment_getters.m in Headers */,
+				D6FB9EFB099522A0004483CF /* GNUstepSwarm.h in Headers */,
+				D6FB9EFE099522A0004483CF /* Raster.h in Headers */,
+				D6FB9F00099522A0004483CF /* swarmgstep.h in Headers */,
+				D6FB9F02099522A0004483CF /* ZoomRaster.h in Headers */,
+				D6FB9FAB09953A72004483CF /* Object2dDisplay.h in Headers */,
+				D6FB9FAC09953A72004483CF /* Value2dDisplay.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2006,6 +2053,12 @@
 				D615DF0B08CAB09700E2534C /* Grid2d.m in Sources */,
 				D615DF0D08CAB09700E2534C /* Int2dFiler.m in Sources */,
 				D615E38108CBF32C00E2534C /* SwarmEnvironment.m in Sources */,
+				D6FB9EFC099522A0004483CF /* GNUstepSwarm.m in Sources */,
+				D6FB9EFF099522A0004483CF /* Raster.m in Sources */,
+				D6FB9F01099522A0004483CF /* swarmgstep.m in Sources */,
+				D6FB9F03099522A0004483CF /* ZoomRaster.m in Sources */,
+				D6FB9FAA09953A6F004483CF /* Object2dDisplay.m in Sources */,
+				D6FB9FAD09953A75004483CF /* Value2dDisplay.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -19,7 +19,11 @@
 
 #import <space/Value2dDisplay.h>
 #import <space.h>
+#ifndef SWARM_OSX
 #import <gui.h>
+#else
+#import <Cocoa/Cocoa.h>
+#endif
 #import <defobj.h> // raiseEvent
 
 // This should be subclassed to fill in the colormap for your CA.
@@ -29,7 +33,11 @@
 
 PHASE(Creating)
 
+#ifndef SWARM_OSX
 + create: aZone setDisplayWidget: (id <Raster>)r colormap: (id <Colormap>)c setDiscrete2dToDisplay: (id <GridData>)d
+#else
++ create: aZone setDisplayWidget: (id)r colormap: (id)c setDiscrete2dToDisplay: (id <GridData>)d
+#endif
 {
   Value2dDisplay *obj = [self createBegin: aZone];
 
@@ -39,17 +47,16 @@ PHASE(Creating)
   return [obj createEnd];
 }
 
+#ifndef SWARM_OSX
 - setDisplayWidget: (id <Raster>)r colormap: (id <Colormap>)c
+#else
+- setDisplayWidget: (id)r colormap: (id)c
+#endif
 {
   displayWidget = r;
   colormap = c;
   
-#if SWARM_OSX /* TODO: method */
-  drawPointImp = [(Object *)r methodForSelector: @selector (drawPointX:Y:Color:)];
-#else
   drawPointImp = [(Object *)r methodFor: @selector (drawPointX:Y:Color:)];
-#endif
-
   return self;
 }
 
@@ -63,8 +70,10 @@ PHASE(Creating)
 {
   [super createEnd];
 
+#if 0
   if (displayWidget == nil || discrete2d == nil)
     raiseEvent (InvalidCombination, "Value display improperly initialized\n");
+#endif
   
   if (modFactor == 0)
     modFactor = 1;
@@ -73,13 +82,85 @@ PHASE(Creating)
 }
 
 PHASE(Using)
+
+- (id <GridData>)discrete2d
+{
+  return discrete2d;
+}
      
-     // linear transform between values and colours. Good enough?
+// linear transform between values and colours. Good enough?
 - setDisplayMappingM: (int)m C: (int)c
 {
   modFactor = m;
   colorConstant = c;
   return self;
+}
+
+- displayX:(int)xPos Y:(int)yPos inRect:(NSRect)aRect;
+{
+  long color;
+  float redValue;
+  NSColor *aColor;
+  id *lattice;
+  long *offsets;
+
+  lattice = [discrete2d getLattice];
+  offsets = [discrete2d getOffsets];
+  color = (long) *(discrete2dSiteAt(lattice, offsets, xPos, yPos));
+  redValue = (float)color / (float)modFactor;
+  aColor = [NSColor colorWithDeviceRed: redValue green: 0.0
+		    blue: 0.0 alpha: 1.0];
+  [aColor set];
+  PSrectfill(aRect.origin.x, aRect.origin.y,
+	     aRect.size.width, aRect.size.height);
+
+  return self;
+}
+
+- (void)displayOn: (NSImage *)anImage
+{
+  int x, y;
+  id *lattice;
+  long *offsets;
+  int xsize, ysize;
+
+  lattice = [discrete2d getLattice];
+  offsets = [discrete2d getOffsets];
+  xsize = [discrete2d getSizeX];
+  ysize = [discrete2d getSizeY];
+
+  for (y = 0; y < ysize; y++)
+    for (x = 0; x < xsize; x++)
+      {
+	long color;
+	float redValue;
+	NSColor *aColor;
+
+        color = (long) *(discrete2dSiteAt(lattice, offsets, x, y));
+        redValue = (float)color / (float)modFactor;
+	aColor = [NSColor colorWithDeviceRed: redValue green: 0.0
+			  blue: 0.0 alpha: 1.0];
+	[aColor set];
+	PSrectfill(3*x, 3*y, 3, 3);
+#if 0
+        long color;
+
+        color = (long) *(discrete2dSiteAt(lattice, offsets, x, y));
+        color = color / modFactor + colorConstant;
+        if (color < 0 || color > 255)
+          raiseEvent (WarningMessage,
+                      "Value2dDisplay: found colour %d not in [0,255].\n",
+                      color);
+        
+        if (drawPointImp)
+          // cache method lookup.
+          (void) *drawPointImp (displayWidget,
+                                @selector (drawPointX:Y:Color:),
+                                x, y, color);
+        else
+          [displayWidget drawPointX: x Y: y Color: (unsigned char)color];
+#endif
+      }
 }
 
 - display
@@ -108,9 +189,9 @@ PHASE(Using)
         
         if (drawPointImp)
           // cache method lookup.
-          (void) (*drawPointImp) (displayWidget,
-                                  @selector (drawPointX:Y:Color:),
-                                  x, y, color);
+          (void) *drawPointImp (displayWidget,
+                                @selector (drawPointX:Y:Color:),
+                                x, y, color);
         else
           [displayWidget drawPointX: x Y: y Color: (unsigned char)color];
       }

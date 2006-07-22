@@ -409,6 +409,7 @@ PHASE(Using)
 
 - (void)catArrayType: (const char *)type
 {
+#ifndef SWARM_OSX /* NESTED */
   [self catStartExpr];
   [self catLiteral: "array"];
   [self catSeparator];
@@ -422,6 +423,7 @@ PHASE(Using)
     lisp_type_for_objc_type (type, outputCount);
   }
   [self catEndExpr];
+#endif
 }
 
 - (void)catType: (const char *)type

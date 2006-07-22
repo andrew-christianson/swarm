@@ -29,19 +29,34 @@ extern void *alignptrto (void *ptr, size_t alignment);
 extern size_t fcall_type_alignment (fcall_type_t varType);
 
 extern void map_objc_class_ivars (Class class,
-                                  void (*process_ivar) (const char *name,
+                                  void (*process_ivar) (id obj,
+														void (*process_object) (id obj,
+																				const char *name,
+																				fcall_type_t type,
+																				void *ptr,
+																				unsigned rank,
+																				unsigned *dims),
+								                        const char *name,
                                                         fcall_type_t type,
                                                         unsigned offset,
                                                         unsigned rank,
-                                                        unsigned *dims));
+                                                        unsigned *dims),
+								  id obj,
+								  void (*process_object) (id obj,
+														  const char *name,
+														  fcall_type_t type,
+														  void *ptr,
+														  unsigned rank,
+														  unsigned *dims));
 
 extern void map_object_ivars (id object,
-                              void (*process_object) (const char *name,
+                              void (*process_object) (id obj,
+							                          const char *name,
                                                       fcall_type_t type,
                                                       void *ptr,
                                                       unsigned rank,
                                                       unsigned *dims));
-extern struct objc_ivar *find_ivar (id obj, const char *name);
+extern struct objc_ivar *find_ivar (Class class, const char *name);
 extern void *ivar_ptr_for_name (id obj, const char *name);
 
 extern void

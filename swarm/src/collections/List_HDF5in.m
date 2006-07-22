@@ -1,5 +1,6 @@
 - hdf5In: hdf5Obj
 {
+#ifndef SWARM_OSX /* NESTED */
   if ([hdf5Obj getDatasetFlag])
     {
       Class class = [hdf5Obj getClass];
@@ -29,5 +30,6 @@
         }
       [hdf5Obj iterate: process_object];
     }
+#endif
   return self;
 }

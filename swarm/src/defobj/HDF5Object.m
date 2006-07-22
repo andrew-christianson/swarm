@@ -930,6 +930,7 @@ hdf5_delete_attribute (hid_t loc_id, const char *name)
 
 - (void)writeLevels
 {
+#ifndef SWARM_OSX /* NESTED */
   void store_level (const char *ivarName, fcall_type_t type,
                     void *ivar_ptr, unsigned rank, unsigned *dims)
     {
@@ -937,6 +938,7 @@ hdf5_delete_attribute (hid_t loc_id, const char *name)
         [self writeLevel: ivarName];
     }
   map_object_ivars (prototype, store_level);
+#endif
 }
 
 - (void)drop

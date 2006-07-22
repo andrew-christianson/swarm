@@ -266,12 +266,13 @@ swarm_directory_objc_remove (id object)
   return NO;
 }
 
+static void node_func (void *data, void *param)
+{
+	xprint (data);
+}
+
 - (void)describe: outputCharStream
 {
-  void node_func (void *data, void *param)
-    {
-      xprint (data);
-    }
   avl_walk (COM_tree, node_func, NULL);
 
 #ifdef HAVE_JDK

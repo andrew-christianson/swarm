@@ -169,7 +169,7 @@ void _obj_printMethods(char *className)
 // _obj_createClass() -- function to add new class to Mac OSX ObjC runtime
 //
 #if SWARM_OSX
-void _obj_createClass(BehaviorPhase_s *aClass)
+void _obj_createClass(Class_s *aClass)
 {
     struct objc_class * meta_class;
     struct objc_class * super_class;

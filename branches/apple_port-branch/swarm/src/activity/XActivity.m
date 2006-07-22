@@ -103,17 +103,17 @@ auditRunRequest (Activity_c *self, const char *request)
   return status;
 }
 
+static BOOL obsoletep (CAction *action)
+{
+	Activity_c *subactivity = ((ActionMerge_c *) action)->subactivity;
+	
+	return COMPLETEDP (subactivity->status) && !subactivity->keepEmptyFlag;
+}
+
 static BOOL
 removeObsoleteMerges (id <ActivityIndex> currentIndex)
 {
   CAction *action = GENERIC_GET (currentIndex);
-
-  BOOL obsoletep ()
-    {
-      Activity_c *subactivity = ((ActionMerge_c *) action)->subactivity;
-
-      return COMPLETEDP (subactivity->status) && !subactivity->keepEmptyFlag;
-    }
 
   if (getClass (action) == id_ActionConcurrent_c)
     {
@@ -125,7 +125,7 @@ removeObsoleteMerges (id <ActivityIndex> currentIndex)
         {
           if (getClass (caction) == id_ActionMerge_c)
             {
-              if (obsoletep ())
+              if (obsoletep (action))
                 [index remove];
             }
         }
@@ -134,7 +134,7 @@ removeObsoleteMerges (id <ActivityIndex> currentIndex)
     }
   else if (getClass (action) == id_ActionMerge_c)
     {
-      if (obsoletep ())
+      if (obsoletep (action))
         {
           [currentIndex remove];
 

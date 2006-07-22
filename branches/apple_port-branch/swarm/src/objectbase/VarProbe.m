@@ -181,6 +181,9 @@ PHASE(Creating)
 
 - _setupObjcVarProbe_
 {
+#if SWARM_OSX /* NESTED */
+  return self;
+#else
 #if SWARM_OSX /* DONE */
   struct objc_ivar_list *ivarList;
 #else
@@ -248,6 +251,7 @@ PHASE(Creating)
         }
       return self;
     }
+#endif
 }
 
 - createEnd
@@ -954,6 +958,7 @@ JS_probe_as_object (COMobject cObj, const char *variableName)
 
 - iterateAsDouble: anObject using: (void (*) (unsigned rank, unsigned *vec, double val))func
 {
+#ifndef SWARM_OSX /* NESTED */
   unsigned vec[rank];
   unsigned di;
   const void *ary = (const void *) anObject + dataOffset;
@@ -983,11 +988,13 @@ JS_probe_as_object (COMobject cObj, const char *variableName)
                       output_type,
                       ary,
                       NULL);
+#endif
   return self;
 }
 
 - iterateAsInteger: anObject using: (void (*) (unsigned rank, unsigned *vec, int val))func
 {
+#ifndef SWARM_OSX /* NESTED */
   unsigned vec[rank];
   unsigned di;
   const void *ary = (const void *) anObject + dataOffset;
@@ -1018,6 +1025,7 @@ JS_probe_as_object (COMobject cObj, const char *variableName)
                       output_type,
                       ary,
                       NULL);
+#endif
   return self;
 }
 

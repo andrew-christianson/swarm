@@ -127,6 +127,7 @@ PHASE(Setting)
 
 - (void)ensureApp: hdf5File
 {
+#ifndef SWARM_OSX /* NESTED */
   if (systemArchiverFlag)
     {
       int appIterateFunc (id <HDF5> appHDF5Obj)
@@ -150,6 +151,7 @@ PHASE(Setting)
         hdf5File = nil;
     }
   [applicationMap at: currentApplicationKey insert: hdf5File];
+#endif
 }
 
 PHASE(Using)

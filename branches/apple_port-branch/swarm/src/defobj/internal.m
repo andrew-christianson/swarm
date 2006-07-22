@@ -169,6 +169,56 @@ objc_array_subtype (const char *type, unsigned *dims)
   return tail;
 }
 
+
+void
+permute (unsigned dim,
+		 unsigned *coord,
+		 unsigned rank,
+		 unsigned *dims,
+		 fcall_type_t baseType,
+		 void (*start_dim) (unsigned dimnum),
+		 void (*end_dim) (void),
+		 void (*start_element) (void),
+		 void (*end_element) (void),
+		 void (*output_type) (fcall_type_t type,
+							  unsigned offset,
+							  void *data))
+{
+	unsigned i;
+	
+	if (dim < rank)
+	{
+		if (start_dim)
+            start_dim (dim);
+		for (i = 0; i < dims[dim]; i++)
+		{
+			coord[dim] = i;
+			permute (dim + 1, coord, rank, dims, baseType, start_dim,
+					 end_dim, start_element, end_element, output_type);
+		}
+		if (end_dim)
+            end_dim ();
+	}
+	else
+	{
+		unsigned offset = 0;
+		unsigned mult = 1;
+		
+		offset = coord[rank - 1];
+		for (i = rank - 1; i > 0; i--)
+		{
+			mult *= dims[i];
+			offset += coord[i - 1] * mult;
+		}
+		if (start_element)
+            start_element ();
+		if (output_type)
+            output_type (baseType, offset, NULL);
+		if (end_element)
+            end_element ();
+	}
+}
+
 void
 process_array (unsigned rank,
                unsigned *dims,
@@ -185,42 +235,8 @@ process_array (unsigned rank,
 {
   unsigned coord[rank];
       
-  void permute (unsigned dim)
-    {
-      unsigned i;
-      
-      if (dim < rank)
-        {
-          if (start_dim)
-            start_dim (dim);
-          for (i = 0; i < dims[dim]; i++)
-            {
-              coord[dim] = i;
-              permute (dim + 1);
-            }
-          if (end_dim)
-            end_dim ();
-        }
-      else
-        {
-          unsigned offset = 0;
-          unsigned mult = 1;
-          
-          offset = coord[rank - 1];
-          for (i = rank - 1; i > 0; i--)
-            {
-              mult *= dims[i];
-              offset += coord[i - 1] * mult;
-            }
-          if (start_element)
-            start_element ();
-          if (output_type)
-            output_type (baseType, offset, NULL);
-          if (end_element)
-            end_element ();
-        }
-    }
-  permute (0);
+  permute (0, coord, rank, dims, baseType, start_dim,
+		   end_dim, start_element, end_element, output_type);
 }
 
 void
@@ -257,18 +273,32 @@ objc_process_array (const char *type,
 
 
 void map_objc_class_ivars (Class class,
-                           void (*process_ivar) (const char *name,
+                           void (*process_ivar) (id obj,
+												 void (*process_object) (id obj,
+																		 const char *name,
+																		 fcall_type_t type,
+																		 void *ptr,
+																		 unsigned rank,
+																		 unsigned *dims),
+						                         const char *name,
                                                  fcall_type_t type,
                                                  unsigned offset,
                                                  unsigned rank,
-                                                 unsigned *dims))
+                                                 unsigned *dims),
+						   id obj,
+						   void (*process_object) (id obj,
+												   const char *name,
+												   fcall_type_t type,
+												   void *ptr,
+												   unsigned rank,
+												   unsigned *dims))
 {
   struct objc_ivar_list *ivars = class->ivars;
   
   if (class->super_class)
     {
       if (strcmp (class->super_class->name, "Object_s") != 0)
-        map_objc_class_ivars (class->super_class, process_ivar);
+        map_objc_class_ivars (class->super_class, process_ivar, obj, process_object);
     }
   
   if (ivars)
@@ -293,14 +323,14 @@ void map_objc_class_ivars (Class class,
               const char *baseType;
               
               baseType = objc_array_subtype (ivar_list[i].ivar_type, dims);
-              process_ivar (ivar_list[i].ivar_name,
+              process_ivar (obj, process_object, ivar_list[i].ivar_name,
                             fcall_type_for_objc_type (*baseType),
                             ivar_list[i].ivar_offset,
                             rank,
                             dims);
             }
           else
-            process_ivar (ivar_list[i].ivar_name,
+            process_ivar (obj, process_object, ivar_list[i].ivar_name,
                           fcall_type_for_objc_type (*ivar_list[i].ivar_type),
                           ivar_list[i].ivar_offset,
                           0,
@@ -309,29 +339,38 @@ void map_objc_class_ivars (Class class,
     }
 }
 
+static void process_ivar (id obj,
+						  void (*process_object) (id obj,
+												  const char *name,
+												  fcall_type_t type,
+												  void *ptr,
+												  unsigned rank,
+												  unsigned *dims),
+                          const char *name,
+						  fcall_type_t type,
+						  unsigned offset,
+						  unsigned rank,
+						  unsigned *dims)
+{
+	process_object (obj, name, type, (void *) obj + offset, rank, dims);
+}
+
 static void
 map_objc_ivars (id obj,
-                void (*process_object) (const char *name,
+                void (*process_object) (id obj,
+				                        const char *name,
                                         fcall_type_t type,
                                         void *ptr,
                                         unsigned rank,
                                         unsigned *dims))
 {
-  void process_ivar (const char *name,
-                     fcall_type_t type,
-                     unsigned offset,
-                     unsigned rank,
-                     unsigned *dims)
-    {
-      process_object (name, type, (void *) obj + offset, rank, dims);
-    }
-
-  map_objc_class_ivars (getClass (obj), process_ivar);
+  map_objc_class_ivars (getClass (obj), process_ivar, obj, process_object);
 }
 
 void
 map_object_ivars (id object,
-                  void (*process_object) (const char *name,
+                  void (*process_object) (id obj,
+				                          const char *name,
                                           fcall_type_t type,
                                           void *ptr,
                                           unsigned rank,
@@ -416,6 +455,7 @@ lisp_process_array (unsigned rank, unsigned *dims, fcall_type_t type,
                     id <OutputStream> stream,
                     BOOL deepFlag)
 {
+#ifndef SWARM_OSX /* NESTED */
   BOOL firstElement;
   
   void lisp_start_dim (unsigned dim)
@@ -453,6 +493,7 @@ lisp_process_array (unsigned rank, unsigned *dims, fcall_type_t type,
                  ptr,
                  data);
   [stream catEndArray];
+#endif
 }
 
 void
@@ -577,6 +618,9 @@ const char *
 lisp_type_for_objc_type (const char *varType,
                          void (*func) (unsigned dim, unsigned count))
 {
+#ifdef SWARM_OSX /* NESTED */
+	return NULL;
+#else
   const char *baseType;
   unsigned dimnum;
 
@@ -643,6 +687,7 @@ lisp_type_for_objc_type (const char *varType,
   dimnum = 0;
   expand_type (varType);
   return baseType;
+#endif
 }
 
 /* nil_method moved to libojc/nil_method.c */

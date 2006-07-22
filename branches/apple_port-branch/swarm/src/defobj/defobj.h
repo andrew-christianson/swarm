@@ -1424,7 +1424,7 @@ extern void _obj_formatIDString (char *buffer, id anObject);
 
 //F: Declaration to enable use of @class declaration for message
 //F: receiver without compile error.
-extern Class objc_get_class (const char *name);  // for class id lookup 
+extern id objc_get_class (const char *name);  // for class id lookup 
 
 //F: Lookup a defobj type object by name.
 extern id defobj_lookup_type (const char *name);

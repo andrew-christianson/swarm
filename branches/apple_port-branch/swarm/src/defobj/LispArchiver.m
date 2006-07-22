@@ -115,6 +115,7 @@ lispProcessPairs (id aZone,
 static void
 lispProcessMakeObjcPairs (id aZone, id stream, id app)
 {
+#ifndef SWARM_OSX /* NESTED */
   void mapUpdate (id <String> key, id <InputStream> stream)
     {
       id objectMap;
@@ -130,6 +131,7 @@ lispProcessMakeObjcPairs (id aZone, id stream, id app)
 	}
     }
   lispProcessPairs (aZone, stream, mapUpdate);
+#endif
 }
 
 static void
@@ -137,6 +139,7 @@ lispProcessApplicationPairs (id aZone,
                              id <InputStream> stream,
                              id <Map> applicationMap)
 {
+#ifndef SWARM_OSX /* NESTED */
   void mapUpdate (id key, id substream)
     {
       Application *app = [applicationMap at: key];
@@ -159,6 +162,7 @@ lispProcessApplicationPairs (id aZone,
       lispProcessMakeObjcPairs (aZone, substream, app);
     }
   lispProcessPairs (aZone, stream, mapUpdate);
+#endif
 }
 
 @implementation LispArchiver_c

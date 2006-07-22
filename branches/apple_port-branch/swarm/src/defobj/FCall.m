@@ -607,8 +607,9 @@ PHASE(Creating)
 }
 
 void
-updateTarget (FCall_c *self, id target)
+updateTarget (id s, id target)
 {
+  FCall_c *self = (FCall_c *)s;
   if (self->fargs->language == LanguageObjc)
     {
       self->gc_fobject = target;

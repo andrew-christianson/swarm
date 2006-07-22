@@ -47,6 +47,9 @@ PHASE(Creating)
 
 - setArray: array
 {
+#if SWARM_OSX /* NESTED */
+	printf("setArray:\n");
+#else
   id <List> l;
   id proto;
   
@@ -148,6 +151,7 @@ PHASE(Creating)
       }
     expand (array, 0);
   }
+#endif
   return self;
 }
 
@@ -165,6 +169,9 @@ PHASE(Using)
 
 - convertToType: (fcall_type_t)destType dest: (void *)ptr
 {
+#if SWARM_OSX /* NESTED */
+	printf("convertToType:dest:\n");
+#else
   unsigned coord[rank];
   void permute (unsigned dim)
     {
@@ -226,6 +233,7 @@ PHASE(Using)
     permute (0);
   else
     memcpy (ptr, data, fcall_type_size (type) * elementCount);
+#endif
   return self;
 }
 

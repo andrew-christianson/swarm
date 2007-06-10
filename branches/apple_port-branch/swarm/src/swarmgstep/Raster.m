@@ -228,8 +228,7 @@
 #endif
 
   [backgroundColor set];
-  PSrectfill(aRect.origin.x, aRect.origin.y,
-	     aRect.size.width, aRect.size.height);
+  NSRectFill(aRect);
 
   if (!image)
     [self createImage];
@@ -243,8 +242,7 @@
       [image lockFocus];
 
       [backgroundColor set];
-      PSrectfill(aRect.origin.x, aRect.origin.y,
-		 aRect.size.width, aRect.size.height);
+      NSRectFill(aRect);
 
       while ((aDisplay = [e nextObject]))
 	{

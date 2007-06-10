@@ -111,8 +111,7 @@ PHASE(Using)
   aColor = [NSColor colorWithDeviceRed: redValue green: 0.0
 		    blue: 0.0 alpha: 1.0];
   [aColor set];
-  PSrectfill(aRect.origin.x, aRect.origin.y,
-	     aRect.size.width, aRect.size.height);
+  NSRectFill(aRect);
 
   return self;
 }
@@ -141,7 +140,9 @@ PHASE(Using)
 	aColor = [NSColor colorWithDeviceRed: redValue green: 0.0
 			  blue: 0.0 alpha: 1.0];
 	[aColor set];
-	PSrectfill(3*x, 3*y, 3, 3);
+        NSRect aRect = NSMakeRect(3*x, 3*y, 3, 3);
+        NSRectFill(aRect);
+
 #if 0
         long color;
 

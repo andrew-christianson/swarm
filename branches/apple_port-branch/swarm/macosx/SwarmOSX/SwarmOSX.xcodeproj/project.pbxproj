@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C38F0E20C4F273C00702783 /* DefClass_OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CCDED070C47A7E400B55817 /* DefClass_OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C38F0E40C4F274100702783 /* DefClass_OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CCDECFE0C47A23700B55817 /* DefClass_OSX.m */; };
+		3C53CF830C54882F009AADAD /* DefObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C53CF7E0C54882F009AADAD /* DefObject.m */; };
+		3CB3147F0C4C4E5300951A12 /* DefClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CB3147D0C4C4E5300951A12 /* DefClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3CB314800C4C4E5300951A12 /* DefClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3147E0C4C4E5300951A12 /* DefClass.m */; };
+		3CCDED210C47B01B00B55817 /* DefObject.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7CB08C6C6CB00E2534C /* DefObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
 		D615D75408C6C13800E2534C /* argp-ba.c in Sources */ = {isa = PBXBuildFile; fileRef = D615D72808C6C13800E2534C /* argp-ba.c */; };
@@ -51,12 +57,8 @@
 		D615D80208C6C6CB00E2534C /* Customize.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7C408C6C6CB00E2534C /* Customize.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D80308C6C6CB00E2534C /* Customize.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D7C508C6C6CB00E2534C /* Customize.m */; };
 		D615D80408C6C6CB00E2534C /* defalloc.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7C608C6C6CB00E2534C /* defalloc.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D615D80508C6C6CB00E2534C /* DefClass.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7C708C6C6CB00E2534C /* DefClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D615D80608C6C6CB00E2534C /* DefClass.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D7C808C6C6CB00E2534C /* DefClass.m */; };
 		D615D80708C6C6CB00E2534C /* defobj.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7C908C6C6CB00E2534C /* defobj.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D80808C6C6CB00E2534C /* defobj.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D7CA08C6C6CB00E2534C /* defobj.m */; };
-		D615D80908C6C6CB00E2534C /* DefObject.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7CB08C6C6CB00E2534C /* DefObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D615D80A08C6C6CB00E2534C /* DefObject.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D7CC08C6C6CB00E2534C /* DefObject.m */; };
 		D615D80B08C6C6CB00E2534C /* deftype.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7CD08C6C6CB00E2534C /* deftype.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D80C08C6C6CB00E2534C /* directory.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7CE08C6C6CB00E2534C /* directory.h */; };
 		D615D80D08C6C6CB00E2534C /* directory.m in Sources */ = {isa = PBXBuildFile; fileRef = D615D7CF08C6C6CB00E2534C /* directory.m */; };
@@ -342,6 +344,11 @@
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF5E0370ADEE00C91783 /* SwarmOSX_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwarmOSX_Prefix.pch; sourceTree = "<group>"; };
+		3C53CF7E0C54882F009AADAD /* DefObject.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefObject.m; sourceTree = "<group>"; };
+		3CB3147D0C4C4E5300951A12 /* DefClass.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefClass.h; sourceTree = "<group>"; };
+		3CB3147E0C4C4E5300951A12 /* DefClass.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefClass.m; sourceTree = "<group>"; };
+		3CCDECFE0C47A23700B55817 /* DefClass_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefClass_OSX.m; sourceTree = "<group>"; };
+		3CCDED070C47A7E400B55817 /* DefClass_OSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefClass_OSX.h; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* SwarmOSX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwarmOSX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -390,12 +397,9 @@
 		D615D7C408C6C6CB00E2534C /* Customize.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Customize.h; sourceTree = "<group>"; };
 		D615D7C508C6C6CB00E2534C /* Customize.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Customize.m; sourceTree = "<group>"; };
 		D615D7C608C6C6CB00E2534C /* defalloc.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = defalloc.h; sourceTree = "<group>"; };
-		D615D7C708C6C6CB00E2534C /* DefClass.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefClass.h; sourceTree = "<group>"; };
-		D615D7C808C6C6CB00E2534C /* DefClass.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefClass.m; sourceTree = "<group>"; };
 		D615D7C908C6C6CB00E2534C /* defobj.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = defobj.h; sourceTree = "<group>"; };
 		D615D7CA08C6C6CB00E2534C /* defobj.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = defobj.m; sourceTree = "<group>"; };
 		D615D7CB08C6C6CB00E2534C /* DefObject.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefObject.h; sourceTree = "<group>"; };
-		D615D7CC08C6C6CB00E2534C /* DefObject.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefObject.m; sourceTree = "<group>"; };
 		D615D7CD08C6C6CB00E2534C /* deftype.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = deftype.h; sourceTree = "<group>"; };
 		D615D7CE08C6C6CB00E2534C /* directory.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = directory.h; sourceTree = "<group>"; };
 		D615D7CF08C6C6CB00E2534C /* directory.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = directory.m; sourceTree = "<group>"; };
@@ -645,7 +649,7 @@
 		D615DF2008CAB1FB00E2534C /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
 		D615DF2108CAB1FB00E2534C /* gui.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = gui.h; sourceTree = "<group>"; };
 		D615DF2208CAB1FB00E2534C /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		D615E13A08CBE6C600E2534C /* Heatbugs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heatbugs.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D615E13A08CBE6C600E2534C /* Heatbugs.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Heatbugs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D615E13C08CBE6CA00E2534C /* Heatbugs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Heatbugs-Info.plist"; sourceTree = "<group>"; };
 		D615E16308CBE8AF00E2534C /* ActiveGraph.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ActiveGraph.h; sourceTree = "<group>"; };
 		D615E16408CBE8AF00E2534C /* ActiveGraph.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ActiveGraph.m; sourceTree = "<group>"; };
@@ -726,7 +730,7 @@
 		D6EAF84E0981BE4E00EE3B51 /* List_HDF5out.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = List_HDF5out.m; sourceTree = "<group>"; };
 		D6EAF8510981BE7600EE3B51 /* README.Random-0.7 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "README.Random-0.7"; sourceTree = "<group>"; };
 		D6EAF8520981BE7600EE3B51 /* README.Random-0.75 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "README.Random-0.75"; sourceTree = "<group>"; };
-		D6EAF9A70981E3ED00EE3B51 /* SwarmTests */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = SwarmTests; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6EAF9A70981E3ED00EE3B51 /* SwarmTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwarmTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6EAF9B30981E49600EE3B51 /* SwarmTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwarmTests.m; sourceTree = SOURCE_ROOT; };
 		D6FB9B950991AFFD004483CF /* README.AppleObjc */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = README.AppleObjc; path = ../README.AppleObjc; sourceTree = SOURCE_ROOT; };
 		D6FB9EF0099522A0004483CF /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
@@ -966,6 +970,7 @@
 		D615D7B708C6C6CB00E2534C /* defobj */ = {
 			isa = PBXGroup;
 			children = (
+				3C53CF7E0C54882F009AADAD /* DefObject.m */,
 				D615D7B908C6C6CB00E2534C /* Archiver.h */,
 				D615D7BB08C6C6CB00E2534C /* Arguments.h */,
 				D6EAF8450981BDFA00EE3B51 /* COM.h */,
@@ -973,10 +978,11 @@
 				D615D7C208C6C6CB00E2534C /* Create.h */,
 				D615D7C408C6C6CB00E2534C /* Customize.h */,
 				D615D7C608C6C6CB00E2534C /* defalloc.h */,
-				D615D7C708C6C6CB00E2534C /* DefClass.h */,
 				D615D7C908C6C6CB00E2534C /* defobj.h */,
 				D615DAC908C91A8900E2534C /* defobj_classes.h */,
 				D615DA9408C6CD5600E2534C /* defobj_types.h */,
+				3CB3147D0C4C4E5300951A12 /* DefClass.h */,
+				3CB3147E0C4C4E5300951A12 /* DefClass.m */,
 				D615D7CB08C6C6CB00E2534C /* DefObject.h */,
 				D615D7CD08C6C6CB00E2534C /* deftype.h */,
 				D615D7CE08C6C6CB00E2534C /* directory.h */,
@@ -993,9 +999,9 @@
 				D615D7BD08C6C6CB00E2534C /* ChangeLog */,
 				D615D7C308C6C6CB00E2534C /* Create.m */,
 				D615D7C508C6C6CB00E2534C /* Customize.m */,
-				D615D7C808C6C6CB00E2534C /* DefClass.m */,
+				3CCDECFE0C47A23700B55817 /* DefClass_OSX.m */,
+				3CCDED070C47A7E400B55817 /* DefClass_OSX.h */,
 				D615D7CA08C6C6CB00E2534C /* defobj.m */,
-				D615D7CC08C6C6CB00E2534C /* DefObject.m */,
 				D615D7CF08C6C6CB00E2534C /* directory.m */,
 				D615D7D108C6C6CB00E2534C /* FArguments.m */,
 				D615D7D308C6C6CB00E2534C /* FCall.m */,
@@ -1532,9 +1538,7 @@
 				D615D80008C6C6CB00E2534C /* Create.h in Headers */,
 				D615D80208C6C6CB00E2534C /* Customize.h in Headers */,
 				D615D80408C6C6CB00E2534C /* defalloc.h in Headers */,
-				D615D80508C6C6CB00E2534C /* DefClass.h in Headers */,
 				D615D80708C6C6CB00E2534C /* defobj.h in Headers */,
-				D615D80908C6C6CB00E2534C /* DefObject.h in Headers */,
 				D615D80B08C6C6CB00E2534C /* deftype.h in Headers */,
 				D615D80C08C6C6CB00E2534C /* directory.h in Headers */,
 				D615D80E08C6C6CB00E2534C /* FArguments.h in Headers */,
@@ -1672,6 +1676,9 @@
 				D6FB9F02099522A0004483CF /* ZoomRaster.h in Headers */,
 				D6FB9FAB09953A72004483CF /* Object2dDisplay.h in Headers */,
 				D6FB9FAC09953A72004483CF /* Value2dDisplay.h in Headers */,
+				3CCDED210C47B01B00B55817 /* DefObject.h in Headers */,
+				3CB3147F0C4C4E5300951A12 /* DefClass.h in Headers */,
+				3C38F0E20C4F273C00702783 /* DefClass_OSX.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1826,9 +1833,7 @@
 				D615D7FA08C6C6CB00E2534C /* Arguments.m in Sources */,
 				D615D80108C6C6CB00E2534C /* Create.m in Sources */,
 				D615D80308C6C6CB00E2534C /* Customize.m in Sources */,
-				D615D80608C6C6CB00E2534C /* DefClass.m in Sources */,
 				D615D80808C6C6CB00E2534C /* defobj.m in Sources */,
-				D615D80A08C6C6CB00E2534C /* DefObject.m in Sources */,
 				D615D80D08C6C6CB00E2534C /* directory.m in Sources */,
 				D615D80F08C6C6CB00E2534C /* FArguments.m in Sources */,
 				D615D81108C6C6CB00E2534C /* FCall.m in Sources */,
@@ -1938,6 +1943,9 @@
 				D6FB9F03099522A0004483CF /* ZoomRaster.m in Sources */,
 				D6FB9FAA09953A6F004483CF /* Object2dDisplay.m in Sources */,
 				D6FB9FAD09953A75004483CF /* Value2dDisplay.m in Sources */,
+				3CB314800C4C4E5300951A12 /* DefClass.m in Sources */,
+				3C38F0E40C4F274100702783 /* DefClass_OSX.m in Sources */,
+				3C53CF830C54882F009AADAD /* DefObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -142,3 +142,5 @@ setNextPhase (id anObject)
 {
   *(Class *) anObject = (Class) (*(BehaviorPhase_s **) anObject)->nextPhase;
 }
+
+//. vim: syntax=objc

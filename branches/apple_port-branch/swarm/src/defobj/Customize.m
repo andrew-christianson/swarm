@@ -24,9 +24,9 @@ Library:      defobj
 */
 
 #import <defobj/Customize.h>
-#import <defobj/DefClass.h>
 #import <defobj/Program.h>
 #import <defobj/defalloc.h>
+#import <defobj/DefClass.h>
 #import <collections.h>
 #import <objc/objc-api.h>
 

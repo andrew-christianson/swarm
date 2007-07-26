@@ -25,40 +25,15 @@ Library:      defobj
 
 #define DEFINE_CLASSES
 #import "defobj.h"
-
 #include "swarmconfig.h" // PTRUINT
 
-@class ObjectEntry;
-
-#ifdef INHERIT_OBJECT
-@interface Object_s: NSObject <DefinedClass, Serialization, GetName>
-{
-@public
-#if SWARM_OSX /* TODO: Memory */
-  // if an Object_s is allocated which is actually a class structure
-  // then enough filler must be in place so that the class structure
-  // is complete and usable by the Apple ObjC runtime.  e.g. zbits
-  // below was in the super_class field and Apple needs to use that
-  // field for sending messages.
-  struct objc_class _filler;
-#endif
-  // Word that contains zone in which object allocated, plus
-  // additional bits about the memory allocations for the object.
-  PTRUINT zbits;
-  ObjectEntry *foreignEntry;
-}
+#if SWARM_OSX
+#import <defobj/DefObject_OSX.h>
 #else
-@interface Object_s <DefinedClass, Serialization, GetName>
-{
-@public
-   // Class that implements the behavior of an object
-   Class isa;           
-   // Word that contains zone in which object allocated, plus
-   // additional bits about the object.
-   PTRUINT zbits; 
-   ObjectEntry *entry;
-}
+#import <defobj/DefObject_GNU.h>
 #endif
+
+@interface Object_s (OSX_GNU)
 /*** methods in Object_s (inserted from .m file by m2h) ***/
 - (const char *)getName;
 + (BOOL)respondsTo: (SEL)aSel;
@@ -141,40 +116,6 @@ extern const char *lispInString (id index);
 extern id lispInKeyword (id index);
 
 //
-// macros for accessing bits at defined locations inside instance variables
-//
-
-#define getBit(word, bit) ((word) & bit)
-#define setBit(word, bit, value)((value) ? ((word) |= (PTRUINT) bit) : \
-                                           ((word) &= ~((PTRUINT) bit)))
-
-// ((value) ? ((word) |= bit) : 
-//				  ((word) &= ~ bit))
-
-#define setField(word, shift, value) (word) |= ((value) << shift)
-
-#define getField(word, shift, mask) ((PTRUINT) ((word) & mask) >> shift)
-
-//
-// callMethodInClass() -- macro for method lookup in an alternate superclass
-//
-// This macro is similar to the macro CALL_METHOD_IN_CLASS in
-// GNU libobjects-0.1.19/src/behavior.h, by Andrew McCallum.
-//
-#if SWARM_OSX /* TODO: direct method call */
-// Need to lookup instance method, get the method imp and call it
-#define callMethodInClass(aClass, aMessage, args...) \
-  ({ Method aMethod= class_getInstanceMethod(aClass, (SEL)aMessage); \
-     aMethod->method_imp (self, aMethod->method_imp , ## args); })
-#else
-#define callMethodInClass(aClass, aMessage, args...) \
-  ({ SEL _sel_ = (aMessage); \
-     get_imp ((aClass), _sel_) (self, _sel_ , ## args); })
-
-extern IMP get_imp (Class class, SEL sel);  // function used by macro
-#endif
-
-//
 // respondsTo() -- function to test if object responds to message  
 //
 extern BOOL respondsTo (id anObject, SEL aSel);
@@ -184,16 +125,6 @@ extern BOOL respondsTo (id anObject, SEL aSel);
 //   function to look up the method that implements a message for an object
 //
 extern IMP getMethodFor (Class aClass, SEL aSel);
-
-//
-// getClass() -- macro to get class of instance
-//
-#define getClass(anObject) (*(Class *)(anObject))
-
-//
-// setClass() -- macro to set behavior of instance to compatible class
-//
-#define setClass(anObject, aClass) (*(Class *)(anObject) = (Class)(aClass))
 
 //
 // struct mapalloc, mapalloc_t --
@@ -215,3 +146,4 @@ struct mapalloc {
   size_t size;            // size of allocated block, as used by descriptor
 };
 
+//. vim: syntax=objc

@@ -36,11 +36,6 @@ Library:      defobj
 #import <defobj/macros.h>
 
 #import <objc/objc-api.h>
-#if SWARM_OSX /* TODO */
-#include <objc-gnu2next.h>
-#else
-#import <objc/sarray.h>
-#endif
 
 #include <misc.h> // strcpy, strlen, sprintf, isDigit
 #include <collections/predicates.h> // arrayp, keywordp, archiver_list_p, stringp
@@ -62,8 +57,8 @@ Library:      defobj
 
 #import <defobj.h> // FCall, FArguments
 
-
 #import <defobj/directory.h>
+
 
 extern id _obj_implModule;  // defined in Program.m
 
@@ -93,7 +88,7 @@ static id suballocPrototype;
 //
 static id describeStream;
 
-@implementation Object_s
+@implementation Object_s (OSX_GNU)
 
 PHASE(Creating)
 
@@ -130,24 +125,6 @@ PHASE(Setting)
   return self;
 }
 
-#if !SWARM_OSX /* TODO: HDF5 */
-- hdf5In: (id <HDF5>)hdf5Obj
-{
-  if ([hdf5Obj getDatasetFlag])
-    [hdf5Obj shallowLoadObject: self];
-  else
-    {
-      int process_object (id component)
-        {
-          [component assignIvar: self];
-          return 0;
-        }
-      [hdf5Obj iterate: process_object];
-    }
-  return self;
-}
-#endif
-
 PHASE(Using)
 
 + (const char *)getName
@@ -174,23 +151,6 @@ PHASE(Using)
 - (BOOL)respondsTo: (SEL)aSel
 {
   return respondsTo (self, aSel);
-}
-
-+ (BOOL)conformsTo: (Protocol *)protocol
-{
-#if SWARM_OSX
-  if (getBit (((Class) self)->info, _CLS_DEFINEDCLASS))
-    return [((CreatedClass_s *) self)->definingClass
-                                     conformsToProtocol: protocol];
-  else
-    return [super conformsToProtocol: protocol];
-#else
-  if (getBit (((Class) self)->info, _CLS_DEFINEDCLASS))
-    return [((CreatedClass_s *) self)->definingClass
-                                     conformsTo: protocol];
-  else
-    return [super conformsTo: protocol];
-#endif
 }
 
 //
@@ -537,20 +497,6 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 }
 
 //
-// getMethodFor: -- return method defined for message to instance, if any
-//
-+ (IMP)getMethodFor: (SEL)aSel
-{
-#if SWARM_OSX /* TODO */
-  printf("getMethodFor: %s\n", aSel);
-  Method m = class_getClassMethod([self class], aSel);
-  return m->method_imp;
-#else
-  return sarray_get (((Class) self)->dtable, (size_t) aSel->sel_id);
-#endif
-}  
-
-//
 // getDefiningClass -- return class which defines ivar structure of CreatedClass
 //
 + getDefiningClass
@@ -592,212 +538,6 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
   return (self > anObject);
 }
 
-//
-// perform:[with:[with:[with:]]] --
-//   method to perform a message on an object with arguments, defined locally
-//   for optional inheritance from the Object superclass, and to define the
-//   three-argument form
-//
-#if SWARM_OSX
-#else
-- perform: (SEL)aSel
-{
-  IMP  mptr;
-
-#if SWARM_OSX /* TODO */
-  printf("perform: %s\n", aSel);
-  mptr = objc_msg_lookup (self, aSel);
-#else
-  mptr = objc_msg_lookup (self, aSel);
-#endif
-  if (!mptr)
-    raiseEvent (InvalidArgument, "> message selector not valid\n");
-  return mptr (self, aSel);
-}
-
-- perform: (SEL)aSel with: anObject1
-{
-  IMP  mptr;
-  
-#if SWARM_OSX /* TODO */
-  printf("perform:with: %s\n", aSel);
-  mptr = objc_msg_lookup (self, aSel);
-#else
-  mptr = objc_msg_lookup (self, aSel);
-#endif
-  if (!mptr)
-    raiseEvent (InvalidArgument, "> message selector not valid\n");
-  return mptr (self, aSel, anObject1);
-}
-
-- perform: (SEL)aSel with: anObject1 with: anObject2
-{
-  IMP  mptr;
-  
-#if SWARM_OSX /* TODO */
-  printf("perform:with:with: %s\n", aSel);
-  mptr = objc_msg_lookup (self, aSel);
-#else
-  mptr = objc_msg_lookup (self, aSel);
-#endif
-  if (!mptr)
-    raiseEvent (InvalidArgument, "> message selector not valid\n");
-  return mptr (self, aSel, anObject1, anObject2);
-}
-
-- perform: (SEL)aSel with: anObject1 with: anObject2 with: anObject3
-{
-  IMP  mptr;
-  
-#if SWARM_OSX /* TODO */
-  printf("perform:with:with:with: %s\n", aSel);
-  mptr = objc_msg_lookup (self, aSel);
-#else
-  mptr = objc_msg_lookup (self, aSel);
-#endif
-  if (!mptr)
-    raiseEvent (InvalidArgument, "> message selector not valid\n");
-  return mptr (self, aSel, anObject1, anObject2, anObject3);
-}
-#endif
-
-#if SWARM_OSX /* TODO */
-#if 0
-- perform: (SEL)aSel with: anObject1 with: anObject2 with: anObject3
-{
-  return objc_msgSend(self, aSel, anObject1, anObject2, anObject3);
-}
-
-- forward: (SEL)aSel : (marg_list)argFrame
-{
-    printf("forward:\n");
-    return nil;
-}
-#endif
-
-#else
-
-#ifdef USE_MFRAME
-- (retval_t)forward: (SEL)aSel : (arglist_t)argFrame
-{
-  NSArgumentInfo info;
-  id <FArguments> fa;
-  id <FCall> fc;
-  types_t val;
-  const char *type = sel_get_type (aSel);
-#ifdef HAVE_JDK
-  jobject jObj;
-#endif
-  COMobject cObj;
-  id <Zone> aZone = getCZone (getZone (self));
-
-  if (!type)
-    {
-      aSel = sel_get_any_typed_uid (sel_get_name (aSel));
-      type = sel_get_type (aSel);
-      if (!type)
-        abort ();
-    }
-
-
-  fa = [FArguments createBegin: aZone];
-
-  if ((cObj = SD_COM_FIND_OBJECT_COM (self)))
-    {
-      COMselector cSel; 
-
-      if (!(cSel = SD_COM_FIND_SELECTOR_COM (aSel)))
-        raiseEvent (InvalidArgument,
-                    "unable to find COM selector `%s' in objc:`%s' %p\n",
-                    sel_get_name (aSel),
-                    [self name],
-                    self,
-                    cObj);
-      {
-        id <Symbol> language = (COM_selector_is_javascript (cSel)
-                                ? LanguageJS
-                                : LanguageCOM);
-        [fa setLanguage: language];
-      }
-    }
-#ifdef HAVE_JDK
-  else if ((jObj = SD_JAVA_FIND_OBJECT_JAVA (self)))
-    {
-      jobject jSel;
-      jclass jClass = (*jniEnv)->GetObjectClass (jniEnv, jObj);
-
-      jSel = SD_JAVA_ENSURE_SELECTOR_JAVA (jClass, aSel);
-      (*jniEnv)->DeleteLocalRef (jniEnv, jClass);
-
-#if 0      
-      if (!jSel)
-        raiseEvent (InvalidArgument,
-                    "unable to find Java selector `%s' in objc:`%s' %p java: %p hash: %d\n",
-                    sel_get_name (aSel),
-                    [self name],
-                    self,
-                    jObj,
-                    swarm_directory_java_hash_code (jObj));
-#endif
-      
-      if (jSel)
-        {
-          const char *sig = java_ensure_selector_type_signature (jSel);
-          
-          [fa setJavaSignature: sig];
-          [scratchZone free: (void *) sig];
-        }
-    }
-#endif
-  else
-    {
-      [fa drop];
-      [self doesNotRecognize: aSel];
-      return NULL;
-    }
-  
-  type = mframe_next_arg (type, &info);
-  mframe_get_arg (argFrame, &info, &val);
-  [fa setObjCReturnType: *info.type];
-  /* skip object and selector */
-  type = mframe_next_arg (type, &info);
-  type = mframe_next_arg (type, &info);
-  while ((type = mframe_next_arg (type, &info)))
-    {
-      mframe_get_arg (argFrame, &info, &val);
-      [fa addArgument: &val ofObjCType: *info.type];
-    }
-  fa = [fa createEnd];
-
-  fc = [FCall create: aZone
-              target: self
-              selector: aSel
-              arguments: fa];
-  
-  if (fc)
-    {
-      [fc performCall];
-      {
-        types_t typebuf;
-        extern void *alloca (size_t);
-        retval_t retValBuf = alloca (MFRAME_RESULT_SIZE);
-        retval_t retVal;
-        
-        retVal = [fc getRetVal: retValBuf buf: &typebuf];
-        [fc drop];
-        [fa drop];
-        return retVal;
-      }
-    }
-  else
-    {
-      [fa drop];
-      [self doesNotRecognize: aSel];
-      return NULL;
-    }
-}
-#endif
-#endif
 
 //
 // methods inherited from Object that are blocked because they do not support
@@ -1104,32 +844,6 @@ initDescribeStream (void)
   [(id) self describeForEach: describeStream];
 }
 
-
-- (void)lispOutVars: stream deep: (BOOL)deepFlag
-{
-#if !SWARM_OSX /* TODO */
-  void store_object (const char *name, fcall_type_t type,
-                     void *ptr, unsigned rank, unsigned *dims)
-    {
-      [stream catSeparator];
-      [stream catKeyword: name];
-      [stream catSeparator];
-      if (rank > 0)
-        lisp_process_array (rank, dims, type, ptr,
-                            NULL, stream, deepFlag);
-      else
-        lisp_output_type (type,
-                          ptr,
-                          0,
-                          NULL,
-                          stream,
-                          deepFlag);
-        
-    }
-  map_object_ivars (self, store_object);
-#endif
-}
-
 // Sometimes the desired effect is not found by saving all variables
 // deep or shallow. One can individually save variables in lisp format
 // with these methods.
@@ -1367,74 +1081,6 @@ initDescribeStream (void)
   [self _lispOut_: stream deep: YES];
 }
 
-- (void)hdf5OutDeep: hdf5Obj
-{
-#if !SWARM_OSX /* TODO: HDF5 */
-  void store_object (const char *name,
-                     fcall_type_t type,
-                     void *ptr,
-                     unsigned rank,
-                     unsigned *dims)
-    {
-      if (type == fcall_type_object)
-        {
-          id obj = *((id *) ptr);
-          
-          if (obj != nil)
-            {
-              id group = [[[[[HDF5 createBegin: [hdf5Obj getZone]]
-                              setWriteFlag: YES]
-                             setParent: hdf5Obj]
-                            setName: name]
-                           createEnd];
-              
-              [obj hdf5OutDeep: group];
-              [group drop];
-            }
-        }
-      else
-        [hdf5Obj storeAsDataset: name typeName: NULL
-                 type: type rank: rank dims: dims 
-                 ptr: ptr];
-    }
-  [hdf5Obj storeTypeName: [self getTypeName]];
-  map_object_ivars (self, store_object);
-#endif
-}
-
-- (void)hdf5OutShallow: hdf5Obj
-{
-#if !SWARM_OSX /* TODO: HDF5 */
-  if ([hdf5Obj getCompoundType])
-    [hdf5Obj shallowStoreObject: self];
-  else
-    {
-      id cType = [[[HDF5CompoundType createBegin: getZone (self)]
-                    setPrototype: self]
-                   createEnd];
-      const char *objName = [hdf5Obj getHDF5Name];
-
-      id cDataset = [[[[[[HDF5 createBegin: getZone (self)]
-                          setName: objName]
-                         setWriteFlag: YES]
-                        setParent: hdf5Obj]
-                       setCompoundType: cType]
-                      createEnd];
-      
-      [cDataset storeTypeName: [self getTypeName]];
-      [cDataset shallowStoreObject: self];
-      
-      // for R
-      [cDataset nameRecord: 0 name: objName];
-      [cDataset writeRowNames];
-      [cDataset writeLevels];
-      
-      [cDataset drop];
-      [cType drop];
-    }
-#endif
-}
-
 - (void)updateArchiver: archiver
 {
 #ifdef HAVE_JDK
@@ -1483,69 +1129,7 @@ initDescribeStream (void)
   [(id) self describeForEachID: describeStream];
 }
 
-#if SWARM_OSX
-#if 0
-- (NSMethodSignature*) methodSignatureForSelector: (SEL)aSelector
-{
-  const char* aName = sel_getName(aSelector);
-  printf("selector: %s\n", aName);
-
-  NSMethodSignature *sig = [self methodSignatureForSelector: aSelector];
-
-  return sig;
-}
-#endif
-
-#if 0
-- (void) forwardInvocation: (NSInvocation*)anInvocation
-{
-  printf("forwardInvocation:\n");
-  SEL aSel = [anInvocation selector];
-  [self doesNotRecognize: aSel];
-}
-#endif
-#endif
-
 @end
-
-//
-// respondsTo() -- function to test if object responds to message  
-//
-BOOL
-respondsTo (id anObject, SEL aSel)
-{
-#if SWARM_OSX /* TODO */
-  printf("respondsTo()\n");
-  return [anObject respondsToSelector: aSel];
-
-//  return ((object_is_instance (anObject)
-//           ? class_getInstanceMethod (anObject->isa, aSel)
-//           : class_getClassMethod (anObject->isa, aSel)) != NULL);
-#else
-  return sarray_get (getClass (anObject)->dtable, (size_t) aSel->sel_id) != 0;
-#endif
-}
-
-//
-// getMethodFor() --
-//   function to look up the method that implements a message within a class
-//
-IMP
-getMethodFor (Class aClass, SEL aSel)
-{
-#if SWARM_OSX /* TODO */
-  printf("getMethodFor(%s, %s)\n", aClass->name, aSel);
-  Method m = class_getInstanceMethod(aClass, aSel);
-  if (m == NULL)
-    m = class_getClassMethod(aClass, aSel);
-
-  if (m == NULL)
-    printf("getMethodFor(%s, %s) not found\n", aClass->name, aSel);
-  return m->method_imp;
-#else
-  return sarray_get (aClass->dtable, (size_t) aSel->sel_id);
-#endif
-}
 
 //
 // xsetname() -- debug function to set display name for an object
@@ -1680,15 +1264,3 @@ xfexec (id anObject, const char *msgName)
   else
     fprintf (_obj_xdebug, "object is nil");
 }
-
-//
-// GNUstep extensions
-//
-#if 0
-
-@implementation Object_s (MacOSXExtensions)
-
-
-@end
-
-#endif

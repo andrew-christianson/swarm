@@ -23,49 +23,35 @@ Description:  class with variables and/or methods defined at runtime
 Library:      defobj
 */
 
-#if SWARM_OSX
-#include <objc/objc-runtime.h>
-#else
-#import <objc/objc-api.h>
-#endif
 #import <objc/Object.h>
 
 //
 // type declarations
 //
 typedef struct classData *classData_t;
-typedef struct methodDefs *methodDefs_t;
 
-//
-// Class_s -- portion of class object allocated for all created classes 
-//
-@interface Class_s: Object
-{
-@public
-#if SWARM_OSX
-	struct objc_class *superclass;	
-	const char *name;		
-	long version;
-	long info;
-	long instanceSize;
-	struct objc_ivar_list *ivars;
-	struct objc_method_list **methodLists;
-	struct objc_cache *cache;
- 	struct objc_protocol_list *protocols;
-  Class classPointer;
+// include in Class_s for appropriate objc runtime
+#ifdef SWARM_OSX
+#import <defobj/DefClass_OSX.h>
 #else
-  Class_s *superclass;    // object for [super ...] dispatch
-  const char *name;       // character string name for class
-  long version;           // for archiving (unused)
-  unsigned long info;     // class number + info bits
-  long instanceSize;      // size of instance in bytes
-  void *ivarList;         // compiler-generated list of local ivars
-  void *methodList;       // compiler-generated list of local methods
-  struct sarray  *dtable; // dispatch table
+#import <defobj/DefClass_GNU.h>
 #endif
-}
 
-/*** methods in Class_s (inserted from .m file by m2h) ***/
+//
+// CreatedClass_s -- class with variables and/or methods defined at runtime 
+// Does not conform to Serialization because class changes identity
+// at createEnd time.
+//
+
+@interface CreatedClass_s (OSX_GNU) // Serialization
+/*** methods in CreatedClass_s (inserted from .m file by m2h) ***/
++ createBegin: aZone;
+- setName: (const char *)className;
+- setClass: (Class)aClass;
+- setSuperclass: aClass;
+- lispInCreate: expr;
+- hdf5InCreate: expr;
+- (void)hdf5OutShallow: stream;
 @end
 
 //
@@ -73,83 +59,22 @@ typedef struct methodDefs *methodDefs_t;
 //
 extern classData_t _obj_getClassData (Class_s *class);
 
-#if SWARM_OSX
-//
-// _obj_printMethods() -- function to print instance and class methods for a class
-//
-void _obj_printMethods(char *className);
-
-//
-// _obj_createClass() -- function to add new class to Mac OSX ObjC runtime
-//
-void _obj_createClass(Class_s *aClass);
-void _obj_addInstanceMethodList(methodDefs_t methodDefs, char *name);
-void _obj_addClassMethodList(methodDefs_t methodDefs, char *name);
-#endif
-
 //
 // _obj_initMethodInterfaces() -- generate chain of methods by interface
 //
 void _obj_initMethodInterfaces (Class_s *class);
 
 
-//
-// CreatedClass_s -- class with variables and/or methods defined at runtime 
-// Does not conform to Serialization because class changes identity
-// at createEnd time.
-//
-@interface CreatedClass_s: Class_s // Serialization
-{
-@public
-  Class_s *definingClass; // compiled class defining ivar structure
-  id metaobjects;         // metaobject collections
-}
-/*** methods in CreatedClass_s (inserted from .m file by m2h) ***/
-+ createBegin: aZone;
-- setName: (const char *)className;
-- setClass: (Class)aClass;
-- setSuperclass: aClass;
-- setDefiningClass: aClass;
-- at: (SEL)aSel addMethod: (IMP)aMethod;
-- lispInCreate: expr;
-- hdf5InCreate: expr;
-- createEnd;
-- (void)hdf5OutShallow: stream;
-- (void)lispOutShallow: stream;
-@end
-
 @interface BehaviorPhase_s: CreatedClass_s
 {
-@public
-  Class_s *nextPhase; // class which implements next interface
-  id filler;          //  pad to size of standard class (for customize)
-  id morefiller;
+  @public
+    Class_s *nextPhase; // class which implements next interface
+    id filler;          //  pad to size of standard class (for customize)
+    id morefiller;
 }
 /*** methods in BehaviorPhase_s (inserted from .m file by m2h) ***/
 - (void)setNextPhase: aBehaviorPhase;
 @end
-
-// info bit to mark as class created at runtime
-#if SWARM_OSX
-#define _CLS_DEFINEDCLASS  0x400
-#else
-#define _CLS_DEFINEDCLASS  0x100
-#endif
-
-#if SWARM_OSX
-#ifndef HOST_BITS_PER_LONG
-#define HOST_BITS_PER_LONG  (sizeof(long)*8)
-#endif 
-
-#define __SWARMCLS_VERSION(cls) ((cls)->version)
-#define __SWARMCLS_SETVERSION(cls, mask) (__SWARMCLS_VERSION(cls) |= mask)
-
-#define SWARMCLS_GETNUMBER(cls) (__SWARMCLS_VERSION(cls) >> (HOST_BITS_PER_LONG/2))
-#define SWARMCLS_SETNUMBER(cls, num) \
-  ({ (cls)->version <<= (HOST_BITS_PER_LONG/2); \
-     (cls)->version >>= (HOST_BITS_PER_LONG/2); \
-     __SWARMCLS_SETVERSION(cls, (((unsigned long)num) << (HOST_BITS_PER_LONG/2))); })
-#endif
 
 //
 // classData -- extension data for compiled class (accessed by class number)
@@ -162,19 +87,4 @@ struct classData {
   id metaobjects;                 // metaobject collections
 };
 
-//
-// methodDefs -- methods of a class belonging to a named interface
-//
-struct methodDefs {
-  methodDefs_t  next;
-  id interfaceID;
-#if SWARM_OSX /* DONE */
-  Method firstEntry;
-  int count;
-  Method firstClassEntry;
-  int classCount;
-#else
-  Method_t firstEntry;
-  int count;
-#endif
-};
+//. vim: syntax=objc

@@ -27,34 +27,16 @@ Library:      defobj
 #import "DefObject.h"
 
 //
-// interface marker for methods in class which implement an interface of a type
-//
-#define PHASE(phase_name) \
--(id)_I_##phase_name { return phase_name; } \
-+(id)_C_##phase_name { return phase_name; }
-
-//
 // specific defined interfaces
 //
 externvar id Creating, Setting, Using, CreatingOnly, UsingOnly;
 
 //
-// Customize_s -- superclass impleemntation of create-phase customization
+// interface marker for methods in class which implement an interface of a type
 //
-@interface Customize_s: Object_s
-+ createBegin: aZone;
-/*** methods in Customize_s (inserted from .m file by m2h) ***/
-+ customizeBegin: aZone;
-- customizeEnd;
-- customizeCopy: aZone;
-+ customizeBeginEnd: aZone;
-- _setCreateBy_: (Class)subclass message: (SEL)messageSelector to: anObject;
-- (void)_setCreateByCopy_;
-- (void)_setCreateByMessage_: (SEL)messageSelector to: anObject;
-- (void)_setCreateByMessage_: (SEL)messageSelector toCopy: anObject;
-- (void)_setRecustomize_: anObject;
-+ (void)setTypeImplemented: aType;
-@end
+#define PHASE(phase_name) \
+-(id)_I_##phase_name { return phase_name; } \
++(id)_C_##phase_name { return phase_name; }
 
 //
 // createByCopy, createByMessageTo, createByMessageToCopy, retainSelf --
@@ -95,7 +77,11 @@ if (_obj_customize(self)) [self _setRecustomize_: recustomizeReceiver]
 //
 // objects to save createBy actions generated customizeBegin/End
 //
+/*
 @interface CreateBy_c: Object_s
+//. FIXME: Would rather use this block, but had to move this over to the
+//. FIXME: _GNU and _OSX splits.  Can this be fixed (as to not repeat 
+//. FIXME: code?)
 {
 @public
   id implementedType; // type of object created by CreateBy object
@@ -104,26 +90,13 @@ if (_obj_customize(self)) [self _setRecustomize_: recustomizeReceiver]
   IMP createMethod;   // cached method for createMessage selector
   id recustomize;     // object to handle further create, if any
 }
-/*** methods in CreateBy_c (inserted from .m file by m2h) ***/
-- createBegin: aZone;
-- customizeBegin: aZone;
-- (void)mapAllocations: (mapalloc_t)mapalloc;
 @end
+*/
 
-@interface Create_bycopy: CreateBy_c
-/*** methods in Create_bycopy (inserted from .m file by m2h) ***/
-- create: aZone;
-@end
-
-@interface Create_bysend: CreateBy_c
-/*** methods in Create_bysend (inserted from .m file by m2h) ***/
-- create: aZone;
-@end
-
-@interface Create_byboth: CreateBy_c
-/*** methods in Create_byboth (inserted from .m file by m2h) ***/
-- create: aZone;
-@end
+//
+// initCustomizeWrapper -- common routine to set up customize wrapper
+//
+static void initCustomizeWrapper (id aZone, id anObject);
 
 //
 // getNextPhase() -- return class which implements next phase of object
@@ -142,5 +115,53 @@ setNextPhase (id anObject)
 {
   *(Class *) anObject = (Class) (*(BehaviorPhase_s **) anObject)->nextPhase;
 }
+
+//XXX static void initCustomizeWrapper (id aZone, id anObject);
+#ifdef SWARM_OSX
+#import <defobj/Customize_OSX.h>
+#else
+#import <defobj/Customize_GNU.h>
+#endif
+
+//. FIXME: See above FIXMEs
+@interface CreateBy_c (OSX_GNU)
+- createBegin: aZone;
+- customizeBegin: aZone;
+- (void)mapAllocations: (mapalloc_t)mapalloc;
+@end
+
+static inline void setWrapperCreateBy (Class wrapper, CreateBy_c *createBy);
+
+@interface Create_bycopy: CreateBy_c
+- create: aZone;
+@end
+
+@interface Create_bysend: CreateBy_c
+- create: aZone;
+@end
+
+//
+// Create_byboth -- class to create instance by sending message to shallow copy
+//
+@interface Create_byboth (OSX_GNU)
+@end
+
+//
+// Customize_s -- superclass impleemntation of create-phase customization
+//
+@interface Customize_s (OSX_GNU)
++ createBegin: aZone;
++ customizeBegin: aZone;
+- customizeEnd;
+- customizeCopy: aZone;
++ customizeBeginEnd: aZone;
+- _setCreateBy_: (Class)subclass message: (SEL)messageSelector to: anObject;
+- (void)_setCreateByCopy_;
+- (void)_setCreateByMessage_: (SEL)messageSelector to: anObject;
+- (void)_setCreateByMessage_: (SEL)messageSelector toCopy: anObject;
+- (void)_setRecustomize_: anObject;
++ (void)setTypeImplemented: aType;
+@end
+
 
 //. vim: syntax=objc

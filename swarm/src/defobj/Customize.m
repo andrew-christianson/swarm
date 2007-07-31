@@ -29,29 +29,32 @@ Library:      defobj
 #import <defobj/DefClass.h>
 #import <collections.h>
 #import <objc/objc-api.h>
-
-#include <misc.h> // strchr, stpcpy, strlen
+#import <misc.h> // strchr, stpcpy, strlen
 
 extern void _obj_splitPhases (Class_s  *class);
 
 extern id _obj_initZone;  // currently receives generated classes
-
 //
 // inline functions to save field in copy of class structure used as wrapper
 //
-
-static inline void
-setWrapperCreateBy (Class wrapper, CreateBy_c *createBy)
-{
-//#if !SWARM_OSX
-  wrapper->version = (long) createBy;
-//#endif
-}
 
 static inline CreateBy_c *
 getWrapperCreateBy (Class wrapper)
 {
   return (CreateBy_c *) wrapper->version;
+}
+
+//
+// inline functions to save field in copy of class structure used as wrapper
+//
+static inline void
+setWrapperCreateBy (Class wrapper, CreateBy_c *createBy)
+{
+  #if SWARM_OSX
+    //. Another do-nothing call.
+  #else
+    wrapper->version = (long) createBy;
+  #endif
 }
 
 //
@@ -66,10 +69,13 @@ initCustomizeWrapper (id aZone, id anObject)
   // allocate wrapper class (copy of self class) for instance being customized
 
   wrapper = (Class) [aZone copyIVars: getClass (anObject)];
+  wrapper->super_class = anObject->isa->super_class; //OSX Specific
+
 #if SWARM_OSX
   wrapper->super_class = anObject->isa->super_class;
 #endif
   wrapper->info |= _CLS_CUSTOMIZEWRAPPER;
+
 
   // allocate a new CreateBy instance and store id in wrapper
 
@@ -90,15 +96,12 @@ initCustomizeWrapper (id aZone, id anObject)
   setClass (anObject, wrapper);
 }
 
-
 //
 // Customize_s -- superclass to implement create-phase customization
 //
-
-@implementation Customize_s
+@implementation Customize_s (OSX_GNU)
 
 PHASE(Creating)
-
 
 + createBegin: aZone
 {
@@ -378,295 +381,6 @@ PHASE(Creating)
   _obj_splitPhases ((Class_s *) self);
 }
 
-//
-// _obj_splitPhases -- split defining class into class object for each phase
-//
-void
-_obj_splitPhases (Class_s *class)
-{
-  classData_t classData, superclassData = 0;
-  BehaviorPhase_s *classCreating, *classUsing;
-  char *classNameBuf;
-  methodDefs_t mdefs;
-#if SWARM_OSX /* DONE */
-  Method mnext;
-#else
-  Method_t mnext;
-#endif
-
-  // return if classes have already been created
-  classData = _obj_getClassData (class);
-  if (classData->initialPhase)
-    return;
-  
-  // split classes for superclass if not done already
-  if ((id) class != id_Customize_s)
-    {
-      superclassData = _obj_getClassData (class->superclass);
-      if (!superclassData->initialPhase)
-        _obj_splitPhases (class->superclass);
-    }
-  
-  // generate chain of contiguous methods by interface
-  _obj_initMethodInterfaces (class);  // (creates temporary chain of
-                                      // defs in classData->metaobjects)
-
-  // create class for methods in Creating phase
-  classCreating = nil;
-  if (!(classData->metaobjects
-        && ((methodDefs_t) classData->metaobjects)->interfaceID == UsingOnly))
-    {
-      classCreating = [id_BehaviorPhase_s createBegin: _obj_initZone];
-      
-      classNameBuf = _obj_initAlloc (strlen (class->name) + 10);
-      stpcpy (stpcpy (classNameBuf, class->name), ".Creating");
-      printf("Alloc %s (%p)\n", classNameBuf, classCreating);
-      
-      [(id) classCreating setName: classNameBuf];
-      [(id) classCreating setClass: getClass (class)];
-      [(id) classCreating setDefiningClass: class];
-    }
-  
-  // create class for methods in Using phase
-  classUsing = nil;
-  if (!(classData->metaobjects
-        && (((methodDefs_t) classData->metaobjects)->interfaceID ==
-            CreatingOnly)))
-    {
-      classUsing = [id_BehaviorPhase_s createBegin: _obj_initZone];
-      
-      classNameBuf = _obj_initAlloc (strlen (class->name) + 7);
-      stpcpy (stpcpy (classNameBuf, class->name), ".Using");
-      printf("Alloc %s (%p)\n", classNameBuf, classUsing);
-
-      [(id) classUsing setName: classNameBuf];
-      //[(id) classUsing setName: class->name];
-      [(id) classUsing setClass: getClass (id_Object_s)];
-      [(id) classUsing setDefiningClass: class];
-    }
-  
-  if (class == id_Customize_s)
-    {
-      if (classCreating)
-        [(id) classCreating setSuperclass: id_Object_s];
-      if (classUsing)
-        [(id) classUsing setSuperclass: id_Object_s];
-      
-    }
-  else
-    {
-      if (classCreating)
-        {
-          if (superclassData->initialPhase->nextPhase == UsingOnly)
-            {
-              do {
-                superclassData = 
-                  _obj_getClassData (superclassData->initialPhase->superclass);
-              }
-              while (superclassData->initialPhase->nextPhase == UsingOnly);
-              
-              [(id) classCreating setSuperclass: superclassData->initialPhase];
-              superclassData = _obj_getClassData (class->superclass);
-            }
-          else
-            [(id) classCreating setSuperclass: superclassData->initialPhase];
-        }
-      if (classUsing)
-        {
-          if (superclassData->initialPhase->nextPhase == CreatingOnly)
-            do {
-              superclassData =
-                _obj_getClassData (superclassData->initialPhase->superclass);
-            }
-            while (superclassData->initialPhase->nextPhase == CreatingOnly);
-          
-          if (superclassData->initialPhase->nextPhase == UsingOnly)
-            [(id) classUsing setSuperclass: superclassData->initialPhase];
-          else
-            [(id) classUsing setSuperclass: superclassData->initialPhase->nextPhase];
-        }
-    }
-  
-#if SWARM_OSX
-    // Add the Creating and Using classes to the ObjC runtime
-    if (classCreating) {
-        Class c;        
-
-        // check superclass
-        if (c = (Class)objc_lookUpClass(classCreating->superclass->name))
-            printf("Found superclass (%s, %p) in objc runtime\n", c->name, c);
-        else
-            printf("Not Found superclass (%s)\n", classCreating->superclass->name);
-
-        // add the class to the next runtime?
-        if (c = (Class)objc_lookUpClass(classCreating->name))
-            printf("Found (%s, %p) in objc runtime\n", c->name, c);
-        else
-            printf("Not Found (%s)\n", classCreating->name);
-
-        //objc_addClass((Class)classCreating);
-        _obj_createClass(classCreating);
-        //classCreating->classPointer = objc_lookUpClass(classCreating->name);
-        //[(id) classCreating setClass: objc_lookUpClass(classCreating->name)];
-        if (c = (Class)objc_lookUpClass("Customize_s"))
-            printf("Found (%s, %p) in objc runtime\n", c->name, c);
-        else
-            printf("Not Found\n");
-        if (c = (Class)objc_lookUpClass(classCreating->name))
-            printf("Found (%s, %p) in objc runtime\n", c->name, c);
-        else
-            printf("Not Found\n");
-    }
-    if (classUsing) {
-        Class c;
-        // add the class to the next runtime?
-        if (c = (Class)objc_lookUpClass(classUsing->name))
-            printf("Found (%s, %p) in objc runtime\n", c->name, c);
-        else
-            printf("Not Found (%s)\n", classUsing->name);
-        _obj_createClass(classUsing);
-        //classUsing->classPointer = objc_lookUpClass(classUsing->name);
-        //[(id) classUsing setClass: objc_lookUpClass(classUsing->name)];
-        if (c = (Class)objc_lookUpClass(classUsing->name))
-            printf("Found (%s, %p) in objc runtime\n", c->name, c);
-        else
-            printf("Not Found\n");
-    }
-#endif
-
-#if SWARM_OSX
-  if (classCreating) {
-    printf("_obj_splitPhases (before): classCreating\n");
-    _obj_printMethods(classCreating->name);
-  } else {
-    printf("_obj_splitPhases (before): NO classCreating\n");
-  }
-  if (classUsing) {
-    printf("_obj_splitPhases (before): classUsing\n");
-    _obj_printMethods(classUsing->name);
-  } else {
-    printf("_obj_splitPhases (before): NO classUsing\n");
-  }
-#endif
-
-  // install methods in whichever phase each method belongs
-  
-  for (mdefs = (methodDefs_t) classData->metaobjects; mdefs; 
-       mdefs = mdefs->next)
-    {
-      if ( mdefs->interfaceID == Creating
-           || (mdefs->interfaceID == CreatingOnly &&
-               mdefs == (methodDefs_t) classData->metaobjects))
-        {
-#if SWARM_OSX
-          _obj_addInstanceMethodList(mdefs, classCreating->name);
-          _obj_addClassMethodList(mdefs, classCreating->name);
-          //[(id) classCreating addInstanceMethodList: mdefs];
-          //[(id) classCreating addClassMethodList: mdefs];
-#else
-          for (mnext = mdefs->firstEntry;
-               mnext < mdefs->firstEntry + mdefs->count; mnext++)
-            [(id) classCreating at: mnext->method_name addMethod: mnext->method_imp];
-#endif          
-        }
-      else if (mdefs->interfaceID == Using
-               || (mdefs->interfaceID == UsingOnly &&
-                   mdefs == (methodDefs_t) classData->metaobjects))
-        {
-#if SWARM_OSX
-          _obj_addInstanceMethodList(mdefs, classUsing->name);
-          _obj_addClassMethodList(mdefs, classUsing->name);
-          //[(id) classUsing addInstanceMethodList: mdefs];
-          //[(id) classUsing addClassMethodList: mdefs];
-#else
-          for (mnext = mdefs->firstEntry;
-               mnext < mdefs->firstEntry + mdefs->count; mnext++)
-            [(id) classUsing at: mnext->method_name addMethod: mnext->method_imp];
-#endif          
-        }
-      else if (mdefs->interfaceID == CreatingOnly ||
-               mdefs->interfaceID == UsingOnly)
-        {
-          raiseEvent (SourceMessage,
-                      "> setTypeImplemented: class %s: cannot specify any other phase\n"
-                      "> in combination with CreatingOnly or UsingOnly\n");
-          
-        }
-      else if (mdefs->interfaceID == Setting)
-        {
-#if SWARM_OSX
-          _obj_addInstanceMethodList(mdefs, classCreating->name);
-          _obj_addClassMethodList(mdefs, classCreating->name);
-          _obj_addInstanceMethodList(mdefs, classUsing->name);
-          _obj_addClassMethodList(mdefs, classUsing->name);
-          //[(id) classUsing addInstanceMethodList: mdefs];
-          //[(id) classUsing addClassMethodList: mdefs];
-#else
-          for (mnext = mdefs->firstEntry;
-               mnext < mdefs->firstEntry + mdefs->count; mnext++)
-            {
-              [(id) classCreating at: mnext->method_name addMethod: mnext->method_imp];
-              [(id) classUsing    at: mnext->method_name addMethod: mnext->method_imp];
-            }
-#endif          
-        }
-      else
-        {
-          raiseEvent (SourceMessage,
-                      "> setTypeImplemented: invalid phase marker in class %s\n",
-                      class->name);
-        }        
-    }
-
-#if SWARM_OSX
-  if (classCreating) {
-    printf("_obj_splitPhases (after): classCreating\n");
-    _obj_printMethods(classCreating->name);
-  } else {
-    printf("_obj_splitPhases (after): NO classCreating\n");
-  }
-  if (classUsing) {
-    printf("_obj_splitPhases (after): classUsing\n");
-    _obj_printMethods(classUsing->name);
-  } else {
-    printf("_obj_splitPhases (after): NO classUsing\n");
-  }
-#endif
-
-  // finalize created classes and root them in the defining class
-  
-  if (classCreating)
-    {
-#if SWARM_OSX
-      classCreating->metaobjects = nil;
-      setBit (classCreating->info, _CLS_DEFINEDCLASS, 1);
-#else
-      classCreating = [(id) classCreating createEnd];
-#endif
-      classCreating->nextPhase = classUsing ? classUsing : CreatingOnly;
-      classData->initialPhase  = classCreating;
-    }
-  else
-    {
-      classData->initialPhase = classUsing;
-      classUsing->nextPhase = UsingOnly;
-    }
-  if (classUsing)
-    {
-#if SWARM_OSX
-      classUsing->metaobjects = nil;
-      setBit (classUsing->info, _CLS_DEFINEDCLASS, 1);
-    }
-#else
-      classUsing = [(id) classUsing createEnd];
-      if (classData->classID)
-        *classData->classID = classUsing;
-    }
-  else if (classData->classID)
-    *classData->classID = classCreating;
-#endif
-}
-
 @end  // end of Create superclass
 
 
@@ -674,7 +388,7 @@ _obj_splitPhases (Class_s *class)
 // CreateBy_c -- superclass of customized create action
 //
 
-@implementation CreateBy_c
+@implementation CreateBy_c (OSX_GNU)
 
 - createBegin: aZone
 {
@@ -748,27 +462,7 @@ _obj_splitPhases (Class_s *class)
 //
 // Create_byboth -- class to create instance by sending message to shallow copy
 //
-
-@implementation Create_byboth
-
-- create: aZone
-{
-  id newObject;
-
-  // Create new instance by sending message to shallow copy.
-
-  newObject = [aZone copyIVars: createReceiver];
-#if SWARM_OSX /* TODO: Maybe Swarm bug, assuming Creating class has Using method createEnd */
-  //[newObject setNextPhase:
-  [newObject performSelector: createMessage withObject: aZone];
-#else
-  [newObject perform: createMessage with: aZone];
-#endif
-  return newObject;
-
-  // (extra zone argument is harmless if not referenced)
-}
-
+@implementation Create_byboth (OSX_GNU)
 @end
 
 //

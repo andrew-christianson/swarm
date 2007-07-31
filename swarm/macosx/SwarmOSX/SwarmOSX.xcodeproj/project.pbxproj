@@ -12,6 +12,8 @@
 		3C53CF830C54882F009AADAD /* DefObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C53CF7E0C54882F009AADAD /* DefObject.m */; };
 		3C7893370C582EB500813E78 /* DefObject_OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C7893350C582EB500813E78 /* DefObject_OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C7893380C582EB500813E78 /* DefObject_OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7893360C582EB500813E78 /* DefObject_OSX.m */; };
+		3C7893A50C58623000813E78 /* Customize_OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C7893A30C58622F00813E78 /* Customize_OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C7893A60C58623000813E78 /* Customize_OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7893A40C58623000813E78 /* Customize_OSX.m */; };
 		3CB3147F0C4C4E5300951A12 /* DefClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CB3147D0C4C4E5300951A12 /* DefClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CB314800C4C4E5300951A12 /* DefClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3147E0C4C4E5300951A12 /* DefClass.m */; };
 		3CCDED210C47B01B00B55817 /* DefObject.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7CB08C6C6CB00E2534C /* DefObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -349,6 +351,8 @@
 		3C53CF7E0C54882F009AADAD /* DefObject.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefObject.m; sourceTree = "<group>"; };
 		3C7893350C582EB500813E78 /* DefObject_OSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefObject_OSX.h; sourceTree = "<group>"; };
 		3C7893360C582EB500813E78 /* DefObject_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefObject_OSX.m; sourceTree = "<group>"; };
+		3C7893A30C58622F00813E78 /* Customize_OSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Customize_OSX.h; path = ../../src/defobj/Customize_OSX.h; sourceTree = SOURCE_ROOT; };
+		3C7893A40C58623000813E78 /* Customize_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = Customize_OSX.m; path = ../../src/defobj/Customize_OSX.m; sourceTree = SOURCE_ROOT; };
 		3CB3147D0C4C4E5300951A12 /* DefClass.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefClass.h; sourceTree = "<group>"; };
 		3CB3147E0C4C4E5300951A12 /* DefClass.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefClass.m; sourceTree = "<group>"; };
 		3CCDECFE0C47A23700B55817 /* DefClass_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefClass_OSX.m; sourceTree = "<group>"; };
@@ -1234,6 +1238,8 @@
 				D615DA4008C6C73F00E2534C /* ActionGroup.m */,
 				D615DA4108C6C73F00E2534C /* ActionHomogeneous.m */,
 				D615DA4208C6C73F00E2534C /* activity.h */,
+				3C7893A30C58622F00813E78 /* Customize_OSX.h */,
+				3C7893A40C58623000813E78 /* Customize_OSX.m */,
 				D615DA4308C6C73F00E2534C /* activity.m */,
 				D615DA4408C6C73F00E2534C /* ChangeLog */,
 				D615DA4508C6C73F00E2534C /* CompoundAction.h */,
@@ -1686,6 +1692,7 @@
 				3CB3147F0C4C4E5300951A12 /* DefClass.h in Headers */,
 				3C38F0E20C4F273C00702783 /* DefClass_OSX.h in Headers */,
 				3C7893370C582EB500813E78 /* DefObject_OSX.h in Headers */,
+				3C7893A50C58623000813E78 /* Customize_OSX.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1954,6 +1961,7 @@
 				3C38F0E40C4F274100702783 /* DefClass_OSX.m in Sources */,
 				3C53CF830C54882F009AADAD /* DefObject.m in Sources */,
 				3C7893380C582EB500813E78 /* DefObject_OSX.m in Sources */,
+				3C7893A60C58623000813E78 /* Customize_OSX.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

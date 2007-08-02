@@ -28,9 +28,9 @@ Library:      defobj
 #include "swarmconfig.h" // PTRUINT
 
 #if SWARM_OSX
-#import <defobj/DefObject_OSX.h>
+#import "DefObject_OSX.h"
 #else
-#import <defobj/DefObject_GNU.h>
+#import "DefObject_GNU.h"
 #endif
 
 @interface Object_s (OSX_GNU)

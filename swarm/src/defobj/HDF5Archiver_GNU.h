@@ -26,20 +26,16 @@
 
 extern id hdf5Archiver;
 
-#ifdef SWARM_OSX
-#import "HDF5Archiver_OSX.h"
-#else
-#import "HDF5Archiver_GNU.h"
-#endif
-
-@interface HDF5Archiver_c (OSX_GNU)
-+ createBegin: aZone;
-+ create: aZone setPath: (const char *)path;
-- setDefaultPath;
-- setDefaultAppPath;
-- getObject: (const char *)key;
+@interface HDF5Archiver_c: Archiver_c <HDF5Archiver>
+{
+}
+- createEnd;
+- (void)ensureApp: hdf5File;
 //XXX This has not been defined in the interface file, why?
-//- (void)sync;
+//- getWritableController
+- (void)putDeep: (const char *)key object: object;
+- (void)putShallow: (const char *)key object: object;
+- getWithZone: aZone key: (const char *)key;
 @end
 
 //. vim: syntax=objc

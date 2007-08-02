@@ -12,8 +12,8 @@
 		3C53CF830C54882F009AADAD /* DefObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C53CF7E0C54882F009AADAD /* DefObject.m */; };
 		3C7893370C582EB500813E78 /* DefObject_OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C7893350C582EB500813E78 /* DefObject_OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C7893380C582EB500813E78 /* DefObject_OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7893360C582EB500813E78 /* DefObject_OSX.m */; };
-		3C7893A50C58623000813E78 /* Customize_OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C7893A30C58622F00813E78 /* Customize_OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C7893A60C58623000813E78 /* Customize_OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7893A40C58623000813E78 /* Customize_OSX.m */; };
+		3C8BC52A0C61843700ADE688 /* HDF5Archiver_OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C8BC5280C61843700ADE688 /* HDF5Archiver_OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C8BC52B0C61843700ADE688 /* HDF5Archiver_OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C8BC5290C61843700ADE688 /* HDF5Archiver_OSX.m */; };
 		3CB3147F0C4C4E5300951A12 /* DefClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CB3147D0C4C4E5300951A12 /* DefClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CB314800C4C4E5300951A12 /* DefClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3147E0C4C4E5300951A12 /* DefClass.m */; };
 		3CCDED210C47B01B00B55817 /* DefObject.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7CB08C6C6CB00E2534C /* DefObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -351,8 +351,8 @@
 		3C53CF7E0C54882F009AADAD /* DefObject.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefObject.m; sourceTree = "<group>"; };
 		3C7893350C582EB500813E78 /* DefObject_OSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefObject_OSX.h; sourceTree = "<group>"; };
 		3C7893360C582EB500813E78 /* DefObject_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefObject_OSX.m; sourceTree = "<group>"; };
-		3C7893A30C58622F00813E78 /* Customize_OSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = Customize_OSX.h; path = ../../src/defobj/Customize_OSX.h; sourceTree = SOURCE_ROOT; };
-		3C7893A40C58623000813E78 /* Customize_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = Customize_OSX.m; path = ../../src/defobj/Customize_OSX.m; sourceTree = SOURCE_ROOT; };
+		3C8BC5280C61843700ADE688 /* HDF5Archiver_OSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = HDF5Archiver_OSX.h; sourceTree = "<group>"; };
+		3C8BC5290C61843700ADE688 /* HDF5Archiver_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = HDF5Archiver_OSX.m; sourceTree = "<group>"; };
 		3CB3147D0C4C4E5300951A12 /* DefClass.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefClass.h; sourceTree = "<group>"; };
 		3CB3147E0C4C4E5300951A12 /* DefClass.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefClass.m; sourceTree = "<group>"; };
 		3CCDECFE0C47A23700B55817 /* DefClass_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefClass_OSX.m; sourceTree = "<group>"; };
@@ -978,26 +978,33 @@
 		D615D7B708C6C6CB00E2534C /* defobj */ = {
 			isa = PBXGroup;
 			children = (
+				3C8BC5280C61843700ADE688 /* HDF5Archiver_OSX.h */,
+				3C8BC5290C61843700ADE688 /* HDF5Archiver_OSX.m */,
+				D615D7C408C6C6CB00E2534C /* Customize.h */,
+				D615D7C508C6C6CB00E2534C /* Customize.m */,
+				3CB3147D0C4C4E5300951A12 /* DefClass.h */,
+				3CB3147E0C4C4E5300951A12 /* DefClass.m */,
+				3CCDED070C47A7E400B55817 /* DefClass_OSX.h */,
+				3CCDECFE0C47A23700B55817 /* DefClass_OSX.m */,
+				D615D7CB08C6C6CB00E2534C /* DefObject.h */,
 				3C53CF7E0C54882F009AADAD /* DefObject.m */,
+				3C7893350C582EB500813E78 /* DefObject_OSX.h */,
+				3C7893360C582EB500813E78 /* DefObject_OSX.m */,
+				D615D7D808C6C6CB00E2534C /* HDF5Archiver.h */,
+				D615D7D908C6C6CB00E2534C /* HDF5Archiver.m */,
 				D615D7B908C6C6CB00E2534C /* Archiver.h */,
 				D615D7BB08C6C6CB00E2534C /* Arguments.h */,
 				D6EAF8450981BDFA00EE3B51 /* COM.h */,
 				D6EAF8470981BDFA00EE3B51 /* COMProxy.h */,
 				D615D7C208C6C6CB00E2534C /* Create.h */,
-				D615D7C408C6C6CB00E2534C /* Customize.h */,
 				D615D7C608C6C6CB00E2534C /* defalloc.h */,
 				D615D7C908C6C6CB00E2534C /* defobj.h */,
 				D615DAC908C91A8900E2534C /* defobj_classes.h */,
 				D615DA9408C6CD5600E2534C /* defobj_types.h */,
-				3CB3147D0C4C4E5300951A12 /* DefClass.h */,
-				3CB3147E0C4C4E5300951A12 /* DefClass.m */,
-				D615D7CB08C6C6CB00E2534C /* DefObject.h */,
 				D615D7CD08C6C6CB00E2534C /* deftype.h */,
-				3C7893350C582EB500813E78 /* DefObject_OSX.h */,
-				3C7893360C582EB500813E78 /* DefObject_OSX.m */,
-				D615D7CE08C6C6CB00E2534C /* directory.h */,
 				D615D7D008C6C6CB00E2534C /* FArguments.h */,
 				D615D7D208C6C6CB00E2534C /* FCall.h */,
+				D615D7CE08C6C6CB00E2534C /* directory.h */,
 				D615D7D408C6C6CB00E2534C /* fcall_java.h */,
 				D6EAF8460981BDFA00EE3B51 /* COM.m */,
 				D6EAF8480981BDFA00EE3B51 /* COMProxy.m */,
@@ -1008,9 +1015,6 @@
 				D615D7BC08C6C6CB00E2534C /* Arguments.m */,
 				D615D7BD08C6C6CB00E2534C /* ChangeLog */,
 				D615D7C308C6C6CB00E2534C /* Create.m */,
-				D615D7C508C6C6CB00E2534C /* Customize.m */,
-				3CCDECFE0C47A23700B55817 /* DefClass_OSX.m */,
-				3CCDED070C47A7E400B55817 /* DefClass_OSX.h */,
 				D615D7CA08C6C6CB00E2534C /* defobj.m */,
 				D615D7CF08C6C6CB00E2534C /* directory.m */,
 				D615D7D108C6C6CB00E2534C /* FArguments.m */,
@@ -1018,8 +1022,6 @@
 				D615D7D508C6C6CB00E2534C /* fcall_java.m */,
 				D615D7D608C6C6CB00E2534C /* fcall_objc.h */,
 				D615D7D708C6C6CB00E2534C /* fcall_objc.m */,
-				D615D7D808C6C6CB00E2534C /* HDF5Archiver.h */,
-				D615D7D908C6C6CB00E2534C /* HDF5Archiver.m */,
 				D615D7DA08C6C6CB00E2534C /* HDF5Object.h */,
 				D615D7DB08C6C6CB00E2534C /* HDF5Object.m */,
 				D615D7DC08C6C6CB00E2534C /* internal.h */,
@@ -1238,8 +1240,6 @@
 				D615DA4008C6C73F00E2534C /* ActionGroup.m */,
 				D615DA4108C6C73F00E2534C /* ActionHomogeneous.m */,
 				D615DA4208C6C73F00E2534C /* activity.h */,
-				3C7893A30C58622F00813E78 /* Customize_OSX.h */,
-				3C7893A40C58623000813E78 /* Customize_OSX.m */,
 				D615DA4308C6C73F00E2534C /* activity.m */,
 				D615DA4408C6C73F00E2534C /* ChangeLog */,
 				D615DA4508C6C73F00E2534C /* CompoundAction.h */,
@@ -1692,7 +1692,7 @@
 				3CB3147F0C4C4E5300951A12 /* DefClass.h in Headers */,
 				3C38F0E20C4F273C00702783 /* DefClass_OSX.h in Headers */,
 				3C7893370C582EB500813E78 /* DefObject_OSX.h in Headers */,
-				3C7893A50C58623000813E78 /* Customize_OSX.h in Headers */,
+				3C8BC52A0C61843700ADE688 /* HDF5Archiver_OSX.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1961,7 +1961,7 @@
 				3C38F0E40C4F274100702783 /* DefClass_OSX.m in Sources */,
 				3C53CF830C54882F009AADAD /* DefObject.m in Sources */,
 				3C7893380C582EB500813E78 /* DefObject_OSX.m in Sources */,
-				3C7893A60C58623000813E78 /* Customize_OSX.m in Sources */,
+				3C8BC52B0C61843700ADE688 /* HDF5Archiver_OSX.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2103,12 +2103,13 @@
 		D615D71E08C6BFEC00E2534C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				ARCHS = (
 					ppc,
 					i386,
 				);
 				GCC_PREPROCESSOR_DEFINITIONS = "SWARM_OSX=1";
-				HEADER_SEARCH_PATHS = ../../src;
+				HEADER_SEARCH_PATHS = ../../src/;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
@@ -2117,8 +2118,9 @@
 		D615D71F08C6BFEC00E2534C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "SWARM_OSX=1";
-				HEADER_SEARCH_PATHS = ../../src;
+				HEADER_SEARCH_PATHS = ../../src/;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};
@@ -2127,8 +2129,9 @@
 		D615D72008C6BFEC00E2534C /* Default */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "SWARM_OSX=1";
-				HEADER_SEARCH_PATHS = ../../src;
+				HEADER_SEARCH_PATHS = ../../src/;
 				MACOSX_DEPLOYMENT_TARGET = 10.4;
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 			};

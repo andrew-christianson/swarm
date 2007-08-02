@@ -18,60 +18,16 @@
 // http://www.swarm.org/
 
 #import <defobj/HDF5Archiver.h>
+/*
 #import <defobj/HDF5Object.h>
 #import <defobj.h> // OSTRDUP
 #import <misc.h> // access
-#import <defobj/defalloc.h> // getZone
 
 #include <collections/predicates.h>
+*/
+#import <defobj/defalloc.h> // getZone
 
-@implementation HDF5Archiver_c
-
-static id
-hdf5_create_app_group (const char *appKey, id hdf5Obj)
-{
-  id hdf5AppObj = hdf5Obj;
-  char *newAppKey, *modeKey;
-
-  newAppKey = OSTRDUP (hdf5Obj, appKey);
-  modeKey = newAppKey;
-  
-  while (*modeKey && *modeKey != '/')
-    modeKey++;
-  if (*modeKey == '/')
-    {
-      *modeKey = '\0';
-      modeKey++;
-#if SWARM_OSX
-      hdf5AppObj = [[[HDF5 createBegin: [hdf5Obj getZone]]
-                        setWriteFlag: YES]
-                       setParent: hdf5Obj];
-      [hdf5AppObj setName: newAppKey];
-      hdf5AppObj = [hdf5AppObj createEnd];
-    }
-  else
-    raiseEvent (InvalidArgument, "expecting composite app/mode key");
-  id obj = [[HDF5 createBegin: [hdf5AppObj getZone]]
-              setParent: hdf5AppObj];
-  [obj setName: modeKey];
-  return [[obj setWriteFlag: YES]
-           createEnd];
-#else
-      hdf5AppObj = [[[[[HDF5 createBegin: [hdf5Obj getZone]]
-                        setWriteFlag: YES]
-                       setParent: hdf5Obj]
-                      setName: newAppKey]
-                     createEnd];
-    }
-  else
-    raiseEvent (InvalidArgument, "expecting composite app/mode key");
-  return [[[[[HDF5 createBegin: [hdf5AppObj getZone]]
-              setParent: hdf5AppObj]
-             setName: modeKey]
-            setWriteFlag: YES]
-           createEnd];
-#endif
-}
+@implementation HDF5Archiver_c (OSX_GNU)
 
 PHASE(Creating)
 
@@ -100,184 +56,6 @@ PHASE(Creating)
   return self;
 }
 
-- createEnd
-{
-  id <HDF5> appFile;
-  
-  [super createEnd];
-
-#if SWARM_OSX
-  appFile = [[[HDF5 createBegin: getZone (self)]
-                 setWriteFlag: NO]
-                setParent: nil];
-  [appFile setName: path];
-  [appFile createEnd];
-#else
-  appFile = [[[[[HDF5 createBegin: getZone (self)]
-                 setWriteFlag: NO]
-                setParent: nil]
-               setName: path]
-              createEnd];
-#endif
-  [self ensureApp: appFile];
-  return self;
-}
-
-PHASE(Setting)
-
-- (void)ensureApp: hdf5File
-{
-#ifndef SWARM_OSX /* NESTED */
-  if (systemArchiverFlag)
-    {
-      int appIterateFunc (id <HDF5> appHDF5Obj)
-        {
-          int modeIterateFunc (id <HDF5> modeHDF5Obj)
-            {
-              const char *appName = [appHDF5Obj getHDF5Name];
-              const char *modeName = [modeHDF5Obj getHDF5Name];
-              id <String> appKey = [self createAppKey: appName mode: modeName];
-
-              [applicationMap at: appKey
-                              insert: modeHDF5Obj];
-              return 0;
-            }
-          [appHDF5Obj iterate: modeIterateFunc drop: NO];
-          return 0;
-        }
-      if (hdf5File)
-        [(id <HDF5>) hdf5File iterate: appIterateFunc drop: NO];
-      if (![self getApplication])
-        hdf5File = nil;
-    }
-  [applicationMap at: currentApplicationKey insert: hdf5File];
-#endif
-}
-
-PHASE(Using)
-
-- getWritableController
-{
-  id hdf5Obj = [self getApplication];
-  
-  if (hdf5Obj)
-    {
-      if ([hdf5Obj getWriteFlag])
-        return hdf5Obj;
-      else
-        {
-          if (systemArchiverFlag)
-            {
-              id app = [hdf5Obj getParent];
-              id file = [app getParent];
-
-              [applicationMap deleteAll];
-              [app drop];
-              [file drop];
-            }
-          [hdf5Obj drop];
-        }
-    }
-#if SWARM_OSX
-  hdf5Obj = [[[HDF5 createBegin: getZone (self)]
-                 setWriteFlag: YES]
-                setParent: nil];
-  [hdf5Obj setName: path];
-  hdf5Obj = [hdf5Obj createEnd];
-#else
-  hdf5Obj = [[[[[HDF5 createBegin: getZone (self)]
-                 setWriteFlag: YES]
-                setParent: nil]
-               setName: path]
-              createEnd];
-#endif
-  
-  if (systemArchiverFlag)
-    hdf5Obj = hdf5_create_app_group ([currentApplicationKey getC], hdf5Obj);
-  
-  [applicationMap at: currentApplicationKey replace: hdf5Obj];
-  return hdf5Obj;
-}
-
-- (void)putDeep: (const char *)key object: object
-{
-#if SWARM_OSX
-  id group = [[[HDF5 createBegin: getZone (self)]
-                  setWriteFlag: YES]
-                 setParent: [self getWritableController]];
-  [group setName: key];
-  group = [group createEnd];
-#else
-  id group = [[[[[HDF5 createBegin: getZone (self)]
-                  setWriteFlag: YES]
-                 setParent: [self getWritableController]]
-                setName: key]
-               createEnd];
-#endif
-
-  if (!group)
-    abort ();
-  [object hdf5OutDeep: group];
-  [group drop];
-}
-
-- (void)putShallow: (const char *)key object: object
-{
-#if SWARM_OSX
-  id dataset = [[[[HDF5 createBegin: getZone (self)]
-                     setWriteFlag: YES]
-                    setParent: [self getWritableController]]
-                   setDatasetFlag: YES];
-  [dataset setName: key];
-  dataset = [dataset createEnd];
-#else
-  id dataset = [[[[[[HDF5 createBegin: getZone (self)]
-                     setWriteFlag: YES]
-                    setParent: [self getWritableController]]
-                   setDatasetFlag: YES]
-                  setName: key]
-                 createEnd];
-#endif
-  if (!dataset)
-    abort ();
-  [object hdf5OutShallow: dataset];
-  [dataset drop];
-}
-
-- getWithZone: aZone key: (const char *)key 
-{
-  id result; 
-  id parent = [self getApplication];
-  
-  if (parent)
-    {
-#if SWARM_OSX
-      id <HDF5> hdf5Obj = [[[HDF5 createBegin: getZone (self)]
-                               setParent: parent]
-                              setDatasetFlag: [parent checkDatasetName: key]];
-      [hdf5Obj setName: key];
-      hdf5Obj = [hdf5Obj createEnd];
-#else
-      id <HDF5> hdf5Obj = [[[[[HDF5 createBegin: getZone (self)]
-                               setParent: parent]
-                              setDatasetFlag: [parent checkDatasetName: key]]
-                             setName: key]
-                            createEnd];
-#endif
-      
-      if (hdf5Obj)
-        {
-          result = hdf5In (aZone, hdf5Obj);
-          [hdf5Obj drop];
-        }
-      else
-        result = nil;
-    }
-  else
-    result = nil;
-  return result;
-}
-
 - getObject: (const char *)key
 {
   return [self getWithZone: getZone (self) key: key];
@@ -296,4 +74,3 @@ PHASE(Using)
 }
 
 @end
-

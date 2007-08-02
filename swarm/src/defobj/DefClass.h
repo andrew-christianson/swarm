@@ -32,9 +32,9 @@ typedef struct classData *classData_t;
 
 // include in Class_s for appropriate objc runtime
 #ifdef SWARM_OSX
-#import <defobj/DefClass_OSX.h>
+#import "DefClass_OSX.h"
 #else
-#import <defobj/DefClass_GNU.h>
+#import "DefClass_GNU.h"
 #endif
 
 //

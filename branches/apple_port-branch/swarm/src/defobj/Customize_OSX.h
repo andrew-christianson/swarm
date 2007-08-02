@@ -23,10 +23,12 @@ Description:  superclass to implement create-phase customization
 Library:      defobj
 */
 
-#import <defobj/DefObject.h>
-#import <defobj/DefClass.h>
+#import "DefObject.h"
+#import "DefClass.h"
 
 extern id _obj_initZone;  // currently receives generated classes
+
+void _obj_splitPhases (Class_s *class);
 
 //. FIXME: Move this back to GENERIC file and add it in here as an `extern' but how?
 //
@@ -45,7 +47,6 @@ extern id _obj_initZone;  // currently receives generated classes
 //@class CreateBy_c;
 
 @interface Customize_s: Object_s
-void _obj_splitPhases (Class_s *class);
 @end
 
 @interface Create_byboth: CreateBy_c

@@ -31,14 +31,6 @@ Library:      defobj
 #import <objc/objc-api.h>
 #import <misc.h> // strchr, stpcpy, strlen
 
-@implementation CreateBy_c
-@end
-
-//
-// Customize_s -- superclass to implement create-phase customization
-//
-@implementation Customize_s
-
 //
 // _obj_splitPhases -- split defining class into class object for each phase
 //
@@ -284,8 +276,14 @@ _obj_splitPhases (Class_s *class)
     }
 }
 
-@end  // end of Create superclass
+@implementation CreateBy_c
+@end
 
+//
+// Customize_s -- superclass to implement create-phase customization
+//
+@implementation Customize_s
+@end  // end of Create superclass
 
 //
 // Create_byboth -- class to create instance by sending message to shallow copy

@@ -16,6 +16,8 @@
 		3C8BC52B0C61843700ADE688 /* HDF5Archiver_OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C8BC5290C61843700ADE688 /* HDF5Archiver_OSX.m */; };
 		3CB3147F0C4C4E5300951A12 /* DefClass.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CB3147D0C4C4E5300951A12 /* DefClass.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3CB314800C4C4E5300951A12 /* DefClass.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CB3147E0C4C4E5300951A12 /* DefClass.m */; };
+		3CCBE1A50C61ECEB004F8960 /* _obj_splitPhases_OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CCBE1A30C61ECEB004F8960 /* _obj_splitPhases_OSX.m */; };
+		3CCBE1A60C61ECEB004F8960 /* _obj_splitPhases.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CCBE1A40C61ECEB004F8960 /* _obj_splitPhases.h */; };
 		3CCDED210C47B01B00B55817 /* DefObject.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7CB08C6C6CB00E2534C /* DefObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
 		8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */; };
@@ -355,6 +357,8 @@
 		3C8BC5290C61843700ADE688 /* HDF5Archiver_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = HDF5Archiver_OSX.m; sourceTree = "<group>"; };
 		3CB3147D0C4C4E5300951A12 /* DefClass.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefClass.h; sourceTree = "<group>"; };
 		3CB3147E0C4C4E5300951A12 /* DefClass.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefClass.m; sourceTree = "<group>"; };
+		3CCBE1A30C61ECEB004F8960 /* _obj_splitPhases_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = _obj_splitPhases_OSX.m; path = ../../src/defobj/_obj_splitPhases_OSX.m; sourceTree = SOURCE_ROOT; };
+		3CCBE1A40C61ECEB004F8960 /* _obj_splitPhases.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = _obj_splitPhases.h; path = ../../src/defobj/_obj_splitPhases.h; sourceTree = SOURCE_ROOT; };
 		3CCDECFE0C47A23700B55817 /* DefClass_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefClass_OSX.m; sourceTree = "<group>"; };
 		3CCDED070C47A7E400B55817 /* DefClass_OSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefClass_OSX.h; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -845,6 +849,8 @@
 		0867D691FE84028FC02AAC07 /* SwarmOSX */ = {
 			isa = PBXGroup;
 			children = (
+				3CCBE1A30C61ECEB004F8960 /* _obj_splitPhases_OSX.m */,
+				3CCBE1A40C61ECEB004F8960 /* _obj_splitPhases.h */,
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				D6FDC03E097CF2D200C67EFC /* tests */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
@@ -1693,6 +1699,7 @@
 				3C38F0E20C4F273C00702783 /* DefClass_OSX.h in Headers */,
 				3C7893370C582EB500813E78 /* DefObject_OSX.h in Headers */,
 				3C8BC52A0C61843700ADE688 /* HDF5Archiver_OSX.h in Headers */,
+				3CCBE1A60C61ECEB004F8960 /* _obj_splitPhases.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1962,6 +1969,7 @@
 				3C53CF830C54882F009AADAD /* DefObject.m in Sources */,
 				3C7893380C582EB500813E78 /* DefObject_OSX.m in Sources */,
 				3C8BC52B0C61843700ADE688 /* HDF5Archiver_OSX.m in Sources */,
+				3CCBE1A50C61ECEB004F8960 /* _obj_splitPhases_OSX.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

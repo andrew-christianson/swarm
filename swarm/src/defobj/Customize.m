@@ -29,32 +29,30 @@ Library:      defobj
 #import <defobj/DefClass.h>
 #import <collections.h>
 #import <objc/objc-api.h>
-#import <misc.h> // strchr, stpcpy, strlen
 
-extern void _obj_splitPhases (Class_s  *class);
+#include <misc.h> // strchr, stpcpy, strlen
+
+//extern void _obj_splitPhases (Class_s  *class);
+#import <defobj/_obj_splitPhases.h>
 
 extern id _obj_initZone;  // currently receives generated classes
+
 //
 // inline functions to save field in copy of class structure used as wrapper
 //
+
+static inline void
+setWrapperCreateBy (Class wrapper, CreateBy_c *createBy)
+{
+//#if !SWARM_OSX
+  wrapper->version = (long) createBy;
+//#endif
+}
 
 static inline CreateBy_c *
 getWrapperCreateBy (Class wrapper)
 {
   return (CreateBy_c *) wrapper->version;
-}
-
-//
-// inline functions to save field in copy of class structure used as wrapper
-//
-static inline void
-setWrapperCreateBy (Class wrapper, CreateBy_c *createBy)
-{
-  #if SWARM_OSX
-    //. Another do-nothing call.
-  #else
-    wrapper->version = (long) createBy;
-  #endif
 }
 
 //
@@ -69,13 +67,10 @@ initCustomizeWrapper (id aZone, id anObject)
   // allocate wrapper class (copy of self class) for instance being customized
 
   wrapper = (Class) [aZone copyIVars: getClass (anObject)];
-  wrapper->super_class = anObject->isa->super_class; //OSX Specific
-
 #if SWARM_OSX
   wrapper->super_class = anObject->isa->super_class;
 #endif
   wrapper->info |= _CLS_CUSTOMIZEWRAPPER;
-
 
   // allocate a new CreateBy instance and store id in wrapper
 
@@ -96,12 +91,15 @@ initCustomizeWrapper (id aZone, id anObject)
   setClass (anObject, wrapper);
 }
 
+
 //
 // Customize_s -- superclass to implement create-phase customization
 //
-@implementation Customize_s (OSX_GNU)
+
+@implementation Customize_s
 
 PHASE(Creating)
+
 
 + createBegin: aZone
 {
@@ -383,12 +381,17 @@ PHASE(Creating)
 
 @end  // end of Create superclass
 
+//
+// _obj_splitPhases -- split defining class into class object for each phase
+//
+// XXX MOVED THIS TO ITS OWN FILE XXX
+
 
 //
 // CreateBy_c -- superclass of customized create action
 //
 
-@implementation CreateBy_c (OSX_GNU)
+@implementation CreateBy_c
 
 - createBegin: aZone
 {
@@ -462,7 +465,27 @@ PHASE(Creating)
 //
 // Create_byboth -- class to create instance by sending message to shallow copy
 //
-@implementation Create_byboth (OSX_GNU)
+
+@implementation Create_byboth
+
+- create: aZone
+{
+  id newObject;
+
+  // Create new instance by sending message to shallow copy.
+
+  newObject = [aZone copyIVars: createReceiver];
+#if SWARM_OSX /* TODO: Maybe Swarm bug, assuming Creating class has Using method createEnd */
+  //[newObject setNextPhase:
+  [newObject performSelector: createMessage withObject: aZone];
+#else
+  [newObject perform: createMessage with: aZone];
+#endif
+  return newObject;
+
+  // (extra zone argument is harmless if not referenced)
+}
+
 @end
 
 //

@@ -357,8 +357,8 @@
 		3C8BC5290C61843700ADE688 /* HDF5Archiver_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = HDF5Archiver_OSX.m; sourceTree = "<group>"; };
 		3CB3147D0C4C4E5300951A12 /* DefClass.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefClass.h; sourceTree = "<group>"; };
 		3CB3147E0C4C4E5300951A12 /* DefClass.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefClass.m; sourceTree = "<group>"; };
-		3CCBE1A30C61ECEB004F8960 /* _obj_splitPhases_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = _obj_splitPhases_OSX.m; path = ../../src/defobj/_obj_splitPhases_OSX.m; sourceTree = SOURCE_ROOT; };
-		3CCBE1A40C61ECEB004F8960 /* _obj_splitPhases.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = _obj_splitPhases.h; path = ../../src/defobj/_obj_splitPhases.h; sourceTree = SOURCE_ROOT; };
+		3CCBE1A30C61ECEB004F8960 /* _obj_splitPhases_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = _obj_splitPhases_OSX.m; sourceTree = "<group>"; };
+		3CCBE1A40C61ECEB004F8960 /* _obj_splitPhases.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = _obj_splitPhases.h; sourceTree = "<group>"; };
 		3CCDECFE0C47A23700B55817 /* DefClass_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefClass_OSX.m; sourceTree = "<group>"; };
 		3CCDED070C47A7E400B55817 /* DefClass_OSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefClass_OSX.h; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -849,8 +849,6 @@
 		0867D691FE84028FC02AAC07 /* SwarmOSX */ = {
 			isa = PBXGroup;
 			children = (
-				3CCBE1A30C61ECEB004F8960 /* _obj_splitPhases_OSX.m */,
-				3CCBE1A40C61ECEB004F8960 /* _obj_splitPhases.h */,
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				D6FDC03E097CF2D200C67EFC /* tests */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
@@ -984,6 +982,8 @@
 		D615D7B708C6C6CB00E2534C /* defobj */ = {
 			isa = PBXGroup;
 			children = (
+				3CCBE1A30C61ECEB004F8960 /* _obj_splitPhases_OSX.m */,
+				3CCBE1A40C61ECEB004F8960 /* _obj_splitPhases.h */,
 				3C8BC5280C61843700ADE688 /* HDF5Archiver_OSX.h */,
 				3C8BC5290C61843700ADE688 /* HDF5Archiver_OSX.m */,
 				D615D7C408C6C6CB00E2534C /* Customize.h */,

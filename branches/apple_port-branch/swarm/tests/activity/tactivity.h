@@ -17,4 +17,8 @@ USING
 @protocol ConcurrentGroup_test <Group_test, ConcurrentGroup, CREATABLE>
 @end
 
+#ifdef SWARM_OSX
+#import <tactivity_types.h>
+#else
 #import <tactivity/types.h>
+#endif

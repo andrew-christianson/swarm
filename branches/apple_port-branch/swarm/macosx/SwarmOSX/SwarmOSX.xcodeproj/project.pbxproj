@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3C3140320C66B4ED0006CDA1 /* SwarmOSX_testCaseBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C31402E0C66B4ED0006CDA1 /* SwarmOSX_testCaseBundle.m */; };
+		3C3140330C66B4ED0006CDA1 /* tactivity.xm in Resources */ = {isa = PBXBuildFile; fileRef = 3C3140310C66B4ED0006CDA1 /* tactivity.xm */; };
 		3C38F0E20C4F273C00702783 /* DefClass_OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CCDED070C47A7E400B55817 /* DefClass_OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C38F0E40C4F274100702783 /* DefClass_OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CCDECFE0C47A23700B55817 /* DefClass_OSX.m */; };
 		3C53CF830C54882F009AADAD /* DefObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C53CF7E0C54882F009AADAD /* DefObject.m */; };
@@ -350,6 +352,13 @@
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1058C7B1FEA5585E11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF5E0370ADEE00C91783 /* SwarmOSX_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwarmOSX_Prefix.pch; sourceTree = "<group>"; };
+		3C3140250C66B4C60006CDA1 /* SwarmOSX_Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwarmOSX_Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C3140260C66B4C60006CDA1 /* SwarmOSX_Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "SwarmOSX_Tests-Info.plist"; sourceTree = "<group>"; };
+		3C31402D0C66B4ED0006CDA1 /* SwarmOSX_testCaseBundle.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SwarmOSX_testCaseBundle.h; sourceTree = "<group>"; };
+		3C31402E0C66B4ED0006CDA1 /* SwarmOSX_testCaseBundle.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SwarmOSX_testCaseBundle.m; sourceTree = "<group>"; };
+		3C31402F0C66B4ED0006CDA1 /* tactivity_classes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tactivity_classes.h; sourceTree = "<group>"; };
+		3C3140300C66B4ED0006CDA1 /* tactivity_types.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tactivity_types.h; sourceTree = "<group>"; };
+		3C3140310C66B4ED0006CDA1 /* tactivity.xm */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = tactivity.xm; sourceTree = "<group>"; };
 		3C53CF7E0C54882F009AADAD /* DefObject.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefObject.m; sourceTree = "<group>"; };
 		3C7893350C582EB500813E78 /* DefObject_OSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefObject_OSX.h; sourceTree = "<group>"; };
 		3C7893360C582EB500813E78 /* DefObject_OSX.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefObject_OSX.m; sourceTree = "<group>"; };
@@ -811,6 +820,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3C3140220C66B4C60006CDA1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8DC2EF560486A6940098B216 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -842,6 +858,7 @@
 				8DC2EF5B0486A6940098B216 /* SwarmOSX.framework */,
 				D615E13A08CBE6C600E2534C /* Heatbugs.app */,
 				D6EAF9A70981E3ED00EE3B51 /* SwarmTests */,
+				3C3140250C66B4C60006CDA1 /* SwarmOSX_Tests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -849,6 +866,11 @@
 		0867D691FE84028FC02AAC07 /* SwarmOSX */ = {
 			isa = PBXGroup;
 			children = (
+				3C31402D0C66B4ED0006CDA1 /* SwarmOSX_testCaseBundle.h */,
+				3C31402E0C66B4ED0006CDA1 /* SwarmOSX_testCaseBundle.m */,
+				3C31402F0C66B4ED0006CDA1 /* tactivity_classes.h */,
+				3C3140300C66B4ED0006CDA1 /* tactivity_types.h */,
+				3C3140310C66B4ED0006CDA1 /* tactivity.xm */,
 				08FB77AEFE84172EC02AAC07 /* Classes */,
 				D6FDC03E097CF2D200C67EFC /* tests */,
 				32C88DFF0371C24200C91783 /* Other Sources */,
@@ -858,6 +880,7 @@
 				D615E13C08CBE6CA00E2534C /* Heatbugs-Info.plist */,
 				D6657AA7097AA5F8004D8FB5 /* MainMenu.nib */,
 				D6FDC034097CF25B00C67EFC /* Tests-Info.plist */,
+				3C3140260C66B4C60006CDA1 /* SwarmOSX_Tests-Info.plist */,
 			);
 			name = SwarmOSX;
 			sourceTree = "<group>";
@@ -1706,6 +1729,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		3C3140240C66B4C60006CDA1 /* SwarmOSX_Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3C3140270C66B4C60006CDA1 /* Build configuration list for PBXNativeTarget "SwarmOSX_Tests" */;
+			buildPhases = (
+				3C3140200C66B4C60006CDA1 /* Resources */,
+				3C3140210C66B4C60006CDA1 /* Sources */,
+				3C3140220C66B4C60006CDA1 /* Frameworks */,
+				3C3140230C66B4C60006CDA1 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwarmOSX_Tests;
+			productName = SwarmOSX_Tests;
+			productReference = 3C3140250C66B4C60006CDA1 /* SwarmOSX_Tests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 		8DC2EF4F0486A6940098B216 /* SwarmOSX */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D615D71908C6BFEC00E2534C /* Build configuration list for PBXNativeTarget "SwarmOSX" */;
@@ -1775,11 +1816,20 @@
 				8DC2EF4F0486A6940098B216 /* SwarmOSX */,
 				D615E13908CBE6C600E2534C /* Heatbugs */,
 				D6EAF9A60981E3ED00EE3B51 /* SwarmTests */,
+				3C3140240C66B4C60006CDA1 /* SwarmOSX_Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		3C3140200C66B4C60006CDA1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C3140330C66B4ED0006CDA1 /* tactivity.xm in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8DC2EF520486A6940098B216 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1806,6 +1856,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		3C3140230C66B4C60006CDA1 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
 		D6EAF86B0981C20400EE3B51 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1822,6 +1885,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3C3140210C66B4C60006CDA1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C3140320C66B4ED0006CDA1 /* SwarmOSX_testCaseBundle.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8DC2EF540486A6940098B216 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2028,6 +2099,81 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		3C3140280C66B4C60006CDA1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "SwarmOSX_Tests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = SwarmOSX_Tests;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Debug;
+		};
+		3C3140290C66B4C60006CDA1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "SwarmOSX_Tests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = SwarmOSX_Tests;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		3C31402A0C66B4C60006CDA1 /* Default */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				INFOPLIST_FILE = "SwarmOSX_Tests-Info.plist";
+				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Cocoa,
+					"-framework",
+					SenTestingKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = SwarmOSX_Tests;
+				WRAPPER_EXTENSION = octest;
+				ZERO_LINK = NO;
+			};
+			name = Default;
+		};
 		D615D71A08C6BFEC00E2534C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2327,6 +2473,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		3C3140270C66B4C60006CDA1 /* Build configuration list for PBXNativeTarget "SwarmOSX_Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C3140280C66B4C60006CDA1 /* Debug */,
+				3C3140290C66B4C60006CDA1 /* Release */,
+				3C31402A0C66B4C60006CDA1 /* Default */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Default;
+		};
 		D615D71908C6BFEC00E2534C /* Build configuration list for PBXNativeTarget "SwarmOSX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

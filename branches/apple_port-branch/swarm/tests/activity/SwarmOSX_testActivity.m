@@ -1,15 +1,15 @@
 //
-//  SwarmOSX_testCaseBundle.m
+//  SwarmOSX_testActivity.m
 //  SwarmOSX
 //
 //  Created by Nima Talebi on 6/08/07.
 //  Copyright 2007 __MyCompanyName__. All rights reserved.
 //
 
-#import "SwarmOSX_testCaseBundle.h"
+#import "SwarmOSX_testActivity.h"
 
 
-@implementation SwarmOSX_testCaseBundle
+@implementation SwarmOSX_testActivity
 
 - (void) test_ForEach {
 	argc = 1;

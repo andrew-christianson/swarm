@@ -1,5 +1,5 @@
 //
-//  SwarmOSX_testCaseBundle.h
+//  SwarmOSX_testActivity.h
 //  SwarmOSX
 //
 //  Created by Nima Talebi on 6/08/07.
@@ -8,12 +8,18 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
+
 //. ForEach
 #import <simtools.h>
 #import <tactivity.h>
 #import "Responder.h"
 
-@interface SwarmOSX_testCaseBundle : SenTestCase {
+#import "ActionGroup_test.h"
+#import "ConcurrentGroup_test.h"
+
+#import "ActionGroup.h"
+
+@interface SwarmOSX_testActivity : SenTestCase {
 	int argc;
   const char* argv[0];
 }

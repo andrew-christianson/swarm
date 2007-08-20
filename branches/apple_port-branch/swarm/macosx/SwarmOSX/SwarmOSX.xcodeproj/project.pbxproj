@@ -11,31 +11,10 @@
 		3C38F0E40C4F274100702783 /* DefClass_OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CCDECFE0C47A23700B55817 /* DefClass_OSX.m */; };
 		3C53CF830C54882F009AADAD /* DefObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C53CF7E0C54882F009AADAD /* DefObject.m */; };
 		3C58BA3A0C6C73B300C30109 /* SwarmOSX_testActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C58BA390C6C73B300C30109 /* SwarmOSX_testActivity.m */; };
-		3C58BA3B0C6C740C00C30109 /* SwarmOSX_testActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C58BA380C6C73B300C30109 /* SwarmOSX_testActivity.h */; };
-		3C58BA3C0C6C740C00C30109 /* SwarmOSX_testActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C58BA390C6C73B300C30109 /* SwarmOSX_testActivity.m */; };
-		3C58BA3D0C6C740D00C30109 /* tactivity.h in Headers */ = {isa = PBXBuildFile; fileRef = D6FDC05A097CF2D200C67EFC /* tactivity.h */; };
-		3C58BA3E0C6C740D00C30109 /* tactivity.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC05B097CF2D200C67EFC /* tactivity.m */; };
-		3C58BA3F0C6C740E00C30109 /* tactivity.xm in Resources */ = {isa = PBXBuildFile; fileRef = 3C3140310C66B4ED0006CDA1 /* tactivity.xm */; };
-		3C58BA400C6C740F00C30109 /* tactivity_classes.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C31402F0C66B4ED0006CDA1 /* tactivity_classes.h */; };
-		3C58BA410C6C740F00C30109 /* tactivity_types.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C3140300C66B4ED0006CDA1 /* tactivity_types.h */; };
-		3C58BA420C6C741100C30109 /* Responder.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC058097CF2D200C67EFC /* Responder.m */; };
-		3C58BA430C6C741200C30109 /* Responder.h in Headers */ = {isa = PBXBuildFile; fileRef = D6FDC057097CF2D200C67EFC /* Responder.h */; };
-		3C58BA9F0C6C756500C30109 /* ActionGroup_test.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC042097CF2D200C67EFC /* ActionGroup_test.m */; };
-		3C58BAA00C6C756500C30109 /* ActionGroup_test.h in Headers */ = {isa = PBXBuildFile; fileRef = D6FDC041097CF2D200C67EFC /* ActionGroup_test.h */; };
-		3C58BAA10C6C756800C30109 /* ConcurrentGroup_test.h in Headers */ = {isa = PBXBuildFile; fileRef = D6FDC046097CF2D200C67EFC /* ConcurrentGroup_test.h */; };
-		3C58BAA20C6C756900C30109 /* ConcurrentGroup_test.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC047097CF2D200C67EFC /* ConcurrentGroup_test.m */; };
 		3C58BB410C6D2FDF00C30109 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C58BB2C0C6D2FDF00C30109 /* SenTestingKit.framework */; };
-		3C58BC330C6D3FF400C30109 /* SwarmOSX_testActivity.h in Sources */ = {isa = PBXBuildFile; fileRef = 3C58BA380C6C73B300C30109 /* SwarmOSX_testActivity.h */; };
-		3C58BC350C6D3FF400C30109 /* tactivity_classes.h in Sources */ = {isa = PBXBuildFile; fileRef = 3C31402F0C66B4ED0006CDA1 /* tactivity_classes.h */; };
-		3C58BC360C6D3FF400C30109 /* tactivity_types.h in Sources */ = {isa = PBXBuildFile; fileRef = 3C3140300C66B4ED0006CDA1 /* tactivity_types.h */; };
-		3C58BC370C6D3FF400C30109 /* tactivity.h in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC05A097CF2D200C67EFC /* tactivity.h */; };
 		3C58BC380C6D3FF400C30109 /* tactivity.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC05B097CF2D200C67EFC /* tactivity.m */; };
-		3C58BC390C6D3FF400C30109 /* tactivity.xm in Sources */ = {isa = PBXBuildFile; fileRef = 3C3140310C66B4ED0006CDA1 /* tactivity.xm */; };
-		3C58BC3A0C6D3FF400C30109 /* ConcurrentGroup_test.h in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC046097CF2D200C67EFC /* ConcurrentGroup_test.h */; };
 		3C58BC3B0C6D3FF400C30109 /* ConcurrentGroup_test.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC047097CF2D200C67EFC /* ConcurrentGroup_test.m */; };
-		3C58BC3C0C6D3FF400C30109 /* ActionGroup_test.h in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC041097CF2D200C67EFC /* ActionGroup_test.h */; };
 		3C58BC3D0C6D3FF400C30109 /* ActionGroup_test.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC042097CF2D200C67EFC /* ActionGroup_test.m */; };
-		3C58BC3E0C6D3FF400C30109 /* Responder.h in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC057097CF2D200C67EFC /* Responder.h */; };
 		3C58BC3F0C6D3FF400C30109 /* Responder.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC058097CF2D200C67EFC /* Responder.m */; };
 		3C7893370C582EB500813E78 /* DefObject_OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C7893350C582EB500813E78 /* DefObject_OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C7893380C582EB500813E78 /* DefObject_OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C7893360C582EB500813E78 /* DefObject_OSX.m */; };
@@ -78,7 +57,6 @@
 		D615D77708C6C13800E2534C /* strdup.c in Sources */ = {isa = PBXBuildFile; fileRef = D615D74B08C6C13800E2534C /* strdup.c */; };
 		D615D77A08C6C13800E2534C /* strndup.c in Sources */ = {isa = PBXBuildFile; fileRef = D615D74E08C6C13800E2534C /* strndup.c */; };
 		D615D77B08C6C13800E2534C /* strnlen.c in Sources */ = {isa = PBXBuildFile; fileRef = D615D74F08C6C13800E2534C /* strnlen.c */; };
-		D615D77E08C6C13800E2534C /* strtoll.c in Sources */ = {isa = PBXBuildFile; fileRef = D615D75208C6C13800E2534C /* strtoll.c */; };
 		D615D77F08C6C13800E2534C /* xmalloc.c in Sources */ = {isa = PBXBuildFile; fileRef = D615D75308C6C13800E2534C /* xmalloc.c */; };
 		D615D78708C6C28900E2534C /* swarmconfig.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D78608C6C28900E2534C /* swarmconfig.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615D7F708C6C6CB00E2534C /* Archiver.h in Headers */ = {isa = PBXBuildFile; fileRef = D615D7B908C6C6CB00E2534C /* Archiver.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -293,7 +271,6 @@
 		D615DED208CAB04C00E2534C /* InFile.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DEBD08CAB04C00E2534C /* InFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615DED308CAB04C00E2534C /* InFile.m in Sources */ = {isa = PBXBuildFile; fileRef = D615DEBE08CAB04C00E2534C /* InFile.m */; };
 		D615DED408CAB04C00E2534C /* initSwarm.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DEBF08CAB04C00E2534C /* initSwarm.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D615DED508CAB04C00E2534C /* Makefile.am in Resources */ = {isa = PBXBuildFile; fileRef = D615DEC008CAB04C00E2534C /* Makefile.am */; };
 		D615DED608CAB04C00E2534C /* NSelect.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DEC108CAB04C00E2534C /* NSelect.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615DED708CAB04C00E2534C /* NSelect.m in Sources */ = {isa = PBXBuildFile; fileRef = D615DEC208CAB04C00E2534C /* NSelect.m */; };
 		D615DED808CAB04C00E2534C /* ObjectLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DEC308CAB04C00E2534C /* ObjectLoader.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -322,10 +299,8 @@
 		D615DF0B08CAB09700E2534C /* Grid2d.m in Sources */ = {isa = PBXBuildFile; fileRef = D615DEF508CAB09700E2534C /* Grid2d.m */; };
 		D615DF0C08CAB09700E2534C /* Int2dFiler.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DEF608CAB09700E2534C /* Int2dFiler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615DF0D08CAB09700E2534C /* Int2dFiler.m in Sources */ = {isa = PBXBuildFile; fileRef = D615DEF708CAB09700E2534C /* Int2dFiler.m */; };
-		D615DF0E08CAB09700E2534C /* Makefile.am in Resources */ = {isa = PBXBuildFile; fileRef = D615DEF808CAB09700E2534C /* Makefile.am */; };
 		D615DF1108CAB09700E2534C /* space.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DEFB08CAB09700E2534C /* space.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615DF2408CAB1FB00E2534C /* gui.h in Headers */ = {isa = PBXBuildFile; fileRef = D615DF2108CAB1FB00E2534C /* gui.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D615DF2508CAB1FB00E2534C /* Makefile.am in Resources */ = {isa = PBXBuildFile; fileRef = D615DF2208CAB1FB00E2534C /* Makefile.am */; };
 		D615E17A08CBE8AF00E2534C /* analysis.h in Headers */ = {isa = PBXBuildFile; fileRef = D615E16708CBE8AF00E2534C /* analysis.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615E1D208CBEA7F00E2534C /* simtoolsgui.h in Headers */ = {isa = PBXBuildFile; fileRef = D615E1AE08CBEA7F00E2534C /* simtoolsgui.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D615E1FB08CBECD100E2534C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D615E1F808CBECD100E2534C /* main.m */; };
@@ -334,6 +309,7 @@
 		D615E38008CBF32C00E2534C /* SwarmEnvironment.h in Headers */ = {isa = PBXBuildFile; fileRef = D615E37D08CBF32C00E2534C /* SwarmEnvironment.h */; };
 		D615E38108CBF32C00E2534C /* SwarmEnvironment.m in Sources */ = {isa = PBXBuildFile; fileRef = D615E37E08CBF32C00E2534C /* SwarmEnvironment.m */; };
 		D6657AA9097AA5F8004D8FB5 /* MainMenu.nib in Resources */ = {isa = PBXBuildFile; fileRef = D6657AA7097AA5F8004D8FB5 /* MainMenu.nib */; };
+		D6A24FD70C7A29FC0029913E /* SwarmOSX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* SwarmOSX.framework */; };
 		D6EAF9A00981D86A00EE3B51 /* SwarmEnvironment_getters.h in Headers */ = {isa = PBXBuildFile; fileRef = D615E38B08CBF48F00E2534C /* SwarmEnvironment_getters.h */; };
 		D6EAF9A30981D87400EE3B51 /* SwarmEnvironment_getters.m in Headers */ = {isa = PBXBuildFile; fileRef = D615E38C08CBF48F00E2534C /* SwarmEnvironment_getters.m */; };
 		D6EAF9B40981E49600EE3B51 /* SwarmTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D6EAF9B30981E49600EE3B51 /* SwarmTests.m */; };
@@ -386,11 +362,7 @@
 		32DBCF5E0370ADEE00C91783 /* SwarmOSX_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwarmOSX_Prefix.pch; sourceTree = "<group>"; };
 		3C3140250C66B4C60006CDA1 /* SwarmOSX_Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SwarmOSX_Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3C3140260C66B4C60006CDA1 /* SwarmOSX_Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "SwarmOSX_Tests-Info.plist"; sourceTree = "<group>"; };
-		3C31402F0C66B4ED0006CDA1 /* tactivity_classes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = tactivity_classes.h; path = ../../macosx/SwarmOSX/tactivity_classes.h; sourceTree = "<group>"; };
-		3C3140300C66B4ED0006CDA1 /* tactivity_types.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = tactivity_types.h; path = ../../macosx/SwarmOSX/tactivity_types.h; sourceTree = "<group>"; };
-		3C3140310C66B4ED0006CDA1 /* tactivity.xm */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = tactivity.xm; path = ../../macosx/SwarmOSX/tactivity.xm; sourceTree = "<group>"; };
 		3C53CF7E0C54882F009AADAD /* DefObject.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DefObject.m; sourceTree = "<group>"; };
-		3C58BA380C6C73B300C30109 /* SwarmOSX_testActivity.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SwarmOSX_testActivity.h; sourceTree = "<group>"; };
 		3C58BA390C6C73B300C30109 /* SwarmOSX_testActivity.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SwarmOSX_testActivity.m; sourceTree = "<group>"; };
 		3C58BB2C0C6D2FDF00C30109 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = /Developer/SDKs/MacOSX10.4u.sdk/System/Library/Frameworks/SenTestingKit.framework; sourceTree = "<absolute>"; };
 		3C7893350C582EB500813E78 /* DefObject_OSX.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DefObject_OSX.h; sourceTree = "<group>"; };
@@ -703,7 +675,7 @@
 		D615DF2008CAB1FB00E2534C /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
 		D615DF2108CAB1FB00E2534C /* gui.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = gui.h; sourceTree = "<group>"; };
 		D615DF2208CAB1FB00E2534C /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		D615E13A08CBE6C600E2534C /* Heatbugs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heatbugs.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D615E13A08CBE6C600E2534C /* Heatbugs.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Heatbugs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D615E13C08CBE6CA00E2534C /* Heatbugs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Heatbugs-Info.plist"; sourceTree = "<group>"; };
 		D615E16308CBE8AF00E2534C /* ActiveGraph.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ActiveGraph.h; sourceTree = "<group>"; };
 		D615E16408CBE8AF00E2534C /* ActiveGraph.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ActiveGraph.m; sourceTree = "<group>"; };
@@ -767,6 +739,14 @@
 		D615E38B08CBF48F00E2534C /* SwarmEnvironment_getters.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SwarmEnvironment_getters.h; sourceTree = "<group>"; };
 		D615E38C08CBF48F00E2534C /* SwarmEnvironment_getters.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; path = SwarmEnvironment_getters.m; sourceTree = "<group>"; };
 		D6657AA8097AA5F8004D8FB5 /* English */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = English; path = English.lproj/MainMenu.nib; sourceTree = "<group>"; };
+		D6A250870C7A2E3C0029913E /* tactivity.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tactivity.h; sourceTree = "<group>"; };
+		D6A2508A0C7A2E9D0029913E /* ActionGroup_test.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ActionGroup_test.h; sourceTree = "<group>"; };
+		D6A2508B0C7A2EAC0029913E /* ConcurrentGroup_test.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ConcurrentGroup_test.h; sourceTree = "<group>"; };
+		D6A2508C0C7A2EC40029913E /* Responder.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Responder.h; sourceTree = "<group>"; };
+		D6A2508D0C7A2EC40029913E /* SwarmOSX_testActivity.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = SwarmOSX_testActivity.h; sourceTree = "<group>"; };
+		D6A2508E0C7A2F050029913E /* tactivity_classes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tactivity_classes.h; sourceTree = SOURCE_ROOT; };
+		D6A2508F0C7A2F050029913E /* tactivity_types.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tactivity_types.h; sourceTree = SOURCE_ROOT; };
+		D6A250B70C7A31640029913E /* tactivity.xm.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tactivity.xm.h; sourceTree = SOURCE_ROOT; };
 		D6BBBF67097F41CE005298EA /* include.dists.creating.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = include.dists.creating.m; sourceTree = "<group>"; };
 		D6BBBF68097F41CE005298EA /* include.dists.setting.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = include.dists.setting.m; sourceTree = "<group>"; };
 		D6BBBF69097F41CE005298EA /* include.dists.using.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = include.dists.using.m; sourceTree = "<group>"; };
@@ -784,7 +764,7 @@
 		D6EAF84E0981BE4E00EE3B51 /* List_HDF5out.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = List_HDF5out.m; sourceTree = "<group>"; };
 		D6EAF8510981BE7600EE3B51 /* README.Random-0.7 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "README.Random-0.7"; sourceTree = "<group>"; };
 		D6EAF8520981BE7600EE3B51 /* README.Random-0.75 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "README.Random-0.75"; sourceTree = "<group>"; };
-		D6EAF9A70981E3ED00EE3B51 /* SwarmTests */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = SwarmTests; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6EAF9A70981E3ED00EE3B51 /* SwarmTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwarmTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6EAF9B30981E49600EE3B51 /* SwarmTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwarmTests.m; sourceTree = SOURCE_ROOT; };
 		D6FB9B950991AFFD004483CF /* README.AppleObjc */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = README.AppleObjc; path = ../README.AppleObjc; sourceTree = SOURCE_ROOT; };
 		D6FB9EF0099522A0004483CF /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
@@ -799,12 +779,10 @@
 		D6FB9EF9099522A0004483CF /* ZoomRaster.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ZoomRaster.m; sourceTree = "<group>"; };
 		D6FDC034097CF25B00C67EFC /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		D6FDC040097CF2D200C67EFC /* ActionGroup.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ActionGroup.m; sourceTree = "<group>"; };
-		D6FDC041097CF2D200C67EFC /* ActionGroup_test.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ActionGroup_test.h; sourceTree = "<group>"; };
 		D6FDC042097CF2D200C67EFC /* ActionGroup_test.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ActionGroup_test.m; sourceTree = "<group>"; };
 		D6FDC043097CF2D200C67EFC /* ActionGroupRandomized.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ActionGroupRandomized.m; sourceTree = "<group>"; };
 		D6FDC044097CF2D200C67EFC /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
 		D6FDC045097CF2D200C67EFC /* ConcurrentGroup.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ConcurrentGroup.m; sourceTree = "<group>"; };
-		D6FDC046097CF2D200C67EFC /* ConcurrentGroup_test.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ConcurrentGroup_test.h; sourceTree = "<group>"; };
 		D6FDC047097CF2D200C67EFC /* ConcurrentGroup_test.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ConcurrentGroup_test.m; sourceTree = "<group>"; };
 		D6FDC048097CF2D200C67EFC /* ConcurrentGroupRandomized.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ConcurrentGroupRandomized.m; sourceTree = "<group>"; };
 		D6FDC049097CF2D200C67EFC /* DSRSwarm.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DSRSwarm.h; sourceTree = "<group>"; };
@@ -821,10 +799,8 @@
 		D6FDC054097CF2D200C67EFC /* Holder.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Holder.h; sourceTree = "<group>"; };
 		D6FDC055097CF2D200C67EFC /* Holder.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Holder.m; sourceTree = "<group>"; };
 		D6FDC056097CF2D200C67EFC /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		D6FDC057097CF2D200C67EFC /* Responder.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Responder.h; sourceTree = "<group>"; };
 		D6FDC058097CF2D200C67EFC /* Responder.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Responder.m; sourceTree = "<group>"; };
 		D6FDC059097CF2D200C67EFC /* Schedule.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Schedule.m; sourceTree = "<group>"; };
-		D6FDC05A097CF2D200C67EFC /* tactivity.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = tactivity.h; sourceTree = "<group>"; };
 		D6FDC05B097CF2D200C67EFC /* tactivity.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = tactivity.m; sourceTree = "<group>"; };
 		D6FDC05C097CF2D200C67EFC /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
 		D6FDC05E097CF2D200C67EFC /* archiver.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = archiver.m; sourceTree = "<group>"; };
@@ -857,6 +833,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D6A24FD70C7A29FC0029913E /* SwarmOSX.framework in Frameworks */,
 				3C58BB410C6D2FDF00C30109 /* SenTestingKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1500,18 +1477,18 @@
 		D6FDC03F097CF2D200C67EFC /* activity */ = {
 			isa = PBXGroup;
 			children = (
-				3C58BA380C6C73B300C30109 /* SwarmOSX_testActivity.h */,
+				D6A250B70C7A31640029913E /* tactivity.xm.h */,
+				D6A2508E0C7A2F050029913E /* tactivity_classes.h */,
+				D6A2508F0C7A2F050029913E /* tactivity_types.h */,
+				D6A2508C0C7A2EC40029913E /* Responder.h */,
+				D6A2508D0C7A2EC40029913E /* SwarmOSX_testActivity.h */,
+				D6A2508B0C7A2EAC0029913E /* ConcurrentGroup_test.h */,
+				D6A2508A0C7A2E9D0029913E /* ActionGroup_test.h */,
+				D6A250870C7A2E3C0029913E /* tactivity.h */,
 				3C58BA390C6C73B300C30109 /* SwarmOSX_testActivity.m */,
-				3C31402F0C66B4ED0006CDA1 /* tactivity_classes.h */,
-				3C3140300C66B4ED0006CDA1 /* tactivity_types.h */,
-				D6FDC05A097CF2D200C67EFC /* tactivity.h */,
 				D6FDC05B097CF2D200C67EFC /* tactivity.m */,
-				3C3140310C66B4ED0006CDA1 /* tactivity.xm */,
-				D6FDC046097CF2D200C67EFC /* ConcurrentGroup_test.h */,
 				D6FDC047097CF2D200C67EFC /* ConcurrentGroup_test.m */,
-				D6FDC041097CF2D200C67EFC /* ActionGroup_test.h */,
 				D6FDC042097CF2D200C67EFC /* ActionGroup_test.m */,
-				D6FDC057097CF2D200C67EFC /* Responder.h */,
 				D6FDC058097CF2D200C67EFC /* Responder.m */,
 				D6FDC044097CF2D200C67EFC /* ChangeLog */,
 				D6FDC043097CF2D200C67EFC /* ActionGroupRandomized.m */,
@@ -1758,13 +1735,6 @@
 				3C7893370C582EB500813E78 /* DefObject_OSX.h in Headers */,
 				3C8BC52A0C61843700ADE688 /* HDF5Archiver_OSX.h in Headers */,
 				3CCBE1A60C61ECEB004F8960 /* _obj_splitPhases.h in Headers */,
-				3C58BA3B0C6C740C00C30109 /* SwarmOSX_testActivity.h in Headers */,
-				3C58BA3D0C6C740D00C30109 /* tactivity.h in Headers */,
-				3C58BA400C6C740F00C30109 /* tactivity_classes.h in Headers */,
-				3C58BA410C6C740F00C30109 /* tactivity_types.h in Headers */,
-				3C58BA430C6C741200C30109 /* Responder.h in Headers */,
-				3C58BAA00C6C756500C30109 /* ActionGroup_test.h in Headers */,
-				3C58BAA10C6C756800C30109 /* ConcurrentGroup_test.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1880,11 +1850,7 @@
 				D615DACC08C91A9100E2534C /* defobj.xm in Resources */,
 				D615DB7B08CA093300E2534C /* activity.xm in Resources */,
 				D615DB9D08CA57AC00E2534C /* collections.xm in Resources */,
-				D615DED508CAB04C00E2534C /* Makefile.am in Resources */,
 				D615DF0908CAB09700E2534C /* FUTURE-DESIGN in Resources */,
-				D615DF0E08CAB09700E2534C /* Makefile.am in Resources */,
-				D615DF2508CAB1FB00E2534C /* Makefile.am in Resources */,
-				3C58BA3F0C6C740E00C30109 /* tactivity.xm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1932,18 +1898,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C58BC330C6D3FF400C30109 /* SwarmOSX_testActivity.h in Sources */,
 				3C58BA3A0C6C73B300C30109 /* SwarmOSX_testActivity.m in Sources */,
-				3C58BC350C6D3FF400C30109 /* tactivity_classes.h in Sources */,
-				3C58BC360C6D3FF400C30109 /* tactivity_types.h in Sources */,
-				3C58BC370C6D3FF400C30109 /* tactivity.h in Sources */,
 				3C58BC380C6D3FF400C30109 /* tactivity.m in Sources */,
-				3C58BC390C6D3FF400C30109 /* tactivity.xm in Sources */,
-				3C58BC3A0C6D3FF400C30109 /* ConcurrentGroup_test.h in Sources */,
 				3C58BC3B0C6D3FF400C30109 /* ConcurrentGroup_test.m in Sources */,
-				3C58BC3C0C6D3FF400C30109 /* ActionGroup_test.h in Sources */,
 				3C58BC3D0C6D3FF400C30109 /* ActionGroup_test.m in Sources */,
-				3C58BC3E0C6D3FF400C30109 /* Responder.h in Sources */,
 				3C58BC3F0C6D3FF400C30109 /* Responder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1974,7 +1932,6 @@
 				D615D77708C6C13800E2534C /* strdup.c in Sources */,
 				D615D77A08C6C13800E2534C /* strndup.c in Sources */,
 				D615D77B08C6C13800E2534C /* strnlen.c in Sources */,
-				D615D77E08C6C13800E2534C /* strtoll.c in Sources */,
 				D615D77F08C6C13800E2534C /* xmalloc.c in Sources */,
 				D615D7F808C6C6CB00E2534C /* Archiver.m in Sources */,
 				D615D7FA08C6C6CB00E2534C /* Arguments.m in Sources */,
@@ -2096,11 +2053,6 @@
 				3C7893380C582EB500813E78 /* DefObject_OSX.m in Sources */,
 				3C8BC52B0C61843700ADE688 /* HDF5Archiver_OSX.m in Sources */,
 				3CCBE1A50C61ECEB004F8960 /* _obj_splitPhases_OSX.m in Sources */,
-				3C58BA3C0C6C740C00C30109 /* SwarmOSX_testActivity.m in Sources */,
-				3C58BA3E0C6C740D00C30109 /* tactivity.m in Sources */,
-				3C58BA420C6C741100C30109 /* Responder.m in Sources */,
-				3C58BA9F0C6C756500C30109 /* ActionGroup_test.m in Sources */,
-				3C58BAA20C6C756900C30109 /* ConcurrentGroup_test.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2186,8 +2138,6 @@
 				OTHER_LDFLAGS = (
 					"-framework",
 					Cocoa,
-					"-framework",
-					SenTestingKit,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = SwarmOSX_Tests;
@@ -2216,8 +2166,6 @@
 				OTHER_LDFLAGS = (
 					"-framework",
 					Cocoa,
-					"-framework",
-					SenTestingKit,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = SwarmOSX_Tests;
@@ -2244,8 +2192,6 @@
 				OTHER_LDFLAGS = (
 					"-framework",
 					Cocoa,
-					"-framework",
-					SenTestingKit,
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = SwarmOSX_Tests;

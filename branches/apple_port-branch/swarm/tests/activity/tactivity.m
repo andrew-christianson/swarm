@@ -1,6 +1,6 @@
 #import <defobj.h>
 #import <tactivity.h>
-#import "tactivity.xm"
+#import "tactivity.xm.h"
 
 void
 _tactivity_implement ()

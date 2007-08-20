@@ -91,7 +91,7 @@
 #define HAVE_STRSEP 1
 
 /* Define if you have the strtoll function.  */
-/* #undef HAVE_STRTOLL */
+#define HAVE_STRTOLL 1
 
 /* Define if you have the <argp.h> header file.  */
 /* #undef HAVE_ARGP_H */

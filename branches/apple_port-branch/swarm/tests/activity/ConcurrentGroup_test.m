@@ -1,8 +1,8 @@
 /*
-Name:         ConcurrentGroup_test.m
-Description:  ConcurrentGroup subclass implementation
-Test suite:   activity
-*/ 
+ Name:         ConcurrentGroup_test.m
+ Description:  ConcurrentGroup subclass implementation
+ Test suite:   activity
+ */ 
 
 
 #import "ConcurrentGroup_test.h"
@@ -24,7 +24,7 @@ PHASE(Using)
   char description[100];
   
   sprintf (description, "Randomized:        %d\n", 
-	   getBit (bits, BitRandomized));
+					 getBit (bits, BitRandomized));
   sprintf (description, "Number of objects: %d\n", numberOfObjects); 
   [outputCharStream catC: description];
 }
@@ -34,16 +34,16 @@ PHASE(Using)
   char buffer[50];
   int i;
   for (i = 0; i < numberOfObjects; i++)
-    {
-      id obj = *(objects + i);
-      if (respondsTo (obj, M(describe:)))
-   	  [obj describe: outputCharStream];
-      else
 	{
-	  _obj_formatIDString (buffer, obj);
-	  [outputCharStream catC: buffer];
+		id obj = *(objects + i);
+		if(respondsTo (obj, M(describe:)))
+			[obj describe: outputCharStream];
+		else 
+		{
+			_obj_formatIDString (buffer, obj);
+			[outputCharStream catC: buffer];
+		}
 	}
-    }
 }
 
 @end

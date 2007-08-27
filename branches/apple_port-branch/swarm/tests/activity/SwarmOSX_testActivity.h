@@ -8,8 +8,6 @@
 
 #import <SenTestingKit/SenTestingKit.h>
 
-
-//. ForEach
 #import <simtools.h>
 #import <tactivity.h>
 #import "Responder.h"
@@ -19,11 +17,26 @@
 
 #import "ActionGroup.h"
 
+#import "DSSwarm.h"
+#import "DSRSwarm.h"
+
+//#import "ESSwarm.h"
+
 @interface SwarmOSX_testActivity : SenTestCase {
 	int argc;
-  const char* argv[0];
+  char *argv[2];
+	BOOL ok;
 }
+
 - (void) test_ForEach;
-- (void) test_ActivityGroup;
+- (void) test_ForEachRandomized;
+- (void) test_ActionGroup;
+- (void) test_ActionGroupRandomized;
+- (void) test_ConcurrentGroup;
+- (void) test_ConcurrentGroupRandomized;
+- (void) test_DynamicSchedule;
+- (void) test_DynamicScheduleRepeat;
+- (void) test_Schedule;
+//- (void) test_ScheduleEmpty;
 
 @end

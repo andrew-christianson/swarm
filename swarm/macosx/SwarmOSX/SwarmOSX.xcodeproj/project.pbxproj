@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		3C38F0E20C4F273C00702783 /* DefClass_OSX.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CCDED070C47A7E400B55817 /* DefClass_OSX.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C38F0E40C4F274100702783 /* DefClass_OSX.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CCDECFE0C47A23700B55817 /* DefClass_OSX.m */; };
+		3C3A68DD0C7B22940085053C /* DSSwarm.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC04C097CF2D200C67EFC /* DSSwarm.m */; };
+		3C3A68DE0C7B229C0085053C /* DSRSwarm.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC04A097CF2D200C67EFC /* DSRSwarm.m */; };
+		3C3A68E00C7B22A60085053C /* Holder.m in Sources */ = {isa = PBXBuildFile; fileRef = D6FDC055097CF2D200C67EFC /* Holder.m */; };
 		3C53CF830C54882F009AADAD /* DefObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C53CF7E0C54882F009AADAD /* DefObject.m */; };
 		3C58BA3A0C6C73B300C30109 /* SwarmOSX_testActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C58BA390C6C73B300C30109 /* SwarmOSX_testActivity.m */; };
 		3C58BB410C6D2FDF00C30109 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C58BB2C0C6D2FDF00C30109 /* SenTestingKit.framework */; };
@@ -675,7 +678,7 @@
 		D615DF2008CAB1FB00E2534C /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
 		D615DF2108CAB1FB00E2534C /* gui.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = gui.h; sourceTree = "<group>"; };
 		D615DF2208CAB1FB00E2534C /* Makefile.am */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = Makefile.am; sourceTree = "<group>"; };
-		D615E13A08CBE6C600E2534C /* Heatbugs.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Heatbugs.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D615E13A08CBE6C600E2534C /* Heatbugs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Heatbugs.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D615E13C08CBE6CA00E2534C /* Heatbugs-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = "Heatbugs-Info.plist"; sourceTree = "<group>"; };
 		D615E16308CBE8AF00E2534C /* ActiveGraph.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ActiveGraph.h; sourceTree = "<group>"; };
 		D615E16408CBE8AF00E2534C /* ActiveGraph.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ActiveGraph.m; sourceTree = "<group>"; };
@@ -764,7 +767,7 @@
 		D6EAF84E0981BE4E00EE3B51 /* List_HDF5out.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = List_HDF5out.m; sourceTree = "<group>"; };
 		D6EAF8510981BE7600EE3B51 /* README.Random-0.7 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "README.Random-0.7"; sourceTree = "<group>"; };
 		D6EAF8520981BE7600EE3B51 /* README.Random-0.75 */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = "README.Random-0.75"; sourceTree = "<group>"; };
-		D6EAF9A70981E3ED00EE3B51 /* SwarmTests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = SwarmTests; sourceTree = BUILT_PRODUCTS_DIR; };
+		D6EAF9A70981E3ED00EE3B51 /* SwarmTests */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "compiled.mach-o.executable"; path = SwarmTests; sourceTree = BUILT_PRODUCTS_DIR; };
 		D6EAF9B30981E49600EE3B51 /* SwarmTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwarmTests.m; sourceTree = SOURCE_ROOT; };
 		D6FB9B950991AFFD004483CF /* README.AppleObjc */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; name = README.AppleObjc; path = ../README.AppleObjc; sourceTree = SOURCE_ROOT; };
 		D6FB9EF0099522A0004483CF /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
@@ -966,6 +969,23 @@
 				32DBCF5E0370ADEE00C91783 /* SwarmOSX_Prefix.pch */,
 			);
 			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		3C3A68E10C7B22B70085053C /* main */ = {
+			isa = PBXGroup;
+			children = (
+				D6FDC052097CF2D200C67EFC /* ForEach.m */,
+				D6FDC053097CF2D200C67EFC /* ForEachRandomized.m */,
+				D6FDC040097CF2D200C67EFC /* ActionGroup.m */,
+				D6FDC043097CF2D200C67EFC /* ActionGroupRandomized.m */,
+				D6FDC045097CF2D200C67EFC /* ConcurrentGroup.m */,
+				D6FDC048097CF2D200C67EFC /* ConcurrentGroupRandomized.m */,
+				D6FDC04D097CF2D200C67EFC /* DynamicSchedule.m */,
+				D6FDC04E097CF2D200C67EFC /* DynamicScheduleRepeat.m */,
+				D6FDC059097CF2D200C67EFC /* Schedule.m */,
+				D6FDC04F097CF2D200C67EFC /* EmptySchedule.m */,
+			);
+			name = main;
 			sourceTree = "<group>";
 		};
 		D615D72708C6C13800E2534C /* misc */ = {
@@ -1477,39 +1497,30 @@
 		D6FDC03F097CF2D200C67EFC /* activity */ = {
 			isa = PBXGroup;
 			children = (
-				D6A250B70C7A31640029913E /* tactivity.xm.h */,
-				D6A2508E0C7A2F050029913E /* tactivity_classes.h */,
-				D6A2508F0C7A2F050029913E /* tactivity_types.h */,
-				D6A2508C0C7A2EC40029913E /* Responder.h */,
 				D6A2508D0C7A2EC40029913E /* SwarmOSX_testActivity.h */,
+				D6A250870C7A2E3C0029913E /* tactivity.h */,
+				D6A250B70C7A31640029913E /* tactivity.xm.h */,
+				D6A2508F0C7A2F050029913E /* tactivity_types.h */,
+				D6A2508E0C7A2F050029913E /* tactivity_classes.h */,
+				D6A2508C0C7A2EC40029913E /* Responder.h */,
 				D6A2508B0C7A2EAC0029913E /* ConcurrentGroup_test.h */,
 				D6A2508A0C7A2E9D0029913E /* ActionGroup_test.h */,
-				D6A250870C7A2E3C0029913E /* tactivity.h */,
+				D6FDC054097CF2D200C67EFC /* Holder.h */,
+				D6FDC049097CF2D200C67EFC /* DSRSwarm.h */,
+				D6FDC04B097CF2D200C67EFC /* DSSwarm.h */,
 				3C58BA390C6C73B300C30109 /* SwarmOSX_testActivity.m */,
 				D6FDC05B097CF2D200C67EFC /* tactivity.m */,
+				D6FDC058097CF2D200C67EFC /* Responder.m */,
 				D6FDC047097CF2D200C67EFC /* ConcurrentGroup_test.m */,
 				D6FDC042097CF2D200C67EFC /* ActionGroup_test.m */,
-				D6FDC058097CF2D200C67EFC /* Responder.m */,
-				D6FDC044097CF2D200C67EFC /* ChangeLog */,
-				D6FDC043097CF2D200C67EFC /* ActionGroupRandomized.m */,
-				D6FDC049097CF2D200C67EFC /* DSRSwarm.h */,
+				D6FDC055097CF2D200C67EFC /* Holder.m */,
 				D6FDC04A097CF2D200C67EFC /* DSRSwarm.m */,
-				D6FDC04B097CF2D200C67EFC /* DSSwarm.h */,
 				D6FDC04C097CF2D200C67EFC /* DSSwarm.m */,
-				D6FDC04D097CF2D200C67EFC /* DynamicSchedule.m */,
-				D6FDC04E097CF2D200C67EFC /* DynamicScheduleRepeat.m */,
-				D6FDC04F097CF2D200C67EFC /* EmptySchedule.m */,
+				D6FDC044097CF2D200C67EFC /* ChangeLog */,
 				D6FDC050097CF2D200C67EFC /* ESSwarm.h */,
 				D6FDC051097CF2D200C67EFC /* ESSwarm.m */,
-				D6FDC052097CF2D200C67EFC /* ForEach.m */,
-				D6FDC053097CF2D200C67EFC /* ForEachRandomized.m */,
-				D6FDC054097CF2D200C67EFC /* Holder.h */,
-				D6FDC055097CF2D200C67EFC /* Holder.m */,
-				D6FDC059097CF2D200C67EFC /* Schedule.m */,
 				D6FDC056097CF2D200C67EFC /* Makefile.am */,
-				D6FDC040097CF2D200C67EFC /* ActionGroup.m */,
-				D6FDC045097CF2D200C67EFC /* ConcurrentGroup.m */,
-				D6FDC048097CF2D200C67EFC /* ConcurrentGroupRandomized.m */,
+				3C3A68E10C7B22B70085053C /* main */,
 			);
 			path = activity;
 			sourceTree = "<group>";
@@ -1903,6 +1914,9 @@
 				3C58BC3B0C6D3FF400C30109 /* ConcurrentGroup_test.m in Sources */,
 				3C58BC3D0C6D3FF400C30109 /* ActionGroup_test.m in Sources */,
 				3C58BC3F0C6D3FF400C30109 /* Responder.m in Sources */,
+				3C3A68DD0C7B22940085053C /* DSSwarm.m in Sources */,
+				3C3A68DE0C7B229C0085053C /* DSRSwarm.m in Sources */,
+				3C3A68E00C7B22A60085053C /* Holder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

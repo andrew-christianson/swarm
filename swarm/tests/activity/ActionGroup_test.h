@@ -7,7 +7,6 @@ Test suite:   activity
 */
 
 
-
 #import <activity/ActionGroup.h>
 
 @interface ActionGroup_test_c: ActionGroup_c

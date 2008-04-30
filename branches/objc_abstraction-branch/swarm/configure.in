@@ -1,0 +1,540 @@
+AC_INIT(etc/Makefile.appl.in)
+AC_CANONICAL_SYSTEM
+
+VERSION=`head -1 $srcdir/VERSION`
+AM_INIT_AUTOMAKE(swarm, $VERSION)
+
+md_SWARM_INSTALLER
+
+test "x$ACLOCAL" = xaclocal && ACLOCAL="aclocal -I m4"
+
+AM_CONFIG_HEADER(swarmconfig.h externvar.h)
+
+AC_PROG_CC
+wn_PROG_OBJC
+LT_AC_PROG_SED
+AC_SUBST(SED)
+
+case ${host} in
+        *-*-darwin9*)
+                OBJCFLAGS="$OBJCFLAGS -B \$(top_srcdir)/tools"
+		NESTLDFLAGS=-fnested-functions
+                ;;
+        *-*-darwin*)
+                OBJCFLAGS="$OBJCFLAGS -B \$(top_srcdir)/tools"
+		NESTLDFLAGS=-fnested-functions
+                ;;
+        *)
+                ;;
+esac
+
+test -n "$OBJCFLAGS" || OBJCFLAGS="$CFLAGS"
+
+AC_SUBST(NESTLDFLAGS)
+
+OBJCFLAGS="$OBJCFLAGS -fgnu-runtime -fno-strict-aliasing -Wall -Wno-import -Wno-protocol -Wno-long-long"
+AC_SUBST(OBJCFLAGS)
+
+AC_LIBTOOL_WIN32_DLL
+AC_PROG_LIBTOOL
+
+SHLIBPATH_VAR=`./libtool --config | $SED -n 's/^shlibpath_var=\(.*\)/\1/p'`
+AC_SUBST(SHLIBPATH_VAR)
+
+AC_ARG_WITH(defaultdir,
+[  --with-defaultdir=DIR            Use DIR instead of prefix as default path],
+  defaultdir=$withval)
+
+if test $prefix = NONE; then
+  prefix=/usr/local
+fi
+if test -z "$defaultdir" ; then
+  defaultdir='${prefix}'
+fi
+
+AC_ARG_ENABLE(onelib,
+[  --enable-onelib                        build as a single library],
+        , enable_onelib=no)
+if test x$enable_onelib = xyes; then
+	ONELIB=yes
+else
+	ONELIB=no
+fi
+
+AC_ARG_ENABLE(gui,
+[  --disable-gui                    Disable GUI, Swarm is batch only],
+  ,enable_gui=yes)
+
+AC_ARG_ENABLE(libobjc,
+[  --disable-libobjc                Disable local ObjC library],
+  ,enable_libobjc=yes)
+
+AC_ARG_ENABLE(gnustep,
+[  --enable-gnustep                 Enable Swarm for use with GNUstep],
+  ,enable_gnustep=no)
+
+if test "$enable_gnustep" = yes; then
+md_FIND_GNUSTEPLIB
+   echo GNUstep integration is enabled.  Skipping configuration of local libobjc
+   enable_libobjc=no
+fi
+
+AC_ARG_WITH(tclscriptdir,
+[  --with-tclscriptdir=DIR          Use DIR for Tcl scripts],
+  tclscriptdir=$withval)
+  
+AC_ARG_WITH(tkscriptdir,
+[  --with-tkscriptdir=DIR           Use DIR for Tk scripts],
+  tkscriptdir=$withval)
+
+AC_ARG_WITH(xpmdir,
+[  --with-xpmdir=DIR                Use DIR/include and DIR/lib for XPM],
+  xpmincludedir=$withval/include
+  xpmlibdir=$withval/lib)
+
+AC_ARG_WITH(xpmlibdir,
+[  --with-xpmlibdir=DIR             Use DIR for XPM library files],
+  xpmlibdir=$withval)
+
+AC_ARG_WITH(xpmincludedir,
+[  --with-xpmincludedir=DIR         Use DIR for XPM header files],
+  xpmincludedir=$withval)
+
+AC_ARG_WITH(xpmlibname,
+[  --with-xpmlibname=NAME           Use -lNAME for XPM],
+  xpmlibname=$withval)
+  
+AC_ARG_WITH(bltdir,
+[  --with-bltdir=DIR                Use DIR/include and DIR/lib for BLT],
+  bltdir=$withval)
+
+AC_ARG_WITH(bltlibname,
+[  --with-bltlibname=NAME           Use -lNAME for BLT],
+  bltlibname=$withval)
+
+
+AC_ARG_WITH(xmlrpc,
+[ --enable-xmlrpc                   Add SwarmXMLRPC library],
+  enable-xmlrpc=no)
+
+
+if test "$enable_gui" = no; then
+   echo GUI has been disabled.  Skipping configure of tclobjc
+else
+   if test "$enable_gnustep" = yes; then
+      echo GNUstep integration is enabled.  Skipping configuration of tclobjc
+   else
+
+# TEA configuration
+PACKAGE_NAME=SWARM_TCLTK
+TEA_INIT(3.6)
+TEA_PATH_TCLCONFIG
+TEA_LOAD_TCLCONFIG
+TEA_PUBLIC_TCL_HEADERS
+
+#TCLINCLUDES=${TCL_INCLUDE_SPEC}
+#TCLLDFLAGS="${TCL_LD_FLAGS} ${TCL_LIBS}"
+#TCLLIB=${TCL_LIB_SPEC} 
+
+#AC_SUBST(TCLINCLUDES)
+#AC_SUBST(TCLLDFLAGS)
+#AC_SUBST(TCLLIB)
+
+#md_FIND_TCL
+#md_FIND_TCL_HEADERS
+#if test -z "$tclincludedir" ; then
+#  AC_MSG_ERROR(Please specify Tcl header path using --with-tcldir or --with-tclincludedir)
+#fi
+
+#md_FIND_TCL_LIBRARIES
+#if test -z "$tcllibdir" ; then
+#  AC_MSG_ERROR(Please specify Tcl library path using --with-tcldir)
+#fi
+
+#md_FIND_TCL_SCRIPTS
+
+#AC_SUBST(tclscriptdir)
+#md_CHECK_TCLTK_LIBINC_VERSION_MATCH(tcl)
+
+TCLMODULE=tclobjc
+AC_SUBST(TCLMODULE)
+
+   fi
+fi
+
+if test "$enable_gui" = no; then
+   echo GUI has been disabled.  Skipping configure of tkobjc
+else
+   if test "$enable_gnustep" = yes; then
+      echo GNUstep integration is enabled.  Skipping configuration of tkobjc
+   else
+   
+TEA_PATH_TKCONFIG
+TEA_LOAD_TKCONFIG
+TEA_PUBLIC_TK_HEADERS
+
+
+#md_FIND_TK_HEADERS
+#if test -z "$tkincludedir" ; then
+#  AC_MSG_ERROR(Please specify Tk include path using --with-tkincludedir)
+#fi
+
+#md_FIND_TK_LIBRARIES
+#if test -z "$tklibdir" ; then
+#  AC_MSG_ERROR(Please specify Tk library path using --with-tkdir)
+#fi
+
+#md_FIND_TK_SCRIPTS
+
+#AC_SUBST(tkscriptdir)
+
+#md_CHECK_TCLTK_LIBINC_VERSION_MATCH(tk)
+
+TKMODULE=tkobjc
+AC_SUBST(TKMODULE)
+
+# This should come from the Tk config - we want the same version
+AC_PATH_XTRA
+if test -n "$x_includes"; then
+  XINCLUDES="-I$x_includes"
+fi
+AC_SUBST(XINCLUDES)
+
+md_FIND_XPM
+
+# These assignments and ac_substs should be removed by changing names in the Makefiles
+TCLINCLUDES=${TCL_INCLUDES}
+TCLLDFLAGS="${TCL_LD_FLAGS} ${TCL_LIBS}"
+TCLLIB=${TCL_LIB_SPEC}
+TKINCLUDES=${TK_INCLUDES}
+TKLDFLAGS=${TK_LIBS}
+TKLIB=${TK_LIB_SPEC}
+AC_SUBST(TCLINCLUDES)
+AC_SUBST(TCLLDFLAGS)
+AC_SUBST(TCLLIB)
+AC_SUBST(TKINCLUDES)
+AC_SUBST(TKLDFLAGS)
+AC_SUBST(TKLIB)
+
+   fi
+
+# This should probably come after GNUstep stuff
+md_CHECK_GUILIBS
+
+fi
+
+if test "$enable_gui" = no; then
+   echo GUI has been disabled.  Skipping configure of tclobjc
+else
+   if test "$enable_gnustep" = yes; then
+      echo GNUstep integration is enabled.  Skipping configuration of BLT
+   else
+
+md_FIND_BLT
+
+   fi
+fi
+
+AC_ARG_WITH(ffidir,
+[  --with-ffidir=DIR                Use DIR/include and DIR/lib for libffi],
+  ffidir=$withval)
+
+AC_ARG_WITH(ffcalldir,
+[  --with-ffcalldir=DIR             Use DIR/include and DIR/lib
+                                     for ffcall (alternative to libffi)])
+
+md_FIND_FFI
+
+AC_ARG_WITH(zlibdir,
+[  --with-zlibdir=DIR               Use DIR/include and DIR/lib for zlib],
+  zlibdir=$withval
+  zlibincludedir=$withval/include)
+
+AC_ARG_WITH(zlibincludedir,
+[  --with-zlibincludedir=DIR        Use DIR for zlib include files],
+  zlibincludedir=$withval)
+
+md_FIND_ZLIB
+
+AC_ARG_WITH(pngdir,
+[  --with-pngdir=DIR                Use DIR/include and DIR/lib for PNG],
+  pngdir=$withval
+  pngincludedir=$withval/include)
+
+AC_ARG_WITH(pngincludedir,
+[  --with-pngincludedir=DIR         Use DIR for PNG include files],
+  pngincludedir=$withval)
+
+md_FIND_PNG
+
+AC_ARG_WITH(hdf5dir,
+[  --with-hdf5dir=DIR               Use DIR for HDF5],
+  hdf5dir=$withval
+  hdf5includedir=$withval/include)
+
+md_FIND_HDF5
+
+AC_ARG_WITH(jdkdir,
+[  --with-jdkdir=DIR                Use DIR for Java Development Kit],
+  jdkdir=$withval)
+
+AC_ARG_ENABLE(jar, 
+[  --disable-jar                    Don't create a swarm.jar file],
+  ,enable_jar=yes)
+
+if test "$enable_jar" = no; then
+  JAVA_CLASSES_INSTALLED_AS=files
+else
+  JAVA_CLASSES_INSTALLED_AS=jar
+fi
+AC_SUBST(JAVA_CLASSES_INSTALLED_AS)
+
+AC_ARG_ENABLE(subdirs,
+[  --enable-subdirs                 Add {include,lib}/swarm subdirs],
+  ,enable_subdirs=no)
+
+if test $prefix = /usr || test $enable_subdirs = yes; then
+   includesubdir=swarm
+   includedir=${includedir}/${includesubdir}
+  
+   if ! test -x $prefix/bin/cygwin1.dll; then
+     # Cygwin will want to use ../bin for DLLs, which will result
+     # in /usr/lib/bin/cygswarm.dll.  Anyway, the shared libraries 
+     # are consolidated into a single DLL, so there is no proliferation 
+     # of libraries
+     libdir=${libdir}/swarm
+   fi
+fi
+
+md_CHECK_LINKFLAGS
+
+AC_CHECK_LIB(dl,main,DLLIB=-ldl)
+AC_CHECK_LIB(dld,main,DLLIB=-ldld) # HPUX
+AC_SUBST(DLLIB)
+
+md_CHECK_INLINING
+md_CHECK_WARNFLAGS
+# md_CHECK_OBJC_LIBS
+md_CHECK_NEXTSTEP
+md_CHECK_POINTER_FMT
+md_CHECK_BUILTIN_APPLY
+md_CHECK_SIZES
+md_CHECK_long_long_printf
+
+#AC_OBJEXT
+#if test $ac_objext = o ; then 
+ # so that LIBOBJS additions from AC_REPLACE_FUNCS have a .lo suffix.
+#  ac_objext=lo
+#fi
+
+ac_save_CFLAGS=$CFLAGS
+CFLAGS="$CFLAGS -fno-builtin"
+AC_REPLACE_FUNCS(memcpy memset strcmp strlen)
+CFLAGS=$ac_save_CFLAGS
+
+AC_REPLACE_FUNCS(memchr realpath stpcpy strchr strncmp strndup strnlen strpbrk strsep strtoll)
+
+# then undo the change because AC_TRY_COMPILE will be checking for
+# the file.$ac_objext, but configure tests are only with gcc, not libtool
+if test $ac_objext = lo ; then
+  ac_objext=o
+fi
+
+md_CHECK_ARGP
+
+md_STRUCT_XPM_ALLOCPIXELS
+
+test -n "$CONSERVATIVE_OPTIMIZATION" || CONSERVATIVE_OPTIMIZATION=no
+AM_CONDITIONAL(CONSERVATIVE_OPTIMIZATION,test $CONSERVATIVE_OPTIMIZATION = yes)
+
+if test $ac_cv_func_stpcpy = yes || test $ac_cv_func_strndup = yes || test $ac_cv_func_strnlen = yes; then
+  CPPFLAGS="$CPPFLAGS -D_GNU_SOURCE"
+fi
+
+AC_CHECK_HEADERS(sys/sigevent.h)
+
+swarm_prefix=$prefix
+if test $exec_prefix = NONE; then
+  swarm_exec_prefix='${swarm_prefix}'
+else
+  swarm_exec_prefix=$exec_prefix
+fi
+swarm_bindir="`echo $bindir | $SED 's/{/{swarm_/'`"
+swarm_libdir="`echo $libdir | $SED 's/{/{swarm_/'`"
+swarm_includedir="`echo $includedir | $SED 's/{/{swarm_/'`"
+swarm_datadir="`echo $datadir | $SED 's/{/{swarm_/'`"
+
+SWARMLDFLAGS="-L\${swarm_libdir} -rpath \${swarm_libdir}"
+AC_SUBST(SWARMLDFLAGS)
+
+AC_SUBST(swarm_prefix)
+AC_SUBST(swarm_exec_prefix)
+
+AC_SUBST(swarm_bindir)
+AC_SUBST(swarm_libdir)
+AC_SUBST(swarm_includedir)
+AC_SUBST(swarm_datadir)
+
+AC_DEFINE_UNQUOTED(PREFIX,"$prefix",[toplevel directory for Swarm installation])
+AC_DEFINE_UNQUOTED(DATADIR,"$datadir",[directory for architecutre independent files])
+AC_DEFINE_UNQUOTED(SYSCONFDIR,"$sysconfdir",[directory for Swarm Makefile templates])
+AC_DEFINE_UNQUOTED(INCLUDEDIR,"$includedir",[directory for Swarm include files])
+if test -n "$includesubdir"; then
+AC_DEFINE_UNQUOTED(INCLUDESUBDIR,"$includesubdir", [subdirectory for includes, if any])
+fi
+
+md_CHECK_PATH_SYNTAX
+
+vj_FIND_JDK
+md_CHECK_JNI_H
+md_CHECK_DLL
+if test $USEDLL = yes; then
+  LIBSWARM_LA=libswarm.la
+  SWARM_DLL=swarm.dll
+  LIBJAVASWARM_LA=
+  JAVASWARM_DLL=${JAVASWARM_LIB_NAME}.dll
+  noinst_LIBS='lib$(MODULE).la'
+  inst_LDFLAGS=-static
+else
+  if test  x$ONELIB = xyes; then
+	  LIBSWARM_LA=libswarm.la
+	  SWARM_DLL=
+	  LIBJAVASWARM_LA=lib${JAVASWARM_LIB_NAME}.la
+	  JAVASWARM_DLL=
+	  noinst_LIBS='lib$(MODULE).la' 
+	  inst_LDFLAGS=
+  else
+	  LIBSWARM_LA=libswarm.la
+	  SWARM_DLL=
+	  LIBJAVASWARM_LA=lib${JAVASWARM_LIB_NAME}.la
+	  JAVASWARM_DLL=
+	  inst_LIBS='lib$(MODULE).la' 
+      inst_LDFLAGS='-rpath $(DESTDIR)$(libdir) -version-info $(CURRENT):$(REVISION):$(AGE)'
+  fi
+fi
+AC_SUBST(SWARM_DLL)
+AC_SUBST(LIBSWARM_LA)
+AC_SUBST(LIBJAVASWARM_LA)
+AC_SUBST(JAVASWARM_DLL)
+AC_SUBST(noinst_LIBS)
+AC_SUBST(inst_LIBS)
+AC_SUBST(inst_LDFLAGS)
+AC_SUBST(ONELIB)
+AC_SUBST(MACOSJAVA)
+
+AC_PATH_PROG(EMACS, emacs, missing)
+
+test -n "$ffidir" || AVCALLDIR=avcall
+AC_SUBST(AVCALLDIR)
+
+if test "$enable_libobjc" = yes; then
+   LIBOBJCDIR='libobjc'
+   LIBOBJCINCLUDES='-I$(top_builddir)/libobjc -I$(top_srcdir)/libobjc'
+   LIBOBJCLDFLAGS='-L../libobjc'
+   LIBOBJCLIB='-lswarmobjc'
+   LIBOBJCDEP='$(top_builddir)/libobjc/libswarmobjc.la'
+   AC_DEFINE([USE_MFRAME], 1, [Define if mframe functions to be used.])
+   # test -d libobjc || mkdir libobjc
+   AC_CONFIG_SUBDIRS(libobjc)
+else
+   echo Skipping configuration of local ObjC library.
+   LIBOBJCDIR=
+   LIBOBJCINCLUDES=
+   LIBOBJCLDFLAGS=
+   LIBOBJCLIB='-lobjc'
+   LIBOBJCDEP=
+fi
+AC_SUBST(LIBOBJCDIR)
+AC_SUBST(LIBOBJCINCLUDES)
+AC_SUBST(LIBOBJCLDFLAGS)
+AC_SUBST(LIBOBJCLIB)
+AC_SUBST(LIBOBJCDEP)
+
+TCLTKGUIDIR='tclobjc tkobjc'
+SIMTOOLSGUI='simtoolsgui'
+SIMTOOLSGUIINCLUDE='-I$(top_srcdir)/src/simtoolsgui'
+GUIDIR='gui'
+GUIDIRINCLUDE='-I$(top_srcdir)/src/gui'
+AM_CONDITIONAL(DISABLE_GUI, false)
+if test "$enable_gui" = no; then
+   TCLTKGUIDIR=
+   SIMTOOLSGUI=
+   SIMTOOLSGUIINCLUDE=
+   GUIDIR=
+   GUIDIRINCLUDE=
+   AC_DEFINE([DISABLE_GUI], 1, [Define if GUI is disabled.])
+   AM_CONDITIONAL(DISABLE_GUI, true)
+fi
+if test "$enable_gnustep" = yes; then
+   AM_CONDITIONAL(ENABLE_GNUSTEP, true)
+   TCLTKGUIDIR=
+   SIMTOOLSGUI=
+   SIMTOOLSGUIINCLUDE=
+   GUIDIR=
+   GUIDIRINCLUDE=
+else
+   AM_CONDITIONAL(ENABLE_GNUSTEP, false)
+fi
+
+
+if test "$enable_xmlrpc" = yes; then
+    SWARM_XMLRPC=swarm_xmlrpc
+    SWARM_XMLRPC_INCLUDE='-I$(top_srcdir)/src/swarm_xmlrpc'
+    AM_CONDITIONAL(ENABLE_XMLRPC, true)
+
+    AC_MSG_CHECKING([for expat library])
+    AC_ARG_WITH(expatdir, [--with-expatdir=DIR    Use DIR/include and DIR/lib for expat library], expatdir=${withval})
+
+    if test x"${withval}" != x ; then
+        md_FIND_INCLUDE(expat)
+        expatincludedir=$_includes;
+        md_FIND_LIB(expat)
+        expatlibdir=$_ldflags;
+
+        AC_SUBST(expatincludedir)
+        AC_SUBST(expatlibdir)
+    fi
+    AC_MSG_RESULT($expatdir)
+    AC_DEFINE([ENABLE_XMLRPC], 1, [Define if SwarmXMLRPC is enables.])
+else
+    SWARM_XMLRPC=
+    SWARM_XMLRPC_INCLUDE=
+    AM_CONDITIONAL(ENABLE_XMLRPC, false)
+fi
+
+AC_SUBST(SWARM_XMLRPC)
+AC_SUBST(SWARM_XMLRPC_INCLUDE)
+
+AC_SUBST(TCLTKGUIDIR)
+AC_SUBST(SIMTOOLSGUI)
+AC_SUBST(SIMTOOLSGUIINCLUDE)
+AC_SUBST(GUIDIR)
+AC_SUBST(GUIDIRINCLUDE)
+
+if test -n "$AVCALLDIR"; then
+  test -d avcall || mkdir avcall
+  AC_CONFIG_SUBDIRS(avcall)
+else
+  test -d avcall || mkdir avcall
+  # avcall.h finds its way into dependency information
+  touch avcall/avcall.h
+fi
+
+AC_OUTPUT([Makefile m4/Makefile src/Makefile src/activity/Makefile
+src/analysis/Makefile src/collections/Makefile src/defobj/Makefile
+src/misc/Makefile src/objectbase/Makefile
+src/random/Makefile src/simtools/Makefile 
+src/space/Makefile etc/modules etc/config.swarm etc/Makefile.appl
+etc/Makefile.lib etc/Makefile.common etc/Makefile.tests etc/Makefile
+etc/swarmrc etc/swarmtrc
+tests/Makefile tests/activity/Makefile tests/collections/Makefile
+tests/defobj/Makefile tests/objectbase/Makefile
+tests/simtools/Makefile tests/space/Makefile tools/Makefile
+tools/print-hdf5 java/Makefile java/javaswarm java/javacswarm
+java/c/Makefile java/swarm/Makefile java/swarm/Makefile.rules
+COM/Makefile COM/c/Makefile
+src/gui/Makefile src/simtoolsgui/Makefile src/tclobjc/Makefile src/tkobjc/Makefile src/tkobjc/tk/Makefile src/swarmgstep/Makefile
+src/swarm_xmlrpc/Makefile
+])
+
+# abs_srcdir=`cd $srcdir; pwd`

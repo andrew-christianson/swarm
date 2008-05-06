@@ -1,4 +1,4 @@
-// Swarm library. Copyright © 1996-2000 Swarm Development Group.
+// Swarm library. Copyright © 1996-2008 Swarm Development Group.
 // This program is free software; you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
 // the Free Software Foundation; either version 2 of the License, or
@@ -23,8 +23,9 @@ Description:  class with variables and/or methods defined at runtime
 Library:      defobj
 */
 
-#import <objc/Object.h>
-#import <objc/objc-api.h>
+//#import <objc/Object.h>
+#import <defobj/SObject.h>
+#import <defobj/swarm-objc-api.h>
 
 //
 // type declarations
@@ -98,8 +99,6 @@ void _obj_initMethodInterfaces (Class_s *class_);
 - (void)setNextPhase: aBehaviorPhase;
 @end
 
-// info bit to mark as class created at runtime
-#define _CLS_DEFINEDCLASS  0x100
 
 //
 // classData -- extension data for compiled class (accessed by class number)
@@ -110,6 +109,7 @@ struct classData {
   id typeImplemented;             // type implemented by class
   BehaviorPhase_s *initialPhase;  // class created for initial phase of type
   id metaobjects;                 // metaobject collections
+  unsigned info;                  // state flags
 };
 
 //
@@ -118,6 +118,77 @@ struct classData {
 struct methodDefs {
   methodDefs_t  next;
   id interfaceID;
+#if SWARM_OBJC_TODO
   Method_t firstEntry;
+#else
+  ObjcMethod firstEntry;
+#endif
   int count;
 };
+
+
+// extended class info bits (bit masks for class->info) used by cust. wrapper
+
+#define _CLS_DEFINEDCLASS  0x100     // info bit to mark as class created at runtime
+#define _CLS_CUSTOMIZEWRAPPER 0x200  // class created by customizeBegin
+#define _CLS_RETAINSELF 0x300        // retain self even if unref by createBy
+
+
+//
+// Functional access to the class extension data
+//
+static inline BOOL
+swarm_class_getCustomizeWrapperBit (Class cls)
+{
+  printf("getCustomizeWrapperBit: %s\n", swarm_class_getName(cls));
+#if SWARM_OBJC_TODO
+  return (cls->info & _CLS_CUSTOMIZEWRAPPER) != 0;
+#else
+  classData_t cData = _obj_getClassData(cls);
+  return (cData->info & _CLS_CUSTOMIZEWRAPPER) != 0;
+#endif
+}
+
+static inline void
+swarm_class_setCustomizeWrapperBit (Class cls, BOOL aBit)
+{
+  printf("setCustomizeWrapperBit: %d %s\n", aBit, swarm_class_getName(cls));
+#if SWARM_OBJC_TODO
+  if (aBit) cls->info |= _CLS_CUSTOMIZEWRAPPER;
+  else cls->info &= ~_CLS_CUSTOMIZEWRAPPER;
+#else
+  classData_t cData = _obj_getClassData(cls);
+  if (aBit) cData->info |= _CLS_CUSTOMIZEWRAPPER;
+  else cData->info &= ~_CLS_CUSTOMIZEWRAPPER;
+#endif
+}
+
+static inline BOOL
+swarm_class_getDefinedClassBit (Class cls)
+{
+  classData_t cData = _obj_getClassData((Class_s *)cls);
+  return (cData->info & _CLS_DEFINEDCLASS) != 0;
+}
+
+static inline void
+swarm_class_setDefinedClassBit (Class cls, BOOL aBit)
+{
+  classData_t cData = _obj_getClassData((Class_s *)cls);
+  if (aBit) cData->info |= _CLS_DEFINEDCLASS;
+  else cData->info &= ~_CLS_DEFINEDCLASS;
+}
+
+static inline BOOL
+swarm_class_getRetainSelfBit (Class cls)
+{
+  classData_t cData = _obj_getClassData((Class_s *)cls);
+  return (cData->info & _CLS_RETAINSELF) != 0;
+}
+
+static inline void
+swarm_class_setRetainSelfBit (Class cls, BOOL aBit)
+{
+  classData_t cData = _obj_getClassData((Class_s *)cls);
+  if (aBit) cData->info |= _CLS_RETAINSELF;
+  else cData->info &= ~_CLS_RETAINSELF;
+}

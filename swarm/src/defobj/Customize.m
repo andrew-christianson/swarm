@@ -28,7 +28,7 @@ Library:      defobj
 #import <defobj/Program.h>
 #import <defobj/defalloc.h>
 #import <collections.h>
-#import <objc/objc-api.h>
+#import <defobj/swarm-objc-api.h>
 
 #include <misc.h> // strchr, stpcpy, strlen
 
@@ -43,13 +43,19 @@ extern id _obj_initZone;  // currently receives generated classes
 static inline void
 setWrapperCreateBy (Class wrapper, CreateBy_c *createBy)
 {
+#if SWARM_OBJC_TODO
   wrapper->version = (long) createBy;
+#endif
 }
 
 static inline CreateBy_c *
 getWrapperCreateBy (Class wrapper)
 {
+#if SWARM_OBJC_TODO
   return (CreateBy_c *) wrapper->version;
+#else
+  return nil;
+#endif
 }
 
 //
@@ -64,7 +70,11 @@ initCustomizeWrapper (id aZone, id anObject)
   // allocate wrapper class (copy of self class) for instance being customized
 
   wrapper = (Class) [aZone copyIVars: getClass (anObject)];
+#if SWARM_OBJC_DONE
   wrapper->info |= _CLS_CUSTOMIZEWRAPPER;
+#else
+  swarm_class_setCustomizeWrapperBit(wrapper, YES);
+#endif
 
   // allocate a new CreateBy instance and store id in wrapper
 
@@ -155,13 +165,21 @@ PHASE(Creating)
     }
   
   // free self if not retained and not required by CreateBy_c object
-  
+#if SWARM_OBJC_TODO  
   if ((getClass (createBy) == [Create_bycopy self]
        || getClass (createBy) == [Create_byboth self])
       && createBy->createReceiver != self
       && (wrapper->info & _CLS_RETAINSELF))
     {
       memset (self, 0, wrapper->instance_size);    // wipe out all content
+#else
+  if ((getClass (createBy) == [Create_bycopy self]
+       || getClass (createBy) == [Create_byboth self])
+      && createBy->createReceiver != self
+      && swarm_class_getRetainSelfBit(wrapper))
+    {
+      memset (self, 0, swarm_class_getInstanceSize(wrapper));    // wipe out all content
+#endif
       [createBy->recustomize freeIVars: self];  // free from saved zone
       // !! should use [self dropFrom: createBy->recustomize] ??
     }
@@ -183,7 +201,11 @@ PHASE(Creating)
                     "> message selector not valid for receiver\n",
                     [[self getClass] getName],
                     createBy->createReceiver,
-                    getClass (createBy->createReceiver)->name,
+#if SWARM_OBJC_TODO
+		    getClass (createBy->createReceiver)->name,
+#else
+                    swarm_class_getName(swarm_object_getClass(createBy->createReceiver)),
+#endif
                     sel_get_name (createBy->createMessage));
     }
   
@@ -381,9 +403,14 @@ _obj_splitPhases (Class_s *class)
 {
   classData_t classData, superclassData = 0;
   BehaviorPhase_s *classCreating, *classUsing;
+  Class creatingClass, usingClass;
   char *classNameBuf;
   methodDefs_t mdefs;
+#if SWARM_OBJC_TODO
   Method_t mnext;
+#else
+  ObjcMethod mnext;
+#endif
 
   // return if classes have already been created
   classData = _obj_getClassData (class);
@@ -415,6 +442,10 @@ _obj_splitPhases (Class_s *class)
       [(id) classCreating setName: classNameBuf];
       [(id) classCreating setClass: getClass (class)];
       [(id) classCreating setDefiningClass: class];
+
+      creatingClass = swarm_objc_allocateClassPair(class->superclass, classNameBuf,
+						   class->instanceSize
+						   - class->superclass->instanceSize);
     }
   
   // create class for methods in Using phase
@@ -425,9 +456,16 @@ _obj_splitPhases (Class_s *class)
     {
       classUsing = [id_BehaviorPhase_s createBegin: _obj_initZone];
       
+      classNameBuf = _obj_initAlloc (strlen (class->name) + 7);
+      stpcpy (stpcpy (classNameBuf, class->name), ".Using");
+
       [(id) classUsing setName: class->name];
       [(id) classUsing setClass: getClass (id_Object_s)];
       [(id) classUsing setDefiningClass: class];
+
+      usingClass = swarm_objc_allocateClassPair(class->superclass, classNameBuf,
+						class->instanceSize
+						- class->superclass->instanceSize);
     }
   
   if (class == id_Customize_s)
@@ -482,18 +520,32 @@ _obj_splitPhases (Class_s *class)
                mdefs == (methodDefs_t) classData->metaobjects))
         {
           for (mnext = mdefs->firstEntry;
-               mnext < mdefs->firstEntry + mdefs->count; mnext++)
-            [(id) classCreating at: mnext->method_name addMethod: mnext->method_imp];
-          
+               mnext < mdefs->firstEntry + mdefs->count; mnext++) {
+#if SWARM_OBJC_TODO
+	    swarm_class_addMethod(creatingClass, (ObjcSEL)mnext->method_name,
+				  (ObjcIMP)mnext->method_imp, mnext->method_types);
+	    [(id) classCreating at: mnext->method_name addMethod: mnext->method_imp];
+#else
+            [(id) classCreating at: swarm_method_getName(mnext)
+		  addMethod: swarm_method_getImplementation(mnext)];
+#endif
+	  }          
         }
       else if (mdefs->interfaceID == Using
                || (mdefs->interfaceID == UsingOnly &&
                    mdefs == (methodDefs_t) classData->metaobjects))
         {
           for (mnext = mdefs->firstEntry;
-               mnext < mdefs->firstEntry + mdefs->count; mnext++)
-            [(id) classUsing at: mnext->method_name addMethod: mnext->method_imp];
-          
+               mnext < mdefs->firstEntry + mdefs->count; mnext++) {
+#if SWARM_OBJC_TODO
+	    swarm_class_addMethod(usingClass, (ObjcSEL)mnext->method_name,
+				  (ObjcIMP)mnext->method_imp, mnext->method_types);
+	    [(id) classUsing at: mnext->method_name addMethod: mnext->method_imp];
+#else
+            [(id) classUsing at: swarm_method_getName(mnext)
+		  addMethod: swarm_method_getImplementation(mnext)];
+#endif
+	  }
         }
       else if (mdefs->interfaceID == CreatingOnly ||
                mdefs->interfaceID == UsingOnly)
@@ -508,8 +560,19 @@ _obj_splitPhases (Class_s *class)
           for (mnext = mdefs->firstEntry;
                mnext < mdefs->firstEntry + mdefs->count; mnext++)
             {
-              [(id) classCreating at: mnext->method_name addMethod: mnext->method_imp];
-              [(id) classUsing    at: mnext->method_name addMethod: mnext->method_imp];
+#if SWARM_OBJC_TODO
+	      swarm_class_addMethod(creatingClass, (ObjcSEL)mnext->method_name,
+				    (ObjcIMP)mnext->method_imp, mnext->method_types);
+	      swarm_class_addMethod(usingClass, (ObjcSEL)mnext->method_name,
+				    (ObjcIMP)mnext->method_imp, mnext->method_types);
+	      [(id) classCreating at: mnext->method_name addMethod: mnext->method_imp];
+	      [(id) classUsing at: mnext->method_name addMethod: mnext->method_imp];
+#else
+              [(id) classCreating at: swarm_method_getName(mnext)
+		    addMethod: swarm_method_getImplementation(mnext)];
+              [(id) classUsing at: swarm_method_getName(mnext)
+		    addMethod: swarm_method_getImplementation(mnext)];
+#endif
             }
           
         }
@@ -528,6 +591,7 @@ _obj_splitPhases (Class_s *class)
       classCreating = [(id) classCreating createEnd];
       classCreating->nextPhase = classUsing ? classUsing : (BehaviorPhase_s *)CreatingOnly;
       classData->initialPhase  = classCreating;
+      swarm_objc_registerClassPair(creatingClass);
     }
   else
     {
@@ -539,6 +603,7 @@ _obj_splitPhases (Class_s *class)
       classUsing = [(id) classUsing createEnd];
       if (classData->classID)
         *classData->classID = classUsing;
+      swarm_objc_registerClassPair(usingClass);
     }
   else if (classData->classID)
     *classData->classID = classCreating;
@@ -649,7 +714,11 @@ _obj_splitPhases (Class_s *class)
 BOOL
 _obj_customize (id anObject)
 {
+#if SWARM_OBJC_DONE
   return (getClass (anObject)->info & _CLS_CUSTOMIZEWRAPPER) != 0;
+#else
+  return swarm_class_getCustomizeWrapperBit(swarm_object_getClass(anObject));
+#endif
 }
 
 //

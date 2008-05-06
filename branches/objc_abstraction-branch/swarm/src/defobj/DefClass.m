@@ -25,8 +25,6 @@ Library:      defobj
 
 #import <defobj/DefClass.h>
 #import <defobj/Program.h>
-#import <objc/objc-api.h>
-#import <objc/sarray.h>
 #import <collections.h> // catC:
 #import <collections/predicates.h> // keywordp
 #import "internal.h" // fcall_type_{size,alignment}, alignsizeto
@@ -47,12 +45,23 @@ _obj_getClassData (Class_s *class)
 {
   classData_t classData;
 
+#if SWARM_OBJC_DONE
   classData = (classData_t)_obj_classes[CLS_GETNUMBER (class) - 1];
   if (!classData)
     {
       classData = _obj_initAlloc (sizeof *classData);
       _obj_classes[CLS_GETNUMBER (class) - 1] = (id) classData;
     }
+#else
+  // SWARM_OBJC_TODO - do not use CLS_GETNUMBER
+  printf("_obj_getClassData lookup: %p %s\n", class, swarm_class_getName (class));
+  if (!swarm_hash_is_key_in_hash (_obj_buckets, CLS_GETNUMBER (class) - 1)) {
+    printf("classData not found in hash.\n");
+    classData = _obj_initAlloc (sizeof *classData);
+    swarm_hash_add (&_obj_buckets, CLS_GETNUMBER(class) - 1, classData);
+  }
+  classData = (classData_t) swarm_hash_value_for_key (_obj_buckets, CLS_GETNUMBER(class) - 1);
+#endif
   return classData;
 }
 
@@ -62,6 +71,7 @@ _obj_getClassData (Class_s *class)
 void
 _obj_initMethodInterfaces (Class_s *class)
 {
+#if SWARM_OBJC_DONE
   classData_t   classData;
   MethodList_t  methods;
   int           count;
@@ -71,7 +81,7 @@ _obj_initMethodInterfaces (Class_s *class)
   methodDefs_t  mdefs;
 
   classData = _obj_getClassData (class);
-  
+
   for (methods = class->methodList; methods; methods = methods->method_next)
     {
       count = 0;
@@ -100,7 +110,42 @@ _obj_initMethodInterfaces (Class_s *class)
           else
             count++;
         }
-    }
+  }
+#else
+  classData_t   classData;
+  ObjcMethod    *methods;
+  int           i, count, outCount;
+  id            interfaceID;
+  Method_t      mnext;
+  const char    *mname;
+  methodDefs_t  mdefs;
+
+  classData = _obj_getClassData (class);
+
+  ObjcMethod *methodList = swarm_class_copyMethodList(class, &outCount);
+  printf("%d methods\n", outCount);
+  count = 0;
+  interfaceID = Using;
+  for (i = outCount - 1; i >= -1; --i) {
+    if (i != -1) printf("%s\n", swarm_sel_getName(swarm_method_getName(methodList[i])));
+    if ((i == -1)
+	|| (strncmp ((mname = swarm_sel_getName(swarm_method_getName(methodList[i]))),
+		     "_I_", 3) == 0)) {
+      if (count) {
+	mdefs = _obj_initAlloc (sizeof *mdefs);
+	mdefs->next = (methodDefs_t)classData->metaobjects;
+	classData->metaobjects = (id)mdefs;
+	mdefs->interfaceID = interfaceID;
+	mdefs->firstEntry = methodList[i + 1];
+	mdefs->count = count;
+      }
+      if (i == -1) continue;
+      interfaceID = swarm_method_getImplementation(methodList[i]) (nil, (SEL)0);
+      count = 0;
+    } else
+      count++;
+  }
+#endif
 }
 
 
@@ -148,6 +193,7 @@ PHASE(CreatingOnly)
 
 - at: (SEL)aSel addMethod: (IMP)aMethod
 {
+#if SWARM_OBJC_TODO
   if (!dtable)
     {
       if (!superclass)
@@ -158,11 +204,13 @@ PHASE(CreatingOnly)
     }
   
   sarray_at_put_safe (dtable, (size_t) aSel->sel_id, aMethod);
+#endif
   return self;
 }
 
 - createEnd
 {
+#if SWARM_OBJC_TODO
   if (!dtable)
     dtable = sarray_lazy_copy (superclass->dtable);
   
@@ -170,7 +218,7 @@ PHASE(CreatingOnly)
   metaobjects = nil;
   
   setBit (info, _CLS_DEFINEDCLASS, 1);
-
+#endif
   return self;
 }
 
@@ -251,6 +299,7 @@ PHASE(CreatingOnly)
 
 - (void)lispOutShallow: stream
 {
+#if SWARM_OBJC_TODO
   struct objc_ivar_list *ivars = ((Class_s *) self)->ivarList;
   unsigned i, count = ivars->ivar_count;
 
@@ -263,6 +312,7 @@ PHASE(CreatingOnly)
       [stream catType: ivars->ivar_list[i].ivar_type];
     }
   [stream catEndMakeClass];
+#endif
 }
 
 - (void)hdf5OutShallow: hdf5Obj

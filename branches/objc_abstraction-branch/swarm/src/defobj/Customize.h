@@ -25,6 +25,7 @@ Library:      defobj
 
 #import <defobj/DefClass.h> // BehaviorPhase_s
 #import <defobj/DefObject.h>
+#import <defobj/swarm-objc-api.h>
 
 //
 // interface marker for methods in class which implement an interface of a type
@@ -60,18 +61,17 @@ externvar id Creating, Setting, Using, CreatingOnly, UsingOnly;
 //   macros to set future create action for current customization
 //
 
-// extended class info bits (bit masks for class->info) used by cust. wrapper
-
-#define _CLS_CUSTOMIZEWRAPPER 0x200  // class created by customizeBegin
-#define _CLS_RETAINSELF 0x300        // retain self even if unref by createBy
-
 //
 // _obj_customize() -- return true if customization in progress
 //
 extern inline BOOL
 _obj_customize (id anObject)
 {
+#if SWARM_OBJC_DONE
   return (getClass (anObject)->info & _CLS_CUSTOMIZEWRAPPER) != 0;
+#else
+  return swarm_class_getCustomizeWrapperBit(swarm_object_getClass(anObject));
+#endif
 }
 
 #define createByCopy() \

@@ -40,7 +40,7 @@ extern id _obj_initZone;  // currently receives generated classes
 //
 // inline functions to save field in copy of class structure used as wrapper
 //
-
+#if 0
 static inline void
 setWrapperCreateBy (Class wrapper, CreateBy_c *createBy)
 {
@@ -58,24 +58,22 @@ getWrapperCreateBy (Class wrapper)
   return nil;
 #endif
 }
+#endif
 
 //
 // initCustomizeWrapper -- common routine to set up customize wrapper
 //
 static void
-initCustomizeWrapper (id aZone, id anObject)
+initCustomizeWrapper (id aZone, Customize_s *anObject)
 {
+#if SWARM_OBJC_DONE
   Class wrapper;
   CreateBy_c *createBy;
 
   // allocate wrapper class (copy of self class) for instance being customized
 
   wrapper = (Class) [aZone copyIVars: getClass (anObject)];
-#if SWARM_OBJC_DONE
   wrapper->info |= _CLS_CUSTOMIZEWRAPPER;
-#else
-  swarm_class_setCustomizeWrapperBit(wrapper, YES);
-#endif
 
   // allocate a new CreateBy instance and store id in wrapper
 
@@ -94,6 +92,28 @@ initCustomizeWrapper (id aZone, id anObject)
   // reset self class to point to the wrapper
 
   setClass (anObject, wrapper);
+#else
+  CreateBy_c *createBy;
+
+  // allocate customization wrapper for instance being customized
+
+  anObject->wrapper = xmalloc(sizeof(struct customizeWrapper));
+  anObject->wrapper->flags |= _CLS_CUSTOMIZEWRAPPER;
+  
+  // allocate a new CreateBy instance and store id in wrapper
+
+  createBy = (CreateBy_c *) [aZone allocIVars: [CreateBy_c self]];
+  setMappedAlloc (createBy);
+  anObject->wrapper->createBy = createBy;
+
+  // save original self class in CreateBy object until customizeEnd
+
+  createBy->createReceiver = (id) getClass (anObject);  // save original class
+
+  // save zone in CreateBy object until customizeEnd
+
+  createBy->recustomize = aZone;
+#endif
 }
 
 
@@ -136,7 +156,11 @@ PHASE(Creating)
 - customizeEnd
 {
   CreateBy_c *createBy;
+#if SWARM_OBJC_DONE
   Class wrapper, selfClass;
+#else
+  Class selfClass;
+#endif
 
   // check that customization in progress
 
@@ -146,9 +170,12 @@ PHASE(Creating)
                 [[self getClass] getName]);
   
   // get information from self before any possible changes by createEnd
-  
+#if SWARM_OBJC_DONE  
   wrapper = getClass (self);
   createBy = getWrapperCreateBy (wrapper);
+#else
+  createBy = wrapper->createBy;
+#endif
   selfClass = createBy->createReceiver;
   
   // execute createEnd to set subclass to handle future create
@@ -166,28 +193,25 @@ PHASE(Creating)
     }
   
   // free self if not retained and not required by CreateBy_c object
-#if SWARM_OBJC_TODO  
   if ((getClass (createBy) == [Create_bycopy self]
        || getClass (createBy) == [Create_byboth self])
       && createBy->createReceiver != self
-      && (wrapper->info & _CLS_RETAINSELF))
+      && (wrapper->flags & _CLS_RETAINSELF))
     {
-      memset (self, 0, wrapper->instance_size);    // wipe out all content
+#if SWARM_OBJC_TODO
+      abort();
 #else
-  if ((getClass (createBy) == [Create_bycopy self]
-       || getClass (createBy) == [Create_byboth self])
-      && createBy->createReceiver != self
-      && swarm_class_getRetainSelfBit(wrapper))
-    {
-      memset (self, 0, swarm_class_getInstanceSize(wrapper));    // wipe out all content
-#endif
+      memset (self, 0, wrapper->instance_size);    // wipe out all content
       [createBy->recustomize freeIVars: self];  // free from saved zone
+#endif
       // !! should use [self dropFrom: createBy->recustomize] ??
     }
   // else keep self but reset class pointer if still pointing to wrapper
+#if SWARM_OBJC_DONE
   else if (getClass (self) == wrapper)
     setClass (self, selfClass);
-  
+#endif
+
   // check for valid message selector and cache method for receiver  
   if (createBy->createMessage)
     {
@@ -202,17 +226,17 @@ PHASE(Creating)
                     "> message selector not valid for receiver\n",
                     [[self getClass] getName],
                     createBy->createReceiver,
-#if SWARM_OBJC_TODO
 		    getClass (createBy->createReceiver)->name,
-#else
-                    swarm_class_getName(swarm_object_getClass(createBy->createReceiver)),
-#endif
                     sel_get_name (createBy->createMessage));
     }
   
   // free wrapper class
-  
+#if SWARM_OBJC_DONE  
   [createBy->recustomize freeIVars: wrapper];
+#else
+  xfree(wrapper);
+  wrapper = NULL;
+#endif
 
   // reset recustomize field where zone was stored and return customization
   // (Subclass can reset recustomize field after default is set.)
@@ -227,7 +251,7 @@ PHASE(Creating)
 - customizeCopy: aZone
 {
   CreateBy_c *createBy;
-  id newObject;
+  Customize_s *newObject;
 
   // check that customization in progress
 
@@ -237,15 +261,22 @@ PHASE(Creating)
                 [[self getClass] getName]);
   
   // make shallow copy of self with original class restored
-  
+#if SWARM_OBJC_DONE  
   createBy = getWrapperCreateBy (getClass (self));
+#else
+  createBy = wrapper->createBy;
+#endif
   newObject = [aZone copyIVars: self];
   setClass (newObject, createBy->createReceiver);
   
   // save zone in new wrapper
   
   initCustomizeWrapper (aZone, newObject);
+#if SWARM_OBJC_DONE
   createBy = getWrapperCreateBy (getClass (newObject));
+#else
+  createBy = newObject->wrapper->createBy;
+#endif
   createBy->recustomize = aZone;
   return newObject;
 }
@@ -269,7 +300,9 @@ PHASE(Creating)
 //
 - _setCreateBy_: (Class)subclass message: (SEL)messageSelector to: anObject
 {
+#if SWARM_OBJC_DONE
   Class wrapper;
+#endif
   CreateBy_c *createBy;
 
   // check that customization in progress
@@ -282,9 +315,12 @@ PHASE(Creating)
                 [[self getClass] getName]);
   
   // install subclass as class of CreateBy instance
-  
+#if SWARM_OBJC_DONE
   wrapper  = getClass (self);
   createBy = getWrapperCreateBy (wrapper);
+#else
+  createBy = wrapper->createBy;
+#endif
   setClass (createBy, subclass);
   
   // if requested, set values for message send in create data block
@@ -373,7 +409,9 @@ PHASE(Creating)
 //
 - (void)_setRecustomize_: anObject
 {
+#if SWARM_OBJC_DONE
   Class wrapper;
+#endif
   CreateBy_c *createBy;
 
   if (!respondsTo (anObject, M(createBegin:)))
@@ -381,9 +419,12 @@ PHASE(Creating)
                 "> setRecustomize receiver argument does not respond to createBegin:\n");
   
   // install subclass as class of CreateBy instance
-  
+#if SWARM_OBJC_DONE
   wrapper  = getClass (self);
   createBy = getWrapperCreateBy (wrapper);
+#else
+  createBy = wrapper->createBy;
+#endif
   createBy->recustomize = anObject;
 }
 
@@ -657,9 +698,9 @@ _obj_splitPhases (Class class)
   unsigned int outCount, i;
   protoList = swarm_class_copyProtocolList(class, &outCount);
   if (protoList) {
-    printf("%d protocols for class %s\n", outCount, class->name);
+    //printf("%d protocols for class %s\n", outCount, class->name);
     for (i = 0; i < outCount; ++i) {
-      printf("%s\n", protoList[i]->protocol_name);
+      //printf("%s\n", protoList[i]->protocol_name);
       if (creatingClass) swarm_class_addProtocol(creatingClass, protoList[i]);
       if (usingClass) swarm_class_addProtocol(usingClass, protoList[i]);
     }
@@ -676,6 +717,8 @@ _obj_splitPhases (Class class)
       swarm_objc_registerClassPair(creatingClass);
       newClassData = _obj_getClassData (creatingClass);
       newClassData->initialPhase = classCreating;
+      newClassData->owner = classData->owner;
+      newClassData->typeImplemented = classData->typeImplemented;
     }
   else
     {
@@ -691,6 +734,8 @@ _obj_splitPhases (Class class)
       swarm_objc_registerClassPair(usingClass);
       newClassData = _obj_getClassData (usingClass);
       newClassData->initialPhase = classUsing;
+      newClassData->owner = classData->owner;
+      newClassData->typeImplemented = classData->typeImplemented;
     }
   //else if (classData->classID)
   //classData->classID = creatingClass;
@@ -799,12 +844,14 @@ _obj_splitPhases (Class class)
 // _obj_customize() -- return true if customization in progress
 //
 BOOL
-_obj_customize (id anObject)
+_obj_customize (Customize_s *anObject)
 {
 #if SWARM_OBJC_DONE
   return (getClass (anObject)->info & _CLS_CUSTOMIZEWRAPPER) != 0;
 #else
-  return swarm_class_getCustomizeWrapperBit(swarm_object_getClass(anObject));
+  if ((anObject->wrapper) && (anObject->wrapper->flags & _CLS_CUSTOMIZEWRAPPER))
+    return YES;
+  return NO;
 #endif
 }
 

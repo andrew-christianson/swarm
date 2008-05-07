@@ -41,7 +41,7 @@ id _obj_initZone;
 externvardef id _obj_globalZone, _obj_sessionZone, _obj_scratchZone;
 externvardef id _obj_GCFixedRootZone;
 
-extern void _obj_splitPhases (Class_s  *class);
+extern void _obj_splitPhases (Class class);
 
 externvardef id Creating, Setting, Using, CreatingOnly, UsingOnly;
 
@@ -194,18 +194,18 @@ initModules (void)
 
   // bootstrap initialization for symbols
 
-  _obj_getClassData (id_CreateDrop_s)->classID = &id_CreateDrop_s;
-  _obj_getClassData (id_Customize_s)->classID = &id_Customize_s;
-  _obj_getClassData (id_EventType_c)->classID = &id_EventType_c;
-  _obj_getClassData (id_Symbol_c)->classID = &id_Symbol_c;
-  _obj_getClassData (id_Warning_c)->classID = &id_Warning_c;
-  _obj_getClassData (id_Error_c)->classID = &id_Error_c;
+  _obj_getClassData (id_CreateDrop_s)->classID = id_CreateDrop_s;
+  _obj_getClassData (id_Customize_s)->classID = id_Customize_s;
+  _obj_getClassData (id_EventType_c)->classID = id_EventType_c;
+  _obj_getClassData (id_Symbol_c)->classID = id_Symbol_c;
+  _obj_getClassData (id_Warning_c)->classID = id_Warning_c;
+  _obj_getClassData (id_Error_c)->classID = id_Error_c;
 
   _obj_splitPhases (id_Error_c);
 
-  Symbol  = _obj_getClassData (id_Symbol_c)->initialPhase;
-  Warning = _obj_getClassData (id_Warning_c)->initialPhase;
-  Error   = _obj_getClassData (id_Error_c)->initialPhase;
+  Symbol  = _obj_getClassData (id_Symbol_c)->initialPhase->definingClass;
+  Warning = _obj_getClassData (id_Warning_c)->initialPhase->definingClass;
+  Error   = _obj_getClassData (id_Error_c)->initialPhase->definingClass;
 
   // initialize 
 
@@ -352,7 +352,7 @@ _obj_initModule (void *module)
         raiseEvent (InternalError, nil);
       
       classData->owner   = moduleObject;
-      classData->classID = *class;
+      classData->classID = **class;
     }
   
   // later -- initialize collections of types, symbols, and classes
@@ -378,7 +378,7 @@ _obj_initModule (void *module)
               if (classData->initialPhase &&
                   classData->initialPhase->nextPhase != UsingOnly)
                 {
-                  type->implementation = classData->initialPhase;
+                  type->implementation = classData->initialPhase->definingClass;
                   *type->typeID = type->implementation;
                   //!! later -- use customizeBeginEnd if no extra class messages
                 }
@@ -393,6 +393,19 @@ _obj_initModule (void *module)
                           [**class getName] );
             }
         }
+
+#if 0
+      // Make generic types points to their concrete class
+      if (type && ((*type->typeID)->class_pointer == id_Type_c)) {
+	if (classData->initialPhase) {
+	  type->implementation = classData->initialPhase->definingClass;
+	  *type->typeID = type->implementation;
+	} else {
+	  type->implementation = classData->classID;
+	  *type->typeID = type->implementation;
+	}
+      }
+#endif
     }
   
   // audit that implementation provided for each creatable type interface
@@ -406,6 +419,17 @@ _obj_initModule (void *module)
         type->implementation = nil;
       }
 #endif
+
+#if 0
+  for (typeID = (Type_c ***) moduleObject->types; *typeID; typeID++)
+    if ((**typeID)->isa == id_Type_c)
+      {
+        raiseEvent (WarningMessage,
+                    "Creatable type %s still Type_c class\n",
+                    (**typeID)->name);
+      }
+#endif
+
   // call initialize function to complete initialization of module
   
   (*initFunction) ();

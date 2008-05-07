@@ -30,7 +30,7 @@ echo making $m.xm $m.xt $m.xc
 
 echo \
 '#import <'$m'.h>
-#import <objc/objc-api.h>
+#import <defobj/swarm-objc-api.h>
 ' >$m.xm
 
 # extract all declared symbols into temporary file
@@ -167,6 +167,9 @@ echo '
 {
 // initialize class id constants and link all classes into module' >>$m.xm
 $SED 's/\(.*\)/id_\1=[\1 self];/' <$m.xm+ >>$m.xm
+echo '
+// Mainly for GNU ObjC runtime, insure dispatch tables are installed' >>$m.xm
+$SED 's/\(.*\)/swarm_class_getMethodImplementation(id_\1, swarm_sel_getUid("self"));/' <$m.xm+ >>$m.xm
 echo '
 // return module object
 return (id)_'$m'_;

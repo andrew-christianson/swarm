@@ -31,7 +31,8 @@ Library:      defobj
 // interface marker for methods in class which implement an interface of a type
 //
 #define PHASE(phase_name) \
--(id)_I_##phase_name { return phase_name; }
+-(id)_I_##phase_name { return phase_name; } \
++(id)_C_##phase_name { return phase_name; }
 
 //
 // specific defined interfaces
@@ -128,9 +129,17 @@ if (_obj_customize(self)) [self _setRecustomize_: recustomizeReceiver]
 // getNextPhase() -- return class which implements next phase of object
 //
 extern inline Class
-getNextPhase (id aClass)
+getNextPhase (Class aClass)
 {
+#if SWARM_OBJC_DONE
   return (Class) ((BehaviorPhase_s *) aClass)->nextPhase;
+#else
+  classData_t classData = _obj_getClassData (aClass);
+  if (classData->initialPhase->nextPhase)
+    return classData->initialPhase->nextPhase->definingClass;
+  else
+    return nil;
+#endif
 }
 
 //
@@ -139,5 +148,11 @@ getNextPhase (id aClass)
 extern inline void
 setNextPhase (id anObject)
 {
+#if SWARM_OBJC_DONE
   *(Class *) anObject = (Class) (*(BehaviorPhase_s **) anObject)->nextPhase;
+#else
+  classData_t classData = _obj_getClassData (swarm_object_getClass (anObject));
+  if (classData->initialPhase->nextPhase)
+    swarm_object_setClass(anObject, classData->initialPhase->nextPhase->definingClass);
+#endif
 }

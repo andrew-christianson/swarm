@@ -40,9 +40,22 @@ Library:      defobj
 externvar id Creating, Setting, Using, CreatingOnly, UsingOnly;
 
 //
+// Customization wrapper
+//
+struct customizeWrapper {
+  Class class;
+  int flags;
+  id createBy;
+};
+
+//
 // Customize_s -- superclass impleemntation of create-phase customization
 //
 @interface Customize_s: Object_s
+{
+@public
+  struct customizeWrapper *wrapper;
+}
 + createBegin: aZone;
 /*** methods in Customize_s (inserted from .m file by m2h) ***/
 + customizeBegin: aZone;
@@ -66,12 +79,14 @@ externvar id Creating, Setting, Using, CreatingOnly, UsingOnly;
 // _obj_customize() -- return true if customization in progress
 //
 extern inline BOOL
-_obj_customize (id anObject)
+_obj_customize (Customize_s *anObject)
 {
 #if SWARM_OBJC_DONE
   return (getClass (anObject)->info & _CLS_CUSTOMIZEWRAPPER) != 0;
 #else
-  return swarm_class_getCustomizeWrapperBit(swarm_object_getClass(anObject));
+  if ((anObject->wrapper) && (anObject->wrapper->flags & _CLS_CUSTOMIZEWRAPPER))
+    return YES;
+  return NO;
 #endif
 }
 
@@ -87,7 +102,7 @@ _obj_customize (id anObject)
 ([(id) self _setCreateByMessage_: @selector(messageName) toCopy: (anObject)], YES) : NO)
 
 #define setRetainSelf() \
-if (_obj_customize (self)) self->class_pointer->info |= _CLS_RETAINSELF
+if (_obj_customize (self)) self->wrapper->flags |= _CLS_RETAINSELF
 
 #define setRecustomize(recustomizeReceiver) \
 if (_obj_customize(self)) [self _setRecustomize_: recustomizeReceiver]

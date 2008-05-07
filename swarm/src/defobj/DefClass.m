@@ -41,7 +41,7 @@ Library:      defobj
 // _obj_getClassData() -- function to get class data extension structure
 //
 classData_t
-_obj_getClassData (Class_s *class)
+_obj_getClassData (Class class)
 {
   classData_t classData;
 
@@ -58,6 +58,7 @@ _obj_getClassData (Class_s *class)
   if (!swarm_hash_is_key_in_hash (_obj_buckets, CLS_GETNUMBER (class) - 1)) {
     printf("classData not found in hash.\n");
     classData = _obj_initAlloc (sizeof *classData);
+    classData->classID = class;
     swarm_hash_add (&_obj_buckets, CLS_GETNUMBER(class) - 1, classData);
   }
   classData = (classData_t) swarm_hash_value_for_key (_obj_buckets, CLS_GETNUMBER(class) - 1);
@@ -68,8 +69,8 @@ _obj_getClassData (Class_s *class)
 //
 // _obj_initMethodInterfaces() -- function to initialize methods by interface
 //
-void
-_obj_initMethodInterfaces (Class_s *class)
+methodDefs_t
+_obj_initMethodInterfaces (Class class)
 {
 #if SWARM_OBJC_DONE
   classData_t   classData;
@@ -112,15 +113,15 @@ _obj_initMethodInterfaces (Class_s *class)
         }
   }
 #else
-  classData_t   classData;
+  //classData_t   classData;
   ObjcMethod    *methods;
   int           i, count, outCount;
   id            interfaceID;
   Method_t      mnext;
   const char    *mname;
-  methodDefs_t  mdefs;
+  methodDefs_t  mdefs = NULL;
 
-  classData = _obj_getClassData (class);
+  //classData = _obj_getClassData (class);
 
   ObjcMethod *methodList = swarm_class_copyMethodList(class, &outCount);
   printf("%d methods\n", outCount);
@@ -130,11 +131,15 @@ _obj_initMethodInterfaces (Class_s *class)
     if (i != -1) printf("%s\n", swarm_sel_getName(swarm_method_getName(methodList[i])));
     if ((i == -1)
 	|| (strncmp ((mname = swarm_sel_getName(swarm_method_getName(methodList[i]))),
-		     "_I_", 3) == 0)) {
+		     "_I_", 3) == 0)
+	|| (strncmp ((mname = swarm_sel_getName(swarm_method_getName(methodList[i]))),
+		     "_C_", 3) == 0)) {
       if (count) {
+	methodDefs_t holdmdefs = mdefs;
 	mdefs = _obj_initAlloc (sizeof *mdefs);
-	mdefs->next = (methodDefs_t)classData->metaobjects;
-	classData->metaobjects = (id)mdefs;
+	//mdefs->next = (methodDefs_t)classData->metaobjects;
+	mdefs->next = holdmdefs;
+	//classData->metaobjects = (id)mdefs;
 	mdefs->interfaceID = interfaceID;
 	mdefs->firstEntry = methodList[i + 1];
 	mdefs->count = count;
@@ -145,6 +150,8 @@ _obj_initMethodInterfaces (Class_s *class)
     } else
       count++;
   }
+
+  return mdefs;
 #endif
 }
 
@@ -181,19 +188,19 @@ PHASE(CreatingOnly)
   return self;
 }
 
-- setDefiningClass: aClass
+- setDefiningClass: (Class)aClass
 {
   definingClass = aClass;
-  info = ((Class_s *) aClass)->info;
-  instanceSize = ((Class_s *) aClass)->instanceSize;
-  ivarList = ((Class_s *) aClass)->ivarList;
-  methodList = ((Class_s *) aClass)->methodList;
+  info = aClass->info;
+  instanceSize = aClass->instance_size;
+  ivarList = aClass->ivars;
+  methodList = aClass->methods;
   return self;
 }
 
 - at: (SEL)aSel addMethod: (IMP)aMethod
 {
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   if (!dtable)
     {
       if (!superclass)
@@ -204,13 +211,15 @@ PHASE(CreatingOnly)
     }
   
   sarray_at_put_safe (dtable, (size_t) aSel->sel_id, aMethod);
+#else
+  // SWARM_OBJC_TODO - do we need meta information about methods?
 #endif
   return self;
 }
 
 - createEnd
 {
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   if (!dtable)
     dtable = sarray_lazy_copy (superclass->dtable);
   
@@ -218,6 +227,9 @@ PHASE(CreatingOnly)
   metaobjects = nil;
   
   setBit (info, _CLS_DEFINEDCLASS, 1);
+#else
+  swarm_class_setDefinedClassBit (self, YES);
+  metaobjects = nil;
 #endif
   return self;
 }

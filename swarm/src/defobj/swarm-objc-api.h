@@ -227,7 +227,8 @@ ObjcIvar swarm_object_getInstanceVariable(ObjcID obj, const char *name, void **o
 
 ObjcID swarm_object_getIvar(ObjcID obj, ObjcIvar ivar);
 
-ObjcClass swarm_object_setClass(ObjcID obj, ObjcClass cls);
+ObjcClass
+swarm_object_setClass (ObjcID obj, ObjcClass cls);
 
 ObjcIvar swarm_object_setInstanceVariable(ObjcID obj, const char *name, void *value);
 
@@ -282,10 +283,14 @@ swarm_sel_registerName (const char *str);
 
 
 // Working with protocols
-ObjcProtocol** swarm_objc_copyProtocolList(unsigned int *outCount);
+ObjcProtocol **
+swarm_objc_copyProtocolList (unsigned int *outCount);
 
-ObjcProtocol* swarm_objc_getProtocol(const char *name);
+ObjcProtocol *
+swarm_objc_getProtocol (const char *name);
 
+const char *
+swarm_protocol_getName (ObjcProtocol *);
 
 // Working with properties
 

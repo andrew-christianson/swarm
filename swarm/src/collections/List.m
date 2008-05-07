@@ -64,12 +64,22 @@ setListClass (id obj, id aClass)
 {
   Class_s *nextPhase = id_List_any;
 
+#if SWARM_OBJC_DONE
   if (getBit (getClass (obj)->info, _CLS_DEFINEDCLASS))
     nextPhase = ((BehaviorPhase_s *) getClass (obj))->nextPhase;
+#else
+  if (swarm_class_getDefinedClassBit(swarm_object_getClass(obj))) {
+    classData_t classData = _obj_getClassData(swarm_object_getClass(obj));
+    nextPhase = classData->initialPhase->nextPhase->definingClass;
+  }
+#endif
   
   if (nextPhase == id_List_any)
     nextPhase = aClass;
-  
+
+  if (!strncmp(swarm_class_getName(swarm_object_getClass(obj)), "List_any", 8))
+    nextPhase = aClass;
+
   setClass (obj, nextPhase);
 }
 

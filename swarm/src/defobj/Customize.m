@@ -448,10 +448,11 @@ _obj_splitPhases (Class class)
   Class creatingClass = NULL, usingClass = NULL;
   char *classNameBuf;
   methodDefs_t mdefs, instance_mdefs, class_mdefs;
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   Method_t mnext;
 #else
-  ObjcMethod mnext;
+  ObjcMethod *mnext;
+  int j;
 #endif
 
   // return if classes have already been created
@@ -562,15 +563,17 @@ _obj_splitPhases (Class class)
            || (mdefs->interfaceID == CreatingOnly &&
                mdefs == instance_mdefs))
         {
-          for (mnext = mdefs->firstEntry;
-               mnext < mdefs->firstEntry + mdefs->count; mnext++) {
-#if SWARM_OBJC_TODO
+	  for (j = 0, mnext = mdefs->firstEntry; j < mdefs->count; ++j) {
+#if SWARM_OBJC_DONE
 	    swarm_class_addMethod(creatingClass, (ObjcSEL)mnext->method_name,
 				  (ObjcIMP)mnext->method_imp, mnext->method_types);
 	    [(id) classCreating at: mnext->method_name addMethod: mnext->method_imp];
 #else
-            [(id) classCreating at: swarm_method_getName(mnext)
-		  addMethod: swarm_method_getImplementation(mnext)];
+	    swarm_class_addMethod(creatingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
+				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
+				  swarm_method_getTypeEncoding(mnext[j]));
+	    //[(id) classCreating at: swarm_method_getName(mnext)
+	    //  addMethod: swarm_method_getImplementation(mnext)];
 #endif
 	  }          
         }
@@ -578,15 +581,17 @@ _obj_splitPhases (Class class)
                || (mdefs->interfaceID == UsingOnly &&
                    mdefs == instance_mdefs))
         {
-          for (mnext = mdefs->firstEntry;
-               mnext < mdefs->firstEntry + mdefs->count; mnext++) {
-#if SWARM_OBJC_TODO
+	  for (j = 0, mnext = mdefs->firstEntry; j < mdefs->count; ++j) {
+#if SWARM_OBJC_DONE
 	    swarm_class_addMethod(usingClass, (ObjcSEL)mnext->method_name,
 				  (ObjcIMP)mnext->method_imp, mnext->method_types);
 	    [(id) classUsing at: mnext->method_name addMethod: mnext->method_imp];
 #else
-            [(id) classUsing at: swarm_method_getName(mnext)
-		  addMethod: swarm_method_getImplementation(mnext)];
+	    swarm_class_addMethod(usingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
+				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
+				  swarm_method_getTypeEncoding(mnext[j]));
+	    //[(id) classUsing at: swarm_method_getName(mnext)
+	    //  addMethod: swarm_method_getImplementation(mnext)];
 #endif
 	  }
         }
@@ -600,10 +605,8 @@ _obj_splitPhases (Class class)
         }
       else if (mdefs->interfaceID == Setting)
         {
-          for (mnext = mdefs->firstEntry;
-               mnext < mdefs->firstEntry + mdefs->count; mnext++)
-            {
-#if SWARM_OBJC_TODO
+	  for (j = 0, mnext = mdefs->firstEntry; j < mdefs->count; ++j) {
+#if SWARM_OBJC_DONE
 	      swarm_class_addMethod(creatingClass, (ObjcSEL)mnext->method_name,
 				    (ObjcIMP)mnext->method_imp, mnext->method_types);
 	      swarm_class_addMethod(usingClass, (ObjcSEL)mnext->method_name,
@@ -611,10 +614,16 @@ _obj_splitPhases (Class class)
 	      [(id) classCreating at: mnext->method_name addMethod: mnext->method_imp];
 	      [(id) classUsing at: mnext->method_name addMethod: mnext->method_imp];
 #else
-              [(id) classCreating at: swarm_method_getName(mnext)
-		    addMethod: swarm_method_getImplementation(mnext)];
-              [(id) classUsing at: swarm_method_getName(mnext)
-		    addMethod: swarm_method_getImplementation(mnext)];
+	      swarm_class_addMethod(creatingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
+				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
+				    swarm_method_getTypeEncoding(mnext[j]));
+	      swarm_class_addMethod(usingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
+				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
+				    swarm_method_getTypeEncoding(mnext[j]));
+              //[(id) classCreating at: swarm_method_getName(mnext)
+	      //    addMethod: swarm_method_getImplementation(mnext)];
+              //[(id) classUsing at: swarm_method_getName(mnext)
+	      //    addMethod: swarm_method_getImplementation(mnext)];
 #endif
             }
           
@@ -636,12 +645,18 @@ _obj_splitPhases (Class class)
            || (mdefs->interfaceID == CreatingOnly &&
                mdefs == class_mdefs))
         {
-          for (mnext = mdefs->firstEntry;
-               mnext < mdefs->firstEntry + mdefs->count; mnext++) {
-	    swarm_class_addMethod(creatingClass, (ObjcSEL)mnext->method_name,
-				  (ObjcIMP)mnext->method_imp, mnext->method_types);
-	    swarm_class_addMethod(creatingClass->class_pointer, (ObjcSEL)mnext->method_name,
-				  (ObjcIMP)mnext->method_imp, mnext->method_types);
+	  for (j = 0, mnext = mdefs->firstEntry; j < mdefs->count; ++j) {
+	    swarm_class_addMethod(creatingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
+				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
+				  swarm_method_getTypeEncoding(mnext[j]));
+	    swarm_class_addMethod(creatingClass->class_pointer,
+				  (ObjcSEL)swarm_method_getName(mnext[j]),
+				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
+				  swarm_method_getTypeEncoding(mnext[j]));
+	    //swarm_class_addMethod(creatingClass, (ObjcSEL)mnext->method_name,
+	    //		  (ObjcIMP)mnext->method_imp, mnext->method_types);
+	    //swarm_class_addMethod(creatingClass->class_pointer, (ObjcSEL)mnext->method_name,
+	    //		  (ObjcIMP)mnext->method_imp, mnext->method_types);
 	    //[(id) classCreating at: mnext->method_name addMethod: mnext->method_imp];
 	  }          
         }
@@ -649,12 +664,18 @@ _obj_splitPhases (Class class)
                || (mdefs->interfaceID == UsingOnly &&
                    mdefs == class_mdefs))
         {
-          for (mnext = mdefs->firstEntry;
-               mnext < mdefs->firstEntry + mdefs->count; mnext++) {
-	    swarm_class_addMethod(usingClass, (ObjcSEL)mnext->method_name,
-				  (ObjcIMP)mnext->method_imp, mnext->method_types);
-	    swarm_class_addMethod(usingClass->class_pointer, (ObjcSEL)mnext->method_name,
-				  (ObjcIMP)mnext->method_imp, mnext->method_types);
+	  for (j = 0, mnext = mdefs->firstEntry; j < mdefs->count; ++j) {
+	    swarm_class_addMethod(usingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
+				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
+				  swarm_method_getTypeEncoding(mnext[j]));
+	    swarm_class_addMethod(usingClass->class_pointer,
+				  (ObjcSEL)swarm_method_getName(mnext[j]),
+				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
+				  swarm_method_getTypeEncoding(mnext[j]));
+	    //swarm_class_addMethod(usingClass, (ObjcSEL)mnext->method_name,
+	    //		  (ObjcIMP)mnext->method_imp, mnext->method_types);
+	    //swarm_class_addMethod(usingClass->class_pointer, (ObjcSEL)mnext->method_name,
+	    //		  (ObjcIMP)mnext->method_imp, mnext->method_types);
 	    //[(id) classUsing at: mnext->method_name addMethod: mnext->method_imp];
 	  }
         }
@@ -668,9 +689,22 @@ _obj_splitPhases (Class class)
         }
       else if (mdefs->interfaceID == Setting)
         {
-          for (mnext = mdefs->firstEntry;
-               mnext < mdefs->firstEntry + mdefs->count; mnext++)
-            {
+	  for (j = 0, mnext = mdefs->firstEntry; j < mdefs->count; ++j) {
+	      swarm_class_addMethod(creatingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
+				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
+				    swarm_method_getTypeEncoding(mnext[j]));
+	      swarm_class_addMethod(creatingClass->class_pointer,
+				    (ObjcSEL)swarm_method_getName(mnext[j]),
+				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
+				    swarm_method_getTypeEncoding(mnext[j]));
+	      swarm_class_addMethod(usingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
+				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
+				    swarm_method_getTypeEncoding(mnext[j]));
+	      swarm_class_addMethod(usingClass->class_pointer,
+				    (ObjcSEL)swarm_method_getName(mnext[j]),
+				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
+				    swarm_method_getTypeEncoding(mnext[j]));
+	      /*
 	      swarm_class_addMethod(creatingClass, (ObjcSEL)mnext->method_name,
 				    (ObjcIMP)mnext->method_imp, mnext->method_types);
 	      swarm_class_addMethod(creatingClass->class_pointer, (ObjcSEL)mnext->method_name,
@@ -679,6 +713,7 @@ _obj_splitPhases (Class class)
 				    (ObjcIMP)mnext->method_imp, mnext->method_types);
 	      swarm_class_addMethod(usingClass->class_pointer, (ObjcSEL)mnext->method_name,
 				    (ObjcIMP)mnext->method_imp, mnext->method_types);
+	      */
 	      //[(id) classCreating at: mnext->method_name addMethod: mnext->method_imp];
 	      //[(id) classUsing at: mnext->method_name addMethod: mnext->method_imp];
             }

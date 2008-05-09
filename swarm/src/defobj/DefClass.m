@@ -116,7 +116,6 @@ _obj_initMethodInterfaces (Class class)
   ObjcMethod    *methods;
   int           i, count, outCount;
   id            interfaceID;
-  Method_t      mnext;
   const char    *mname;
   methodDefs_t  mdefs = NULL;
 
@@ -140,7 +139,7 @@ _obj_initMethodInterfaces (Class class)
 	mdefs->next = holdmdefs;
 	//classData->metaobjects = (id)mdefs;
 	mdefs->interfaceID = interfaceID;
-	mdefs->firstEntry = methodList[i + 1];
+	mdefs->firstEntry = &(methodList[i + 1]);
 	mdefs->count = count;
       }
       if (i == -1) continue;

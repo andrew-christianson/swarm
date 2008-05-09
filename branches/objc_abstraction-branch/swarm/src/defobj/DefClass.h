@@ -117,10 +117,10 @@ struct classData {
 struct methodDefs {
   methodDefs_t  next;
   id interfaceID;
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   Method_t firstEntry;
 #else
-  ObjcMethod firstEntry;
+  ObjcMethod *firstEntry;
 #endif
   int count;
 };

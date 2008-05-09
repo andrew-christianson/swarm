@@ -39,7 +39,8 @@ Library:      defobj
 #define swarm_class_getSuperclass(cls) class_get_super_class(cls)
 
 #define swarm_method_getName(method) (((Method *)method)->method_name)
-#define swarm_method_getImplementation(method) method_get_imp(method)
+#define swarm_method_getImplementation(method) method_get_imp((Method *)method)
+#define swarm_method_getTypeEncoding(method) (((Method *)method)->method_types)
 
 #define swarm_objc_lookupClass(name) objc_lookup_class(name)
 

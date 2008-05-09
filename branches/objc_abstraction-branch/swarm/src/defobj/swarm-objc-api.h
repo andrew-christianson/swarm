@@ -307,15 +307,22 @@ swarm_protocol_getName (ObjcProtocol *);
 
 
 
+//
+// platform-specific ObjC runtime library
+//
 
-
-// What ObjC runtime?
+#if __APPLE_CC__
 #if defined(OBJC_API_VERSION) && OBJC_API_VERSION >= 2
 // Apple ObjC 2.0
 #import <defobj/swarm-objc-apple2.h>
 #else
-// TODO: How to differentiate between GNU and Apple ObjC 1.0
+// Apple ObjC 1.0
+#import <defobj/swarm-objc-apple.h>
+#endif
+#else
+// GNU ObjC runtime
 #import <defobj/swarm-objc-gnu.h>
 #endif
+
 
 #endif // _SWARM_OBJC_API_H

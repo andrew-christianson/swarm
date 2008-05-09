@@ -362,6 +362,7 @@ fi
 swarm_bindir="`echo $bindir | $SED 's/{/{swarm_/'`"
 swarm_libdir="`echo $libdir | $SED 's/{/{swarm_/'`"
 swarm_includedir="`echo $includedir | $SED 's/{/{swarm_/'`"
+swarm_datarootdir="`echo $datarootdir | $SED 's/{/{swarm_/'`"
 swarm_datadir="`echo $datadir | $SED 's/{/{swarm_/'`"
 
 SWARMLDFLAGS="-L\${swarm_libdir} -rpath \${swarm_libdir}"
@@ -373,6 +374,7 @@ AC_SUBST(swarm_exec_prefix)
 AC_SUBST(swarm_bindir)
 AC_SUBST(swarm_libdir)
 AC_SUBST(swarm_includedir)
+AC_SUBST(swarm_datarootdir)
 AC_SUBST(swarm_datadir)
 
 AC_DEFINE_UNQUOTED(PREFIX,"$prefix",[toplevel directory for Swarm installation])
@@ -431,7 +433,9 @@ if test "$enable_libobjc" = yes; then
    LIBOBJCDIR='libobjc'
    LIBOBJCINCLUDES='-I$(top_builddir)/libobjc -I$(top_srcdir)/libobjc'
    LIBOBJCLDFLAGS='-L../libobjc'
+   # disable for abstraction work
    LIBOBJCLIB='-lswarmobjc'
+   #LIBOBJCLIB=
    LIBOBJCDEP='$(top_builddir)/libobjc/libswarmobjc.la'
    AC_DEFINE([USE_MFRAME], 1, [Define if mframe functions to be used.])
    # test -d libobjc || mkdir libobjc
@@ -441,7 +445,9 @@ else
    LIBOBJCDIR=
    LIBOBJCINCLUDES=
    LIBOBJCLDFLAGS=
-   LIBOBJCLIB='-lobjc'
+   # disable for abstraction work
+   #LIBOBJCLIB='-lobjc'
+   LIBOBJCLIB=
    LIBOBJCDEP=
 fi
 AC_SUBST(LIBOBJCDIR)

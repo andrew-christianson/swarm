@@ -19,7 +19,7 @@
 
 #import <collections.h> // OutputStream
 #include <misc.h> // size_t
-#include <objc/objc-api.h>
+#import <defobj/swarm-objc-api.h>
 
 externvar id _obj_GCFixedRootZone;
 

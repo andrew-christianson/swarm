@@ -25,7 +25,7 @@ Library:      defobj
 
 #import <defobj.h>
 #import <defobj/Create.h>
-#include <objc/objc.h> // retval_t
+#import <defobj/swarm-objc-api.h> // retval_t
 #import "internal.h"
 
 #include <swarmconfig.h>

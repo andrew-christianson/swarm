@@ -13,17 +13,42 @@ BOOL
 swarm_class_addMethod (Class cls, SEL aSel, IMP imp, const char *types)
 {
   if (!cls) return NO;
-  //if (sarray_get (cls->dtable, (size_t) aSel->sel_id) != 0) return NO;
 
-  //Method *aMethod = (Method *)malloc(sizeof(Method));
-  //aMethod->method_name = aSel;
-  //aMethod->method_types = malloc (strlen (types) + 1);
-  //strcpy ((char*)aMethod->method_types, types);
-  //aMethod->method_imp = imp;
+  struct objc_method_list *methodList = cls->methods;
+  if (methodList) {
+    // Reallocate method list
+    int i, size = methodList->method_count;
+    struct objc_method_list *newList = malloc(sizeof(struct objc_method_list)
+					      + size * sizeof(struct objc_method));
 
+    // copy old methods
+    for (i = 0; i < size; ++i) {
+      newList->method_list[i].method_name = methodList->method_list[i].method_name;
+      newList->method_list[i].method_types = methodList->method_list[i].method_types;
+      newList->method_list[i].method_imp = methodList->method_list[i].method_imp;
+    }
+
+    // add the new method
+    newList->method_list[size].method_name = aSel;
+    newList->method_list[size].method_types = types;
+    newList->method_list[size].method_imp = imp;
+
+    // add to class
+    newList->method_count = size + 1;
+    newList->method_next = methodList->method_next;
+    cls->methods = newList;
+    free(methodList);
+  } else {
+    cls->methods = malloc(sizeof(struct objc_method_list));
+    cls->methods->method_next = NULL;
+    cls->methods->method_count = 1;
+    cls->methods->method_list[0].method_name = aSel;
+    cls->methods->method_list[0].method_types = types;
+    cls->methods->method_list[0].method_imp = imp;
+  }
+
+  // put in dispatch array
   sarray_at_put_safe (cls->dtable, (size_t) aSel->sel_id, imp);
-
-  // SWARM_OBJC_TODO - reconstruct method list
 
   return YES;
 }
@@ -159,7 +184,9 @@ swarm_objc_allocateClassPair (Class superClass, const char *name,
   Class new_class;
   Class root_class;
 
+#if SWARM_OBJC_DEBUG
   printf("Allocating class pair: %s\n", name);
+#endif
 
   // SWARM_OBJC_TODO - Allow creation of root class
 
@@ -213,7 +240,9 @@ swarm_objc_allocateClassPair (Class superClass, const char *name,
   meta_class->class_pointer = (void *)root_class->class_pointer;
 
   // Finally, register the class with the runtime.
+#if SWARM_OBJC_DEBUG
   printf("Adding class to runtime: %s\n", new_class->name);
+#endif
   __objc_add_class_to_hash(new_class);
 
   return new_class;

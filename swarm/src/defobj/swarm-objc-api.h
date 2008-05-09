@@ -35,6 +35,7 @@ Library:      defobj
 
 #define SWARM_OBJC_DONE 0
 
+#define SWARM_OBJC_DEBUG 0
 
 // opaque ObjC runtime structures
 typedef void *ObjcClass;
@@ -272,6 +273,12 @@ ObjcIMP swarm_method_setImplementation(ObjcMethod method, ObjcIMP imp);
 const char *
 swarm_sel_getName (ObjcSEL sel);
 
+const char *
+swarm_sel_getTypeEncoding (ObjcSEL sel);
+
+ObjcSEL
+swarm_sel_getTypedUid (const char *str, const char *types);
+
 ObjcSEL
 swarm_sel_getUid (const char *str);
 
@@ -280,6 +287,9 @@ swarm_sel_isEqual (ObjcSEL sel1, ObjcSEL sel2);
 
 ObjcSEL
 swarm_sel_registerName (const char *str);
+
+ObjcSEL
+swarm_sel_registerTypedName (const char *str, const char *types);
 
 
 // Working with protocols

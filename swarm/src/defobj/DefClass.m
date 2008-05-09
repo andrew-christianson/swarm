@@ -53,15 +53,14 @@ _obj_getClassData (Class class)
       _obj_classes[CLS_GETNUMBER (class) - 1] = (id) classData;
     }
 #else
-  // SWARM_OBJC_TODO - do not use CLS_GETNUMBER
-  printf("_obj_getClassData lookup: %p %s\n", class, swarm_class_getName (class));
-  if (!swarm_hash_is_key_in_hash (_obj_buckets, CLS_GETNUMBER (class) - 1)) {
-    printf("classData not found in hash.\n");
+  //printf("_obj_getClassData lookup: %p %s\n", class, swarm_class_getName (class));
+  if (!swarm_hash_is_key_in_hash (_obj_buckets, class)) {
+    //printf("classData not found in hash.\n");
     classData = _obj_initAlloc (sizeof *classData);
     classData->classID = class;
-    swarm_hash_add (&_obj_buckets, CLS_GETNUMBER(class) - 1, classData);
+    swarm_hash_add (&_obj_buckets, class, classData);
   }
-  classData = (classData_t) swarm_hash_value_for_key (_obj_buckets, CLS_GETNUMBER(class) - 1);
+  classData = (classData_t) swarm_hash_value_for_key (_obj_buckets, class);
 #endif
   return classData;
 }
@@ -124,11 +123,11 @@ _obj_initMethodInterfaces (Class class)
   //classData = _obj_getClassData (class);
 
   ObjcMethod *methodList = swarm_class_copyMethodList(class, &outCount);
-  printf("%d methods\n", outCount);
+  //printf("%d methods\n", outCount);
   count = 0;
   interfaceID = Using;
   for (i = outCount - 1; i >= -1; --i) {
-    if (i != -1) printf("%s\n", swarm_sel_getName(swarm_method_getName(methodList[i])));
+    //if (i != -1) printf("%s\n", swarm_sel_getName(swarm_method_getName(methodList[i])));
     if ((i == -1)
 	|| (strncmp ((mname = swarm_sel_getName(swarm_method_getName(methodList[i]))),
 		     "_I_", 3) == 0)
@@ -228,7 +227,7 @@ PHASE(CreatingOnly)
   
   setBit (info, _CLS_DEFINEDCLASS, 1);
 #else
-  swarm_class_setDefinedClassBit (self, YES);
+  swarm_class_setDefinedClassBit (self->definingClass, YES);
   metaobjects = nil;
 #endif
   return self;

@@ -31,7 +31,7 @@ Library:      defobj
 #import <collections.h> // _collections_
 
 #import <defobj/swarm-objc-api.h>
-#import <defobj/SProtocol.h>
+#import <objc/Protocol.h>
 
 #include <misc.h> // xmalloc, strcmp, memset
 
@@ -125,7 +125,7 @@ initModules (void)
     classes = _obj_initAlloc (_obj_nclasses * sizeof (id));
     swarm_objc_getClassList(classes, _obj_nclasses);
   }
-  printf("# of classes: %d\n", _obj_nclasses);
+  //printf("# of classes: %d\n", _obj_nclasses);
 
   // allocate global hash table of class variable extensions
   int initialSize = 2;
@@ -137,7 +137,7 @@ initModules (void)
   int i;
   for (i = 0;i < _obj_nclasses; ++i) {
     class = classes[i];
-    printf("%s\n", swarm_class_getName(class));
+    //printf("%s\n", swarm_class_getName(class));
     if (swarm_class_getSuperclass(class) == moduleSuper) {
       _obj_nmodules++;
       // get uninitialized module object
@@ -393,19 +393,6 @@ _obj_initModule (void *module)
                           [**class getName] );
             }
         }
-
-#if 0
-      // Make generic types points to their concrete class
-      if (type && ((*type->typeID)->class_pointer == id_Type_c)) {
-	if (classData->initialPhase) {
-	  type->implementation = classData->initialPhase->definingClass;
-	  *type->typeID = type->implementation;
-	} else {
-	  type->implementation = classData->classID;
-	  *type->typeID = type->implementation;
-	}
-      }
-#endif
     }
   
   // audit that implementation provided for each creatable type interface

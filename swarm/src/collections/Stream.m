@@ -3,7 +3,7 @@
 #import <collections/predicates.h>
 #import <defobj/defalloc.h>
 #import "../defobj/internal.h" // fcall_type_size
-#include <objc/objc-api.h>
+#include <defobj/swarm-objc-api.h>
 
 @implementation ArchiverKeyword_c
 

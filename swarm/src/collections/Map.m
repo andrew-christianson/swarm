@@ -29,7 +29,7 @@ Library:      collections
 #import <collections/List_linked.h>
 #import <collections/classes.h>
 
-#include <objc/objc-api.h> // object_get_class
+#include <defobj/swarm-objc-api.h> // object_get_class
 #include <collections/predicates.h> // keywordp, stringp
 
 #import <defobj.h> // hdf5in, HDF5

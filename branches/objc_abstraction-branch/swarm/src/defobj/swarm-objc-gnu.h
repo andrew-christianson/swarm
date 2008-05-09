@@ -33,14 +33,20 @@ Library:      defobj
 // Direct mappings so use preprocessor defines
 //
 
-#define swarm_objc_lookupClass(name) objc_lookup_class(name)
 #define swarm_class_getName(cls) class_get_class_name(cls)
-#define swarm_sel_getName(sel) sel_get_name(sel)
-#define swarm_sel_getUid(str) sel_get_uid(str)
 #define swarm_class_getMethodImplementation(cls, sel) get_imp(cls, sel)
-#define swarm_method_getName(method) (((Method *)method)->method_name)
-#define swarm_method_getImplementation(method) method_get_imp(method)
-#define swarm_object_getClass(obj) object_get_class(obj)
 #define swarm_class_getInstanceSize(cls) class_get_instance_size(cls)
 #define swarm_class_getSuperclass(cls) class_get_super_class(cls)
 
+#define swarm_method_getName(method) (((Method *)method)->method_name)
+#define swarm_method_getImplementation(method) method_get_imp(method)
+
+#define swarm_objc_lookupClass(name) objc_lookup_class(name)
+
+#define swarm_object_getClass(obj) object_get_class(obj)
+
+#define swarm_sel_getName(sel) sel_get_name(sel)
+#define swarm_sel_getTypeEncoding(sel) sel_get_type(sel)
+#define swarm_sel_getTypedUid(str, types) sel_get_typed_uid(str, types)
+#define swarm_sel_getUid(str) sel_get_uid(str)
+#define swarm_sel_registerTypedName(str, types) sel_register_typed_name(str, types)

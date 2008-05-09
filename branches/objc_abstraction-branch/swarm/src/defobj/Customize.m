@@ -29,7 +29,7 @@ Library:      defobj
 #import <defobj/defalloc.h>
 #import <collections.h>
 #import <defobj/swarm-objc-api.h>
-#import <defobj/SProtocol.h>
+#import <objc/Protocol.h>
 
 #include <misc.h> // strchr, stpcpy, strlen
 

@@ -43,7 +43,8 @@ typedef enum {fcall_type_void = 0,
               fcall_type_iid
               } fcall_type_t;
 
-#include <objc/objc.h>
+#import <defobj/swarm-objc-api.h>
+#include <stdio.h>
 
 typedef union {
   id object;

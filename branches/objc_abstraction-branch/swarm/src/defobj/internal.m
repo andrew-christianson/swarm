@@ -23,7 +23,6 @@
 #import "internal.h"
 
 #include <misc.h> // strtoul, isDigit
-#include <objc/objc-api.h>
 #import <collections/predicates.h>
 
 #import <swarmconfig.h>
@@ -263,6 +262,7 @@ void map_objc_class_ivars (Class class,
                                                  unsigned rank,
                                                  unsigned *dims))
 {
+#if SWARM_OBJC_TODO
   struct objc_ivar_list *ivars = class->ivars;
   
   if (class->super_class)
@@ -307,6 +307,7 @@ void map_objc_class_ivars (Class class,
                           NULL);
         }
     }
+#endif // SWARM_OBJC_TODO
 }
 
 static void
@@ -350,6 +351,7 @@ map_object_ivars (id object,
 struct objc_ivar *
 find_ivar (id obj, const char *name)
 {
+#if SWARM_OBJC_TODO
   Class class = (Class)obj;
   struct objc_ivar_list *ivars = class->ivars;
 
@@ -376,16 +378,19 @@ find_ivar (id obj, const char *name)
         }
       return NULL;
     }
+#endif // SWARM_OBJC_TODO
   return NULL;
 }
 
 void *
 ivar_ptr_for_name (id obj, const char *name)
 {
+#if SWARM_OBJC_TODO
   struct objc_ivar *ivar = find_ivar (getClass (obj), name);
 
   if (ivar)
     return (void *) obj + ivar->ivar_offset;
+#endif // SWARM_OBJC_TODO
   return NULL;
 }
 
@@ -810,6 +815,7 @@ objc_type_for_fcall_type (fcall_type_t type)
 struct objc_ivar_list *
 ivar_extend_list (struct objc_ivar_list *ivars, unsigned additional)
 {
+#if SWARM_OBJC_TODO
   unsigned existing = ivars ? ivars->ivar_count : 0;
   unsigned count = existing + additional;
   struct objc_ivar_list *newivars;
@@ -826,17 +832,24 @@ ivar_extend_list (struct objc_ivar_list *ivars, unsigned additional)
             existing * sizeof (struct objc_ivar));
   newivars->ivar_count = existing;
   return newivars;
+#else
+  return NULL;
+#endif // SWARM_OBJC_TODO
 }
 
 Class 
 class_copy (Class class)
 {
+#if SWARM_OBJC_TODO
   size_t classSize = sizeof (struct objc_class);
   Class newClass = xmalloc (classSize);
   
   memcpy (newClass, class, classSize);
   newClass->ivars = ivar_extend_list (newClass->ivars, 0);
   return newClass;
+#else
+  return NULL;
+#endif
 }
 
 id
@@ -857,6 +870,7 @@ void
 class_addVariable (Class class, const char *varName, fcall_type_t varType,
              unsigned rank, unsigned *dims)
 {
+#if SWARM_OBJC_TODO
   struct objc_ivar *il;
   
   class->ivars = ivar_extend_list (class->ivars, 1);
@@ -868,6 +882,7 @@ class_addVariable (Class class, const char *varName, fcall_type_t varType,
   il->ivar_name = SSTRDUP (varName);
   class->instance_size = il->ivar_offset + fcall_type_size (varType);
   class->ivars->ivar_count++; 
+#endif // SWARM_OBJC_TODO
 }
 
 static unsigned generatedClassNameCount = 0;
@@ -886,6 +901,7 @@ class_generate_name (void)
 static fcall_type_t
 object_ivar_type (id obj, const char *ivar_name, BOOL *isArrayPtr)
 {
+#if SWARM_OBJC_TODO
 #ifdef HAVE_JDK
   jobject jobj = SD_JAVA_FIND_OBJECT_JAVA (obj);
     
@@ -917,11 +933,15 @@ object_ivar_type (id obj, const char *ivar_name, BOOL *isArrayPtr)
           return fcall_type_for_objc_type (*ivar->ivar_type);
         }
     }
+#else
+  return (fcall_type_t)NULL;
+#endif // SWARM_OBJC_TODO
 }
 
 void
 object_setVariable (id obj, const char *ivar_name, void *inbuf)
 {
+#if SWARM_OBJC_TODO
 #ifdef HAVE_JDK
   jobject jobj = SD_JAVA_FIND_OBJECT_JAVA (obj);
 
@@ -956,6 +976,7 @@ object_setVariable (id obj, const char *ivar_name, void *inbuf)
       
       memcpy (ptr, inbuf, count * fcall_type_size (type)); 
     }
+#endif
 }
 
 unsigned
@@ -1064,6 +1085,7 @@ object_setVariableFromExpr (id obj, const char *ivar_name, id expr)
       else
 #endif
         {
+#if SWARM_OBJC_TODO
           struct objc_ivar *ivar = find_ivar (getClass (obj), ivar_name);
           void *ptr;
           const char *atype = ivar->ivar_type;
@@ -1083,6 +1105,7 @@ object_setVariableFromExpr (id obj, const char *ivar_name, id expr)
           else
             type = fcall_type_for_objc_type (*atype);
           [expr convertToType: type dest: ptr];
+#endif // SWARM_OBJC_TODO
         }
     }
   else if (valuep (expr))

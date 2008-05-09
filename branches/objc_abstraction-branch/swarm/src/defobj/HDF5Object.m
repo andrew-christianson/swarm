@@ -476,6 +476,7 @@ create_class_from_compound_type (id aZone,
                                  const char *typeName,
                                  Class *classPtr)
 {
+#if SWARM_OBJC_TODO
   unsigned i, count;
   size_t tid_size;
   Class class;
@@ -573,6 +574,7 @@ create_class_from_compound_type (id aZone,
       }
       *classPtr = [classObj createEnd];
     }
+#endif // SWARM_OBJC_TODO
 }
 #endif
 
@@ -1685,7 +1687,11 @@ PHASE(Using)
       
       if (typeName)
         {
+#if SWARM_OBJC_DONE
           Class class = objc_lookup_class (typeName);
+#else
+          Class class = swarm_objc_lookupClass (typeName);
+#endif
  
           SFREEBLOCK (typeName);
 
@@ -1813,6 +1819,7 @@ PHASE(Using)
   else
 #endif
     {
+#if SWARM_OBJC_TODO
       struct objc_ivar *ivar = find_ivar (getClass (obj), ivarName);
       void *ptr = (void *) obj + ivar->ivar_offset;
       
@@ -1829,6 +1836,7 @@ PHASE(Using)
         }
       else
         *(id *) ptr = hdf5In ([obj getZone], self);
+#endif // SWARM_OBJC_TODO
     }
 }
 

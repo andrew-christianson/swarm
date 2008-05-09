@@ -2,7 +2,7 @@
 #define __defobj_COM_h
 
 #include <defobj.h>
-#include <objc/objc.h>
+#import <defobj/swarm-objc-api.h>
 
 #if defined(__cplusplus) && !defined(__OBJC__)
 extern "C" {

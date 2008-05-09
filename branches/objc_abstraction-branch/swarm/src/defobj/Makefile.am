@@ -30,7 +30,7 @@ libdefobj_la_LIBADD = $(FFILIB)
 
 bin_SCRIPTS = m2h make-h2x
 
-defobj_HEADERS = Archiver.h LispArchiver.h HDF5Archiver.h Arguments.h Create.h Customize.h DefClass.h DefObject.h HDF5Object.h Program.h Symbol.h Zone.h FCall.h FArguments.h defalloc.h deftype.h directory.h JavaProxy.h JavaClassProxy.h JavaCollection.h JavaCollectionIndex.h javavars.h COMProxy.h macros.h COM.h swarm-objc-api.h swarm_hash.h swarm-objc-gnu.h SObject.h SProtocol.h
+defobj_HEADERS = Archiver.h LispArchiver.h HDF5Archiver.h Arguments.h Create.h Customize.h DefClass.h DefObject.h HDF5Object.h Program.h Symbol.h Zone.h FCall.h FArguments.h defalloc.h deftype.h directory.h JavaProxy.h JavaClassProxy.h JavaCollection.h JavaCollectionIndex.h javavars.h COMProxy.h macros.h COM.h swarm-objc-api.h swarm_hash.h swarm-objc-gnu.h
 
 $(libdefobj_la_OBJECTS): version.h
 

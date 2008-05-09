@@ -26,7 +26,7 @@ Library:      defobj
 #import <defobj/FCall.h>
 #import <defobj.h>
 #import <defobj/FArguments.h>
-#import <objc/objc-api.h>
+#import <defobj/swarm-objc-api.h>
 #import <defobj/defalloc.h>
 #import <defobj/macros.h>
 
@@ -49,7 +49,7 @@ Library:      defobj
 #include <Foundation/NSMethodSignature.h>
 #else
 #ifdef USE_MFRAME
-#include <objc/mframe.h>
+#include <defobj/Smframe.h>
 #endif
 #endif
 

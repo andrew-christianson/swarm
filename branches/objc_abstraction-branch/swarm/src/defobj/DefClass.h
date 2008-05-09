@@ -23,9 +23,8 @@ Description:  class with variables and/or methods defined at runtime
 Library:      defobj
 */
 
-//#import <objc/Object.h>
-#import <defobj/SObject.h>
 #import <defobj/swarm-objc-api.h>
+#import <objc/Object.h>
 
 //
 // type declarations
@@ -138,32 +137,6 @@ struct methodDefs {
 // Functional access to the class extension data
 //
 static inline BOOL
-swarm_class_getCustomizeWrapperBit (Class cls)
-{
-  printf("getCustomizeWrapperBit: %s\n", swarm_class_getName(cls));
-#if SWARM_OBJC_TODO
-  return (cls->info & _CLS_CUSTOMIZEWRAPPER) != 0;
-#else
-  classData_t cData = _obj_getClassData(cls);
-  return (cData->info & _CLS_CUSTOMIZEWRAPPER) != 0;
-#endif
-}
-
-static inline void
-swarm_class_setCustomizeWrapperBit (Class cls, BOOL aBit)
-{
-  printf("setCustomizeWrapperBit: %d %s\n", aBit, swarm_class_getName(cls));
-#if SWARM_OBJC_TODO
-  if (aBit) cls->info |= _CLS_CUSTOMIZEWRAPPER;
-  else cls->info &= ~_CLS_CUSTOMIZEWRAPPER;
-#else
-  classData_t cData = _obj_getClassData(cls);
-  if (aBit) cData->info |= _CLS_CUSTOMIZEWRAPPER;
-  else cData->info &= ~_CLS_CUSTOMIZEWRAPPER;
-#endif
-}
-
-static inline BOOL
 swarm_class_getDefinedClassBit (Class cls)
 {
   classData_t cData = _obj_getClassData(cls);
@@ -176,19 +149,4 @@ swarm_class_setDefinedClassBit (Class cls, BOOL aBit)
   classData_t cData = _obj_getClassData(cls);
   if (aBit) cData->info |= _CLS_DEFINEDCLASS;
   else cData->info &= ~_CLS_DEFINEDCLASS;
-}
-
-static inline BOOL
-swarm_class_getRetainSelfBit (Class cls)
-{
-  classData_t cData = _obj_getClassData(cls);
-  return (cData->info & _CLS_RETAINSELF) != 0;
-}
-
-static inline void
-swarm_class_setRetainSelfBit (Class cls, BOOL aBit)
-{
-  classData_t cData = _obj_getClassData(cls);
-  if (aBit) cData->info |= _CLS_RETAINSELF;
-  else cData->info &= ~_CLS_RETAINSELF;
 }

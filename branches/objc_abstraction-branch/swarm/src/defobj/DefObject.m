@@ -146,7 +146,7 @@ PHASE(Using)
 
 + (const char *)getName
 {
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   return ((Class) self)->name;
 #else
   return swarm_class_getName(self);
@@ -292,7 +292,7 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
         {
           setBit (zbits, BitSuballocList, 0);
           [zone freeBlock: suballocList
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
                 blockSize: getClass (suballocList)->instance_size];
 #else
                 blockSize: swarm_class_getInstanceSize(swarm_object_getClass(suballocList))];
@@ -333,7 +333,7 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
         }
       [index drop];
       [zone freeBlock: suballocList
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
             blockSize: getClass (suballocList)->instance_size];
 #else
             blockSize: swarm_class_getInstanceSize(swarm_object_getClass(suballocList))];
@@ -396,14 +396,14 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
     {
       zone = getZone (self);
       suballocList =
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
         [zone allocBlock: getClass (suballocPrototype)->instance_size];
 #else
         [zone allocBlock: swarm_class_getInstanceSize(swarm_object_getClass(suballocPrototype))];
 #endif
       memcpy (suballocList,
               suballocPrototype,
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
               getClass (suballocPrototype)->instance_size);
 #else
               swarm_class_getInstanceSize(swarm_object_getClass(suballocPrototype)));
@@ -466,7 +466,7 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 //
 + getSuperclass
 {
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   return ((Class) self)->super_class;
 #else
   return swarm_class_getSuperclass(self);
@@ -485,7 +485,7 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
     {
       if (superclass == (Class) aClass)
         return YES;
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
       if (!superclass->super_class)
         return NO;
       superclass = superclass->super_class;
@@ -562,8 +562,10 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 //
 + (IMP)getMethodFor: (SEL)aSel
 {
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   return sarray_get (((Class) self)->dtable, (size_t) aSel->sel_id);
+#else
+  return swarm_class_getMethodImplementation(self, aSel);
 #endif
 }  
 
@@ -596,7 +598,7 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 //
 - getType
 {
-  return _obj_getClassData (*(Class_s **) self)->typeImplemented;
+  return _obj_getClassData (self->isa)->typeImplemented;
 }
 
 //
@@ -1465,7 +1467,7 @@ initDescribeStream (void)
 BOOL
 respondsTo (id anObject, SEL aSel)
 {
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   return sarray_get (getClass (anObject)->dtable, (size_t) aSel->sel_id) != 0;
 #else
   return swarm_class_respondsToSelector(swarm_object_getClass(anObject), aSel);
@@ -1479,7 +1481,7 @@ respondsTo (id anObject, SEL aSel)
 IMP
 getMethodFor (Class aClass, SEL aSel)
 {
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   return sarray_get (aClass->dtable, (size_t) aSel->sel_id);
 #else
   return swarm_class_getMethodImplementation(aClass, aSel);

@@ -24,7 +24,6 @@ Library:      defobj
 */
 
 #import <defobj/FArguments.h>
-#import <objc/objc-api.h>
 #import <defobj/defalloc.h>
 #import "internal.h"
 #include <misc.h> // stpcpy

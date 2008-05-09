@@ -377,7 +377,7 @@ PHASE(Using)
   else
     {
       [self catC: "<"];
-      [self catC: class_->name];
+      [self catC: swarm_class_getName(class_)];
       [self catC: ">"];
     }
 }

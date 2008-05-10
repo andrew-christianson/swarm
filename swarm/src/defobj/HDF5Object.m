@@ -23,7 +23,7 @@
 #import <defobj.h> // STRDUP, ZSTRDUP, SSTRDUP, FREEBLOCK, SFREEBLOCK
 #import <defobj/defalloc.h> // getZone
 #import <defobj/directory.h> // swarm_directory_ensure_class_named
-#import <defobj/classes.h> // id_Object_s
+#import <defobj/defobj_classes.h> // id_Object_s
 
 #import "internal.h" // map_object_ivars, class_generate_name, ivar_ptr_for_name
 #ifdef HAVE_JDK

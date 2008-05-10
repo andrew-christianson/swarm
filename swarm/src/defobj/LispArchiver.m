@@ -194,7 +194,7 @@ PHASE(Creating)
       // Create zone for easy destruction of expressions,
       // but don't drop it yet, since we will be doing
       // lazy evaluation on the saved pairs
-      inStreamZone = [Zone create: getZone (self)];
+      inStreamZone = [SwarmZone create: getZone (self)];
       [self _load_];
     }
   else

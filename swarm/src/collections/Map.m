@@ -27,7 +27,7 @@ Library:      collections
 #import <defobj/defalloc.h>
 
 #import <collections/List_linked.h>
-#import <collections/classes.h>
+#import <collections/collections_classes.h>
 
 #include <defobj/swarm-objc-api.h> // object_get_class
 #include <collections/predicates.h> // keywordp, stringp

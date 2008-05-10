@@ -26,7 +26,7 @@ Library:      collections
 #import <defobj.h>
 #include <externvar.h>
 
-//S: Standard collection types
+//S: Standarsd collection types
 
 //D: The collections library follows the library interface conventions of
 //D: the defobj library.  It also depends on standard supertypes and
@@ -1234,4 +1234,4 @@ CREATING
 - setUniformRandom: rnd;
 @end
 
-#import <collections/types.h>
+#import <collections/collections_types.h>

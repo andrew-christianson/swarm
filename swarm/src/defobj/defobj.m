@@ -62,7 +62,7 @@ externvardef id id_JavaClassProxy;
 void
 _defobj_implement (void)
 {
-  [id_Zone_c setTypeImplemented: Zone];
+  [id_Zone_c setTypeImplemented: SwarmZone];
   [id_Symbol_c setTypeImplemented: Symbol];
   [id_Warning_c setTypeImplemented: Warning];
   [id_Error_c setTypeImplemented: Error];

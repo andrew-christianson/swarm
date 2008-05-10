@@ -24,7 +24,7 @@ Library:      defobj
 */
 
 #include <swarmconfig.h> // PTRUINT
-#import <defobj/classes.h> // id_Zone_c
+#import <defobj/defobj_classes.h> // id_Zone_c
 
 //
 // getZone() --

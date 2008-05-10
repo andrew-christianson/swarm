@@ -213,11 +213,11 @@ initModules (void)
 
   // initialize standard allocation zones
 
-  _obj_globalZone  = [Zone create: _obj_initZone];
-  _obj_sessionZone = [Zone create: _obj_initZone];
-  _obj_scratchZone = [Zone create: _obj_initZone];
+  _obj_globalZone  = [SwarmZone create: _obj_initZone];
+  _obj_sessionZone = [SwarmZone create: _obj_initZone];
+  _obj_scratchZone = [SwarmZone create: _obj_initZone];
 
-  _obj_GCFixedRootZone = [Zone createBegin: _obj_initZone];
+  _obj_GCFixedRootZone = [SwarmZone createBegin: _obj_initZone];
   [_obj_GCFixedRootZone setGCFixedRootFlag: YES];
   _obj_GCFixedRootZone = [_obj_GCFixedRootZone createEnd];
 

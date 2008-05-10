@@ -170,7 +170,7 @@ PHASE(Using)
 - allocIVars: (Class)aClass
 {
   Object_s *newObject;
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   size_t size = aClass->instance_size;
 #else
   size_t size = swarm_class_getInstanceSize(aClass);
@@ -213,7 +213,7 @@ PHASE(Using)
 
   // allocate object of required size, including links in object header
 
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   instanceSize = getClass (anObject)->instance_size;
 #else
   instanceSize = swarm_class_getInstanceSize(swarm_object_getClass(anObject));
@@ -248,7 +248,7 @@ PHASE(Using)
 
   swarm_directory_objc_remove (anObject);
 
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   size = getClass (anObject)->instance_size;
 #else
   size = swarm_class_getInstanceSize(swarm_object_getClass(anObject));
@@ -267,7 +267,7 @@ PHASE(Using)
                     "> was allocated for restricted internal use by\n"
                     "> allocIVarsComponent: or copyIVarsComponent:,\n"
                     "> and may only be freed by freeIVarsComponent:\n",
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
                     anObject, getClass (anObject)->name);
 #else
                     anObject, swarm_class_getName(swarm_object_getClass(anObject)));
@@ -290,7 +290,7 @@ PHASE(Using)
 
   // allocate object of required size, including links in object header
 
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   newObject = (Object_s *) dalloc (aClass->instance_size, GCFixedRootFlag);
 #else  
   newObject = (Object_s *) dalloc (swarm_class_getInstanceSize(aClass), GCFixedRootFlag);
@@ -299,7 +299,7 @@ PHASE(Using)
   if (_obj_debug)
     {
       objectCount++;
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
       objectTotal += aClass->instance_size;
 #else
       objectTotal += swarm_class_getInstanceSize(aClass);
@@ -308,7 +308,7 @@ PHASE(Using)
   
   // initialize and return the new object, without adding to population list
 
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   memset (newObject, 0, aClass->instance_size);
 #else
   memset (newObject, 0, swarm_class_getInstanceSize(aClass));
@@ -328,7 +328,7 @@ PHASE(Using)
 
   // allocate object of required size, including links in object header
 
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   newObject = (Object_s *) dalloc (getClass (anObject)->instance_size, GCFixedRootFlag);
 #else
   newObject = (Object_s *) dalloc (swarm_class_getInstanceSize(swarm_object_getClass(anObject)),
@@ -338,7 +338,7 @@ PHASE(Using)
   if (_obj_debug)
     {
       objectCount++;
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
       objectTotal += getClass (anObject)->instance_size;
 #else
       objectTotal += swarm_class_getInstanceSize(swarm_object_getClass(anObject));
@@ -347,7 +347,7 @@ PHASE(Using)
   
   // initialize and return the new object, without adding to population list
   
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   memcpy (newObject, anObject, getClass (anObject)->instance_size);
 #else
   memcpy (newObject, anObject, swarm_class_getInstanceSize(swarm_object_getClass(anObject)));
@@ -377,7 +377,7 @@ PHASE(Using)
                     anObject, swarm_class_getName(swarm_object_getClass(anObject)));
       
       objectCount--;
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
       objectTotal -= getClass (anObject)->instance_size;
 
       memset ((id *) anObject, _obj_fillfree,

@@ -26,5 +26,5 @@ libactivity_la_LDFLAGS = @inst_LDFLAGS@
 activity_HEADERS = Action.h ActionGroup.h CompoundAction.h Schedule.h SwarmProcess.h XActivity.h
 
 install-data-local:
-	$(INSTALL_DATA) classes.h $(DESTDIR)$(activitydir)
-	$(INSTALL_DATA) types.h $(DESTDIR)$(activitydir)
+	$(INSTALL_DATA) $(MODULE)_classes.h $(DESTDIR)$(activitydir)
+	$(INSTALL_DATA) $(MODULE)_types.h $(DESTDIR)$(activitydir)

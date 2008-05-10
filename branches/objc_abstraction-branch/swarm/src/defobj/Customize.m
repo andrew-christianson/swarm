@@ -226,7 +226,7 @@ PHASE(Creating)
                     "> message selector not valid for receiver\n",
                     [[self getClass] getName],
                     createBy->createReceiver,
-		    getClass (createBy->createReceiver)->name,
+		    swarm_class_getName (getClass (createBy->createReceiver)),
                     sel_get_name (createBy->createMessage));
     }
   
@@ -446,6 +446,7 @@ _obj_splitPhases (Class class)
   classData_t classData, newClassData, superclassData = 0;
   BehaviorPhase_s *classCreating, *classUsing;
   Class creatingClass = NULL, usingClass = NULL;
+  Class superClass;
   char *classNameBuf;
   methodDefs_t mdefs, instance_mdefs, class_mdefs;
 #if SWARM_OBJC_DONE
@@ -461,16 +462,17 @@ _obj_splitPhases (Class class)
     return;
   
   // split classes for superclass if not done already
+  superClass = swarm_class_getSuperclass(class);
   if ((id) class != id_Customize_s)
     {
-      superclassData = _obj_getClassData (class->super_class);
+      superclassData = _obj_getClassData (superClass);
       if (!superclassData->initialPhase)
-        _obj_splitPhases (class->super_class);
+        _obj_splitPhases (superClass);
    }
   
   // generate chain of contiguous methods by interface
   instance_mdefs = _obj_initMethodInterfaces (class);
-  class_mdefs = _obj_initMethodInterfaces (class->class_pointer);
+  class_mdefs = _obj_initMethodInterfaces (swarm_class_getMetaclass (class));
 
   // create class for methods in Creating phase
   classCreating = nil;
@@ -479,12 +481,13 @@ _obj_splitPhases (Class class)
     {
       classCreating = [id_BehaviorPhase_s createBegin: _obj_initZone];
       
-      classNameBuf = _obj_initAlloc (strlen (class->name) + 10);
-      stpcpy (stpcpy (classNameBuf, class->name), ".Creating");
+      classNameBuf = _obj_initAlloc (strlen (swarm_class_getName(class)) + 10);
+      stpcpy (stpcpy (classNameBuf, swarm_class_getName(class)), ".Creating");
       
-      creatingClass = swarm_objc_allocateClassPair(class->super_class, classNameBuf,
-						   class->instance_size
-						   - class->super_class->instance_size);
+      creatingClass =
+	swarm_objc_allocateClassPair(superClass, classNameBuf,
+				     swarm_class_getInstanceSize (class)
+				     - swarm_class_getInstanceSize (superClass));
 
       [(id) classCreating setName: classNameBuf];
       [(id) classCreating setClass: getClass (class)];
@@ -498,12 +501,12 @@ _obj_splitPhases (Class class)
     {
       classUsing = [id_BehaviorPhase_s createBegin: _obj_initZone];
       
-      classNameBuf = _obj_initAlloc (strlen (class->name) + 7);
-      stpcpy (stpcpy (classNameBuf, class->name), ".Using");
+      classNameBuf = _obj_initAlloc (strlen (swarm_class_getName(class)) + 7);
+      stpcpy (stpcpy (classNameBuf, swarm_class_getName(class)), ".Using");
 
-      usingClass = swarm_objc_allocateClassPair(class->super_class, classNameBuf,
-						class->instance_size
-						- class->super_class->instance_size);
+      usingClass = swarm_objc_allocateClassPair(superClass, classNameBuf,
+						swarm_class_getInstanceSize (class)
+						- swarm_class_getInstanceSize (superClass));
 
       [(id) classUsing setName: classNameBuf];
       [(id) classUsing setClass: getClass (id_Object_s)];
@@ -528,12 +531,12 @@ _obj_splitPhases (Class class)
             {
               do {
                 superclassData = 
-                  _obj_getClassData (superclassData->initialPhase->definingClass->super_class);
+                  _obj_getClassData (swarm_class_getSuperclass (superclassData->initialPhase->definingClass));
               }
               while (superclassData->initialPhase->nextPhase == UsingOnly);
               
               [(id) classCreating setSuperclass: superclassData->initialPhase];
-              superclassData = _obj_getClassData (class->super_class);
+              superclassData = _obj_getClassData (superClass);
             }
           else
             [(id) classCreating setSuperclass: superclassData->initialPhase];
@@ -543,7 +546,7 @@ _obj_splitPhases (Class class)
           if (superclassData->initialPhase->nextPhase == CreatingOnly)
             do {
               superclassData =
-                _obj_getClassData (superclassData->initialPhase->definingClass->super_class);
+                _obj_getClassData (swarm_class_getSuperclass (superclassData->initialPhase->definingClass));
             }
             while (superclassData->initialPhase->nextPhase == CreatingOnly);
           
@@ -632,7 +635,7 @@ _obj_splitPhases (Class class)
         {
           raiseEvent (SourceMessage,
                       "> setTypeImplemented: invalid phase marker in class %s\n",
-                      class->name);
+                      swarm_class_getName (class));
         }        
     }
 
@@ -649,7 +652,7 @@ _obj_splitPhases (Class class)
 	    swarm_class_addMethod(creatingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
 				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				  swarm_method_getTypeEncoding(mnext[j]));
-	    swarm_class_addMethod(creatingClass->class_pointer,
+	    swarm_class_addMethod(swarm_class_getMetaclass (creatingClass),
 				  (ObjcSEL)swarm_method_getName(mnext[j]),
 				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				  swarm_method_getTypeEncoding(mnext[j]));
@@ -668,7 +671,7 @@ _obj_splitPhases (Class class)
 	    swarm_class_addMethod(usingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
 				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				  swarm_method_getTypeEncoding(mnext[j]));
-	    swarm_class_addMethod(usingClass->class_pointer,
+	    swarm_class_addMethod(swarm_class_getMetaclass (usingClass),
 				  (ObjcSEL)swarm_method_getName(mnext[j]),
 				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				  swarm_method_getTypeEncoding(mnext[j]));
@@ -693,14 +696,14 @@ _obj_splitPhases (Class class)
 	      swarm_class_addMethod(creatingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
 				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				    swarm_method_getTypeEncoding(mnext[j]));
-	      swarm_class_addMethod(creatingClass->class_pointer,
+	      swarm_class_addMethod(swarm_class_getMetaclass (creatingClass),
 				    (ObjcSEL)swarm_method_getName(mnext[j]),
 				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				    swarm_method_getTypeEncoding(mnext[j]));
 	      swarm_class_addMethod(usingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
 				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				    swarm_method_getTypeEncoding(mnext[j]));
-	      swarm_class_addMethod(usingClass->class_pointer,
+	      swarm_class_addMethod(swarm_class_getMetaclass (usingClass),
 				    (ObjcSEL)swarm_method_getName(mnext[j]),
 				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				    swarm_method_getTypeEncoding(mnext[j]));
@@ -723,7 +726,7 @@ _obj_splitPhases (Class class)
         {
           raiseEvent (SourceMessage,
                       "> setTypeImplemented: invalid phase marker in class %s\n",
-                      class->name);
+                      swarm_class_getName(class));
         }        
     }
 

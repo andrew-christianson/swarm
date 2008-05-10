@@ -147,6 +147,9 @@ swarm_class_getClassMethod (ObjcClass cls, ObjcSEL name);
 ObjcIvar
 swarm_class_getClassVariable (ObjcClass cls, const char *name);
 
+ObjcClass
+swarm_class_getMetaclass (ObjcClass cls);
+
 const char *
 swarm_class_getName (ObjcClass cls);
 

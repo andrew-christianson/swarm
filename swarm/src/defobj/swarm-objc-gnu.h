@@ -54,3 +54,5 @@ Library:      defobj
 #define swarm_sel_registerTypedName(str, types) sel_register_typed_name(str, types)
 
 #define swarm_ivar_getName(ivar) (((Ivar_t)ivar)->ivar_name)
+#define swarm_ivar_getOffset(ivar) (((Ivar_t)ivar)->ivar_offset)
+#define swarm_ivar_getTypeEncoding(ivar) (((Ivar_t)ivar)->ivar_type)

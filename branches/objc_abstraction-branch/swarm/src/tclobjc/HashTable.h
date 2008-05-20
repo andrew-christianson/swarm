@@ -29,9 +29,9 @@
 #define __HashTable_h_INCLUDE_GNU
 
 //#include <coll/objc-gnu2next.h>
-#import <defobj/SObject.h>
 #import <defobj/swarm_hash.h>
 #import <defobj/swarm-objc-api.h>
+#import <objc/Object.h>
 
 typedef swarm_node_ptr GNUHashState;
 

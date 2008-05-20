@@ -53,6 +53,28 @@ swarm_class_addMethod (Class cls, SEL aSel, IMP imp, const char *types)
   return YES;
 }
 
+Ivar_t *
+swarm_class_copyIvarList (Class cls, unsigned int *outCount)
+{
+  IvarList_t ivars = cls->ivars;
+  Ivar_t *ivarList;
+  int i;
+
+  // Get count of all ivars
+  *outCount = 0;
+  if (ivars == NULL) return NULL;
+  *outCount = ivars->ivar_count;
+  if (*outCount == 0) return NULL;
+
+  // Allocate ivar array
+  ivarList = (Ivar_t *)malloc(*outCount * sizeof(Ivar_t));
+  for (i = 0; i < ivars->ivar_count; i++) {
+    ivarList[i] = &(ivars->ivar_list[i]);
+  }
+
+  return ivarList;
+}
+
 Method **
 swarm_class_copyMethodList (Class cls, unsigned int *outCount)
 {

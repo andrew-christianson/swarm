@@ -243,9 +243,11 @@ void swarm_object_setIvar(ObjcID object, ObjcIvar ivar, void *value);
 const char *
 swarm_ivar_getName (ObjcIvar ivar);
 
-ptrdiff_t swarm_ivar_getOffset(ObjcIvar ivar);
+ptrdiff_t
+swarm_ivar_getOffset (ObjcIvar ivar);
 
-const char * swarm_ivar_getTypeEncoding(ObjcIvar ivar);
+const char *
+swarm_ivar_getTypeEncoding (ObjcIvar ivar);
 
 
 // Working with methods

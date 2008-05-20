@@ -240,7 +240,8 @@ void swarm_object_setIvar(ObjcID object, ObjcIvar ivar, void *value);
 
 
 // Working with instance variables
-const char * swarm_ivar_getName(ObjcIvar ivar);
+const char *
+swarm_ivar_getName (ObjcIvar ivar);
 
 ptrdiff_t swarm_ivar_getOffset(ObjcIvar ivar);
 

@@ -52,3 +52,5 @@ Library:      defobj
 #define swarm_sel_getTypedUid(str, types) sel_get_typed_uid(str, types)
 #define swarm_sel_getUid(str) sel_get_uid(str)
 #define swarm_sel_registerTypedName(str, types) sel_register_typed_name(str, types)
+
+#define swarm_ivar_getName(ivar) (((Ivar_t)ivar)->ivar_name)

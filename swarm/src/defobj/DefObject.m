@@ -622,7 +622,7 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 {
   IMP  mptr;
 
-  mptr = objc_msg_lookup (self, aSel);
+  mptr = swarm_class_getMethodImplementation (swarm_object_getClass (self), aSel);
   if (!mptr)
     raiseEvent (InvalidArgument, "> message selector not valid\n");
   return mptr (self, aSel);
@@ -632,7 +632,7 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 {
   IMP  mptr;
   
-  mptr = objc_msg_lookup (self, aSel);
+  mptr = swarm_class_getMethodImplementation (swarm_object_getClass (self), aSel);
   if (!mptr)
     raiseEvent (InvalidArgument, "> message selector not valid\n");
   return mptr (self, aSel, anObject1);
@@ -642,7 +642,7 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 {
   IMP  mptr;
   
-  mptr = objc_msg_lookup (self, aSel);
+  mptr = swarm_class_getMethodImplementation (swarm_object_getClass (self), aSel);
   if (!mptr)
     raiseEvent (InvalidArgument, "> message selector not valid\n");
   return mptr (self, aSel, anObject1, anObject2);
@@ -652,7 +652,7 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 {
   IMP  mptr;
   
-  mptr = objc_msg_lookup (self, aSel);
+  mptr = swarm_class_getMethodImplementation (swarm_object_getClass (self), aSel);
   if (!mptr)
     raiseEvent (InvalidArgument, "> message selector not valid\n");
   return mptr (self, aSel, anObject1, anObject2, anObject3);
@@ -666,7 +666,7 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
   id <FArguments> fa;
   id <FCall> fc;
   types_t val;
-  const char *type = sel_get_type (aSel);
+  const char *type = swarm_sel_getTypeEncoding (aSel);
 #ifdef HAVE_JDK
   jobject jObj;
 #endif
@@ -675,8 +675,8 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 
   if (!type)
     {
-      aSel = sel_get_any_typed_uid (sel_get_name (aSel));
-      type = sel_get_type (aSel);
+      aSel = swarm_sel_getUid (swarm_sel_getName (aSel));
+      type = swarm_sel_getTypeEncoding (aSel);
       if (!type)
         abort ();
     }
@@ -691,7 +691,7 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
       if (!(cSel = SD_COM_FIND_SELECTOR_COM (aSel)))
         raiseEvent (InvalidArgument,
                     "unable to find COM selector `%s' in objc:`%s' %p\n",
-                    sel_get_name (aSel),
+                    swarm_sel_getName (aSel),
                     [self name],
                     self,
                     cObj);
@@ -715,7 +715,7 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
       if (!jSel)
         raiseEvent (InvalidArgument,
                     "unable to find Java selector `%s' in objc:`%s' %p java: %p hash: %d\n",
-                    sel_get_name (aSel),
+                    swarm_sel_getName (aSel),
                     [self name],
                     self,
                     jObj,
@@ -872,7 +872,7 @@ _obj_dropAlloc (mapalloc_t mapalloc, BOOL objectAllocation)
 - doesNotRecognize: (SEL)sel
 {
   raiseEvent (InvalidArgument, "%s does not recognize %s\n",
-              [self name], sel_get_name (sel));
+              [self name], swarm_sel_getName (sel));
   return self;
 }
 #endif
@@ -1570,7 +1570,7 @@ xexec (id anObject, const char *msgName)
   
   if (anObject)
     {
-      sel = sel_get_any_uid (msgName);
+      sel = swarm_sel_getUid (msgName);
       if (sel)
         {
           if ([anObject respondsTo: sel])

@@ -227,7 +227,7 @@ PHASE(Creating)
                     [[self getClass] getName],
                     createBy->createReceiver,
 		    swarm_class_getName (getClass (createBy->createReceiver)),
-                    sel_get_name (createBy->createMessage));
+                    swarm_sel_getName (createBy->createMessage));
     }
   
   // free wrapper class
@@ -366,7 +366,7 @@ PHASE(Creating)
   
   // confirm valid message selector and return customization wrapper class
   
-  messageName = (const char *) sel_get_name (messageSelector);
+  messageName = (const char *) swarm_sel_getName (messageSelector);
   if (!messageName
       || !strchr (messageName, ':')
       || ((unsigned)(strchr (messageName, ':') - messageName)
@@ -393,7 +393,7 @@ PHASE(Creating)
 
   // confirm valid message selector and return customization wrapper class
 
-  messageName = (const char *) sel_get_name( messageSelector );
+  messageName = (const char *) swarm_sel_getName (messageSelector);
   if (!messageName ||
       (strchr (messageName, ':')
        && ((unsigned)(strchr (messageName, ':') - messageName)

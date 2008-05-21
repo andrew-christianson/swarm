@@ -107,12 +107,12 @@ id (*_swarm_i_Object_s__drop) (struct Object_s *, struct objc_selector *);
 
 static void predispatch ()
 {
-   _swarm_i_Zone_c__allocIVarsComponent_ = get_imp (objc_lookup_class ("Zone_c"), M(allocIVarsComponent:));
-   _swarm_i_Zone_c__freeIVarsComponent_ = get_imp (objc_lookup_class ("Zone_c"), M(freeIVarsComponent:));
-  _swarm_i_Zone_c__allocBlock_ = get_imp (objc_lookup_class ("Zone_c"), M(allocBlock:));
-  _swarm_i_Zone_c__freeBlock_blockSize_ = get_imp (objc_lookup_class ("Zone_c"), M(freeBlock:blockSize:));
-  _swarm_i_ComponentZone_c__allocIVars_ = get_imp (objc_lookup_class ("ComponentZone_c"), M(allocIVars:));
-  _swarm_i_Object_s__drop = get_imp (objc_lookup_class ("Object_s"), M(drop));
+   _swarm_i_Zone_c__allocIVarsComponent_ = swarm_class_getMethodImplementation (swarm_objc_lookupClass ("Zone_c"), M(allocIVarsComponent:));
+   _swarm_i_Zone_c__freeIVarsComponent_ = swarm_class_getMethodImplementation (swarm_objc_lookupClass ("Zone_c"), M(freeIVarsComponent:));
+   _swarm_i_Zone_c__allocBlock_ = swarm_class_getMethodImplementation (swarm_objc_lookupClass ("Zone_c"), M(allocBlock:));
+  _swarm_i_Zone_c__freeBlock_blockSize_ = swarm_class_getMethodImplementation (swarm_objc_lookupClass ("Zone_c"), M(freeBlock:blockSize:));
+  _swarm_i_ComponentZone_c__allocIVars_ = swarm_class_getMethodImplementation (swarm_objc_lookupClass ("ComponentZone_c"), M(allocIVars:));
+  _swarm_i_Object_s__drop = swarm_class_getMethodImplementation (swarm_objc_lookupClass ("Object_s"), M(drop));
 }
 
 

@@ -410,7 +410,7 @@ swarm_directory_COM_ensure_selector (COMselector cSel)
         for (ti = 0; ti < argCount; ti++)
           add_type (comEnv->selectorArgFcallType (cSel, ti));
 
-        sel = swarm_sel_getUid (name);
+        sel = swarm_sel_getUidWithType (name);
         {
           BOOL needSelector = NO;
           

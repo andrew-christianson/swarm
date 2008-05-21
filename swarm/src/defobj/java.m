@@ -1985,7 +1985,7 @@ swarm_directory_java_ensure_selector (jobject jsel)
             (*jniEnv)->DeleteLocalRef (jniEnv, lref);
           }
       
-        sel = swarm_sel_getUid (name);
+        sel = swarm_sel_getUidWithType (name);
         {
           BOOL needSelector = NO;
           

@@ -47,10 +47,14 @@ Library:      defobj
 
 #define swarm_object_getClass(obj) object_get_class(obj)
 
+#define swarm_sel_getAnyUid(str) sel_get_any_uid(str)
 #define swarm_sel_getName(sel) sel_get_name(sel)
 #define swarm_sel_getTypeEncoding(sel) sel_get_type(sel)
 #define swarm_sel_getTypedUid(str, types) sel_get_typed_uid(str, types)
 #define swarm_sel_getUid(str) sel_get_uid(str)
+#define swarm_sel_getUidWithType(str) sel_get_any_typed_uid(str)
+#define swarm_sel_isEqual(sel1, sel2) sel_eq(sel1, sel2)
+#define swarm_sel_registerName(str) sel_get_uid(str)
 #define swarm_sel_registerTypedName(str, types) sel_register_typed_name(str, types)
 
 #define swarm_ivar_getName(ivar) (((Ivar_t)ivar)->ivar_name)

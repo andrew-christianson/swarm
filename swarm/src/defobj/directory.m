@@ -439,7 +439,7 @@ swarm_directory_superclass (Class class)
         }
     }
 #endif
-  return class_get_super_class (class);
+  return swarm_class_getSuperclass (class);
 }
 
 

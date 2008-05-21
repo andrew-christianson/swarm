@@ -112,14 +112,11 @@ _obj_initMethodInterfaces (Class class)
         }
   }
 #else
-  //classData_t   classData;
-  ObjcMethod    *methods;
-  int           i, count, outCount;
-  id            interfaceID;
-  const char    *mname;
-  methodDefs_t  mdefs = NULL;
-
-  //classData = _obj_getClassData (class);
+  unsigned int outCount;
+  int i, count;
+  id interfaceID;
+  const char *mname;
+  methodDefs_t mdefs = NULL;
 
   ObjcMethod *methodList = swarm_class_copyMethodList(class, &outCount);
   //printf("%d methods\n", outCount);
@@ -189,10 +186,10 @@ PHASE(CreatingOnly)
 - setDefiningClass: (Class)aClass
 {
   definingClass = aClass;
-  info = aClass->info;
-  instanceSize = aClass->instance_size;
+  //info = aClass->info;
+  //instanceSize = aClass->instance_size;
   ivarList = aClass->ivars;
-  methodList = aClass->methods;
+  //methodList = aClass->methods;
   return self;
 }
 

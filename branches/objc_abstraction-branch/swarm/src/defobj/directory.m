@@ -142,7 +142,7 @@ swarm_directory_entry_drop (DirectoryEntry *entry)
 {
   [stream catPointer: self];
   [stream catC: " selector: "];
-  [stream catC: selector ? sel_get_name (selector) : "M(<nil>)"];
+  [stream catC: selector ? swarm_sel_getName (selector) : "M(<nil>)"];
   [super describe: stream];
 }
 @end
@@ -153,8 +153,8 @@ compare_objc_selectors (const void *A, const void *B, void *PARAM)
   SelectorEntry *a = (SelectorEntry *) A;
   SelectorEntry *b = (SelectorEntry *) B;
 
-  const char *aname = sel_get_name (a->selector);
-  const char *bname = sel_get_name (b->selector);
+  const char *aname = swarm_sel_getName (a->selector);
+  const char *bname = swarm_sel_getName (b->selector);
   
   return strcmp (aname, bname);
 }

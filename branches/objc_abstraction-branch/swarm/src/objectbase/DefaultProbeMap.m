@@ -19,7 +19,7 @@
 
 #import <objectbase/DefaultProbeMap.h>
 #import <collections.h>
-#import <objc/objc-api.h>
+#import <defobj/swarm-objc-api.h>
 #import <defobj.h> // Warning
 #import <defobj/defalloc.h> // getZone
 #include <swarmconfig.h>

@@ -403,7 +403,11 @@ PHASE(Creating)
     }
   else 
     {
+#if SWARM_OBJC_DONE
       SEL sel = sel_get_any_typed_uid (theMethodName);
+#else
+      SEL sel = swarm_sel_getUidWithType (theMethodName);
+#endif
 
 #ifdef HAVE_JDK
       if (!sel)
@@ -433,7 +437,7 @@ PHASE(Creating)
        gc_fobject = SD_COM_FIND_OBJECT_COM (obj);
       
       if (callType == JScall)
-        UPDATEMETHODNAME (sel_get_name (sel));
+        UPDATEMETHODNAME (swarm_sel_getName (sel));
       return self;
     }
 #ifdef HAVE_JDK
@@ -469,7 +473,7 @@ PHASE(Creating)
      fmethod = sel;
     class = getClass (obj);
     gc_fclass = class;
-    ffunction = FUNCPTR (get_imp ((Class) gc_fclass, (SEL) fmethod));
+    ffunction = FUNCPTR (swarm_class_getMethodImplementation ((Class) gc_fclass, (SEL) fmethod));
     return self;
   }
 }

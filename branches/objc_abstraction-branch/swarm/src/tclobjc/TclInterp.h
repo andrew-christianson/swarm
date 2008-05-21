@@ -24,7 +24,7 @@
 #ifndef _TclInterp_h
 #define _TclInterp_h
 
-#include <objc/Object.h>
+#import <objc/Object.h>
 #include <tcl.h>
 #include <tclObjc.h>
 

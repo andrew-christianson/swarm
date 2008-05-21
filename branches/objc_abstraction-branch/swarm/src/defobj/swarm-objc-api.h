@@ -276,6 +276,9 @@ ObjcIMP swarm_method_setImplementation(ObjcMethod method, ObjcIMP imp);
 
 
 // Working with selectors
+ObjcSEL
+swarm_sel_getAnyUid (const char *str);
+
 const char *
 swarm_sel_getName (ObjcSEL sel);
 
@@ -287,6 +290,9 @@ swarm_sel_getTypedUid (const char *str, const char *types);
 
 ObjcSEL
 swarm_sel_getUid (const char *str);
+
+ObjcSEL
+swarm_sel_getUidWithType (const char *str);
 
 ObjcBOOL
 swarm_sel_isEqual (ObjcSEL sel1, ObjcSEL sel2);

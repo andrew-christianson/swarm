@@ -22,7 +22,7 @@
 //D: A collection of tools that are only loosely related to each other.
 //D: the class hierarchy is virtually flat.
 
-#import <swarm.h>
+#import <SwarmTop.h>
 #import <objectbase.h>
 
 @protocol UName <SwarmObject, CREATABLE>

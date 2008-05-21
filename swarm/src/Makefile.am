@@ -37,11 +37,11 @@ libswarm_la_DEPENDENCIES = $(foreach module,$(SWARMMODULES),$(module)/lib$(modul
 libswarm_la_SOURCES = SwarmEnvironment.m classList.m
 BUILT_SOURCES = classList.m
 
-include_HEADERS = swarm.h SwarmEnvironment.h SwarmEnvironment_getters.h
+include_HEADERS = SwarmTop.h SwarmEnvironment.h SwarmEnvironment_getters.h
 
 SwarmEnvironment.lo: SwarmEnvironment_getters.m
 
-SwarmEnvironment_getters.m: swarm.h
+SwarmEnvironment_getters.m: SwarmTop.h
 
  include $(top_srcdir)/etc/Makefile.protocol
 
@@ -49,7 +49,7 @@ getters.elc: $(abs_top_builddir)/protocol.elc $(abs_top_builddir)/interface.elc
 
 $(abs_top_builddir)/interface.elc: $(abs_top_builddir)/protocol.elc
 
-$(srcdir)/SwarmEnvironment_getters.m: swarm.h getters.elc
+$(srcdir)/SwarmEnvironment_getters.m: SwarmTop.h getters.elc
 	$(ENVEMACS) -batch $(GUIOPT) -l '$(dos_abs_builddir)@PATHDELIM@getters.elc' -f generate-SwarmEnvironment-getters
 
 EXPORTALL=-Wl,--export-all

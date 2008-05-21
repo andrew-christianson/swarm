@@ -40,12 +40,12 @@ typedef struct methodDefs *methodDefs_t;
 @public
   Class_s *superclass;    // object for [super ...] dispatch
   const char *name;       // character string name for class
-  long version;           // for archiving (unused)
-  unsigned long info;     // class number + info bits
-  long instanceSize;      // size of instance in bytes
+  //long version;           // for archiving (unused)
+  //unsigned long info;     // class number + info bits
+  //long instanceSize;      // size of instance in bytes
   void *ivarList;         // compiler-generated list of local ivars
-  void *methodList;       // compiler-generated list of local methods
-  struct sarray  *dtable; // dispatch table
+  //void *methodList;       // compiler-generated list of local methods
+  //struct sarray  *dtable; // dispatch table
 }
 
 /*** methods in Class_s (inserted from .m file by m2h) ***/

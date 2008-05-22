@@ -43,7 +43,7 @@ typedef struct methodDefs *methodDefs_t;
   //long version;           // for archiving (unused)
   //unsigned long info;     // class number + info bits
   //long instanceSize;      // size of instance in bytes
-  void *ivarList;         // compiler-generated list of local ivars
+  //void *ivarList;         // compiler-generated list of local ivars
   //void *methodList;       // compiler-generated list of local methods
   //struct sarray  *dtable; // dispatch table
 }

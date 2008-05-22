@@ -1,13 +1,24 @@
 
 #import <defobj/swarm-objc-gnu.h>
-#include <stdlib.h>
 #include <objc/runtime.h>
 #include <objc/Object.h>
 #include <objc/Protocol.h>
 
+#include <stdint.h>
+#include <stdlib.h>
+#include <stddef.h>
+
 //
 // Working with classes
 //
+
+BOOL
+swarm_class_addIvar (Class cls, const char *name, size_t size, uint8_t alignment,
+		     const char *types)
+{
+  printf("swarm_class_addIvar() not implemented\n");
+  abort();
+}
 
 BOOL
 swarm_class_addMethod (Class cls, SEL aSel, IMP imp, const char *types)
@@ -162,6 +173,27 @@ swarm_class_copyProtocolList (Class cls, unsigned int *outCount)
   return protocolList;
 }
 
+Ivar_t
+swarm_class_getInstanceVariable (Class cls, const char *name)
+{
+  unsigned i;
+
+  if (!cls) return NULL;
+  IvarList_t ivars = cls->ivars;
+
+  // no ivars
+  if (ivars == NULL) return NULL;
+  if (ivars->ivar_count == 0) return NULL;
+
+  for (i = 0; i < ivars->ivar_count; i++) {
+    //printf("%s\n", ivars->ivar_list[i].ivar_name);
+    if (strcmp (ivars->ivar_list[i].ivar_name, name) == 0)
+      return &(ivars->ivar_list[i]);
+  }
+
+  return NULL;
+}
+
 BOOL
 swarm_class_respondsToSelector (Class cls, SEL sel)
 {
@@ -268,6 +300,14 @@ swarm_objc_allocateClassPair (Class superClass, const char *name,
   __objc_add_class_to_hash(new_class);
 
   return new_class;
+}
+
+Class
+swarm_objc_allocateClassPairCopy (Class cls, const char *name,
+				  size_t extraBytes)
+{
+  printf("swarm_objc_allocateClassPairCopy() not implemented\n");
+  abort();
 }
 
 void

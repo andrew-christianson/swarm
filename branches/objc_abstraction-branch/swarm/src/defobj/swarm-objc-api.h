@@ -147,12 +147,6 @@ swarm_class_getClassMethod (ObjcClass cls, ObjcSEL name);
 ObjcIvar
 swarm_class_getClassVariable (ObjcClass cls, const char *name);
 
-ObjcClass
-swarm_class_getMetaclass (ObjcClass cls);
-
-const char *
-swarm_class_getName (ObjcClass cls);
-
 ObjcMethod
 swarm_class_getInstanceMethod (ObjcClass cls, ObjcSEL name);
 
@@ -165,11 +159,14 @@ swarm_class_getInstanceVariable (ObjcClass cls, const char *name);
 const char *
 swarm_class_getIvarLayout (ObjcClass cls);
 
-ObjcBOOL
-swarm_class_getMetaClass (ObjcClass cls);
+ObjcClass
+swarm_class_getMetaclass (ObjcClass cls);
 
 ObjcIMP
 swarm_class_getMethodImplementation (ObjcClass cls, ObjcSEL sel);
+
+const char *
+swarm_class_getName (ObjcClass cls);
 
 ObjcProperty
 swarm_class_getProperty (ObjcClass cls, const char *name);
@@ -181,7 +178,7 @@ int
 swarm_class_getVersion (ObjcClass cls);
 
 ObjcBOOL
-swarm_class_isMetaClass (ObjcClass cls);
+swarm_class_isMetaclass (ObjcClass cls);
 
 ObjcBOOL
 swarm_class_respondsToSelector (ObjcClass cls, ObjcSEL sel);
@@ -203,6 +200,10 @@ ObjcClass
 swarm_objc_allocateClassPair (ObjcClass superClass, const char *name,
 			      size_t extraBytes);
 
+ObjcClass
+swarm_objc_allocateClassPairCopy (ObjcClass cls, const char *name,
+				  size_t extraBytes);
+
 void
 swarm_objc_registerClassPair (ObjcClass cls);
 
@@ -213,7 +214,7 @@ ObjcID swarm_objc_getClass(const char *name);
 
 int swarm_objc_getClassList(ObjcClass *buffer, int bufferLen);
 
-ObjcClass swarm_objc_getMetaClass(const char *name);
+ObjcClass swarm_objc_getMetaclass(const char *name);
 ObjcClass swarm_objc_lookupClass(const char *name);
 
 

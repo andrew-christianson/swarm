@@ -476,7 +476,6 @@ create_class_from_compound_type (id aZone,
                                  const char *typeName,
                                  Class *classPtr)
 {
-#if SWARM_OBJC_TODO
   unsigned i, count;
   size_t tid_size;
   Class class;
@@ -498,6 +497,7 @@ create_class_from_compound_type (id aZone,
     *classPtr = class;
   else
     {
+#if SWARM_OBJC_DONE
       Class newClass = [CreateDrop class];
       id classObj = [id_BehaviorPhase_s createBegin: aZone];
       struct objc_ivar_list *ivars =
@@ -573,8 +573,11 @@ create_class_from_compound_type (id aZone,
         ((Class) classObj)->instance_size = size;
       }
       *classPtr = [classObj createEnd];
+#else
+      printf("Creating new class from HDF5 not implemented.\n");
+      abort();
+#endif
     }
-#endif // SWARM_OBJC_TODO
 }
 #endif
 
@@ -1819,7 +1822,7 @@ PHASE(Using)
   else
 #endif
     {
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
       struct objc_ivar *ivar = find_ivar (getClass (obj), ivarName);
       void *ptr = (void *) obj + ivar->ivar_offset;
       
@@ -1836,7 +1839,25 @@ PHASE(Using)
         }
       else
         *(id *) ptr = hdf5In ([obj getZone], self);
-#endif // SWARM_OBJC_TODO
+#else
+      ObjcIvar ivar = find_ivar (getClass (obj), ivarName);
+      void *ptr = (void *) obj + swarm_ivar_getOffset(ivar);
+      
+      if (!ivar)
+        raiseEvent (InvalidArgument,
+                    "could not find ivar `%s'", ivarName);
+      
+      if ([self getDatasetFlag])
+        {
+	  const char *itype = swarm_ivar_getTypeEncoding(ivar);
+          if (*itype  == _C_PTR)
+            *((void **) ptr) = [self _loadDatasetIntoNewBuffer_: obj];
+          else
+            [self loadDataset: (void *) obj + swarm_ivar_getOffset(ivar)];
+        }
+      else
+        *(id *) ptr = hdf5In ([obj getZone], self);
+#endif
     }
 }
 

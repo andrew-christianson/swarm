@@ -188,7 +188,7 @@ PHASE(CreatingOnly)
   definingClass = aClass;
   //info = aClass->info;
   //instanceSize = aClass->instance_size;
-  ivarList = aClass->ivars;
+  //ivarList = aClass->ivars;
   //methodList = aClass->methods;
   return self;
 }
@@ -235,7 +235,11 @@ PHASE(CreatingOnly)
   id <Index> li = [expr begin: aZone];
   id key, val;
 
+#if SWARM_OBJC_DONE
   Class newClass = class_copy ((Class) self);
+#else
+  Class newClass = swarm_objc_allocateClassPairCopy((Class) self, class_generate_name(), 0);
+#endif
   
   while ((key = [li next]) != nil)
     {
@@ -294,6 +298,9 @@ PHASE(CreatingOnly)
         raiseEvent (InvalidArgument, "argument should be string or list");
     }
   [li drop];
+
+  swarm_objc_registerClassPair(newClass);
+
   return newClass;
 }
 
@@ -306,7 +313,7 @@ PHASE(CreatingOnly)
 
 - (void)lispOutShallow: stream
 {
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
   struct objc_ivar_list *ivars = ((Class_s *) self)->ivarList;
   unsigned i, count = ivars->ivar_count;
 
@@ -319,6 +326,20 @@ PHASE(CreatingOnly)
       [stream catType: ivars->ivar_list[i].ivar_type];
     }
   [stream catEndMakeClass];
+#else
+  unsigned i, outCount;
+  ObjcIvar *ivars = swarm_class_copyIvarList(swarm_object_getClass(self), &outCount);
+
+  [stream catStartMakeClass: [self name]];
+  for (i = 0; i < outCount; i++)
+    {
+      [stream catSeparator];
+      [stream catKeyword: swarm_ivar_getName(ivars[i])];
+      [stream catSeparator];
+      [stream catType: swarm_ivar_getTypeEncoding(ivars[i])];
+    }
+  [stream catEndMakeClass];
+  if (ivars) free(ivars);
 #endif
 }
 

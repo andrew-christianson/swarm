@@ -1,8 +1,11 @@
-AC_INIT(etc/Makefile.appl.in)
+AC_INIT(Swarm,2.2,support@swarm.org)
+AC_CONFIG_SRCDIR(etc/Makefile.appl.in)
 AC_CANONICAL_SYSTEM
 
 VERSION=`head -1 $srcdir/VERSION`
 AM_INIT_AUTOMAKE(swarm, $VERSION)
+
+LT_INIT([win32-dll])
 
 md_SWARM_INSTALLER
 
@@ -11,8 +14,8 @@ test "x$ACLOCAL" = xaclocal && ACLOCAL="aclocal -I m4"
 AM_CONFIG_HEADER(swarmconfig.h externvar.h)
 
 AC_PROG_CC
-wn_PROG_OBJC
-LT_AC_PROG_SED
+AC_PROG_OBJC
+AC_PROG_SED
 AC_SUBST(SED)
 
 case ${host} in
@@ -35,10 +38,8 @@ AC_SUBST(NESTLDFLAGS)
 OBJCFLAGS="$OBJCFLAGS -fgnu-runtime -fno-strict-aliasing -Wall -Wno-import -Wno-protocol -Wno-long-long"
 AC_SUBST(OBJCFLAGS)
 
-AC_LIBTOOL_WIN32_DLL
-AC_PROG_LIBTOOL
 
-SHLIBPATH_VAR=`./libtool --config | $SED -n 's/^shlibpath_var=\(.*\)/\1/p'`
+SHLIBPATH_VAR=$shlibpath_var  
 AC_SUBST(SHLIBPATH_VAR)
 
 AC_ARG_WITH(defaultdir,
@@ -132,30 +133,6 @@ TEA_PATH_TCLCONFIG
 TEA_LOAD_TCLCONFIG
 TEA_PUBLIC_TCL_HEADERS
 
-#TCLINCLUDES=${TCL_INCLUDE_SPEC}
-#TCLLDFLAGS="${TCL_LD_FLAGS} ${TCL_LIBS}"
-#TCLLIB=${TCL_LIB_SPEC} 
-
-#AC_SUBST(TCLINCLUDES)
-#AC_SUBST(TCLLDFLAGS)
-#AC_SUBST(TCLLIB)
-
-#md_FIND_TCL
-#md_FIND_TCL_HEADERS
-#if test -z "$tclincludedir" ; then
-#  AC_MSG_ERROR(Please specify Tcl header path using --with-tcldir or --with-tclincludedir)
-#fi
-
-#md_FIND_TCL_LIBRARIES
-#if test -z "$tcllibdir" ; then
-#  AC_MSG_ERROR(Please specify Tcl library path using --with-tcldir)
-#fi
-
-#md_FIND_TCL_SCRIPTS
-
-#AC_SUBST(tclscriptdir)
-#md_CHECK_TCLTK_LIBINC_VERSION_MATCH(tcl)
-
 TCLMODULE=tclobjc
 AC_SUBST(TCLMODULE)
 
@@ -172,23 +149,6 @@ else
 TEA_PATH_TKCONFIG
 TEA_LOAD_TKCONFIG
 TEA_PUBLIC_TK_HEADERS
-
-
-#md_FIND_TK_HEADERS
-#if test -z "$tkincludedir" ; then
-#  AC_MSG_ERROR(Please specify Tk include path using --with-tkincludedir)
-#fi
-
-#md_FIND_TK_LIBRARIES
-#if test -z "$tklibdir" ; then
-#  AC_MSG_ERROR(Please specify Tk library path using --with-tkdir)
-#fi
-
-#md_FIND_TK_SCRIPTS
-
-#AC_SUBST(tkscriptdir)
-
-#md_CHECK_TCLTK_LIBINC_VERSION_MATCH(tk)
 
 TKMODULE=tkobjc
 AC_SUBST(TKMODULE)
@@ -526,7 +486,7 @@ else
   touch avcall/avcall.h
 fi
 
-AC_OUTPUT([Makefile m4/Makefile src/Makefile src/activity/Makefile
+AC_CONFIG_FILES([Makefile m4/Makefile src/Makefile src/activity/Makefile
 src/analysis/Makefile src/collections/Makefile src/defobj/Makefile
 src/misc/Makefile src/objectbase/Makefile
 src/random/Makefile src/simtools/Makefile 
@@ -542,5 +502,7 @@ COM/Makefile COM/c/Makefile
 src/gui/Makefile src/simtoolsgui/Makefile src/tclobjc/Makefile src/tkobjc/Makefile src/tkobjc/tk/Makefile src/swarmgstep/Makefile
 src/swarm_xmlrpc/Makefile
 ])
+
+AC_OUTPUT
 
 # abs_srcdir=`cd $srcdir; pwd`

@@ -12,7 +12,7 @@
 #include <Foundation/NSMethodSignature.h>
 #else
 #ifdef USE_MFRAME
-#include <defobj/Smframe.h>
+#include <objc/mframe.h>
 #endif
 #endif
 

@@ -1,3 +1,14 @@
+2008-06-25  Scott Christley  <schristley@mac.com>
+
+	* Archiver.h, Arguments.h, COM.h, COMProxy.h, Create.h,
+	DefClass.h, DefObject.h, FArguments.h, FCall.h, HDF5Archiver.h,
+	HDF5Object.h, JavaClassProxy.h, JavaCollection.h,
+	JavaCollectionIndex.h, JavaProxy.h, LispArchiver.h, Program.h,
+	Symbol.h, Zone.h, defalloc.h, defobj.h, deftype.h, directory.h,
+	fcall_java.h, fcall_objc.h, java.h, javavars.h, make-h2x: Use
+	local include syntax to handle directory structure differences
+	between libraries and OpenStep frameworks.
+
 2008-04-29  Scott Christley  <schristley@mac.com>
 
         * java.m: Don't need mframe.h for GNUstep.

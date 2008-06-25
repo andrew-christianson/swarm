@@ -23,8 +23,8 @@ Description:  standard collection types
 Library:      collections
 */
 
-#import <defobj.h>
-#include <externvar.h>
+#import "defobj.h"
+#include "externvar.h"
 
 //S: Standarsd collection types
 

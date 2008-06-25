@@ -17,9 +17,9 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <analysis.h> // ActiveOutFile
-#import <defobj.h> // HDF5
-#import <objectbase/MessageProbe.h>
+#import "analysis.h" // ActiveOutFile
+#import "defobj.h" // HDF5
+#import "MessageProbe.h"
 
 @interface ActiveOutFile: MessageProbe <ActiveOutFile>
 {

@@ -20,9 +20,9 @@
 // Simple Graph Object -> encapsulates many of the low-level objects 
 //                        required to get graphs/file traces to work.
 
-#import <analysis.h> // EZGraph
-#import <gui.h>
-#import <simtoolsgui/GUIComposite.h>
+#import "analysis.h" // EZGraph
+#import "gui.h"
+#import "GUIComposite.h"
 
 @class EZGraph;
 @class EZSequence;

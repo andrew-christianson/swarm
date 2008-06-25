@@ -17,8 +17,8 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <space.h> // Int2dFiler, Discrete2d
-#import <objectbase/SwarmObject.h>
+#import "space.h" // Int2dFiler, Discrete2d
+#import "SwarmObject.h"
 
 // generic object to handle filing of 2d objects.
 // Tell it what message to send, and it sends it.

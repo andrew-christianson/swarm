@@ -17,9 +17,9 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <space.h> // Discrete2d
-#import <objectbase/SwarmObject.h>
-#import <gui.h> // Raster
+#import "space.h" // Discrete2d
+#import "SwarmObject.h"
+#import "gui.h" // Raster
 
 // generic object to handle display 2d objects
 // hand it a 2d raster widget, tell it what message to send, and it sends it.

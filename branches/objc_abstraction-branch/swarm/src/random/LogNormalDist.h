@@ -89,8 +89,8 @@ Relative speed:	| Speed 0.111 (time 9.040) relative to MT19937 getUnsignedSample
 */
 
 
-#import <objectbase/SwarmObject.h>
-#import <random.h>
+#import "SwarmObject.h"
+#import "random.h"
 
 
 @interface LogNormalDist: SwarmObject <LogNormalDist>

@@ -17,8 +17,8 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <objectbase.h> // Swarm
-#import <activity/SwarmProcess.h> // CSwarmProcess
+#import "objectbase.h" // Swarm
+#import "SwarmProcess.h" // CSwarmProcess
 
 @interface Swarm: CSwarmProcess <Swarm>
 {

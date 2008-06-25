@@ -1,3 +1,11 @@
+2008-06-25  Scott Christley  <schristley@mac.com>
+
+	* Array.h, Collection.h, InputStream.h, List.h, ListShuffler.h,
+	List_GEN.h, List_linked.h, List_mlinks.h, Map.h, OrderedSet.h,
+	OutputStream.h, Permutation.h, Set.h, Stream.h, StringObject.h,
+	collections.h: Use local include syntax to handle directory
+	structure differences between libraries and OpenStep frameworks.
+
 2007-03-04  Marcus G. Daniels  <marcus@snoutfarm.com>
 
 	* OutputStrteam.[hm], Stream.h, collections.h: Change class to

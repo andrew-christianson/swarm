@@ -17,9 +17,9 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <analysis.h> // FunctionGraph
-#import <gui.h>
-#import <objectbase/SwarmObject.h>
+#import "analysis.h" // FunctionGraph
+#import "gui.h"
+#import "SwarmObject.h"
 
 @interface FunctionGraph: SwarmObject <FunctionGraph>
 {

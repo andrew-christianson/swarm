@@ -1,3 +1,8 @@
+2008-06-25  Scott Christley  <schristley@mac.com>
+
+	* gui.h: Use local include syntax to handle directory structure
+	differences between libraries and OpenStep frameworks.
+
 2006-04-02  Paul Johnson
 
         * gui.h: drawHistogramWithInt: change (int*) to  (unsigned*) because

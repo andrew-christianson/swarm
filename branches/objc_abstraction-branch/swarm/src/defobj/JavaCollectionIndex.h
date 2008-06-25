@@ -17,9 +17,9 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <defobj.h>
-#import <defobj/Create.h>
-#import <swarmconfig.h>
+#import "defobj.h"
+#import "Create.h"
+#import "swarmconfig.h"
 
 #ifdef HAVE_JDK
 #import "java.h"

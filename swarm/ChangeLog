@@ -1,28 +1,26 @@
-<<<<<<< ChangeLog
-2008-05-07  Scott Christley  <schristley@mac.com>
+2008-05-27  Scott Christley  <schristley@mac.com>
 
-	* configure.in (swarm_datarootdir): datadir requires datarootdir.
+	* Makefile.am (super-clean): Remove files.
 
-=======
 2008-05-22  Bill Northcott  <w.northcott@unsw.edu.au>
 
-    * configure.in : shlibpath_var is now an available variable
+	* configure.in : shlibpath_var is now an available variable
     
 2008-05-20  Bill Northcott  <w.northcott@unsw.edu.au>
 
-    * configure.in, Makefile.am: update to recent standards
+	* configure.in, Makefile.am: update to recent standards
     
 2008-05-19  Bill Northcott  <w.northcott@unsw.edu.au>
 
-	* autogen.sh: add -Wno-portability to automake to 
-    suppress warnings.
-    * configure.in: remove cruft leftover from pre-TEA
+	* autogen.sh: add -Wno-portability to automake to suppress
+	warnings.
+
+	* configure.in: remove cruft leftover from pre-TEA
     
 2008-05-07  Scott Christley  <schristley@mac.com>
 
 	* configure.in (swarm_datarootdir): datadir requires datarootdir.
 
->>>>>>> 1.677
 2008-04-29  Scott Christley  <schristley@mac.com>
 
 	* configure.in (LIBOBJCLIB): Use standard name for ObjC library.

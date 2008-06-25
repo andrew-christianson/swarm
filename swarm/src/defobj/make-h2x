@@ -84,7 +84,7 @@ $SED <$m.xm+ >>$m.xt \
   -e 's/\(.*\)/externvar id \1;/'
 echo '
 #ifdef DEFINE_CLASSES
-#import <'$m'/'$m'_classes.h>
+#import "'$m'_classes.h"
 #endif' >>$m.xt
 
 # define type identifiers in generated file

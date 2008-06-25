@@ -24,8 +24,8 @@ Library:      defobj
 */
 
 
-#import <defobj/FArguments.h>
-#include <swarmconfig.h>
+#import "FArguments.h"
+#include "swarmconfig.h"
 #ifndef USE_AVCALL
 #undef PACKAGE
 #undef VERSION
@@ -34,7 +34,7 @@ Library:      defobj
 #undef VERSION
 #endif
 
-#import <defobj.h> // JOBJECT
+#import "defobj.h" // JOBJECT
 
 @interface FCall_c: CreateDrop_s <FCall>
 {

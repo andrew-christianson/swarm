@@ -1,3 +1,11 @@
+2008-06-25  Scott Christley  <schristley@mac.com>
+
+	* Ca2d.h, ConwayLife2d.h, DblBuffer2d.h, Diffuse2d.h,
+	Discrete2d.h, Grid2d.h, Int2dFiler.h, Object2dDisplay.h,
+	Value2dDisplay.h, space.h: Use local include syntax to handle
+	directory structure differences between libraries and OpenStep
+	frameworks.
+
 2008-04-29  Scott Christley  <schristley@mac.com>
 
         * Makefile.am (SRC): Do not build Object2dDisplay and

@@ -17,9 +17,9 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <analysis.h> // ActiveGraph
-#import <objectbase/MessageProbe.h>
-#import <gui.h>
+#import "analysis.h" // ActiveGraph
+#import "MessageProbe.h"
+#import "gui.h"
 
 // A graph that fetches its data, draws it on a GraphElement
 @interface ActiveGraph: MessageProbe <ActiveGraph>

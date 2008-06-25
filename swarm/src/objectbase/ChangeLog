@@ -1,3 +1,12 @@
+2008-06-25  Scott Christley  <schristley@mac.com>
+
+	* ActivityControl.h, CompleteProbeMap.h, CompleteVarMap.h,
+	DefaultProbeMap.h, EmptyProbeMap.h, MessageProbe.h, Probe.h,
+	ProbeLibrary.h, ProbeMap.h, Swarm.h, SwarmObject.h, VarProbe.h,
+	objectbase.h, probing.h, swarm_rts_routines.h: Use local include
+	syntax to handle directory structure differences between libraries
+	and OpenStep frameworks.
+
 2007-08-30  Gennady Telegin  <gepo@lvk.cs.msu.su>
 
 	* CustomProbeMap.m: If user add probe for unexisting method, then raise

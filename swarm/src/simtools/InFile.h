@@ -17,8 +17,8 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <simtools.h> // InFile
-#import <objectbase/SwarmObject.h>
+#import "simtools.h" // InFile
+#import "SwarmObject.h"
 
 @interface InFile: SwarmObject <InFile>
 {

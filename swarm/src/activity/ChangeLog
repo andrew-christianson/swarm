@@ -1,3 +1,10 @@
+2008-06-25  Scott Christley  <schristley@mac.com>
+
+	* Action.h, ActionGroup.h, CompoundAction.h, Schedule.h,
+	SwarmProcess.h, XActivity.h, activity.h: Use local include syntax
+	to handle directory structure differences between libraries and
+	OpenStep frameworks.
+
 2007-03-04  Marcus G. Daniels  <marcus@snoutfarm.com>
 
 	* activity.h (_activity_context_error): Use C linkage.

@@ -24,10 +24,10 @@ Library:      defobj
 */
 
 #define DEFINE_CLASSES
-#import <defobj.h>
+#import "defobj.h"
 #import <objc/Object.h>
 
-#include <swarmconfig.h> // PTRUINT
+#include "swarmconfig.h" // PTRUINT
 
 @class ObjectEntry;
 

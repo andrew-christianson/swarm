@@ -1,6 +1,6 @@
-#import <defobj/FArguments.h>
-#import <defobj/FCall.h>
-#import <defobj/swarm-objc-api.h>
+#import "FArguments.h"
+#import "FCall.h"
+#import "swarm-objc-api.h"
 
 extern void objc_setup_call (FArguments_c *fa, id obj, SEL sel);
 extern void objc_add_primitive (FArguments_c *fa, fcall_type_t type, void *val);

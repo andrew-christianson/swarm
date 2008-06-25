@@ -19,8 +19,8 @@
 
 // generic 2d cellular automata.
 
-#import <space.h> // Ca2d
-#import <space/DblBuffer2d.h>
+#import "space.h" // Ca2d
+#import "DblBuffer2d.h"
 
 @interface Ca2d: DblBuffer2d <Ca2d>
 {

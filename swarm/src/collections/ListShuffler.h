@@ -9,8 +9,8 @@
 // Reworked from Ted Belding's Shuffler.
 // (Algorithm from Knuth vol 2)
 
-#import <defobj/Create.h>
-#import <collections.h>
+#import "Create.h"
+#import "collections.h"
 
 @interface ListShuffler_c: CreateDrop_s <ListShuffler>
 {

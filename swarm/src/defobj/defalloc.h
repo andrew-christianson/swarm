@@ -23,8 +23,8 @@ Description:  additional interfaces for block-level memory allocation
 Library:      defobj
 */
 
-#include <swarmconfig.h> // PTRUINT
-#import <defobj/defobj_classes.h> // id_Zone_c
+#include "swarmconfig.h" // PTRUINT
+#import "defobj_classes.h" // id_Zone_c
 
 //
 // getZone() --

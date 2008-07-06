@@ -27,6 +27,8 @@
 #import "../defobj/java.h" // SD_JAVA_FIND_OBJECT_JAVA
 #endif
 
+#import <defobj/COM.h>
+
 #import "local.h"
 
 @implementation DefaultProbeMap

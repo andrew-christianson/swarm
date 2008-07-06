@@ -80,7 +80,7 @@ lispProcessPairs (id aZone,
             if (quotedp (key))
               key = [key getQuotedObject];
             
-            key = [key copy: aZone];
+            key = [(id <Copy>)key copy: aZone];
             
             if (archiver_list_p (key))
               {
@@ -97,7 +97,7 @@ lispProcessPairs (id aZone,
                               [last name]);
                 [first catC: "/"];
                 [first catC: [last getC]];
-                key = [first copy: aZone];
+                key = [(id <Copy>)first copy: aZone];
               }
             
             if (!stringp (key))
@@ -143,7 +143,7 @@ lispProcessApplicationPairs (id aZone,
 
       if (app == nil)
         {
-          app = [[[Application createBegin: aZone]
+          app = [[(Application *)[Application createBegin: aZone]
                    setName: [key getC]]
                   createEnd];
           [applicationMap at: key insert: app];
@@ -210,7 +210,7 @@ PHASE(Setting)
   
   if ((app = [applicationMap at: appKey]) == nil)
     {
-      app = [[[Application createBegin: getZone (self)]
+      app = [[(Application *)[Application createBegin: getZone (self)]
                setName: [appKey getC]]
               createEnd];
       

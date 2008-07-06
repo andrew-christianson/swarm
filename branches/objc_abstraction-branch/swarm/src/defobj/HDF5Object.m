@@ -1588,7 +1588,7 @@ PHASE(Using)
           
           if ((gid = H5Gopen (oid, memberName)) < 0)
             raiseEvent (LoadError, "cannot open group `%s'", memberName);
-          group = [[[[[[HDF5 createBegin: getZone (self)]
+          group = [[[(id <HDF5>)[[[HDF5 createBegin: getZone (self)]
                         setParent: self]
                        setWriteFlag: NO]
                       setName: memberName]
@@ -1605,7 +1605,7 @@ PHASE(Using)
 
           if ((did = H5Dopen (oid, memberName)) < 0)
             raiseEvent (LoadError, "cannot open dataset `%s'", memberName);
-          dataset = [[[[[[[HDF5 createBegin: getZone (self)]
+          dataset = [[[(id <HDF5>)[[[[HDF5 createBegin: getZone (self)]
                            setParent: self]
                           setWriteFlag: NO]
                          setDatasetFlag: YES]

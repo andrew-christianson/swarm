@@ -40,7 +40,7 @@
 #import <defobj/Arguments.h> // Arguments_c
 
 #ifndef DISABLE_GUI
-#ifndef GNUSTEP
+#if !defined(GNUSTEP) && !defined(SWARM_OSX)
 #import <gui.h> // GUI_EVENT_ASYNC
 #endif
 #endif
@@ -155,7 +155,7 @@ PHASE(Creating)
   initRandom (arguments);
 
 #ifndef DISABLE_GUI  
-#ifndef GNUSTEP
+#if !defined(GNUSTEP) && !defined(SWARM_OSX)
   if (swarmGUIMode)
     initSimtoolsGUI ();
 #endif
@@ -241,7 +241,7 @@ PHASE(Using)
 }
 
 #ifndef DISABLE_GUI
-#ifndef GNUSTEP
+#if !defined(GNUSTEP) && !defined(SWARM_OSX)
 - (void)createProbeDisplay: obj
 {
   CREATE_PROBE_DISPLAY (obj);
@@ -285,7 +285,7 @@ PHASE(Using)
 {
   while (GUI_EVENT_ASYNC ()) {}
 }
-#endif // GNUSTEP
+#endif // GNUSTEP, SWARM_OSX
 #endif // DISABLE_GUI
 
 - (void)xprint: obj
@@ -328,7 +328,7 @@ _initSwarm_ (int argc, const char **argv, const char *appName,
              BOOL inhibitExecutableSearchFlag)
 {
   id env;
-#ifndef GNUSTEP
+#if !defined(GNUSTEP) && !defined(SWARM_OSX)
   void __objc_exec_class_for_all_initial_modules ();
 
   __objc_exec_class_for_all_initial_modules ();

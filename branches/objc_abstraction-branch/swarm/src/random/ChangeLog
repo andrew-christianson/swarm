@@ -1,5 +1,7 @@
 2008-07-06  Scott Christley  <schristley@mac.com>
 
+	* include.gens.creating.m ([-createEnd]): Use swarm objc runtime API.
+
 	* random.h, randomdefs.h: Use local include syntax to handle
 	directory structure differences between libraries and OpenStep
 	frameworks.

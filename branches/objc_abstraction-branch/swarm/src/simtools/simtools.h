@@ -380,7 +380,7 @@ USING
 
 
 
-#include <simtools/initSwarm.h>
+#include "initSwarm.h"
 
 //#: Initializes the Swarm libraries without version or bug-report-address
 //#: information.

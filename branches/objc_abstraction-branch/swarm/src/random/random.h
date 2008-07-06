@@ -59,8 +59,8 @@ USING
 - (unsigned)getMagic;			// object's 'magic number'
 @end
 
-#import <random/generators.h>
-#import <random/distributions.h>
-#import <random/randomvars.h>
-#import <random/randomdefs.h>
+#import "generators.h"
+#import "distributions.h"
+#import "randomvars.h"
+#import "randomdefs.h"
 

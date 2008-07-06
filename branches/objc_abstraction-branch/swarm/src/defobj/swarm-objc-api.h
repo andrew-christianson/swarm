@@ -325,12 +325,13 @@ swarm_protocol_getName (ObjcProtocol *);
 //
 
 #if __APPLE_CC__
+#include <objc/objc-api.h>
 #if defined(OBJC_API_VERSION) && OBJC_API_VERSION >= 2
 // Apple ObjC 2.0
-#import <defobj/swarm-objc-apple2.h>
+#import "swarm-objc-apple2.h"
 #else
 // Apple ObjC 1.0
-#import <defobj/swarm-objc-apple.h>
+#import "swarm-objc-apple.h"
 #endif
 #else
 // GNU ObjC runtime

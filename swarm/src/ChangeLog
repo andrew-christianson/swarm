@@ -1,5 +1,7 @@
 2008-07-06  Scott Christley  <schristley@mac.com>
 
+	* SwarmEnvironment.m: Disable tcl/tk/blt gui for OSX.
+
 	* SwarmTop.h: Use local include syntax to handle directory
 	structure differences between libraries and OpenStep frameworks.
 

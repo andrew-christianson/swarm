@@ -1,5 +1,15 @@
 2008-07-06  Scott Christley  <schristley@mac.com>
 
+	* COM.h, HDF5Archiver.m, HDF5Object.m, LispArchiver.m: Cast so
+	compiler finds correct method definition.
+
+	* make-h2x: Rename EventType to SwarmEventType.
+
+	* swarm-objc-apple2.h: Initial mapping of swarm objc abstraction
+	runtime to Apple ObjC 2.
+
+	* swarm-objc-apple.m: New file.
+
 	* Customize.h, defobj.h, swarm-objc-api.h: Use local include
 	syntax to handle directory structure differences between libraries
 	and OpenStep frameworks.

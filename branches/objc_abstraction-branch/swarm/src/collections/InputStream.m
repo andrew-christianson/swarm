@@ -208,7 +208,7 @@ readString (id inStream, char terminator)
                 if (newObj == nil)
                   [self _unexpectedEOF_];
             
-                return [[[ArchiverArray createBegin: aZone]
+                return [[(id <ArchiverArray>)[ArchiverArray createBegin: aZone]
                           setArray: newObj]
                          createEnd];
               }

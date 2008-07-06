@@ -36,6 +36,8 @@ Library:      collections
 #import <defobj/java.h> // SD_JAVA_{INSTANTIATE,FINDJAVACLASS} (in HDF5in)
 #endif
 
+#import <defobj/HDF5Object.h>
+
 @implementation List_any
 
 PHASE(Creating)

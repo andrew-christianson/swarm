@@ -1,5 +1,7 @@
 2008-07-06  Scott Christley  <schristley@mac.com>
 
+	* Discrete2d.m: Cast so compiler finds correct method definition.
+
 	* space.h: Use local include syntax to handle directory structure
 	differences between libraries and OpenStep frameworks.
 

@@ -80,6 +80,7 @@ echo 'extern void *_'$m'_[];
 ' >$m.xt
 $SED <$m.xm+ >>$m.xt \
   -e 's/^Zone/SwarmZone/' \
+  -e 's/^EventType/SwarmEventType/' \
   -e 's/^Collection/SwarmCollection/' \
   -e 's/\(.*\)/externvar id \1;/'
 echo '
@@ -91,6 +92,7 @@ echo '
 
 $SED <$m.xm+ >>$m.xm \
   -e 's/^Zone/SwarmZone/' \
+  -e 's/^EventType/SwarmEventType/' \
   -e 's/^Collection/SwarmCollection/' \
   -e 's/\(.*\)/externvardef id \1=0;/'
 
@@ -100,6 +102,7 @@ echo '
 void *_'$m'_types[]={' >>$m.xm
 $SED <$m.xm+ >>$m.xm \
   -e 's/Zone/SwarmZone/' \
+  -e 's/^EventType/SwarmEventType/' \
   -e 's/^Collection/SwarmCollection/' \
   -e 's/\(.*\)/\&\1,/'
 echo 0, >>$m.xm

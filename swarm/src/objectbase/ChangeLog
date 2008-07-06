@@ -1,3 +1,7 @@
+2008-07-06  Scott Christley  <schristley@mac.com>
+
+	* DefaultProbeMap.m: Include COM.h to eliminate compile errors.
+
 2008-06-25  Scott Christley  <schristley@mac.com>
 
 	* ActivityControl.h, CompleteProbeMap.h, CompleteVarMap.h,

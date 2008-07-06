@@ -1,5 +1,7 @@
 2008-07-06  Scott Christley  <schristley@mac.com>
 
+	* UName.m: Cast so compiler finds correct method definition.
+
 	* simtools.h: Use local include syntax to handle directory
 	structure differences between libraries and OpenStep frameworks.
 

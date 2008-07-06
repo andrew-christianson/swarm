@@ -1,3 +1,8 @@
+2008-07-06  Scott Christley  <schristley@mac.com>
+
+	* collections.h: Use local include syntax to handle directory
+	structure differences between libraries and OpenStep frameworks.
+
 2008-06-25  Scott Christley  <schristley@mac.com>
 
 	* Array.h, Collection.h, InputStream.h, List.h, ListShuffler.h,

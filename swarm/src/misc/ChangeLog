@@ -1,3 +1,8 @@
+2008-07-06  Scott Christley  <schristley@mac.com>
+
+	* misc.h: Use local include syntax to handle directory structure
+	differences between libraries and OpenStep frameworks.
+
 2008-04-29  Scott Christley  <schristley@mac.com>
 
 	* misc.h (LLONG_MIN, LLONG_MAX): Use old gcc defines if available.

@@ -19,8 +19,8 @@
 
 //S: Classes to support GNUstep integration
 
-#import <objectbase.h>
-#import <space.h>
+#import "objectbase.h"
+#import "space.h"
 
 @protocol Object2dDisplay <SwarmObject, CREATABLE>
 //S: Object2dDisplay displays 2d arrays of objects.

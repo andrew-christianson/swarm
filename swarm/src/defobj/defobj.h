@@ -78,8 +78,8 @@ typedef struct {
 #if defined(__cplusplus) && !defined(__OBJC__)
 }
 #else
-#import <defobj/deftype.h>
-#include <externvar.h>
+#import "deftype.h"
+#include "externvar.h"
 
 //S: Standard objects for GNU Objective C extensions
 
@@ -1437,7 +1437,7 @@ extern id defobj_lookup_type (const char *name);
 //
 // type objects generated for module
 //
-#import <defobj/defobj_types.h>
+#import "defobj_types.h"
 
 extern void initDefobj (id <Arguments> arguments);
 

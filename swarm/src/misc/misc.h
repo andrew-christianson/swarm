@@ -20,7 +20,7 @@
 #ifndef _MISC_H
 #define _MISC_H
 
-#include <swarmconfig.h>
+#include "swarmconfig.h"
 
 #include <stddef.h>
 #if defined(__hpux__) && defined(HAVE_SYS_SIGEVENT_H)
@@ -38,7 +38,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <math.h>
-#include <defobj/swarm-objc-api.h> // BOOL
+#include "swarm-objc-api.h" // BOOL
 
 #include <limits.h>
 

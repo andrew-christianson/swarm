@@ -1016,4 +1016,4 @@ externvar BOOL (*_activity_trace) (id);
 //
 // include automatically generated definitions for activity package
 //
-#import <activity/activity_types.h>
+#import "activity_types.h"

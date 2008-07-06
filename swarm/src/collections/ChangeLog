@@ -1,5 +1,15 @@
 2008-07-06  Scott Christley  <schristley@mac.com>
 
+	* Array.m, List.m: Include HDF5Object.h to eliminate compile
+	warnings.
+
+	* InputStream.m, List_HDF5out.m, OutputStream.m, Map.m: Cast so
+	compiler finds correct method definition.
+
+	* OutputStream.m: Rename bool to aBool.
+
+	* Stream.[hm]: Rename bool to bool_.
+
 	* collections.h: Use local include syntax to handle directory
 	structure differences between libraries and OpenStep frameworks.
 

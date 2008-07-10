@@ -38,7 +38,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <math.h>
-#include "swarm-objc-api.h" // BOOL
+#include <objc/objc.h> // BOOL
 
 #include <limits.h>
 

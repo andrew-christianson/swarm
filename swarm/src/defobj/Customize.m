@@ -184,7 +184,7 @@ PHASE(Creating)
   
   // check that a create selection was made 
   
-  if ([getClass (createBy) superClass] != [CreateBy_c self])
+  if (swarm_class_getSuperclass(getClass (createBy)) != [CreateBy_c self])
     {
       raiseEvent (CreateSubclassing,
                   "> class %s: createEnd did not select a createBy action when called by\n"
@@ -484,10 +484,10 @@ _obj_splitPhases (Class class)
       classNameBuf = _obj_initAlloc (strlen (swarm_class_getName(class)) + 10);
       stpcpy (stpcpy (classNameBuf, swarm_class_getName(class)), ".Creating");
       
-      creatingClass =
-	swarm_objc_allocateClassPair(superClass, classNameBuf,
-				     swarm_class_getInstanceSize (class)
-				     - swarm_class_getInstanceSize (superClass));
+      creatingClass = swarm_objc_allocateClassPair(superClass, classNameBuf, 0);
+
+	  // copy the instance variables
+	  swarm_class_copyIvars(class, creatingClass);
 
       [(id) classCreating setName: classNameBuf];
       [(id) classCreating setClass: getClass (class)];
@@ -504,9 +504,10 @@ _obj_splitPhases (Class class)
       classNameBuf = _obj_initAlloc (strlen (swarm_class_getName(class)) + 7);
       stpcpy (stpcpy (classNameBuf, swarm_class_getName(class)), ".Using");
 
-      usingClass = swarm_objc_allocateClassPair(superClass, classNameBuf,
-						swarm_class_getInstanceSize (class)
-						- swarm_class_getInstanceSize (superClass));
+      usingClass = swarm_objc_allocateClassPair(superClass, classNameBuf, 0);
+
+	  // copy the instance variables
+	  swarm_class_copyIvars(class, usingClass);
 
       [(id) classUsing setName: classNameBuf];
       [(id) classUsing setClass: getClass (id_Object_s)];
@@ -652,7 +653,7 @@ _obj_splitPhases (Class class)
 	    swarm_class_addMethod(creatingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
 				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				  swarm_method_getTypeEncoding(mnext[j]));
-	    swarm_class_addMethod(swarm_class_getMetaclass (creatingClass),
+	    swarm_class_addMethod(swarm_object_getClass (creatingClass),
 				  (ObjcSEL)swarm_method_getName(mnext[j]),
 				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				  swarm_method_getTypeEncoding(mnext[j]));
@@ -671,7 +672,7 @@ _obj_splitPhases (Class class)
 	    swarm_class_addMethod(usingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
 				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				  swarm_method_getTypeEncoding(mnext[j]));
-	    swarm_class_addMethod(swarm_class_getMetaclass (usingClass),
+	    swarm_class_addMethod(swarm_object_getClass (usingClass),
 				  (ObjcSEL)swarm_method_getName(mnext[j]),
 				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				  swarm_method_getTypeEncoding(mnext[j]));
@@ -696,14 +697,14 @@ _obj_splitPhases (Class class)
 	      swarm_class_addMethod(creatingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
 				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				    swarm_method_getTypeEncoding(mnext[j]));
-	      swarm_class_addMethod(swarm_class_getMetaclass (creatingClass),
+	      swarm_class_addMethod(swarm_object_getClass (creatingClass),
 				    (ObjcSEL)swarm_method_getName(mnext[j]),
 				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				    swarm_method_getTypeEncoding(mnext[j]));
 	      swarm_class_addMethod(usingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
 				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				    swarm_method_getTypeEncoding(mnext[j]));
-	      swarm_class_addMethod(swarm_class_getMetaclass (usingClass),
+	      swarm_class_addMethod(swarm_object_getClass (usingClass),
 				    (ObjcSEL)swarm_method_getName(mnext[j]),
 				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				    swarm_method_getTypeEncoding(mnext[j]));

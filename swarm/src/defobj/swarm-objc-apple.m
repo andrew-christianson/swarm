@@ -55,6 +55,25 @@ swarm_class_addMethod (Class cls, SEL aSel, IMP imp, const char *types)
 	return ret;
 }
 
+void
+swarm_class_copyIvars (Class fromClass, Class toClass)
+{
+	unsigned int i, outCount;
+	unsigned int aSize, anAlign;
+
+	// copy the instance variables from one class to the other
+	Ivar *ivarList = class_copyIvarList(fromClass, &outCount);
+	if (ivarList) {
+		for (i = 0; i < outCount; ++i) {
+			NSGetSizeAndAlignment(ivar_getTypeEncoding(ivarList[i]), &aSize, &anAlign);
+			printf("copy ivar: %s %d %d\n", ivar_getName(ivarList[i]), aSize, log2(aSize));
+			class_addIvar(toClass, ivar_getName(ivarList[i]), aSize, log2(aSize),
+				ivar_getTypeEncoding(ivarList[i]));
+		}
+		free(ivarList);
+	}
+}
+
 #else
 
 // Apple ObjC 1.0

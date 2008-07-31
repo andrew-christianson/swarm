@@ -486,8 +486,8 @@ _obj_splitPhases (Class class)
       
       creatingClass = swarm_objc_allocateClassPair(superClass, classNameBuf, 0);
 
-	  // copy the instance variables
-	  swarm_class_copyIvars(class, creatingClass);
+      // copy the instance variables
+      swarm_class_copyIvars(class, creatingClass);
 
       [(id) classCreating setName: classNameBuf];
       [(id) classCreating setClass: getClass (class)];
@@ -506,8 +506,8 @@ _obj_splitPhases (Class class)
 
       usingClass = swarm_objc_allocateClassPair(superClass, classNameBuf, 0);
 
-	  // copy the instance variables
-	  swarm_class_copyIvars(class, usingClass);
+      // copy the instance variables
+      swarm_class_copyIvars(class, usingClass);
 
       [(id) classUsing setName: classNameBuf];
       [(id) classUsing setClass: getClass (id_Object_s)];
@@ -653,7 +653,7 @@ _obj_splitPhases (Class class)
 	    swarm_class_addMethod(creatingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
 				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				  swarm_method_getTypeEncoding(mnext[j]));
-	    swarm_class_addMethod(swarm_object_getClass (creatingClass),
+	    swarm_class_addMethod(swarm_class_getClass (creatingClass),
 				  (ObjcSEL)swarm_method_getName(mnext[j]),
 				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				  swarm_method_getTypeEncoding(mnext[j]));
@@ -672,7 +672,7 @@ _obj_splitPhases (Class class)
 	    swarm_class_addMethod(usingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
 				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				  swarm_method_getTypeEncoding(mnext[j]));
-	    swarm_class_addMethod(swarm_object_getClass (usingClass),
+	    swarm_class_addMethod(swarm_class_getClass (usingClass),
 				  (ObjcSEL)swarm_method_getName(mnext[j]),
 				  (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				  swarm_method_getTypeEncoding(mnext[j]));
@@ -697,14 +697,14 @@ _obj_splitPhases (Class class)
 	      swarm_class_addMethod(creatingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
 				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				    swarm_method_getTypeEncoding(mnext[j]));
-	      swarm_class_addMethod(swarm_object_getClass (creatingClass),
+	      swarm_class_addMethod(swarm_class_getClass (creatingClass),
 				    (ObjcSEL)swarm_method_getName(mnext[j]),
 				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				    swarm_method_getTypeEncoding(mnext[j]));
 	      swarm_class_addMethod(usingClass, (ObjcSEL)swarm_method_getName(mnext[j]),
 				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				    swarm_method_getTypeEncoding(mnext[j]));
-	      swarm_class_addMethod(swarm_object_getClass (usingClass),
+	      swarm_class_addMethod(swarm_class_getClass (usingClass),
 				    (ObjcSEL)swarm_method_getName(mnext[j]),
 				    (ObjcIMP)swarm_method_getImplementation(mnext[j]),
 				    swarm_method_getTypeEncoding(mnext[j]));

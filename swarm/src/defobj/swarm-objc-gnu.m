@@ -16,8 +16,46 @@ BOOL
 swarm_class_addIvar (Class cls, const char *name, size_t size, uint8_t alignment,
 		     const char *types)
 {
-  printf("swarm_class_addIvar() not implemented\n");
-  abort();
+  if (!cls) return NO;
+
+  IvarList_t ivars = cls->ivars;
+
+  if (ivars) {
+    // Reallocate ivar list
+    int i, cnt = ivars->ivar_count;
+    struct objc_ivar_list *newList = malloc(sizeof(struct objc_ivar_list)
+					    + cnt * sizeof(struct objc_ivar));
+
+    // copy old ivars
+    for (i = 0; i < cnt; ++i) {
+      newList->ivar_list[i].ivar_name = ivars->ivar_list[i].ivar_name;
+      newList->ivar_list[i].ivar_type = ivars->ivar_list[i].ivar_type;
+      newList->ivar_list[i].ivar_offset = ivars->ivar_list[i].ivar_offset;
+    }
+
+    // add the new ivar
+    newList->ivar_list[cnt].ivar_name = name;
+    newList->ivar_list[cnt].ivar_type = types;
+    newList->ivar_list[cnt].ivar_offset = cls->instance_size;
+
+    // add to class
+    newList->ivar_count = cnt + 1;
+    cls->ivars = newList;
+    free(ivars);
+  } else {
+    // first instance variable
+    cls->ivars = malloc(sizeof(struct objc_ivar_list));
+    if (!cls->ivars) return NO;
+    cls->ivars->ivar_count = 1;
+    cls->ivars->ivar_list[0].ivar_name = name;
+    cls->ivars->ivar_list[0].ivar_type = types;
+    cls->ivars->ivar_list[0].ivar_offset = 0;
+  }
+
+  // increase size of class
+  cls->instance_size += size;
+
+  return YES;
 }
 
 BOOL
@@ -84,6 +122,48 @@ swarm_class_copyIvarList (Class cls, unsigned int *outCount)
   }
 
   return ivarList;
+}
+
+void
+swarm_class_copyIvars (Class fromClass, Class toClass)
+{
+  IvarList_t fromIvars = fromClass->ivars;
+  int i, count;
+
+  // Any ivars to copy
+  if (fromIvars == NULL) return;
+  count = fromIvars->ivar_count;
+  if (count == 0) return;
+
+  struct objc_ivar_list *newList;
+  int start = 0;
+  if (toClass->ivars) {
+    int cnt = toClass->ivars->ivar_count;
+    newList = malloc(sizeof(struct objc_ivar_list)
+		     + (count + cnt - 1) * sizeof(struct objc_ivar));
+
+    // copy old ivars
+    for (i = 0; i < cnt; ++i) {
+      newList->ivar_list[i].ivar_name = toClass->ivars->ivar_list[i].ivar_name;
+      newList->ivar_list[i].ivar_type = toClass->ivars->ivar_list[i].ivar_type;
+      newList->ivar_list[i].ivar_offset = toClass->ivars->ivar_list[i].ivar_offset;
+    }
+    start = cnt;
+  } else {
+    newList = malloc(sizeof(struct objc_ivar_list)
+		     + count * sizeof(struct objc_ivar));
+  }
+
+  // copy new ivars
+  for (i = 0; i < count; ++i) {
+    newList->ivar_list[start + i].ivar_name = fromClass->ivars->ivar_list[i].ivar_name;
+    newList->ivar_list[start + i].ivar_type = fromClass->ivars->ivar_list[i].ivar_type;
+    newList->ivar_list[start + i].ivar_offset = fromClass->ivars->ivar_list[i].ivar_offset;
+  }
+
+  // add to class
+  toClass->ivars = newList;
+  toClass->instance_size += fromClass->instance_size - fromClass->ivars->ivar_list[0].ivar_offset;
 }
 
 Method **

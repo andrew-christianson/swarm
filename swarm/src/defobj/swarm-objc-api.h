@@ -82,6 +82,9 @@ swarm_class_copyProtocolList (ObjcClass cls, unsigned int *outCount);
 ObjcID
 swarm_class_createInstance (ObjcClass cls, size_t extraBytes);
 
+ObjcClass
+swarm_class_getClass (ObjcClass cls);
+
 ObjcMethod
 swarm_class_getClassMethod (ObjcClass cls, ObjcSEL name);
 

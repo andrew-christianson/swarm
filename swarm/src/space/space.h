@@ -34,11 +34,11 @@
 //D: addition, other types of spaces are desired: continuous coordinates,
 //D: other dimensions, arbitrary graphs, etc.
 
-#import "objectbase.h"
-#import "swarmconfig.h"
+#import <Swarm/objectbase.h>
+#import <Swarm/swarmconfig.h>
 #ifndef DISABLE_GUI
 #if !defined(GNUSTEP) && !defined(SWARM_OSX)
-#import <gui.h> // Raster, Colormap
+#import <Swarm/gui.h> // Raster, Colormap
 #endif
 #endif
 

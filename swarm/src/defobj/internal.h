@@ -17,9 +17,9 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <collections.h> // OutputStream
-#include <misc.h> // size_t
-#import <defobj/swarm-objc-api.h>
+#import <Swarm/collections.h> // OutputStream
+#include <Swarm/misc.h> // size_t
+#import <Swarm/swarm-objc-api.h>
 
 externvar id _obj_GCFixedRootZone;
 

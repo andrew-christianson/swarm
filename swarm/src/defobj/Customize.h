@@ -23,9 +23,9 @@ Description:  superclass impleemntation of create-phase customization
 Library:      defobj
 */
 
-#import "DefClass.h" // BehaviorPhase_s
-#import "DefObject.h"
-#import "swarm-objc-api.h"
+#import <Swarm/DefClass.h> // BehaviorPhase_s
+#import <Swarm/DefObject.h>
+#import <Swarm/swarm-objc-api.h>
 
 //
 // interface marker for methods in class which implement an interface of a type

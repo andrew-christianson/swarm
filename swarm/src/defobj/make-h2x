@@ -29,8 +29,8 @@ echo making $m.xm $m.xt $m.xc
 # generate #import statements in generated file
 
 echo \
-'#import <'$m'.h>
-#import <defobj/swarm-objc-api.h>
+'#import <Swarm/'$m'.h>
+#import <Swarm/swarm-objc-api.h>
 ' >$m.xm
 
 # extract all declared symbols into temporary file

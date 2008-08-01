@@ -23,8 +23,8 @@ Description:  generic supertype for collections
 Library:      collections
 */
 
-#import "Create.h"
-#import "collections.h"
+#import <Swarm/Create.h>
+#import <Swarm/collections.h>
 
 @interface Collection_any: CreateDrop_s <Collection>
 {

@@ -23,8 +23,8 @@ Description:  superclass support for all zone implementations
 Library:      defobj
 */
 
-#import "Create.h"
-#import "defalloc.h"
+#import <Swarm/Create.h>
+#import <Swarm/defalloc.h>
 
 @interface Zone_c : CreateDrop_s <Zone>
 {

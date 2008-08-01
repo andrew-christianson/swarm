@@ -1,3 +1,6 @@
+MODULE = swarmtop
+swarmtopdir = $(includedir)/Swarm
+
 if ENABLE_GNUSTEP
 SUBDIRS = misc collections defobj activity objectbase $(TCLTKGUIDIR) $(GUIDIR) random simtools $(SIMTOOLSGUI) analysis space swarmgstep $(SWARM_XMLRPC)
 else
@@ -8,12 +11,16 @@ SWARMMODULES = space analysis $(GNUSTEPMODULE) $(SIMTOOLSGUI) simtools random $(
 
 EXTRA_DIST = Makefile.rules getters.el SwarmEnvironment_getters.m
 
-.PHONY: headers
+.PHONY: headers swarm-link
 
-all-recursive: headers
+all-recursive: swarm-link headers
 
 #EXTRA_PROGRAMS = swarm.dll
 #bin_PROGRAMS = @SWARM_DLL@
+
+swarm-link:
+	-$(LN_S) . Swarm
+	for i in $(SUBDIRS) ; do $(MAKE) -C $$i swarm-link ; done
 
 headers: SwarmEnvironment_getters.m
 	for i in $(SUBDIRS) ; do $(MAKE) -C $$i headers ; done
@@ -37,7 +44,7 @@ libswarm_la_DEPENDENCIES = $(foreach module,$(SWARMMODULES),$(module)/lib$(modul
 libswarm_la_SOURCES = SwarmEnvironment.m classList.m
 BUILT_SOURCES = classList.m
 
-include_HEADERS = SwarmTop.h SwarmEnvironment.h SwarmEnvironment_getters.h
+swarmtop_HEADERS = SwarmTop.h SwarmEnvironment.h SwarmEnvironment_getters.h
 
 SwarmEnvironment.lo: SwarmEnvironment_getters.m
 

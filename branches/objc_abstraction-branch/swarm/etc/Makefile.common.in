@@ -35,7 +35,7 @@ GNUSTEPLIBINCLUDES = @GNUSTEPLIBINCLUDES@
 GNUSTEPLIBLDFLAGS = @GNUSTEPLIBLDFLAGS@
 GNUSTEPLIBLIBS = @GNUSTEPLIBLIBS@
 
-SWARMINCLUDES = -I$(includedir) -I$(includedir)/activity -I$(includedir)/analysis -I$(includedir)/collections -I$(includedir)/defobj -I$(includedir)/misc -I$(includedir)/objectbase -I$(includedir)/random -I$(includedir)/simtools -I$(includedir)/space
+SWARMINCLUDES = -I$(includedir) -I$(includedir)/Swarm
 
 SWARMLDFLAGS = @SWARMLDFLAGS@ @NESTLDFLAGS@
 XPMLDFLAGS = @XPMLDFLAGS@

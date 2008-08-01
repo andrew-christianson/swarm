@@ -23,8 +23,8 @@ Description:  character string object
 Library:      collections
 */
 
-#import "Create.h"
-#import "collections.h"
+#import <Swarm/Create.h>
+#import <Swarm/collections.h>
 
 @interface String_c: CreateDrop_s <String>
 {

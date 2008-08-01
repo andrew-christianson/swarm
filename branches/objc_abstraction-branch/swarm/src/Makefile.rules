@@ -1,4 +1,4 @@
-.PHONY: headers
+.PHONY: headers swarm-link
 
 SUFFIXES = .m
 
@@ -18,12 +18,16 @@ $(filter-out $(xm_file),$(BUILT_SOURCES)): $(xm_file)
 
 headers: $(xm_file)
 
+swarm-link:
+	-rm -f Swarm
+	-$(LN_S) . Swarm
+
 $(firstword $(TYPEINFO)): $(MODULE).h $(MAKEH2X) # $(SOURCES)
 	OBJC="$(OBJC)" OBJCFLAGS='$(DEFS) $(INCLUDES) $(CPPFLAGS) $(OBJCFLAGS)' OBJECTS="$(lib$(MODULE)_la_OBJECTS)" SED="$(SED)" sh $(MAKEH2X) $(MODULE).xm $(srcdir)
 	mv $(MODULE).xt $(MODULE)_types.h
 	mv $(MODULE).xc $(MODULE)_classes.h
 
-include_HEADERS = $(MODULE).h
+#include_HEADERS = $(MODULE).h
 
 # Local variables:
 # mode: makefile

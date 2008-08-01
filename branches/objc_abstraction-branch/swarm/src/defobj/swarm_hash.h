@@ -56,7 +56,7 @@ Library:      defobj
 
 #include <stddef.h>
 #include <string.h> // strcmp
-#import <defobj/swarm-objc-api.h> // BOOL
+#import <Swarm/swarm-objc-api.h> // BOOL
 
 /*
  * This data structure is used to hold items

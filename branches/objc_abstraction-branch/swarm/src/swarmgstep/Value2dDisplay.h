@@ -17,11 +17,11 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import "space.h" // Value2dDisplay, Discrete2d
-#import "swarmgstep.h"
-#import "Discrete2d.h"
+#import <Swarm/space.h> // Value2dDisplay, Discrete2d
+#import <Swarm/swarmgstep.h>
+#import <Swarm/Discrete2d.h>
 #ifndef SWARM_OSX
-#import <gui.h> // Raster, Colormap
+#import <Swarm/gui.h> // Raster, Colormap
 #else
 #import <Cocoa/Cocoa.h>
 #endif

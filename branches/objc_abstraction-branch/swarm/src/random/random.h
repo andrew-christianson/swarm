@@ -35,7 +35,7 @@ Modified:	 1998-10-08 (v. 0.8)  by Sven Thommesen
 //D: and a set of distribution classes for transforming random number
 //D: sequences into various simulated probability distributions.
 
-#import "objectbase.h"		// for protocol SwarmObject
+#import <Swarm/objectbase.h>		// for protocol SwarmObject
 
 
 @protocol InternalState
@@ -59,8 +59,8 @@ USING
 - (unsigned)getMagic;			// object's 'magic number'
 @end
 
-#import "generators.h"
-#import "distributions.h"
-#import "randomvars.h"
-#import "randomdefs.h"
+#import <Swarm/generators.h>
+#import <Swarm/distributions.h>
+#import <Swarm/randomvars.h>
+#import <Swarm/randomdefs.h>
 

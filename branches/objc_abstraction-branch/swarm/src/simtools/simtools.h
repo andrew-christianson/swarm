@@ -22,8 +22,8 @@
 //D: A collection of tools that are only loosely related to each other.
 //D: the class hierarchy is virtually flat.
 
-#import "SwarmTop.h"
-#import "objectbase.h"
+#import <Swarm/SwarmTop.h>
+#import <Swarm/objectbase.h>
 
 @protocol UName <SwarmObject, CREATABLE>
 //S: A class used to generate unique names (e.g. "critter1", "critter2" etc.)

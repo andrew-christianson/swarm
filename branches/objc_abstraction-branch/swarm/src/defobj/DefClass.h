@@ -23,7 +23,7 @@ Description:  class with variables and/or methods defined at runtime
 Library:      defobj
 */
 
-#import "swarm-objc-api.h"
+#import <Swarm/swarm-objc-api.h>
 #import <objc/Object.h>
 
 //

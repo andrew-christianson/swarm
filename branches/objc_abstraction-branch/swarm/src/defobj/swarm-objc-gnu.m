@@ -166,6 +166,7 @@ swarm_class_copyIvars (Class fromClass, Class toClass)
   toClass->instance_size += fromClass->instance_size - fromClass->ivars->ivar_list[0].ivar_offset;
 }
 
+
 Method **
 swarm_class_copyMethodList (Class cls, unsigned int *outCount)
 {

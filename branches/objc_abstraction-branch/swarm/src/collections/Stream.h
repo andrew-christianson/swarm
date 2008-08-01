@@ -1,7 +1,7 @@
-#import "Create.h"
-#import "defobj.h"
-#import "collections.h"
-#import "List_linked.h"
+#import <Swarm/Create.h>
+#import <Swarm/defobj.h>
+#import <Swarm/collections.h>
+#import <Swarm/List_linked.h>
 
 @interface ArchiverKeyword_c: CreateDrop_s <ArchiverKeyword>
 {

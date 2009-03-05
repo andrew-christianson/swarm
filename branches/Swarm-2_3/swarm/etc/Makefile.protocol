@@ -1,0 +1,48 @@
+ifndef swarm_srcdir
+swarm_srcdir = $(top_srcdir)
+endif
+
+abs_top_builddir := $(shell cd $(top_builddir); pwd)
+abs_builddir := $(shell pwd)
+ifeq ($(OSTYPE),cygwin)
+  dos_abs_top_builddir := $(shell cygpath -w $(abs_top_builddir))
+  dos_abs_builddir := $(shell cygpath -w $(abs_builddir))
+  dos_swarm_srcdir = $(shell cygpath -w $(swarm_srcdir))
+define elcrule
+cp -f $< $(dir $@)_$(notdir $<)
+$(ENVEMACS) -batch -f batch-byte-compile '$(shell cd $(dir $@); cygpath -w `pwd`)\_$(notdir $<)'
+mv $(dir $@)_$(notdir $@) $@
+$(RM) $(dir $@)_$(notdir $<)
+endef
+else
+  dos_abs_top_builddir := $(abs_top_builddir)
+  dos_abs_builddir := $(abs_builddir)
+  dos_swarm_srcdir := $(swarm_srcdir)
+define elcrule
+cp -f $< $(dir $@)_$(notdir $<)
+$(ENVEMACS) -batch -f batch-byte-compile $(shell cd $(dir $@); pwd)/_$(notdir $<)
+mv $(dir $@)_$(notdir $@) $@
+$(RM) $(dir $@)_$(notdir $<)
+endef
+endif
+
+ENVEMACS = TOP_BUILDDIR='$(dos_abs_top_builddir)' BUILDDIR='$(dos_abs_builddir)' SWARMSRCDIR='$(dos_swarm_srcdir)' $(EMACS)
+
+
+MODULES = defobj collections activity objectbase random simtools gui simtoolsgui space analysis
+
+%.elc: $(swarm_srcdir)/etc/%.el
+	$(elcrule)
+
+$(abs_top_builddir)/%.elc: $(swarm_srcdir)/etc/%.el
+	$(elcrule)
+
+$(abs_top_builddir)/%.elc: $(top_srcdir)/%.el
+	$(elcrule)
+
+%.elc: %.el
+	$(elcrule)
+
+$(abs_top_builddir)/protocol.elc: $(abs_top_builddir)/common.elc
+
+GUIOPT = --eval '(setq *disable-gui* $(if $(GUIDIR),nil,t))'

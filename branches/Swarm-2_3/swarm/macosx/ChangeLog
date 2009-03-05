@@ -1,0 +1,43 @@
+2007-06-06  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* swarm.xcode swarm.xcodeproj: update project format
+	
+2007-06-06  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* configure.sh: update to MacOS 10.4 and Mac Intel
+	
+2007-06-06  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* buildlibs.sh: update to MacOS 10.4
+	
+2005-02-07  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* INSTALL.MacOSX : fix typo in docs
+
+2005-02-04  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* INSTALL.MacOSX README.MacOSX: updated docs
+
+2005-02-03  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* INSTALL.MacOSX: updated docs
+	* configure.sh: added -B flag to gcc for Java patch
+	
+2004-11-30  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* INSTALL.MacOSX README.MacOSX: updated docs
+	* buildlibs.sh configure.sh: added Xcode scripts
+	* swarm.xcode: added xcode project.
+
+2003-09-15  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* swarmx/configure.sh  swarmx.pbproj: updates to build with
+	Apple Project Builder.
+
+2003-09-15  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* INSTALL.MacOSX README.MacOSX: updated docs
+
+2003-08-11  Bill Northcott <W.Northcott@unsw.edu.au>
+
+	* swarmx/buildlibs.sh: no more continue through build errors

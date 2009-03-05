@@ -1,0 +1,40 @@
+2004-02-25  Marcus G. Daniels <mgd@santafe.edu>
+
+        * ProbeTest.m (TestObject): Make ivars public.
+
+2000-03-28    <mgd@nest.swarm.org>
+
+	* Swarm 2.1.1 frozen.
+
+2000-02-12    <mgd@nest.swarm.org>
+
+	* Swarm 2.1 frozen.
+
+1999-09-18  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* Swarm 2.0.1 released.
+
+1999-08-28  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* Swarm 2.0 released.
+
+1999-01-18  Alex Lancaster  <alex@santafe.edu>
+
+	* Makefile.am: Add.
+
+	* Makefile: Remove.
+
+	* ProbeTest.m (main): Add return values for all test cases, so
+	automake will assign pass/fail correctly.  Tweaked some test
+	cases.
+
+1998-01-24  Marcus G. Daniels  <mgd@wijiji.santafe.edu>
+
+	* ProbeTest.m: Don't import tkobjc.h. 
+
+1997-12-16  Alex Lancaster  <alex@wijiji.santafe.edu>
+
+	* Makefile (LIBNAME): Added to repository. Removed SWARMHOME macro.
+
+	* ProbeTest.m (main): Added to repository. Fixed #import directives.
+

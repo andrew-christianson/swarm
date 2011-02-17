@@ -1,3 +1,8 @@
+2011-02-17  Scott Christley  <schristley@mac.com>
+
+	* config.guess, config.sub, ltmain.sh: Updated
+	by libtoolize 1.2.6b.
+
 2008-08-19  Marcus G. Daniels <marcus@snoutfarm.com>
 
 	* config.guess, config.sub, ltmain.sh:

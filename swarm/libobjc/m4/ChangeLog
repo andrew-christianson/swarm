@@ -1,3 +1,9 @@
+2011-02-17  Scott Christley  <schristley@mac.com>
+
+	* libtool.m4, lt~obsolete.m4, ltsugar.m4,
+	ltversion.m4, ltoptions.m4: New file for
+	from libtoolize 2.2.6b.
+
 2004-11-29  Marcus G. Daniels <mgd@santafe.edu>
 
 	* acdll.m4, acheaders.m4: Quote all macro names for newer aclocal.

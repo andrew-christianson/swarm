@@ -1,3 +1,12 @@
+2011-02-17  Scott Christley  <schristley@mac.com>
+
+	* config.guess, config.sub, ltmain.sh: Updated
+	by libtoolize 1.2.6b.
+
+	* VERSION: Bump. 2.4 release branch created.
+	* NEWS: version 2.4
+	* configure.in: version 2.4
+
 2009-03-05  Scott Christley  <schristley@mac.com>
 
 	* AUTHORS: Add myself.

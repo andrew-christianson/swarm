@@ -95,11 +95,11 @@ SWARMHOME=<path to where Swarm is installed>
 
 For example, on a local system the line may look like this:
 
-SWARMHOME=/home/username/Swarm/swarm-2.2
+SWARMHOME=/home/username/Swarm/swarm-2.4
 
 if the system admin has installed Swarm it may be:
 
-SWARMHOME=/usr/local/swarm-2.2
+SWARMHOME=/usr/local/swarm-2.4
 
 This points `make' to the Makefile.appl (in the case of applications)
 or Makefile.lib (in the case of libraries) file in the directory in

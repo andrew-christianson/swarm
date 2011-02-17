@@ -52,7 +52,7 @@
 #undef Widget
 #undef Object
 
-#include <swarmconfig.h> // header problems might occur unprotected in png.h
+#include <misc.h> // header problems might occur unprotected in png.h
 #ifdef HAVE_PNG
 #include <png.h>
 #else

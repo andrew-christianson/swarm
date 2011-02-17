@@ -24,12 +24,12 @@
 //D: values or displaying distributions as well as more specific
 //D: measurement tools (such as Average, Entropy). 
 
-#import <Swarm/objectbase.h>
-#import <Swarm/swarmconfig.h>
+#import <objectbase.h>
+#import <swarmconfig.h>
 #ifndef DISABLE_GUI
 #ifndef GNUSTEP
-#import <Swarm/simtoolsgui.h> // GUIComposite
-#import <Swarm/gui.h> // GraphElement
+#import <simtoolsgui.h> // GUIComposite
+#import <gui.h> // GraphElement
 #endif
 #endif
 

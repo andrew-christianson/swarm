@@ -2,7 +2,7 @@ MODULE = tclobjc
 CURRENT = 1
 REVISION = 3
 AGE = 1
-tclobjcdir = $(includedir)/Swarm/tclobjc
+tclobjcdir = $(includedir)/tclobjc
 
 TCLINCLUDES = @TCLINCLUDES@
 TKINCLUDES = @TKINCLUDES@

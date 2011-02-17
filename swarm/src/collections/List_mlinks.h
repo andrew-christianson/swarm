@@ -24,7 +24,7 @@ Library:      collections
 */
 
 #define MLINKS 1
-#import <Swarm/List_GEN.h>
+#import <collections/List_GEN.h>
 
 id <ListIndex> beginMlinksList (id list, id <Zone> aZone);
 id getFirstMlinksList (id list);

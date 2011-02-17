@@ -29,7 +29,7 @@
 
   [super buildObjects];
   
-  modelZone = [SwarmZone create: [self getZone]]; 
+  modelZone = [Zone create: [self getZone]]; 
   
   // use the built-in object lispAppArchiver to load modelSwarm parameters
   if ((forestModelSwarm = [lispAppArchiver getWithZone: modelZone key: "modelSwarm"])== nil)

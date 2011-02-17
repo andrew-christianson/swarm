@@ -1,79 +1,3 @@
-2010-04-11  Marcus G. Daniels <marcus@snoutfarm.com>
-
-	* Arguments.m: Look for signature (swarmconfig.h) in Swarm/.
-	Use CONFIG_DATADIR instead of DATADIR (latter is defined in windows.h).
-
-2010-02-18  Bill Northcott  <w.northcott@unsw.edu.au>
-
-	* configure.in: use Cocoa framework if Apple 
-          compiler
-    
-2009-11-29  Scott Christley  <schristley@mac.com>
-
-	* defobj.h: Include swarmconfig.h.
-
-2009-11-24  Bill Northcott  <w.northcott@unsw.edu.au>
-
-	* swarm-objc-api.h : changed __NEXT_RUNTIME__ to __APPLE__
-       for Apple compiler which needs Apple runtime
-	
-2009-11-24  Scott Christley  <schristley@mac.com>
-
-	* defobj.h, defalloc.h: Use defobj directory to include generated
-	file on platforms other than OpenStep.
-
-2009-11-24  Bill Northcott  <w.northcott@unsw.edu.au>
-
-	* make-h2x : changed $SED to $GSED for GNU sed
-	
-2009-11-07  Scott Christley  <schristley@mac.com>
-
-	* swarm-objc-gnu.h (class_getInstanceMethod): Add macro.
-	
-	* Program.m (initialize): Needs to return self.
-	
-	* DefObject.h, Program.h: Need to inherit from NSObject on
-	OpenStep.
-
-	* DefObject.m: Use conformsToProtocol: on OpenStep.  Add
-	casts to eliminate compiler errors.
-	
-	* defobj.m (_objc_lookup_class): Not available on Mac OSX.
-
-	* COM.m (swarm_directory_COM_ensure_selector): Typed selectors
-	not available on Mac OSX.
-
-	* FArguments.[hm] (setSelector:forTarget:): New method.
-
-	* swarm-objc-apple2.h (swarm_class_getClass): New definition.
-	
-2009-09-24  Scott Christley  <schristley@mac.com>
-
-	* defobj.h, LispArchiver.m, COM.m, Program.m, macros.h,
-	Customize.m, DefObject.m, directory.m, HDF5Object.h, HDF5Object.m,
-	FCall.m: Adjust casts to eliminate compiler warnings.
-
-	* Customize.h (getNextPhase, setNextPhase): Cannot inline as it
-	references static function.
-
-2009-05-09  Scott Christley  <schristley@mac.com>
-
-	* swarm-objc-gnu.m: Add prototype for GNU ObjC runtime internal function.
-	Set the new class and meta class as resolved.
-
-2009-04-02  Scott Christley  <schristley@mac.com>
-
-	* defobj.h, defobj.m, LispArchiver.m, FArguments.h, COM.h,
-	fcall_objc.h, FArguments.m, COM.m, fcall_objc.m, Program.h,
-	internal.h, Program.m, Zone.m, internal.m, DefClass.h, java.m,
-	DefClass.m, Archiver.m, Customize.h, DefObject.h, Customize.m,
-	DefObject.m, deftype.h, directory.m, defalloc.h, HDF5Object.m,
-	Makefile.am, make-h2x, FCall.m: ObjC runtime abstraction.
-	
-	* swarm-objc-api.h, swarm-objc-apple.h, swarm-objc-apple.m,
-	swarm_hash.h, swarm_hash.m, swarm-objc-apple2.h, swarm-objc-gnu.h,
-	swarm-objc-gnu.m: New file.
-
 2009-03-05  Scott Christley  <schristley@mac.com>
 
 	* FCall.m: mframe internals not available for GNUstep.
@@ -82,31 +6,10 @@
 
 	* defboj.h: Clarify documentation for -getName.
 
-2008-07-06  Scott Christley  <schristley@mac.com>
-
-	* COM.h, HDF5Archiver.m, HDF5Object.m, LispArchiver.m: Cast so
-	compiler finds correct method definition.
-
-	* make-h2x: Rename EventType to SwarmEventType.
-
-	* Customize.h, defobj.h, swarm-objc-api.h: Standardize include
-	directory structure to support libraries and OpenStep frameworks.
-
 2008-06-15  Marcus G. Daniels <marcus@snoutfarm.com>
 
 	* HDF5Object.m: Define H5_USE_16_API so that both HDF5 1.6 and 1.8
 	will work.
-
-2008-06-25  Scott Christley  <schristley@mac.com>
-
-	* Archiver.h, Arguments.h, COM.h, COMProxy.h, Create.h,
-	DefClass.h, DefObject.h, FArguments.h, FCall.h, HDF5Archiver.h,
-	HDF5Object.h, JavaClassProxy.h, JavaCollection.h,
-	JavaCollectionIndex.h, JavaProxy.h, LispArchiver.h, Program.h,
-	Symbol.h, Zone.h, defalloc.h, defobj.h, deftype.h, directory.h,
-	fcall_java.h, fcall_objc.h, java.h, javavars.h, make-h2x:
-	Standardize include directory structure to support libraries and
-	OpenStep frameworks.
 
 2008-04-29  Scott Christley  <schristley@mac.com>
 

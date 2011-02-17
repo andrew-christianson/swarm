@@ -22,7 +22,7 @@
 #import <tkobjc/common.h>
 #import <tkobjc/global.h>
 
-#import <defobj/swarm-objc-api.h>
+#import <objc/objc-api.h>
 
 static void
 tkobjc_bindReturnToSetValue (id widget, id self)
@@ -143,7 +143,7 @@ PHASE(Creating)
 
 PHASE(Using)
 
-- (id)getVarProbe
+- (id <VarProbe>)getVarProbe
 {
   return varProbe;
 }

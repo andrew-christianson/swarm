@@ -24,6 +24,7 @@ Library:      defobj
 */
 
 #import <defobj/FArguments.h>
+#import <objc/objc-api.h>
 #import <defobj/defalloc.h>
 #import "internal.h"
 #include <misc.h> // stpcpy
@@ -81,62 +82,15 @@ PHASE(Creating)
 
 - setSelector: (SEL)selector
 {
-  const char *type = swarm_sel_getTypeEncoding (selector);
+  const char *type = sel_get_type (selector);
 
   if (!type)
     {
-      const char *name = swarm_sel_getName (selector);
+      const char *name = sel_get_name (selector);
 
-      selector = swarm_sel_getUidWithType (name);
-      type = swarm_sel_getTypeEncoding (selector);
+      selector = sel_get_any_typed_uid (name);
+      type = sel_get_type (selector);
     }
-  
-  {
-    COMobject cSel;
-#ifdef HAVE_JDK
-    jobject jSel;
-#endif
-    
-    if ((cSel = SD_COM_FIND_SELECTOR_COM (selector)))
-      {
-        language = LanguageCOM;
-        if (COM_selector_is_boolean_return (cSel))
-          [self setBooleanReturnType];
-        else
-          [self setObjCReturnType: *type];
-      }
-#ifdef HAVE_JDK
-    else if ((jSel = SD_JAVA_FIND_SELECTOR_JAVA (selector)))
-      {
-        const char *sig =
-          java_ensure_selector_type_signature (jSel);
-        
-        [self setJavaSignature: sig];
-        [scratchZone free: (void *) sig];
-        {
-          jobject retType =
-            (*jniEnv)->GetObjectField (jniEnv, jSel, f_retTypeFid);
-          
-          if ((*jniEnv)->IsSameObject (jniEnv, retType, c_boolean))
-            [self setBooleanReturnType];
-          else
-            [self setObjCReturnType: *type];
-          (*jniEnv)->DeleteLocalRef (jniEnv, retType);
-        }
-      }
-#endif
-    else
-      {
-        language = LanguageObjc;
-        [self setObjCReturnType: *type];
-      }
-  }
-  return self;
-}
-
-- setSelector: (SEL)selector forTarget: (id)theTarget
-{
-  const char *type = swarm_method_getTypeEncoding(swarm_class_getInstanceMethod(swarm_object_getClass(theTarget), selector));
   
   {
     COMobject cSel;
@@ -183,7 +137,7 @@ PHASE(Creating)
 
 + create: aZone setSelector: (SEL)aSel
 {
-  return [[(FArguments_c *)[self createBegin: aZone] setSelector: aSel] createEnd];
+  return [[[self createBegin: aZone] setSelector: aSel] createEnd];
 }
 
 

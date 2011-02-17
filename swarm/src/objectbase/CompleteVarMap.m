@@ -19,7 +19,7 @@
 
 #import <objectbase/CompleteVarMap.h>
 #import <collections.h>
-#import <defobj/swarm-objc-api.h>
+#import <objc/objc-api.h>
 #import <defobj.h> // Warning
 #import <defobj/defalloc.h> // getZone
 
@@ -83,7 +83,7 @@ PHASE(Creating)
   aClass = probedClass;
   do {
     [classList addFirst: (id) aClass];
-    aClass = swarm_class_getSuperclass(aClass);
+    aClass = aClass->super_class;
   } while (aClass);
   
   anIndex = [classList begin: getZone (self)];

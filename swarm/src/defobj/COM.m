@@ -329,7 +329,7 @@ swarm_directory_COM_find_object_objc (COMobject cObject)
       ObjectEntry *result = swarm_directory_COM_find (cObject);
 
       return (result
-              ? (id)result->object
+              ? result->object
               : nil);
     }
 }
@@ -353,8 +353,8 @@ swarm_directory_COM_find_class_objc (COMclass cClass)
       ObjectEntry *result = swarm_directory_COM_find_class (cClass);
 
       return (result
-              ? (id)result->object
-              : nil);
+              ? result->object
+              : Nil);
     }
 }
 
@@ -370,7 +370,7 @@ swarm_directory_COM_ensure_object_objc (COMobject cObject)
       result = swarm_directory_COM_find (cObject);
 
       return (result
-              ? (id)result->object
+              ? result->object
               : SD_COM_ADD_OBJECT_OBJC (comEnv->COMnormalize (cObject),
                                         [COMProxy create: globalZone]));
     }
@@ -410,19 +410,19 @@ swarm_directory_COM_ensure_selector (COMselector cSel)
         for (ti = 0; ti < argCount; ti++)
           add_type (comEnv->selectorArgFcallType (cSel, ti));
 
-        sel = swarm_sel_getUidWithType (name);
+        sel = sel_get_any_typed_uid (name);
         {
           BOOL needSelector = NO;
           
           if (sel)
             {
-              if (!swarm_sel_getTypedUid (name, signatureBuf))
+              if (!sel_get_typed_uid (name, signatureBuf))
                 {
 #if 1
                   raiseEvent (WarningMessage,
                               "Method `%s' type (%s) differs from Swarm "
                               "method's type (%s)\n",
-			      name, signatureBuf, swarm_sel_getTypeEncoding (sel));
+                            name, signatureBuf, sel->sel_types);
 #endif
                   needSelector = YES;
                 }
@@ -433,14 +433,10 @@ swarm_directory_COM_ensure_selector (COMselector cSel)
           
           if (needSelector)
             {
-#if SWARM_OBJC_DONE
               const char *type =
                 mframe_build_signature (signatureBuf, NULL, NULL, NULL);
               
-              sel = swarm_sel_registerTypedName (name, type);
-#else
-              sel = swarm_sel_registerName (name);
-#endif
+              sel = sel_register_typed_name (name, type);
             }
         }
       }

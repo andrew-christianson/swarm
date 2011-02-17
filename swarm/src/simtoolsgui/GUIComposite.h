@@ -17,9 +17,9 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <Swarm/simtoolsgui.h> // GUIComposite
-#import <Swarm/SwarmObject.h>
-#import <Swarm/collections.h>
+#import <simtoolsgui.h> // GUIComposite
+#import <objectbase/SwarmObject.h>
+#import <collections.h>
 
 @interface GUIComposite: SwarmObject <GUIComposite>
 {

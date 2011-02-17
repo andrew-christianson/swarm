@@ -23,12 +23,12 @@ Description:  action included in an activity plan
 Library:      activity
 */
 
-#import <Swarm/defobj.h>
-#import <Swarm/Create.h>
-#import <Swarm/CompoundAction.h>
-#import <Swarm/activity.h>
+#import <defobj.h>
+#import <defobj/Create.h>
+#import <activity/CompoundAction.h>
+#import <activity.h>
 
-#import <Swarm/swarmconfig.h>
+#include <swarmconfig.h>
 
 @interface CAction: CreateDrop_s
 {

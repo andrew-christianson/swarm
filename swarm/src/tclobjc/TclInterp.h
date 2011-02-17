@@ -24,9 +24,9 @@
 #ifndef _TclInterp_h
 #define _TclInterp_h
 
-#import <objc/Object.h>
+#include <objc/Object.h>
 #include <tcl.h>
-#include <tclobjc/tclObjc.h>
+#include <tclObjc.h>
 
 #if !((TCL_MAJOR_VERSION == 7 && TCL_MINOR_VERSION >= 4) || TCL_MAJOR_VERSION >= 8)
 #   define TCLVERSIONLT74 1

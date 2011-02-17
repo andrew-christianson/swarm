@@ -27,7 +27,7 @@
 #import <tkobjc/CanvasItem.h>
 #import <defobj/defalloc.h> // getZone
 
-#import <defobj/swarm-objc-api.h>
+#include <objc/objc-api.h>
 #include <misc.h>
 
 #define BARSIZE 10
@@ -229,7 +229,7 @@ PHASE(Using)
   if (schedule == nil)
     return;
   
-  zone = [SwarmZone create: getZone (self)];
+  zone = [Zone create: getZone (self)];
   
   mi = [schedule mapBegin: zone];
   if ([mi next: (id *)&key])

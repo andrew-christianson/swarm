@@ -17,9 +17,9 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <Swarm/simtoolsgui.h> // MultiVarProbeDisplay
-#import <Swarm/CommonProbeDisplay.h>
-#import <Swarm/collections.h>
+#import <simtoolsgui.h> // MultiVarProbeDisplay
+#import <simtoolsgui/CommonProbeDisplay.h>
+#import <collections.h>
 
 @interface MultiVarProbeDisplay: CommonProbeDisplay <MultiVarProbeDisplay>
 {

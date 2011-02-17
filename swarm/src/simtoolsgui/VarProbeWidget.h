@@ -17,12 +17,12 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <Swarm/SwarmObject.h>
-#import <Swarm/VarProbe.h>
-#import <Swarm/gui.h>
+#import <objectbase/SwarmObject.h>
+#import <objectbase/VarProbe.h>
+#import <gui.h>
 
 #ifdef USE_WIDGET
-#include <Swarm/Widget.h>
+#include <tkobjc/Widget.h>
 @interface VarProbeWidget: Widget
 #else
 @interface VarProbeWidget: SwarmObject

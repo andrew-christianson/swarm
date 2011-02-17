@@ -36,7 +36,7 @@
          simtools
          simtoolsgui
          space
-         SwarmTop)
+         swarm)
        '(activity
          analysis
          collections
@@ -47,7 +47,7 @@
          (random . "distributions.h")
          simtools
          space
-         SwarmTop)))
+         swarm)))
         
 
 (defun swarm-modules ()
@@ -80,7 +80,7 @@
          (if filename
              filename
            (header-filename-for-module-sym module-sym))))
-    (if (eq module-sym 'SwarmTop)
+    (if (eq module-sym 'swarm)
         (concat (get-swarmsrcdir) "src/" file)
       (concat (get-swarmsrcdir) "src/" module-name "/" file))))
 

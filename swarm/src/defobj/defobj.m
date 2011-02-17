@@ -28,6 +28,7 @@ Library:      defobj
 #include "defobj.xm"
 #import <defobj/HDF5Object.h>
 
+#include <objc/objc-api.h> // objc_lookup_class, _objc_lookup_class
 #include <misc.h> // strcmp, sscanf
 #include <collections/predicates.h> // keywordp, archiver_list_p, stringp
 
@@ -62,7 +63,7 @@ externvardef id id_JavaClassProxy;
 void
 _defobj_implement (void)
 {
-  [id_Zone_c setTypeImplemented: SwarmZone];
+  [id_Zone_c setTypeImplemented: Zone];
   [id_Symbol_c setTypeImplemented: Symbol];
   [id_Warning_c setTypeImplemented: Warning];
   [id_Error_c setTypeImplemented: Error];
@@ -136,11 +137,7 @@ findLocalClass (const char *name)
 
   for (i = 0; i < localClassCount; i++)
     {
-#if SWARM_OBJC_DONE
       if (strcmp (localClasses[i]->name, name) == 0)
-#else
-      if (strcmp (swarm_class_getName(localClasses[i]), name) == 0)
-#endif
         return localClasses[i];
     }
   return Nil;
@@ -163,11 +160,7 @@ initDefobj (id <Arguments> _arguments)
   id_JavaClassProxy = [JavaClassProxy self];
 
   arguments = _arguments;
-#if SWARM_OBJC_TODO
-#if !SWARM_OSX
   _objc_lookup_class = findTypeOrLocalClass;
-#endif
-#endif
   {
     BOOL inhibitLoadFlag =
       ([arguments getInhibitArchiverLoadFlag] |

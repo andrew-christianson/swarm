@@ -34,11 +34,11 @@
 //D: addition, other types of spaces are desired: continuous coordinates,
 //D: other dimensions, arbitrary graphs, etc.
 
-#import <Swarm/objectbase.h>
-#import <Swarm/swarmconfig.h>
+#import <objectbase.h>
+#import <swarmconfig.h>
 #ifndef DISABLE_GUI
-#if !defined(GNUSTEP) && !defined(SWARM_OSX)
-#import <Swarm/gui.h> // Raster, Colormap
+#ifndef GNUSTEP
+#import <gui.h> // Raster, Colormap
 #endif
 #endif
 
@@ -230,7 +230,6 @@ USING
 
 #ifndef DISABLE_GUI
 #ifndef GNUSTEP
-#ifndef SWARM_OSX
 @protocol Value2dDisplay <SwarmObject, CREATABLE>
 //S: Value2dDisplay displays 2d arrays of values.
 
@@ -262,7 +261,6 @@ USING
 //M: this is a nice trick that you might want to look at. 
 - display;
 @end
-#endif
 #endif
 #endif
 
@@ -345,7 +343,6 @@ USING
 
 #ifndef DISABLE_GUI
 #ifndef GNUSTEP
-#ifndef SWARM_OSX
 @protocol Object2dDisplay <SwarmObject, CREATABLE>
 //S: Object2dDisplay displays 2d arrays of objects.
 
@@ -387,7 +384,6 @@ USING
 //M: Make a probe for an object at a specific point.
 - makeProbeAtX: (unsigned)x Y: (unsigned)y;
 @end
-#endif
 #endif
 #endif
 

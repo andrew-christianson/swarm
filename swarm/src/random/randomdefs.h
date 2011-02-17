@@ -39,7 +39,7 @@ Date:		 2001-07-17
 123456789|123456789|123456789|123456789|123456789|123456789|123456789|123456789|
 */
 
-#include <Swarm/misc.h> // clock, time, getpid, sleep, gettimeofday,
+#include <misc.h> // clock, time, getpid, sleep, gettimeofday,
 
 // System calls used:
 

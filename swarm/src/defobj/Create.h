@@ -23,7 +23,7 @@ Description:  superclasses to implement object life cycle
 Library:      defobj
 */
 
-#import <Swarm/Customize.h>
+#import <defobj/Customize.h>
 
 //
 // CreateDrop_s -- superclass to create object with retained zone for drop

@@ -17,8 +17,8 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <Swarm/simtools.h> // OutFile
-#import <Swarm/OutFile.h>
+#import <simtools.h> // OutFile
+#import <simtools/OutFile.h>
 
 // This object opens the designated file in `append' mode
 // rather than `create' mode, thus not wiping out

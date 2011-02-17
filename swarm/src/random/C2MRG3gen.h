@@ -126,8 +126,8 @@ Reference for	| L'Ecuyer et al, op. cit.
 output quality:	| 
 */
 
-#import <Swarm/random.h>
-#import <Swarm/SwarmObject.h>
+#import <random.h>
+#import <objectbase/SwarmObject.h>
 
 #define MAXLAG     3U
 #define COMPONENTS 2U

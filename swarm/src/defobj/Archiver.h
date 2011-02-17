@@ -17,11 +17,11 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <Swarm/Create.h>
-#import <Swarm/defobj.h>
-#import <Swarm/collections.h>
+#import <defobj/Create.h>
+#import <defobj.h>
+#import <collections.h>
 
-#import <Swarm/swarmconfig.h>
+#include <swarmconfig.h>
 
 #define ARCHIVER_FUNCTION_NAME "archiver"
 

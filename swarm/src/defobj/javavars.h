@@ -1,4 +1,4 @@
-#import <Swarm/directory.h> // for safe access to jni things
+#import <defobj/directory.h> // for safe access to jni things
 
 extern jclass c_boolean,
   c_char, c_byte,

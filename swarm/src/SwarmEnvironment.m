@@ -40,7 +40,7 @@
 #import <defobj/Arguments.h> // Arguments_c
 
 #ifndef DISABLE_GUI
-#if !defined(GNUSTEP) && !defined(SWARM_OSX)
+#ifndef GNUSTEP
 #import <gui.h> // GUI_EVENT_ASYNC
 #endif
 #endif
@@ -96,23 +96,23 @@ struct Zone_c;
 struct ComponentZone_c;
 struct Object_s;
 
-id (*_swarm_i_Zone_c__allocIVarsComponent_) (struct Zone_c *, SEL, Class);
-void (*_swarm_i_Zone_c__freeIVarsComponent_) (struct Zone_c *, SEL, id);
-void * (*_swarm_i_Zone_c__allocBlock_) (struct Zone_c *, SEL, size_t);
-void (*_swarm_i_Zone_c__freeBlock_blockSize_) (struct Zone_c *, SEL, void *, size_t);
-id (*_swarm_i_ComponentZone_c__allocIVars_) (struct ComponentZone_c *, SEL, Class);
-id (*_swarm_i_Object_s__drop) (struct Object_s *, SEL);   
+id (*_swarm_i_Zone_c__allocIVarsComponent_) (struct Zone_c *, struct objc_selector *, Class);
+void (*_swarm_i_Zone_c__freeIVarsComponent_) (struct Zone_c *, struct objc_selector *, id);
+void * (*_swarm_i_Zone_c__allocBlock_) (struct Zone_c *, struct objc_selector *, size_t);
+void (*_swarm_i_Zone_c__freeBlock_blockSize_) (struct Zone_c *, struct objc_selector *, void *, size_t);
+id (*_swarm_i_ComponentZone_c__allocIVars_) (struct ComponentZone_c *, struct objc_selector *, Class);
+id (*_swarm_i_Object_s__drop) (struct Object_s *, struct objc_selector *);   
 
 // static void predispatch () __attribute__ ((constructor));
 
 static void predispatch ()
 {
-  _swarm_i_Zone_c__allocIVarsComponent_ = (void *)swarm_class_getMethodImplementation (swarm_objc_lookupClass ("Zone_c"), M(allocIVarsComponent:));
-  _swarm_i_Zone_c__freeIVarsComponent_ = (void *)swarm_class_getMethodImplementation (swarm_objc_lookupClass ("Zone_c"), M(freeIVarsComponent:));
-  _swarm_i_Zone_c__allocBlock_ = (void *)swarm_class_getMethodImplementation (swarm_objc_lookupClass ("Zone_c"), M(allocBlock:));
-  _swarm_i_Zone_c__freeBlock_blockSize_ = (void *)swarm_class_getMethodImplementation (swarm_objc_lookupClass ("Zone_c"), M(freeBlock:blockSize:));
-  _swarm_i_ComponentZone_c__allocIVars_ = (void *)swarm_class_getMethodImplementation (swarm_objc_lookupClass ("ComponentZone_c"), M(allocIVars:));
-  _swarm_i_Object_s__drop = (void *)swarm_class_getMethodImplementation (swarm_objc_lookupClass ("Object_s"), M(drop));
+   _swarm_i_Zone_c__allocIVarsComponent_ = get_imp (objc_lookup_class ("Zone_c"), M(allocIVarsComponent:));
+   _swarm_i_Zone_c__freeIVarsComponent_ = get_imp (objc_lookup_class ("Zone_c"), M(freeIVarsComponent:));
+  _swarm_i_Zone_c__allocBlock_ = get_imp (objc_lookup_class ("Zone_c"), M(allocBlock:));
+  _swarm_i_Zone_c__freeBlock_blockSize_ = get_imp (objc_lookup_class ("Zone_c"), M(freeBlock:blockSize:));
+  _swarm_i_ComponentZone_c__allocIVars_ = get_imp (objc_lookup_class ("ComponentZone_c"), M(allocIVars:));
+  _swarm_i_Object_s__drop = get_imp (objc_lookup_class ("Object_s"), M(drop));
 }
 
 
@@ -155,7 +155,7 @@ PHASE(Creating)
   initRandom (arguments);
 
 #ifndef DISABLE_GUI  
-#if !defined(GNUSTEP) && !defined(SWARM_OSX)
+#ifndef GNUSTEP
   if (swarmGUIMode)
     initSimtoolsGUI ();
 #endif
@@ -241,7 +241,7 @@ PHASE(Using)
 }
 
 #ifndef DISABLE_GUI
-#if !defined(GNUSTEP) && !defined(SWARM_OSX)
+#ifndef GNUSTEP
 - (void)createProbeDisplay: obj
 {
   CREATE_PROBE_DISPLAY (obj);
@@ -285,7 +285,7 @@ PHASE(Using)
 {
   while (GUI_EVENT_ASYNC ()) {}
 }
-#endif // GNUSTEP, SWARM_OSX
+#endif // GNUSTEP
 #endif // DISABLE_GUI
 
 - (void)xprint: obj
@@ -328,13 +328,11 @@ _initSwarm_ (int argc, const char **argv, const char *appName,
              BOOL inhibitExecutableSearchFlag)
 {
   id env;
-
-#if !defined(GNUSTEP) && !defined(SWARM_OSX)
+#ifndef GNUSTEP
   void __objc_exec_class_for_all_initial_modules ();
 
   __objc_exec_class_for_all_initial_modules ();
 #endif
-
   env = [SwarmEnvironment createBegin];
 
 #if DEBUG

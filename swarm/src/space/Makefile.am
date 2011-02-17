@@ -2,7 +2,7 @@ MODULE = space
 CURRENT = 2
 REVISION = 1
 AGE = 0
-spacedir = $(includedir)/Swarm
+spacedir = $(includedir)/space
 
 include $(top_srcdir)/src/Makefile.rules
 
@@ -12,7 +12,7 @@ noinst_LTLIBRARIES = @noinst_LIBS@
 lib_LTLIBRARIES = @inst_LIBS@
 EXTRA_LTLIBRARIES = libspace.la
 
-if ENABLE_OPENSTEP
+if ENABLE_GNUSTEP
 GUI_SRC =
 GUI_HDRS =
 else
@@ -30,9 +30,9 @@ libspace_la_SOURCES = $(SRC)
 libspace_la_LDFLAGS = @inst_LDFLAGS@
 
 if DISABLE_GUI
-space_HEADERS = $(MODULE).h Ca2d.h ConwayLife2d.h DblBuffer2d.h Diffuse2d.h Discrete2d.h Grid2d.h Int2dFiler.h
+space_HEADERS = Ca2d.h ConwayLife2d.h DblBuffer2d.h Diffuse2d.h Discrete2d.h Grid2d.h Int2dFiler.h
 else
-space_HEADERS = $(MODULE).h Ca2d.h ConwayLife2d.h DblBuffer2d.h Diffuse2d.h Discrete2d.h Grid2d.h Int2dFiler.h $(GUI_HDRS)
+space_HEADERS = Ca2d.h ConwayLife2d.h DblBuffer2d.h Diffuse2d.h Discrete2d.h Grid2d.h Int2dFiler.h $(GUI_HDRS)
 endif
 
 EXTRA_DIST = Object2dDisplay.h Value2dDisplay.h

@@ -21,7 +21,7 @@
 // activities, provides the "stop" and "go" buttons. Also handles updating
 // the Tk event loop.
 
-#import <Swarm/SwarmObject.h>
+#import <objectbase/SwarmObject.h>
 
 @interface ControlPanel: SwarmObject <ControlPanel>
 {

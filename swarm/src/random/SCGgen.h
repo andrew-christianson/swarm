@@ -134,8 +134,8 @@ Reference for	| Knuth, op.cit.
 output quality:	| 
 */
 
-#import <Swarm/random.h>
-#import <Swarm/SwarmObject.h>
+#import <random.h>
+#import <objectbase/SwarmObject.h>
 
 
 #define COMPONENTS 1

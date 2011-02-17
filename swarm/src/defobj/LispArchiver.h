@@ -17,9 +17,9 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <Swarm/Archiver.h>
+#import <defobj/Archiver.h>
 
-#import <Swarm/swarmconfig.h>
+#include <swarmconfig.h>
 
 #define SWARMARCHIVER_LISP ".swarmArchiver"
 #define SWARMARCHIVER_LISP_SUFFIX ".scm"

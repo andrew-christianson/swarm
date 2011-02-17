@@ -20,7 +20,7 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <Swarm/Swarm.h> // Swarm
+#import <objectbase/Swarm.h> // Swarm
 #import <Foundation/NSObject.h>
 #import <Foundation/NSLock.h>
 #import <Foundation/NSTimer.h>

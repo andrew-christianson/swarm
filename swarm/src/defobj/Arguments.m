@@ -17,19 +17,17 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#include <swarmconfig.h> // SYSCONFDIR, HAVE_ARGP_H, CONFIG_DATADIR
-
 #import <defobj/Arguments.h>
 #import <defobj.h> // STRDUP, SSTRDUP, ZSTRDUP, arguments
 #import <defobj/defalloc.h> // getZone
 #include <misc.h> // getenv, access, stpcpy, stat, dropdir, isAlnum
 
+#include <swarmconfig.h> // SYSCONFDIR, HAVE_ARGP_H
 #ifdef HAVE_ARGP_H
 #include <argp.h>
 #else
 #include <misc/argp.h>
 #endif
-
 
 #ifdef HAVE_JDK
 #include "java.h"
@@ -51,7 +49,7 @@ const char *program_invocation_short_name;
 
 #define VARCHAR(ch) ({ char _ch = ch; (isAlnum (_ch) || (_ch == '_')); })
 
-#define SIGNATURE_FILE "Swarm/swarmconfig.h"
+#define SIGNATURE_FILE "swarmconfig.h"
 
 #ifdef INCLUDESUBDIR
 #define SIGNATURE_SUBPATH "include/" INCLUDESUBDIR "/"
@@ -837,7 +835,7 @@ expandvars (const char *path)
 
 - (const char *)getDataPath
 {
-  return [self _getPath_: CONFIG_DATADIR "/swarm/" subpath: "share/swarm/"];
+  return [self _getPath_: DATADIR "/swarm/" subpath: "share/swarm/"];
 }
 
 #ifdef __CYGWIN__

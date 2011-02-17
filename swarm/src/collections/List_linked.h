@@ -24,6 +24,6 @@ Library:      collections
 */
 
 #define LINKED 1
-#import <Swarm/List_GEN.h>
+#import <collections/List_GEN.h>
 
 id <ListIndex> beginLinkedList (struct List_linked *list);

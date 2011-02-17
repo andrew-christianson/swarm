@@ -20,7 +20,7 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#include <Swarm/Raster.h>
+#include <swarmgstep/Raster.h>
 
 @interface ZoomRaster : Raster
 {

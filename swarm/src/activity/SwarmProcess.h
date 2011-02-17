@@ -23,7 +23,7 @@ Description:  object to coordinate a collection of started activities
 Library:      activity
 */
 
-#import <Swarm/XActivity.h>
+#import <activity/XActivity.h>
 
 @class SwarmActivity_c, ScheduleActivity_c;
 

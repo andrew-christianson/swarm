@@ -22,7 +22,7 @@
 #import <defobj.h> // nameToObject, STRDUP
 #import <gui.h>
 #import <objectbase.h> // val_t
-#import <defobj/swarm-objc-api.h>
+#import <objc/objc-api.h>
 
 #include <misc.h> // strlen, isSpace
 #include "../objectbase/probing.h" // string_convert
@@ -139,8 +139,8 @@ PHASE(Creating)
           objWindows[which_arg] = [myProbe isArgumentId: which_arg];
           myWidgets[i] = [MessageProbeEntry createBegin: aZone];
           [myWidgets[i] setParent: self];
-          [(id)myWidgets[i] setIdFlag: [myProbe isArgumentId: which_arg]];
-          [(id)myWidgets[i] setArg: which_arg];
+          [myWidgets[i] setIdFlag: [myProbe isArgumentId: which_arg]];
+          [myWidgets[i] setArg: which_arg];
           myWidgets[i] = [myWidgets[i] createEnd];
         } 
       else
@@ -161,7 +161,7 @@ PHASE(Using)
   
   for (i = 0; i < (argCount / 2); i++)
     {
-      id entryWidget = myWidgets[2 * i + 1];
+      id <MessageProbeEntry> entryWidget = myWidgets[2 * i + 1];
       const char *test = STRDUP ([entryWidget getValue]);
       
       if (empty (test))

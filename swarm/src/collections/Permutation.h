@@ -23,7 +23,7 @@ Description:  permutation object - array of integers
 Library:      collections
 */
 
-#import <Swarm/Array.h>
+#import <collections/Array.h>
 
 @interface PermutationItem_c: CreateDrop_s
 {

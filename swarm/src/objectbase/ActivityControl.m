@@ -169,7 +169,7 @@ PHASE(Using)
   return status;
 }
 
-- (id <ScheduleActivity>)getActivity
+- (id <Activity>)getActivity
 {
   return activity;
 }

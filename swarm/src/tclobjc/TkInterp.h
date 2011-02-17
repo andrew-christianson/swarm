@@ -24,7 +24,7 @@
 #ifndef _TkInterp_h
 #define _TkInterp_h
 
-#include <tclobjc/TclInterp.h>
+#include "TclInterp.h"
 #include <tk.h>
 
 @interface TkInterp: TclInterp

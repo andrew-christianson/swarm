@@ -26,8 +26,6 @@ Library:      defobj
 #ifndef __swarm_defobj_h
 #define __swarm_defobj_h
 
-#include <Swarm/swarmconfig.h>
-
 #if defined(__cplusplus) && !defined(__OBJC__)
 extern "C" {
 #endif
@@ -45,11 +43,7 @@ typedef enum {fcall_type_void = 0,
               fcall_type_iid
               } fcall_type_t;
 
-#ifdef __APPLE__
-#import <Cocoa/Cocoa.h>
-#endif
-#import <Swarm/swarm-objc-api.h>
-#include <stdio.h>
+#include <objc/objc.h>
 
 typedef union {
   id object;
@@ -83,8 +77,8 @@ typedef struct {
 #if defined(__cplusplus) && !defined(__OBJC__)
 }
 #else
-#import <Swarm/deftype.h>
-#include <Swarm/externvar.h>
+#import <defobj/deftype.h>
+#include <externvar.h>
 
 //S: Standard objects for GNU Objective C extensions
 
@@ -807,7 +801,7 @@ externvar id <Error>
 
 //#: macro used to create and initialize a Warning symbol
 #define deferror(name, message) \
-  [(id)(name = [Error create: globalZone setName: #name])	\
+  [(name = [Error create: globalZone setName: #name]) \
     setMessageString: message]
 @end
 
@@ -1444,11 +1438,7 @@ extern id defobj_lookup_type (const char *name);
 //
 // type objects generated for module
 //
-#if SWARM_OPENSTEP
-#import <Swarm/defobj_types.h>
-#else
-#import <defobj/defobj_types.h>
-#endif
+#import <defobj/types.h>
 
 extern void initDefobj (id <Arguments> arguments);
 

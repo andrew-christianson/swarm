@@ -24,7 +24,7 @@
 #ifndef _tclObjc_h
 #define _tclObjc_h
 
-#import <Swarm/swarm-objc-api.h>
+#include <objc/objc.h>
 #include <tcl.h>
 
 #define TCLOBJC_VERSION "1.4"

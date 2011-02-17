@@ -1,8 +1,8 @@
 #ifndef __defobj_java_h
 #define __defobj_java_h
-#import <Swarm/directory.h> // DIRECTORY_SIZE, ObjectEntry, SelectorEntry
+#import <defobj/directory.h> // DIRECTORY_SIZE, ObjectEntry, SelectorEntry
 
-#import <Swarm/swarmconfig.h>
+#include <swarmconfig.h>
 #ifdef JNI_H_NEEDS_INT64
 #define __int64 SWARM_INT64
 #endif

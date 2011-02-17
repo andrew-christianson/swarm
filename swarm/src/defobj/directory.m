@@ -25,7 +25,8 @@
 
 #include <misc.h>
 #include <misc/avl.h>
-#import <defobj/swarm-objc-api.h>
+#include <objc/objc.h>
+#include <objc/objc-api.h>
 
 #import <defobj.h>
 
@@ -116,11 +117,7 @@ swarm_directory_entry_drop (DirectoryEntry *entry)
       else
         {
           [stream catC: " class: "];
-#if SWARM_OBJC_DONE
-	  [stream catC: ((Class) object)->name];
-#else
-          [stream catC: swarm_class_getName((id)object)];
-#endif
+          [stream catC: ((Class) object)->name];
         }
     }
   else
@@ -142,7 +139,7 @@ swarm_directory_entry_drop (DirectoryEntry *entry)
 {
   [stream catPointer: self];
   [stream catC: " selector: "];
-  [stream catC: selector ? swarm_sel_getName (selector) : "M(<nil>)"];
+  [stream catC: selector ? sel_get_name (selector) : "M(<nil>)"];
   [super describe: stream];
 }
 @end
@@ -153,8 +150,8 @@ compare_objc_selectors (const void *A, const void *B, void *PARAM)
   SelectorEntry *a = (SelectorEntry *) A;
   SelectorEntry *b = (SelectorEntry *) B;
 
-  const char *aname = swarm_sel_getName (a->selector);
-  const char *bname = swarm_sel_getName (b->selector);
+  const char *aname = sel_get_name (a->selector);
+  const char *bname = sel_get_name (b->selector);
   
   return strcmp (aname, bname);
 }
@@ -319,11 +316,7 @@ objc_class_for_class_name (const char *classname)
       strncpy (typename, &(classname[beg]), len);
       typename[len] = 0;
       {
-#if SWARM_OBJC_DONE
-	id ret = objc_lookup_class (typename);
-#else
-        id ret = swarm_objc_lookupClass (typename);
-#endif
+        id ret = objc_lookup_class (typename);
         
         // If non-CREATABLE then implementation will be set to Creating
         // and class will not be a real one, retry by appending "_c"
@@ -332,20 +325,12 @@ objc_class_for_class_name (const char *classname)
             char buf[len + 2];
 
             stpcpy (stpcpy (buf, typename), "_c");
-#if SWARM_OBJC_DONE
-	    ret = objc_lookup_class (buf);
-#else
-            ret = swarm_objc_lookupClass (buf);
-#endif
+            ret = objc_lookup_class (buf);
           }
         return (Class) ret;
       }
     }
-#if SWARM_OBJC_DONE
   return objc_lookup_class (classname);
-#else
-  return swarm_objc_lookupClass (classname);
-#endif
 }
 
 void
@@ -370,11 +355,7 @@ swarm_directory_ensure_class_named (const char *className)
 #endif
     }
   if (!objcClass)
-#if SWARM_OBJC_DONE
     objcClass = objc_lookup_class (className);
-#else
-    objcClass = swarm_objc_lookupClass (className);
-#endif
   return objcClass;
 }
 
@@ -439,7 +420,7 @@ swarm_directory_superclass (Class class)
         }
     }
 #endif
-  return swarm_class_getSuperclass (class);
+  return class_get_super_class (class);
 }
 
 
@@ -470,11 +451,7 @@ swarm_directory_language_independent_class_name_for_objc_object  (id oObj)
 #endif
     }
   return (oObj
-#if SWARM_OBJC_DONE
           ? (const char *) SSTRDUP ((getClass (oObj))->name)
-#else
-          ? (const char *) SSTRDUP (swarm_class_getName(swarm_object_getClass(oObj)))
-#endif
           : NULL);
 }
 
@@ -540,11 +517,7 @@ language_independent_class_name_for_objc_class (Class oClass)
     }
   else
     {
-#if SWARM_OBJC_DONE
       if (getBit (oClass->info, _CLS_DEFINEDCLASS))
-#else
-      if (swarm_class_getDefinedClassBit(oClass))
-#endif
         {
           Type_c *typeImpl;
           Class_s *nextPhase;
@@ -569,11 +542,7 @@ language_independent_class_name_for_objc_class (Class oClass)
               language_independent_class_name_for_typename (typeImpl->name, YES);
           else 
             className =
-#if SWARM_OBJC_DONE
               language_independent_class_name_for_typename (oClass->name, YES);
-#else
-              language_independent_class_name_for_typename (swarm_class_getName(oClass), YES);
-#endif
         }
     }
   return className;

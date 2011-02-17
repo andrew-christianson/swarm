@@ -23,16 +23,14 @@ Description:  superclass impleemntation of create-phase customization
 Library:      defobj
 */
 
-#import <Swarm/DefClass.h> // BehaviorPhase_s
-#import <Swarm/DefObject.h>
-#import <Swarm/swarm-objc-api.h>
+#import <defobj/DefClass.h> // BehaviorPhase_s
+#import <defobj/DefObject.h>
 
 //
 // interface marker for methods in class which implement an interface of a type
 //
 #define PHASE(phase_name) \
--(id)_I_##phase_name { return phase_name; } \
-+(id)_C_##phase_name { return phase_name; }
+-(id)_I_##phase_name { return phase_name; }
 
 //
 // specific defined interfaces
@@ -40,22 +38,9 @@ Library:      defobj
 externvar id Creating, Setting, Using, CreatingOnly, UsingOnly;
 
 //
-// Customization wrapper
-//
-struct customizeWrapper {
-  Class class;
-  int flags;
-  id createBy;
-};
-
-//
 // Customize_s -- superclass impleemntation of create-phase customization
 //
 @interface Customize_s: Object_s
-{
-@public
-  struct customizeWrapper *wrapper;
-}
 + createBegin: aZone;
 /*** methods in Customize_s (inserted from .m file by m2h) ***/
 + customizeBegin: aZone;
@@ -75,19 +60,18 @@ struct customizeWrapper {
 //   macros to set future create action for current customization
 //
 
+// extended class info bits (bit masks for class->info) used by cust. wrapper
+
+#define _CLS_CUSTOMIZEWRAPPER 0x200  // class created by customizeBegin
+#define _CLS_RETAINSELF 0x300        // retain self even if unref by createBy
+
 //
 // _obj_customize() -- return true if customization in progress
 //
 extern inline BOOL
-_obj_customize (Customize_s *anObject)
+_obj_customize (id anObject)
 {
-#if SWARM_OBJC_DONE
   return (getClass (anObject)->info & _CLS_CUSTOMIZEWRAPPER) != 0;
-#else
-  if ((anObject->wrapper) && (anObject->wrapper->flags & _CLS_CUSTOMIZEWRAPPER))
-    return YES;
-  return NO;
-#endif
 }
 
 #define createByCopy() \
@@ -102,7 +86,7 @@ _obj_customize (Customize_s *anObject)
 ([(id) self _setCreateByMessage_: @selector(messageName) toCopy: (anObject)], YES) : NO)
 
 #define setRetainSelf() \
-if (_obj_customize (self)) self->wrapper->flags |= _CLS_RETAINSELF
+if (_obj_customize (self)) self->class_pointer->info |= _CLS_RETAINSELF
 
 #define setRecustomize(recustomizeReceiver) \
 if (_obj_customize(self)) [self _setRecustomize_: recustomizeReceiver]
@@ -143,12 +127,17 @@ if (_obj_customize(self)) [self _setRecustomize_: recustomizeReceiver]
 //
 // getNextPhase() -- return class which implements next phase of object
 //
-extern Class
-getNextPhase (Class aClass);
+extern inline Class
+getNextPhase (id aClass)
+{
+  return (Class) ((BehaviorPhase_s *) aClass)->nextPhase;
+}
 
 //
 // setNextPhase() -- change behavior of object to next defined phase
 //
-extern void
-setNextPhase (id anObject);
-
+extern inline void
+setNextPhase (id anObject)
+{
+  *(Class *) anObject = (Class) (*(BehaviorPhase_s **) anObject)->nextPhase;
+}

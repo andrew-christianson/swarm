@@ -23,8 +23,8 @@ Description:  state of processing within an action plan
 Library:      activity
 */
 
-#import <Swarm/Create.h>
-#import <Swarm/activity.h>
+#import <defobj/Create.h>
+#import <activity.h>
 
 //
 // Activity_c -- state of processing within an action type

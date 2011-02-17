@@ -53,7 +53,7 @@ PHASE(Creating)
 - setProbedSelector: (SEL)aSel
 {
   probedSelector = aSel;
-  probedMethodName = STRDUP (swarm_sel_getName (aSel));
+  probedMethodName = STRDUP (sel_get_name (aSel));
   return self;
 }
 
@@ -70,7 +70,7 @@ PHASE(Creating)
   
   [super createEnd];
 
-  probedSelector = swarm_sel_getUidWithType (probedMethodName);
+  probedSelector = sel_get_any_typed_uid (probedMethodName);
   if (probedObject)
     {
       COMobject cObject = SD_COM_FIND_OBJECT_COM (probedObject);
@@ -86,13 +86,13 @@ PHASE(Creating)
           [self drop]; 
           return nil;
         }
-      if (!swarm_sel_getTypeEncoding (probedSelector))
+      if (!sel_get_type (probedSelector))
         {
           raiseEvent (WarningMessage, "Type for selector does not exist");
           [self drop]; 
           return nil;
         }
-      probedType = GSTRDUP (swarm_sel_getTypeEncoding (probedSelector));
+      probedType = GSTRDUP (sel_get_type (probedSelector));
     }
   {
     unsigned argCount = [self getArgCount];
@@ -130,7 +130,7 @@ PHASE(Setting)
 
 PHASE(Using)
 
-- clone: (id <Zone>)aZone
+- clone: aZone
 {
   MessageProbe *new_probe;
   
@@ -161,7 +161,7 @@ nth_type (const char *type, unsigned which)
 
 - (const char *)getProbedMessage
 {
-  return swarm_sel_getName (probedSelector);
+  return sel_get_name (probedSelector);
 }
 
 - (unsigned)getArgCount
@@ -306,7 +306,7 @@ copy_to_nth_colon (const char *str, int n)
 
 - (const char *)getArgName: (unsigned)which
 {
-  return copy_to_nth_colon (swarm_sel_getName (probedSelector), which);
+  return copy_to_nth_colon (sel_get_name (probedSelector), which);
 }
 
 - (BOOL)isResultId
@@ -441,7 +441,7 @@ copy_to_nth_colon (const char *str, int n)
 {
   [super describe: stream];
   [stream catC: "selector: "];
-  [stream catC: swarm_sel_getName (probedSelector)];
+  [stream catC: sel_get_name (probedSelector)];
   [stream catC: "\n"];
 }
 

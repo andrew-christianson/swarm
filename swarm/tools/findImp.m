@@ -18,7 +18,8 @@
 // http://www.swarm.org/
 
 #import <simtools.h> // initSwarmBatch
-#import <defobj/swarm-objc-api.h>
+#import <objc/objc.h>
+#import <objc/objc-api.h>
 
 #define EXIT abort ()
 
@@ -43,7 +44,7 @@ main (int argc, const char **argv)
   initSwarmBatch (1, argv);
   swarm_force_references ();
 
-  impClass = swarm_objc_lookupClass (argv[1]);
+  impClass = objc_lookup_class (argv[1]);
   if (!impClass)
     EXIT;
 
@@ -54,24 +55,23 @@ main (int argc, const char **argv)
       BOOL factoryFlag;
       BOOL found = NO;
       
-      sel = swarm_sel_getUid (&argv[argn][1]);
+      sel = sel_get_any_uid (&argv[argn][1]);
       if (!sel)
         EXIT;
     
-      if (swarm_class_getName(impClass)) 
-        imp = swarm_class_getMethodImplementation (impClass, sel);
+      if (impClass->name) 
+        imp = get_imp (impClass, sel);
       else
         imp = NULL;
       if (!imp)
         EXIT;
       
       factoryFlag = argv[argn][0] == '+';
-
-      for (class = factoryFlag ? swarm_class_getMetaclass(impClass) : impClass; 
+      
+      for (class = factoryFlag ? impClass->class_pointer : impClass; 
            class;
-           class = swarm_class_getSuperclass(class))
+           class = class->super_class)
         {
-#if SWARM_OBJC_DONE
           struct objc_method_list *methods = class->methods;
           
           while (methods)
@@ -80,9 +80,9 @@ main (int argc, const char **argv)
               
               for (i = 0; i < methods->method_count; i++)
                 {
-                  if (swarm_sel_isEqual (methods->method_list[i].method_name, sel))
+                  if (sel_eq (methods->method_list[i].method_name, sel))
                     {
-                      const char *name = swarm_sel_getName (sel);
+                      const char *name = sel_get_name (sel);
                       size_t len = strlen (name);
                       char buf[len + 1];
                       unsigned j;
@@ -106,44 +106,11 @@ main (int argc, const char **argv)
                 }
               methods = methods->method_next;
             }
-#else
-	  unsigned i, outCount;
-	  ObjcMethod *methodList = swarm_class_copyMethodList(class, &outCount);
-
-	  if (methodList) {
-	    for (i = 0; i < outCount; i++) {
-	      if (swarm_sel_isEqual (swarm_method_getName(methodList[i]), sel)) {
-		const char *name = swarm_sel_getName (sel);
-		//printf("%s\n", name);
-		size_t len = strlen (name);
-		char buf[len + 1];
-		unsigned j;
-		const char *className = strip (swarm_class_getName(class));
-                      
-		strcpy (buf, name);
-		for (j = 0; j < len; j++)
-		  if (buf[j] == ':')
-		    buf[j] = '_';
-		buf[len] = '\0';
-		printf ("%c%s _%c_%s__%s\n",
-			factoryFlag ? '+' : '-',
-			name,
-			factoryFlag ? 'c' : 'i',
-			className,
-			buf);
-		SFREEBLOCK (className);
-		found = YES;
-		goto next;
-	      }
-	    }
-	    free(methodList);
-	  }
-#endif
         }
     next:
       if (!found)
         fprintf (stderr, "Could not find `%s' in `%s'\n",
-                 swarm_sel_getName (sel), strip (swarm_class_getName(impClass)));
+                 sel_get_name (sel), strip (impClass->name));
           
     }
   return 0;

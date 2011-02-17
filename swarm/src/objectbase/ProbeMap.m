@@ -18,7 +18,7 @@
 // http://www.swarm.org/
 
 #import <objectbase/ProbeMap.h>
-#import <defobj/swarm-objc-api.h>
+#import <objc/objc-api.h>
 #import <defobj.h> // Warning, STRDUP
 #import <defobj/defalloc.h> // getZone
 #import <objectbase/VarProbe.h>
@@ -398,7 +398,6 @@ PHASE(Creating)
 
 - (void)addObjcFields: (Class)aClass
 { 
-#if SWARM_OBJC_DONE
   IvarList_t ivarList;
 
   if ((ivarList = aClass->ivars))
@@ -406,23 +405,13 @@ PHASE(Creating)
       int i;
       
       for (i = 0; i < ivarList->ivar_count; i++)
-	[self _addVarProbeForClass_: aClass
-	      variableName: ivarList->ivar_list[i].ivar_name];
+          [self _addVarProbeForClass_: aClass
+                variableName: ivarList->ivar_list[i].ivar_name];
     }
-#else
-  unsigned i, outCount;
-  ObjcIvar *ivarList = swarm_class_copyIvarList(aClass, &outCount);
-  for (i = 0; i < outCount; ++i) {
-    [self _addVarProbeForClass_: aClass
-	  variableName: swarm_ivar_getName(ivarList[i])];
-  }
-  if (ivarList) free(ivarList);
-#endif
 }
 
 - (void)addObjcMethods: (Class)aClass
 {
-#if SWARM_OBJC_DONE
   MethodList_t methodList;
 
   if ((methodList = aClass->methods))
@@ -433,14 +422,6 @@ PHASE(Creating)
         [self _addMessageProbe_: aClass
               selector: methodList->method_list[i - 1].method_name];
     }
-#else
-  unsigned i, outCount;
-  ObjcMethod *methodList = swarm_class_copyMethodList(aClass, &outCount);
-  for (i = 0; i < outCount; ++i)
-    [self _addMessageProbe_: aClass
-	  selector: swarm_method_getName(methodList[i])];
-  if (methodList) free(methodList);
-#endif
 }
 
 - (void)addCOMFields: (COMclass)cClass
@@ -610,7 +591,7 @@ PHASE(Using)
 
   raiseEvent (WarningMessage,
               "ProbeMap not added because %s is not a superclass of %s\n",
-              swarm_class_getName(aClass), swarm_class_getName(probedClass));
+              aClass->name, probedClass->name);
 
   return self;
 }
@@ -653,7 +634,7 @@ PHASE(Using)
   
       raiseEvent (WarningMessage,
                   "Probe not added to ProbeMap because %s is not a superclass of %s\n",
-                  swarm_class_getName(aClass), swarm_class_getName(probedClass));
+                  aClass->name, probedClass->name);
     }
       
   return self;
@@ -762,7 +743,7 @@ PHASE(Using)
   [self dropProbeFor: aVariable];
 }
 
-- (id <MessageProbe>)getProbeForMessage: (const char *)aMessage
+- (id <Probe>)getProbeForMessage: (const char *)aMessage
 {
   id string;
   id res;

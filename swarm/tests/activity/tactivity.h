@@ -4,7 +4,7 @@
 @protocol Group_test
 CREATING
 + createBegin: aZone numberOfObjects: (int)num;
-- (void)addObject: obj;
+- addObject: obj;
 USING
 - (void)describe: outputCharStream;
 - (void)describeForEach: outputCharStream;
@@ -17,4 +17,4 @@ USING
 @protocol ConcurrentGroup_test <Group_test, ConcurrentGroup, CREATABLE>
 @end
 
-#import <tactivity/tactivity_types.h>
+#import <tactivity/types.h>

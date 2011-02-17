@@ -23,12 +23,8 @@ Description:  additional interfaces for block-level memory allocation
 Library:      defobj
 */
 
-#import <Swarm/swarmconfig.h> // PTRUINT
-#if SWARM_OPENSTEP
-#import <Swarm/defobj_classes.h> // id_Zone_c
-#else
-#import <defobj/defobj_classes.h> // id_Zone_c
-#endif
+#include <swarmconfig.h> // PTRUINT
+#import <defobj/classes.h> // id_Zone_c
 
 //
 // getZone() --
@@ -46,15 +42,11 @@ Library:      defobj
 //   components
 //
 
-#if SWARM_OBJC_DONE
 #if 0
 #define getCZone(aZone) \
 ( _obj_debug ? [(aZone) getComponentZone] : ((id *)(aZone))[3] )
 #else
 #define getCZone(aZone) (getClass (aZone) == id_Zone_c ? (((id *)(aZone))[3]) : aZone)
-#endif
-#else
-#define getCZone(aZone) [(aZone) getComponentZone]
 #endif
 
 //

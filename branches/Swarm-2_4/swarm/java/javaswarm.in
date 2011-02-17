@@ -1,0 +1,98 @@
+#!/bin/sh
+
+# Copyright © 1999-2000 Swarm Development Group
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307
+# USA
+# 
+# The Swarm Development Group can be reached via our website at:
+# http://www.swarm.org/
+
+swarm_prefix="@swarm_prefix@"
+swarm_exec_prefix="@swarm_exec_prefix@"
+jdkdir=@jdkdir@
+swarm_datarootdir="@swarm_datarootdir@"
+
+if test @USEDLL@ = yes; then
+  @SHLIBPATH_VAR@=@swarm_bindir@:@tcllibdir@/../bin:$@SHLIBPATH_VAR@
+else
+  @SHLIBPATH_VAR@=`cat << EOF | sort 2>/dev/null | uniq | tr '\012' ':'
+@swarm_libdir@
+@xpmlibdir@
+@bltlibdir@
+@ffilibdir@
+@pnglibdir@
+@zliblibdir@
+@hdf5libdir@
+EOF
+`$@SHLIBPATH_VAR@
+fi
+
+JAVALIBS="@JAVALIBS@"
+_JAVACLASSES='@JAVACLASSES@'
+if test @USEDOSCLASSPATH@ = yes; then
+  DOSJAVALIBS=''
+  for path in `echo $JAVALIBS | tr ':' '\012'`; do
+    path=`eval echo $path`
+    DOSJAVALIBS="${DOSJAVALIBS}`cygpath -w "$path"`;"
+  done
+  JAVACLASSES=''
+  for path in `echo $_JAVACLASSES | tr ':' '\012'`; do
+    path=`eval echo $path`
+    JAVACLASSES="${JAVACLASSES}`cygpath -w "$path"`;"
+  done
+  PS=';'
+  PD='\'
+  swarmclassdir=`cygpath -w "@swarm_datadir@"`
+  @JAVALIBPATH_VAR@=`cygpath -w "@swarm_bindir@"`${PS}${DOSJAVALIBS}
+else
+  JAVACLASSES=$_JAVACLASSES
+  PS=:
+  PD=/
+  swarmclassdir="@swarm_datadir@"
+  @JAVALIBPATH_VAR@="@swarm_libdir@${PS}${JAVALIBS}"
+fi
+
+JAVAENV="@JAVAENV@"
+JAVACMD=@JAVACMD@
+
+export @SHLIBPATH_VAR@ @JAVALIBPATH_VAR@
+
+JAVA_CLASSES_INSTALLED_AS=@JAVA_CLASSES_INSTALLED_AS@
+
+if test x$JAVA_CLASSES_INSTALLED_AS = xjar; then
+  classpath=".${PS}${swarmclassdir}${PD}swarm${PD}swarm.jar"
+else
+  classpath=".${PS}${swarmclassdir}"
+fi
+classpath="$classpath${PS}${swarmclassdir}${PD}swarm${PD}kawa.jar${PS}${JAVACLASSES}${PS}$CLASSPATH"
+
+for i in "$@"; do
+  argsexpr="$argsexpr '$i'"
+done
+
+if test -z "$argsexpr"; then
+  echo "@JAVALIBPATH_VAR@=\"$@JAVALIBPATH_VAR@\""
+  echo "@SHLIBPATH_VAR@=\"$@SHLIBPATH_VAR@\""
+  echo "CLASSPATH=\"$classpath\""
+  echo "export @JAVALIBPATH_VAR@ @SHLIBPATH_VAR@ CLASSPATH"   
+elif test -n "$JAVASWARMGDB"; then
+  (echo "shell rm -f /tmp/.gdbinit.$$";
+   echo "cd `pwd`"; echo "set args $argsexpr" ) > /tmp/.swarmgdbinit.$$
+  eval "$JAVAENV CLASSPATH='$classpath' $JAVASWARMGDB -command /tmp/.swarmgdbinit.$$ $JAVACMD"
+  rm -f /tmp/.swarmgdbinit.$$
+else
+  eval "$JAVAENV CLASSPATH='$classpath' $JAVACMD $argsexpr"
+fi
+

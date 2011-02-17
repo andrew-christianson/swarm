@@ -1,0 +1,68 @@
+2006-08-19  Marcus G. Daniels <mgd@santafe.edu>
+
+	* Discrete2d.m:  Don't nest calls to -setObjectFlag:,
+	as it has void return.
+
+2004-07-16  Scott Christley  <schristley@mac.com>
+
+	* Discrete2d.m (MyDiscrete2d): Remove objectFlag.
+	([MyDiscrete2d -setObjectFlag:]): Remove.
+
+2000-03-28    <mgd@nest.swarm.org>
+
+	* Swarm 2.1.1 frozen.
+
+2000-02-12    <mgd@nest.swarm.org>
+
+	* Swarm 2.1 frozen.
+
+1999-12-31  Marcus G. Daniels  <mgd@drone.swarm.org>
+
+	* Discrete2d.m (checkArchiverDiscrete2d): Use sync instead of save.
+
+1999-09-18  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* Swarm 2.0.1 released.
+
+1999-08-28  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* Swarm 2.0 released.
+
+1999-06-28  Alex Lancaster  <alex@santafe.edu>
+
+	* Discrete2d.m (createArchiver): Conditionally create instances of
+	LispArchiver or HDF5Archiver, as protocols are now separate.
+
+1999-06-08  Alex Lancaster  <alex@santafe.edu>
+
+	* Discrete2d.m ([MyDiscrete2d -setUpdateFlag:]): New method and
+	instance variable to control whether if -putObject: is used.
+	([MyDiscrete2d -updateArchiver:]): Only call -putObject: if
+	updateFlag set.
+	(checkArchiverDiscrete2d): Accept additional BOOL updateFlag
+	variable.  Set created objects using this flag, and the read
+	Archiver instance accordingly.
+	(main): Add matching `NO' update tests for each existing Lisp
+	archiving test.
+
+1999-05-02  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* Discrete2d.m: Remove emptyMap.
+	(main): Add deep HDF5 check. 
+
+1999-05-01  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* Discrete2d.m (Discrete2d): Add objectFlag.
+	([MyDiscrete2d -setObjectFlag:]): New setter.
+	(checkArchiverDiscrete2d): Use it.
+	([MyDiscrete2d -updateArchiver:]): Use putDeep:object: or
+	putDeepShallow:object: per objectFlag.
+	([MyDiscrete2d -checkObject]): Check values or objects per objectFlag
+	(not formerly inherited useValues or useObjects).  Repair
+	logic exception case detection.
+	(main): Add shallow HDF5 check.
+
+1999-04-25  Alex Lancaster  <alex@santafe.edu>
+
+	* Makefile.am, Discrete2d.m: New files.
+

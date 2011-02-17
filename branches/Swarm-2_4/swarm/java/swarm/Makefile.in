@@ -1,0 +1,124 @@
+prefix=@prefix@
+datadir=@datadir@
+jdkdir=@jdkdir@
+INSTALL=@INSTALL@
+jdkdir=@jdkdir@
+jdkbindir=$(jdkdir)/bin
+JAR=@JAR@
+JAVAC=@JAVAC@
+JAVACLASSESARG=@JAVACLASSESARG@
+srcdir=@srcdir@
+VPATH=$(srcdir)
+top_srcdir=@top_srcdir@
+top_dossrcdir=@top_dossrcdir@
+KAWAJAR=@KAWAJAR@
+KAWAPATH=$(top_dossrcdir)@PATHDELIM@java@PATHDELIM@$(KAWAJAR)
+JAVACOMPILE = $(JAVAC) -classpath '..@PATHSEP@$(JAVACLASSESARG)@PATHSEP@$(KAWAPATH)'
+
+include ../Makefile.common
+
+CLASSPHASES := C __u
+INTERFACEPHASES := $(CLASSPHASES) S
+
+PRECLASSES = NonUniqueMethodSignatureException SignatureNotFoundException Selector BaseImpl PhaseCImpl Primitives ObjCProxy
+SECLASSES = SwarmEnvironment SwarmEnvironmentC SwarmEnvironmentS SwarmEnvironmentImpl SwarmEnvironmentCImpl
+POSTCLASSES = CustomizedType ProxyClassLoader $(SECLASSES) Globals
+
+define class-protocols
+$($(module)_creatable_PROTOCOLS)
+endef
+
+define interface-protocols
+$($(module)_creatable_PROTOCOLS) $($(module)_noncreatable_PROTOCOLS)
+endef
+
+define module-creating-classes
+$(addprefix $(module)/,$(addsuffix CImpl,$(class-protocols)))
+endef
+
+define module-using-classes
+$(addprefix $(module)/,$(addsuffix Impl,$(class-protocols)))
+endef
+
+define module-classes
+$(module-creating-classes) $(module-using-classes)
+endef
+
+define module-creating-interfaces
+$(addprefix $(module)/,$(addsuffix C,$(interface-protocols)))
+endef
+
+define module-setting-interfaces
+$(addprefix $(module)/,$(addsuffix S,$(interface-protocols)))
+endef
+
+define module-using-interfaces
+$(addprefix $(module)/,$(interface-protocols))
+endef
+
+define module-interfaces
+$(module-creating-interfaces) $(module-setting-interfaces) $(module-using-interfaces)
+endef
+
+GENCLASSFILES := $(addsuffix .class,$(foreach module,$(MODULES),$(module-classes)))
+
+GENINTERFACEFILES := $(addsuffix .class,$(foreach module,$(MODULES),$(module-interfaces)))
+
+GENFILES = $(GENCLASSFILES) $(GENINTERFACEFILES)
+
+SWARMGENFILES = $(addprefix swarm/,$(GENFILES))
+SWARMCLASSES = $(PRECLASSES) $(POSTCLASSES)
+SWARMCLASSFILES = $(addsuffix .class,$(addprefix swarm/,$(SWARMCLASSES)))
+
+ALLCLASSFILES = $(SWARMCLASSFILES) $(SWARMGENFILES)
+
+PRECLASSESFILES = $(addsuffix .class,$(PRECLASSES))
+POSTCLASSESFILES = $(addsuffix .class,$(POSTCLASSES))
+
+all: $(PRECLASSESFILES) modules $(POSTCLASSESFILES)
+
+Selector.class: NonUniqueMethodSignatureException.class SignatureNotFoundException.class
+
+Globals.class: SwarmEnvironment.class
+
+
+$(POSTCLASSESFILES): $(PRECLASSESFILES) modules
+
+deps: 
+	for module in $(MODULES); do $(MAKE) -C $$module .deps; done
+
+modules: deps $(addsuffix .class,$(PRECLASSES))
+	for module in $(MODULES); do $(MAKE) -C $$module all; done
+
+
+ifneq ($(OSTYPE),cygwin32)
+jar: all
+	cd .. ; unset CLASSPATH ; $(JAR) cf swarm/swarm.jar $(ALLCLASSFILES)
+else
+jar: all
+	cd .. ; unset CLASSPATH ; $(JAR) cf swarm/swarm.jar swarm/\*.class $(foreach module,$(MODULES),swarm/$(module)/\*.class)
+endif
+
+install-java-classes-as-jar: jar
+	test -d $(DESTDIR)$(datadir) || mkdir $(DESTDIR)$(datadir)
+	test -d $(DESTDIR)$(datadir)/swarm || mkdir $(DESTDIR)$(datadir)/swarm
+	$(INSTALL) swarm.jar $(DESTDIR)$(datadir)/swarm
+
+install-java-classes-as-files: all
+	test -d $(DESTDIR)$(datadir) || mkdir $(DESTDIR)$(datadir)
+	$(RM) ../filelist
+	for f in $(SWARMCLASSES); do echo $$f >> ../filelist ; done
+	$(foreach module,$(MODULES),for f in $(module-creating-classes); do echo $$f >> ../filelist; done;)
+	$(foreach module,$(MODULES),for f in $(module-using-classes); do echo $$f >> ../filelist; done;)
+	$(foreach module,$(MODULES),for f in $(module-creating-interfaces); do echo $$f >> ../filelist; done;)
+	$(foreach module,$(MODULES),for f in $(module-setting-interfaces); do echo $$f >> ../filelist; done;)
+	$(foreach module,$(MODULES),for f in $(module-using-interfaces); do echo $$f >> ../filelist; done;)
+	sed -e 's,^,swarm/,' -e 's,$$,\.class,' < ../filelist > ../filelist.new
+	(cd ..; tar -c -f - -T filelist.new) | (cd $(DESTDIR)$(datadir); tar xf -)
+	$(RM) ../filelist ../filelist.new
+
+install: install-java-classes-as-@JAVA_CLASSES_INSTALLED_AS@
+
+# for the non-generated Java (the other rules from JavaDep use JAVACOMPILE)
+%.class: %.java
+	$(JAVACOMPILE) -d .. @PATHEXPR@

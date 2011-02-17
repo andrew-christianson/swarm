@@ -1,0 +1,11 @@
+.SUFFIXES: .m .xm
+
+.m.o:
+	$(OBJC) -c $(OBJCFLAGS) $(CPPFLAGS) $(DLLCPPFLAGS) $(EXTRACPPFLAGS) $(SWARMINCLUDES) $(GNUSTEPLIBINCLUDES) $< 
+
+.mm.o:
+	$(OBJC) -x objective-c++ -c $(OBJCFLAGS) $(CPPFLAGS) $(DLLCPPFLAGS) $(EXTRACPPFLAGS) $(SWARMINCLUDES) $(GNUSTEPLIBINCLUDES) $< 
+
+# Local Variables:
+# mode: makefile
+# End:

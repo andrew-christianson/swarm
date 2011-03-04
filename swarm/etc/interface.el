@@ -320,7 +320,7 @@
 
 (defun module-path (module)
   (let ((sym (module-sym module)))
-    (if (eq sym 'SwarmTop)
+    (if (eq sym 'swarm)
         ""
       (concat (symbol-name sym) "/"))))
        

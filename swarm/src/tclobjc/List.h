@@ -23,8 +23,7 @@
 #define __List_h_INCLUDE_GNU
 
 //#include <coll/objc-gnu2next.h>
-#import <defobj/swarm-objc-api.h>
-#import <objc/Object.h>
+#include <objc/Object.h>
 
 @interface List : Object
 {

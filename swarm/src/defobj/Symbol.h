@@ -23,7 +23,7 @@ Description:  classes to define distinct global id constants
 Library:      defobj
 */
 
-#import <Swarm/Create.h>
+#import <defobj/Create.h>
 
 @interface Symbol_c: CreateDrop_s <Symbol>
 {

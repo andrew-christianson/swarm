@@ -74,7 +74,7 @@ PHASE(Using)
 //
 // _activateUnderSwarm_::: -- start new activity to run under swarm
 //
-- (id)_activateUnderSwarm_: (Class)activityClass 
+- (id <Activity>)_activateUnderSwarm_: (Class)activityClass 
                                      : (Class)indexClass
                                      : swarmContext
                                      : (Zone_c *)swarmZone
@@ -626,7 +626,7 @@ PHASE(Using)
   return memberAction;
 }
 
-- (id <Symbol>)getLoc
+- getLoc
 {
   return [memberIndex getLoc];
 }

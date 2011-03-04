@@ -1734,11 +1734,7 @@ find_java_wrapper_class (Class class)
     }
   else if (proxyClassLoader)
     {
-#if SWARM_OBJC_DONE
       jstring str = (*jniEnv)->NewStringUTF (jniEnv, class->name);
-#else
-      jstring str = (*jniEnv)->NewStringUTF (jniEnv, swarm_class_getName(class));
-#endif
 
       ret = (*jniEnv)->CallObjectMethod (jniEnv,
                                          proxyClassLoader,
@@ -1985,19 +1981,19 @@ swarm_directory_java_ensure_selector (jobject jsel)
             (*jniEnv)->DeleteLocalRef (jniEnv, lref);
           }
       
-        sel = swarm_sel_getUidWithType (name);
+        sel = sel_get_any_typed_uid (name);
         {
           BOOL needSelector = NO;
           
           if (sel)
             {
-              if (!swarm_sel_getTypedUid (name, signatureBuf))
+              if (!sel_get_typed_uid (name, signatureBuf))
                 {
 #if 1
                   raiseEvent (WarningMessage,
                               "Method `%s' type (%s) differs from Swarm "
                               "method's type (%s)\n",
-			      name, signatureBuf, swarm_sel_getTypeEncoding (sel));
+                            name, signatureBuf, sel->sel_types);
 #endif
                   needSelector = YES;
                 }
@@ -2011,7 +2007,7 @@ swarm_directory_java_ensure_selector (jobject jsel)
               const char *type =
                 mframe_build_signature (signatureBuf, NULL, NULL, NULL);
               
-              sel = swarm_sel_registerTypedName (name, type);
+              sel = sel_register_typed_name (name, type);
             }
         }
       }
@@ -2111,7 +2107,7 @@ swarm_directory_objc_ensure_selector_java (jclass jClass, SEL sel)
     return entry->foreignObject.java;
   else
     {
-      jobject jSelName = (*jniEnv)->NewStringUTF (jniEnv, swarm_sel_getName (sel));
+      jobject jSelName = (*jniEnv)->NewStringUTF (jniEnv, sel_get_name (sel));
       jobject jSel, ret;
 
       jSel =

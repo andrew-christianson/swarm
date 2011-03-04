@@ -20,7 +20,7 @@
    */ 
 
 #include "HashTable.h"
-#include <defobj/swarm-objc-api.h>
+#include <objc/objc-api.h>
 #include <swarmconfig.h> // PTRUINT, PTRINT
 
 #define DEFAULT_HASH_CAPACITY 32
@@ -28,13 +28,9 @@
 /* Some useful hash and compare functions not provided by hash.h */
 
 static inline unsigned int
-hash_object (swarm_cache_ptr cache, const void *key)
+hash_object (cache_ptr cache, const void *key)
 {
-#if SWARM_OBJC_TODO
   return (([((id)key) hash]) & cache->mask);
-#else
-  return 0;
-#endif
 }
 
 static inline int
@@ -44,7 +40,7 @@ compare_objects (const void *k1, const void *k2)
 }
 
 static inline PTRUINT
-hash_int (swarm_cache_ptr cache, const void *key)
+hash_int (cache_ptr cache, const void *key)
 {
   return ((PTRUINT) key & cache->mask);
 }
@@ -74,8 +70,8 @@ compare_long_ints (const void *k1, const void *k2)
   valueDesc: (const char *)aValueDesc 
   capacity: (unsigned) aCapacity
 {
-  swarm_hash_func_type hf;
-  swarm_compare_func_type cf;
+  hash_func_type hf;
+  compare_func_type cf;
   
   if (!aKeyDesc) 
     [self error:"in %s, NULL keyDesc\n", sel_get_name(_cmd)];
@@ -88,40 +84,40 @@ compare_long_ints (const void *k1, const void *k2)
     {
     case _C_ATOM:
     case _C_CHARPTR : 
-      hf = (swarm_hash_func_type)swarm_hash_string;
-      cf = (swarm_compare_func_type)swarm_compare_strings;
+      hf = (hash_func_type)hash_string;
+      cf = (compare_func_type)compare_strings;
       break;
     case _C_ID:
     case _C_CLASS:
-      hf = (swarm_hash_func_type)hash_object;
-      cf = (swarm_compare_func_type)compare_objects;
+      hf = (hash_func_type)hash_object;
+      cf = (compare_func_type)compare_objects;
       break;
     case _C_PTR: 
-      hf = (swarm_hash_func_type)swarm_hash_ptr;
-      cf = (swarm_compare_func_type)swarm_compare_ptrs;
+      hf = (hash_func_type)hash_ptr;
+      cf = (compare_func_type)compare_ptrs;
       break;
     case _C_INT: 
     case _C_SEL:
     case _C_UINT: 
-      hf = (swarm_hash_func_type)hash_int;
-      cf = (swarm_compare_func_type)compare_ints;
+      hf = (hash_func_type)hash_int;
+      cf = (compare_func_type)compare_ints;
       break;
     case _C_LNG: 
     case _C_ULNG: 
-      hf = (swarm_hash_func_type)hash_int;
-      cf = (swarm_compare_func_type)compare_long_ints;
+      hf = (hash_func_type)hash_int;
+      cf = (compare_func_type)compare_long_ints;
       break;
     case _C_FLT:
       /* Fix this.  Do something better with floats. */
-      hf = (swarm_hash_func_type)hash_int;
-      cf = (swarm_compare_func_type)compare_ints;
+      hf = (hash_func_type)hash_int;
+      cf = (compare_func_type)compare_ints;
       break;
     default: 
-      hf = (swarm_hash_func_type)hash_int;
-      cf = (swarm_compare_func_type)compare_ints;
+      hf = (hash_func_type)hash_int;
+      cf = (compare_func_type)compare_ints;
       break;
     }
-  _buckets = swarm_hash_new(aCapacity, hf, cf);
+  _buckets = hash_new(aCapacity, hf, cf);
   _nbBuckets = _buckets->size;
   return self;
 }
@@ -147,19 +143,19 @@ compare_long_ints (const void *k1, const void *k2)
 
 - free
 {
-  swarm_hash_delete(_buckets);
+  hash_delete(_buckets);
   return [super free];
 }
 
 - freeObjects
 {
-  swarm_node_ptr node;
+  node_ptr node;
   void *val;
   
-  while ((node = swarm_hash_next(_buckets, 0)))
+  while ((node = hash_next(_buckets, 0)))
     {
       val = node->value;
-      swarm_hash_remove(_buckets, node->key);
+      hash_remove(_buckets, node->key);
       if (*valueDesc == _C_ID)
 	[(id)val free];
     }
@@ -178,10 +174,10 @@ compare_long_ints (const void *k1, const void *k2)
 
 - empty
 {
-  swarm_node_ptr node;
+  node_ptr node;
   
-  while ((node = swarm_hash_next(_buckets, 0)))
-    swarm_hash_remove(_buckets, node->key);
+  while ((node = hash_next(_buckets, 0)))
+    hash_remove(_buckets, node->key);
   count = 0;
   _nbBuckets = _buckets->size;
   return self;
@@ -190,15 +186,15 @@ compare_long_ints (const void *k1, const void *k2)
 - shallowCopy
 {
   HashTable *c;
-  swarm_node_ptr node;
+  node_ptr node;
   
   c = [super shallowCopy];
-  c->_buckets = swarm_hash_new(_buckets->size, 
-			       _buckets->hash_func, 
-			       _buckets->compare_func);
+  c->_buckets = hash_new(_buckets->size, 
+			 _buckets->hash_func, 
+			 _buckets->compare_func);
   /* copy nodes to new copy */
   node = 0;
-  while ((node = swarm_hash_next(_buckets, node)))
+  while ((node = hash_next(_buckets, node)))
     [c insertKey:node->key value:node->value];
 
   return c;
@@ -206,11 +202,11 @@ compare_long_ints (const void *k1, const void *k2)
 
 - deepen
 {
-  swarm_node_ptr node = 0;
+  node_ptr node = 0;
   
   if (*valueDesc == _C_ID) 
     {
-      while ((node = swarm_hash_next(_buckets, node)))
+      while ((node = hash_next(_buckets, node)))
 	{
 	  node->value = [(id)(node->value) deepCopy];
 	}
@@ -227,22 +223,22 @@ compare_long_ints (const void *k1, const void *k2)
 
 - (BOOL) isKey:(const void *)aKey
 {
-  return (swarm_hash_value_for_key(_buckets, aKey)) ? YES : NO;
+  return (hash_value_for_key(_buckets, aKey)) ? YES : NO;
 }
 
 - (void *) valueForKey:(const void *)aKey
 {
-  return swarm_hash_value_for_key(_buckets, aKey);
+  return hash_value_for_key(_buckets, aKey);
 }
 
 - (void *) insertKey:(const void *)aKey value:(void *)aValue
 {
   void *prevValue;
   
-  prevValue = swarm_hash_value_for_key(_buckets, aKey);
+  prevValue = hash_value_for_key(_buckets, aKey);
   if (prevValue)
-    swarm_hash_remove(_buckets, aKey);
-  swarm_hash_add(&_buckets, aKey, aValue);
+    hash_remove(_buckets, aKey);
+  hash_add(&_buckets, aKey, aValue);
   count = _buckets->used;
   _nbBuckets = _buckets->size;
   return prevValue;
@@ -250,9 +246,9 @@ compare_long_ints (const void *k1, const void *k2)
 
 - (void *) removeKey:(const void *)aKey
 {
-  if (swarm_hash_value_for_key(_buckets, aKey)) 
+  if (hash_value_for_key(_buckets, aKey)) 
     {
-      swarm_hash_remove(_buckets, aKey);
+      hash_remove(_buckets, aKey);
       count = _buckets->used;
       _nbBuckets = _buckets->size;
     }
@@ -268,7 +264,7 @@ compare_long_ints (const void *k1, const void *k2)
          key:(const void **)aKey 
          value:(void **)aValue
 {
-  *aState = swarm_hash_next(_buckets, *aState);
+  *aState = hash_next(_buckets, *aState);
   if (*aState) 
     {
       *aKey = (*aState)->key;
@@ -346,18 +342,18 @@ compare_long_ints (const void *k1, const void *k2)
 
 - makeObjectsPerform:(SEL)aSel
 {
-  swarm_node_ptr node = 0;
+  node_ptr node = 0;
   
-  while ((node = swarm_hash_next(_buckets, node)))
+  while ((node = hash_next(_buckets, node)))
     [(id)(node->value) perform:aSel];
   return self;
 }
 
 - makeObjectsPerform:(SEL)aSel with:anObject
 {
-  swarm_node_ptr node = 0;
+  node_ptr node = 0;
   
-  while ((node = swarm_hash_next(_buckets, node)))
+  while ((node = hash_next(_buckets, node)))
     [(id)(node->value) perform:aSel with:anObject];
   return self;
 }

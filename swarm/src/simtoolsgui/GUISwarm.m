@@ -70,7 +70,7 @@ PHASE(Using)
   return [controlPanel startInActivity: [self getActivity]];
 }
 
-- (id <Activity>)activateIn: swarmContext
+- activateIn: swarmContext
 {
   [super activateIn: swarmContext];
   [actionCache setScheduleContext: self];

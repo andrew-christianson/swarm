@@ -26,7 +26,7 @@ Library:      activity
 #import <activity/Schedule.h>
 #import <activity/ActionGroup.h>
 #import <defobj/defalloc.h>
-#import <activity/activity_classes.h>
+#import <activity/classes.h>
 #include <misc.h> // abort
 
 #import <collections/List_mlinks.h> // beginMlinksList
@@ -530,7 +530,7 @@ _activity_insertAction (Schedule_c *self, timeval_t tVal, CAction *anAction)
                     "> action to be removed from schedule does not belong to schedule\n");
 #endif
       
-      removedAction = [(id <Schedule>) ((CAction *) anAction)->owner remove: anAction];
+      removedAction = [(id) ((CAction *) anAction)->owner remove: anAction];
       
       emptyAction =
         [(id) ((CAction *) anAction)->owner _getEmptyActionConcurrent_];
@@ -955,7 +955,7 @@ PHASE(Using)
 @implementation ConcurrentSchedule_c
 PHASE(Creating)
 
-+ createBegin: (id <Zone>)aZone
++ createBegin: aZone
 {
   ActivationOrder_c *obj = [super createBegin: aZone];
 
@@ -1297,16 +1297,12 @@ PHASE(Using)
       // Avoid leaving behind invalid owners in mergeAction
       // `owner' is used in [Schedule remove:], for example
       // first do some common cases before expensive conformsTo
-#if SWARM_OSX
-      if ([collection conformsToProtocol: @protocol (ConcurrentSchedule)])
-#else
 #ifdef FAST
       if (class != id_Schedule_c)
         if (class == id_ActivationOrder_c || class == id_ConcurrentSchedule_c
             || [collection conformsTo: @protocol (ConcurrentSchedule)])
 #else
       if ([collection conformsTo: @protocol (ConcurrentSchedule)])
-#endif
 #endif
 {
           removedAction->owner =
@@ -1322,7 +1318,7 @@ PHASE(Using)
 //
 - get
 {
-  id status = currentAction;
+  id <Symbol> status = currentAction;
 
   if (REMOVEDP (status) || COMPLETEDP (status))
     return nil;

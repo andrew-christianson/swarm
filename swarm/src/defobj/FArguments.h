@@ -23,12 +23,12 @@ Description:  used for packing arguments to a foreign call
 Library:      defobj
 */
 
-#import <Swarm/defobj.h>
-#import <Swarm/Create.h>
-#import <Swarm/swarm-objc-api.h> // retval_t
-#import <Swarm/internal.h>
+#import <defobj.h>
+#import <defobj/Create.h>
+#include <objc/objc.h> // retval_t
+#import "internal.h"
 
-#import <Swarm/swarmconfig.h>
+#include <swarmconfig.h>
 #ifdef USE_AVCALL
 #include <avcall.h>
 #endif
@@ -63,7 +63,6 @@ Library:      defobj
 + createBegin: aZone;
 - setLanguage: (id <Symbol>)language;
 - setSelector: (SEL)aSel;
-- setSelector: (SEL)aSel forTarget: (id)theTarget;
 + create: aZone setSelector: (SEL)aSel;
 - setJavaSignature: (const char *)javaSignature;
 - addArgument: (types_t *)value ofType: (fcall_type_t)type;

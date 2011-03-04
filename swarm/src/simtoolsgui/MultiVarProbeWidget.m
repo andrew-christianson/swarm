@@ -29,7 +29,7 @@
 
 @implementation MultiProbe
 
-- setParent: (id)parentFrame
+- setParent: (id <Frame>)parentFrame
 {
   parent = parentFrame;
 
@@ -94,7 +94,7 @@
 
 - addEntries: (id <List>)objectList
 {
-  id li = [objectList begin: [self getZone]];
+  id <ListIndex> li = [objectList begin: [self getZone]];
   id obj;
 
   while ((obj = [li next]) != nil)
@@ -109,7 +109,7 @@ static BOOL
 findObject (id entryMap, const char *windowName,
             id *obj_ptr, id *entry_ptr)
 {
-  id emi = [entryMap begin: [entryMap getZone]];
+  id <MapIndex> emi = [entryMap begin: [entryMap getZone]];
   id <VarProbeEntry> entry;
   id obj;
 
@@ -143,7 +143,7 @@ findObject (id entryMap, const char *windowName,
 
 - (void)update
 {
-  id emi = [entryMap begin: [self getZone]];
+  id <MapIndex> emi = [entryMap begin: [self getZone]];
   char buffer[512];
   id <VarProbeEntry> entry;
   id obj;

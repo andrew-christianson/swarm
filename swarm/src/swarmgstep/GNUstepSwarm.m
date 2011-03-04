@@ -24,7 +24,6 @@
 #import <Foundation/NSThread.h>
 #import <Foundation/NSRunLoop.h>
 #import <Foundation/NSTimer.h>
-#import <Foundation/NSAutoreleasePool.h>
 #import <AppKit/NSView.h>
 
 #define SG_STATE_NOTHING 0
@@ -37,14 +36,12 @@
 
 #define SG_COND_A 1
 #define SG_COND_B 2
-#define SG_COND_WAIT 3
-#define SG_COND_RUN 4
 
 @implementation GNUstepSwarmController
 
 - (void)spawnSimulation: (Class)aSwarmClass withDelegate: anObject
 {
-  printf("[GNUstepSwarmController spawnSimulation:]\n");
+  fprintf(stderr, "[GNUstepSwarmController spawnSimulation:]\n");
 
   _delegate = anObject;
   _currentState = SG_STATE_NEW;
@@ -58,7 +55,7 @@
 #if 1
   // Wait for swarm to be ready
   [_theConditionLock lockWhenCondition: SG_COND_A];
-  [_theConditionLock unlockWithCondition: SG_COND_WAIT];
+  [_theConditionLock unlockWithCondition: SG_COND_A];
 #endif
 }
 
@@ -66,7 +63,7 @@
 {
   NSAutoreleasePool *pool;
 
-  printf("[GNUstepSwarmController newSimulation:]\n");
+  fprintf(stderr, "[GNUstepSwarmController newSimulation:]\n");
 
   pool = [NSAutoreleasePool new];
   _modelThread = [NSThread currentThread];
@@ -86,48 +83,34 @@
   [_theConditionLock lockWhenCondition: SG_COND_B];
   [_theConditionLock unlockWithCondition: SG_COND_A];
 
-	[self simulationControl: nil];
-
-#if 0
   [NSTimer scheduledTimerWithTimeInterval: 0.000001
 	   target: self selector: @selector(simulationControl:)
 	   userInfo: nil repeats: YES];
 
-  printf("before run\n");
+  fprintf(stderr, "before run\n");
   [[NSRunLoop currentRunLoop] run];
-  printf("after run\n");
-#endif
+  fprintf(stderr, "after run\n");
 
   [NSThread exit];
 }
 
-//- (void)processStateFlagWithOriginal: (int)originalState
-- (void)processStateFlag
+- (void)processStateFlagWithOriginal: (int)originalState
 {
   switch (_currentState)
     {
     case SG_STATE_DROP:
-      printf("Terminating simulation\n");
+      fprintf(stderr, "Terminating simulation\n");
       [getTopLevelActivity() terminate];
       break;
-    case SG_STATE_START: {
-      NSAutoreleasePool *pool = [NSAutoreleasePool new];
+    case SG_STATE_START:
       [[_theSwarm getActivity] stepUntil: [[_theSwarm getActivity]
 					    getCurrentTime] + 1];
-      [pool release];
       break;
-    }
-    case SG_STATE_STEP: {
-      NSAutoreleasePool *pool = [NSAutoreleasePool new];
+    case SG_STATE_STEP:
       [[_theSwarm getActivity] stepUntil: [[_theSwarm getActivity]
 					    getCurrentTime] + 1];
-      [pool release];
-
-      [_theConditionLock lockWhenCondition: SG_COND_RUN];
-      [_theConditionLock unlockWithCondition: SG_COND_WAIT];
       _currentState = SG_STATE_STOP;
       break;
-    }
     case SG_STATE_STOP:
       break;
     }
@@ -135,32 +118,19 @@
 
 - (void)simulationControl: (NSTimer *)aTimer
 {
-	while (_currentState != SG_STATE_DROP) {
-	
-		// wait to start
-		printf("waiting %d\n", _currentState);
-		[_theConditionLock lockWhenCondition: SG_COND_RUN];
-		_currentState = SG_STATE_START;
-		[_theConditionLock unlockWithCondition: SG_COND_RUN];
+  int originalState = _currentState;
 
-		while ((_currentState == SG_STATE_START) 
-				|| (_currentState == SG_STATE_STEP)) {
+  // Check if the user initiated a new state
+  if (_nextState != SG_STATE_NOTHING)
+    {
+      [_theLock lock];
+      fprintf(stderr, "Got new state %d\n", _nextState);
+      _currentState = _nextState;
+      _nextState = SG_STATE_NOTHING;
+      [_theLock unlock];
+    }
 
-				//printf("running %d\n", [_theConditionLock condition]);
-
-			// Check if the user initiated a new state
-			if (_nextState != SG_STATE_NOTHING) {
-				[_theLock lock];
-				printf("Got new state %d\n", _nextState);
-				_currentState = _nextState;
-				_nextState = SG_STATE_NOTHING;
-				[_theLock unlock];
-			}
-
-			//[self processStateFlagWithOriginal: originalState];
-			[self processStateFlag];
-		}
-	}
+  [self processStateFlagWithOriginal: originalState];
 }
 
 - getSwarm
@@ -170,39 +140,23 @@
 
 - (void)startSwarmSimulation: sender
 {
-	if ([_theConditionLock tryLockWhenCondition: SG_COND_WAIT]) {
-
-		printf("startSwarmSimulation\n");
-		[_theLock lock];
-		_nextState = SG_STATE_START;
-		[_theLock unlock];
-
-		[_theConditionLock unlockWithCondition: SG_COND_RUN];
-	}
+  [_theLock lock];
+  _nextState = SG_STATE_START;
+  [_theLock unlock];
 }
 
 - (void)stepSwarmSimulation: sender
 {
-	if ([_theConditionLock tryLockWhenCondition: SG_COND_WAIT]) {
-
-		printf("stepSwarmSimulation\n");
-		[_theLock lock];
-		_nextState = SG_STATE_STEP;
-		[_theLock unlock];
-		[_theConditionLock unlockWithCondition: SG_COND_RUN];
-	}
+  [_theLock lock];
+  _nextState = SG_STATE_STEP;
+  [_theLock unlock];
 }
 
 - (void)stopSwarmSimulation: sender
 {
-	if ([_theConditionLock tryLockWhenCondition: SG_COND_RUN]) {
-
-		printf("stopSwarmSimulation\n");
-		[_theLock lock];
-		_nextState = SG_STATE_STOP;
-		[_theLock unlock];
-		[_theConditionLock unlockWithCondition: SG_COND_WAIT];
-	}
+  [_theLock lock];
+  _nextState = SG_STATE_STOP;
+  [_theLock unlock];
 }
 
 - (void)dropSwarmSimulation: sender
@@ -217,8 +171,7 @@
 #if 0
   fprintf(stderr, "performDisplayUpdate:\n");
 #endif
-  //[aView setNeedsDisplay: YES];
-  [aView display];
+  [aView setNeedsDisplay: YES];
 }
 
 - (void) viewNeedsDisplay: aView

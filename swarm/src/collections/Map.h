@@ -23,8 +23,8 @@ Description:  sorted map implemented as linear list
 Library:      collections
 */
 
-#import <Swarm/Collection.h>
-#import <Swarm/defobj.h> // Serialization
+#import <collections/Collection.h>
+#import <defobj.h> // Serialization
 //
 // struct mapentry, mapentry_t -- internal node containing key-member pair
 //

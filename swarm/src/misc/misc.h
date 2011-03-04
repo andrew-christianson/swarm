@@ -20,7 +20,7 @@
 #ifndef _MISC_H
 #define _MISC_H
 
-#include <Swarm/swarmconfig.h>
+#include <swarmconfig.h>
 
 #include <stddef.h>
 #if defined(__hpux__) && defined(HAVE_SYS_SIGEVENT_H)
@@ -65,17 +65,16 @@
 
 /* Expected to be declared by stdlib.h are atoi, getenv, qsort. */
 /* Expected to be declared by unistd.h are access, getpid, and sleep. */
-#ifdef __MINGW32__
-#define BOOL WINBOOL
-/* Avoid defines like Rectangle which will cause problems in tkobjc */
-#define NOGDI
-#include <windows.h>
-#undef BOOL
-#define sleep(x) (Sleep((x)*1000),0)
-#endif
-
 /* Expected to be declared by time.h are clock, time, and gettimeofday. */
 /* Expected to be declared by sys/time.h. is timeval. */
+
+#ifdef __MINGW32__
+struct timezone {
+  int tz_minuteswest;
+  int tz_dsttime;
+};
+int gettimeofday (struct timeval *tv, struct timezone *tz);
+#endif
 
 void *xmalloc (size_t size);
 void *xmalloc_atomic (size_t size);

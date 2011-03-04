@@ -24,7 +24,7 @@
 #import <defobj.h> // STRDUP, ZSTRDUP, SSTRDUP, FREEBLOCK, SFREEBLOCK
 #import <defobj/defalloc.h> // getZone
 #import <defobj/directory.h> // swarm_directory_ensure_class_named
-#import <defobj/defobj_classes.h> // id_Object_s
+#import <defobj/classes.h> // id_Object_s
 
 #import "internal.h" // map_object_ivars, class_generate_name, ivar_ptr_for_name
 #ifdef HAVE_JDK
@@ -477,7 +477,7 @@ create_class_from_compound_type (id aZone,
                                  const char *typeName,
                                  Class *classPtr)
 {
-  unsigned count;
+  unsigned i, count;
   size_t tid_size;
   Class class;
   
@@ -498,8 +498,6 @@ create_class_from_compound_type (id aZone,
     *classPtr = class;
   else
     {
-#if SWARM_OBJC_DONE
-      int i;
       Class newClass = [CreateDrop class];
       id classObj = [id_BehaviorPhase_s createBegin: aZone];
       struct objc_ivar_list *ivars =
@@ -575,10 +573,6 @@ create_class_from_compound_type (id aZone,
         ((Class) classObj)->instance_size = size;
       }
       *classPtr = [classObj createEnd];
-#else
-      printf("Creating new class from HDF5 not implemented.\n");
-      abort();
-#endif
     }
 }
 #endif
@@ -710,7 +704,7 @@ PHASE(Using)
                         "expecting string table for int -> char * conversion");
           {
             PTRINT offset = *(int *) (buf + hoffset);
-            id mi = [stringMap begin: scratchZone];
+            id <MapIndex> mi = [stringMap begin: scratchZone];
             const char *key;
 
             if (offset > 0)
@@ -868,7 +862,7 @@ hdf5_delete_attribute (hid_t loc_id, const char *name)
     raiseEvent (SaveError, "unable to copy string type");
 
   {
-    id mi = [stringMap begin: scratchZone];
+    id <MapIndex> mi = [stringMap begin: scratchZone];
     const char *key;
     size_t maxlen = 0;
 
@@ -1572,7 +1566,7 @@ PHASE(Using)
 #endif
 }
 
-- (void)iterate: (int (*) (id hdf5obj))iterateFunc drop: (BOOL)dropFlag
+- (void)iterate: (int (*) (id <HDF5> hdf5obj))iterateFunc drop: (BOOL)dropFlag
 {
 #ifdef HAVE_HDF5
   herr_t process_object (hid_t oid, const char *memberName, void *client)
@@ -1590,7 +1584,7 @@ PHASE(Using)
           
           if ((gid = H5Gopen (oid, memberName)) < 0)
             raiseEvent (LoadError, "cannot open group `%s'", memberName);
-          group = [[[(id <HDF5>)[[[HDF5 createBegin: getZone (self)]
+          group = [[[[[[HDF5 createBegin: getZone (self)]
                         setParent: self]
                        setWriteFlag: NO]
                       setName: memberName]
@@ -1607,7 +1601,7 @@ PHASE(Using)
 
           if ((did = H5Dopen (oid, memberName)) < 0)
             raiseEvent (LoadError, "cannot open dataset `%s'", memberName);
-          dataset = [[[(id <HDF5>)[[[[HDF5 createBegin: getZone (self)]
+          dataset = [[[[[[[HDF5 createBegin: getZone (self)]
                            setParent: self]
                           setWriteFlag: NO]
                          setDatasetFlag: YES]
@@ -1630,7 +1624,7 @@ PHASE(Using)
 #endif  
 }
 
-- (void)iterate: (int (*) (id hdf5obj))iterateFunc
+- (void)iterate: (int (*) (id <HDF5> hdf5obj))iterateFunc
 {
   [self iterate: iterateFunc drop: YES];
 }
@@ -1692,11 +1686,7 @@ PHASE(Using)
       
       if (typeName)
         {
-#if SWARM_OBJC_DONE
           Class class = objc_lookup_class (typeName);
-#else
-          Class class = swarm_objc_lookupClass (typeName);
-#endif
  
           SFREEBLOCK (typeName);
 
@@ -1706,9 +1696,8 @@ PHASE(Using)
             {
               id typeObject = baseTypeObject;
 
-              int process_object (id anObj)
+              int process_object (HDF5_c *hdf5Obj)
                 {
-		  HDF5_c *hdf5Obj = anObj;
                   if (hdf5Obj->datasetFlag)
                     {
                       hid_t did = hdf5Obj->loc_id;
@@ -1825,7 +1814,6 @@ PHASE(Using)
   else
 #endif
     {
-#if SWARM_OBJC_DONE
       struct objc_ivar *ivar = find_ivar (getClass (obj), ivarName);
       void *ptr = (void *) obj + ivar->ivar_offset;
       
@@ -1842,25 +1830,6 @@ PHASE(Using)
         }
       else
         *(id *) ptr = hdf5In ([obj getZone], self);
-#else
-      ObjcIvar ivar = find_ivar (getClass (obj), ivarName);
-      void *ptr = (void *) obj + swarm_ivar_getOffset(ivar);
-      
-      if (!ivar)
-        raiseEvent (InvalidArgument,
-                    "could not find ivar `%s'", ivarName);
-      
-      if ([self getDatasetFlag])
-        {
-	  const char *itype = swarm_ivar_getTypeEncoding(ivar);
-          if (*itype  == _C_PTR)
-            *((void **) ptr) = [self _loadDatasetIntoNewBuffer_: obj];
-          else
-            [self loadDataset: (void *) obj + swarm_ivar_getOffset(ivar)];
-        }
-      else
-        *(id *) ptr = hdf5In ([obj getZone], self);
-#endif
     }
 }
 
@@ -1982,7 +1951,7 @@ hdf5_store_attribute (hid_t did,
 
   if (rank > 0)
     {
-      hsize_t hdf5dims[rank];
+      hssize_t hdf5dims[rank];
       unsigned i;
       hid_t sid;
       
@@ -2066,7 +2035,7 @@ hdf5_store_attribute (hid_t did,
         if (H5Sselect_elements (c_sid,
                                 H5S_SELECT_SET,
                                 count,
-                                (const hsize_t **) coords) < 0)
+                                (const hssize_t **) coords) < 0)
           raiseEvent (InvalidArgument, "unable to select elements");
       }
     else
@@ -2165,7 +2134,7 @@ hdf5_store_attribute (hid_t did,
   
   coord[0][0] = recordNumber;
   if (H5Sselect_elements (c_sid, H5S_SELECT_SET, 1,
-                          (const hsize_t **) coord) < 0)
+                          (const hssize_t **) coord) < 0)
     raiseEvent (InvalidArgument, "unable to select record: %u", recordNumber);
 #else
   hdf5_not_available ();

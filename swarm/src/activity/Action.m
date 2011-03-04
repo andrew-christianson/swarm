@@ -69,12 +69,7 @@ PHASE(Creating)
 {
   [super createEnd];
 
-#if SWARM_OBJC_DONE
   perform_imp = [FCall_c instanceMethodFor: M(performCall)];
-#else
-  perform_imp = swarm_class_getMethodImplementation([FCall_c class], M(performCall));
-#endif
-
   return self;
 }
 
@@ -191,7 +186,7 @@ PHASE(Using)
 - (void)_performAction_: (id <Activity>)anActivity
 {
   if (target) // in the case of FActionForEach
-    updateTarget ((FCall_c *)call, target);
+    updateTarget (call, target);
   
   PERFORM (call);
 }
@@ -304,12 +299,8 @@ PHASE(Setting)
 {
   id <FArguments> arguments =
     [FArguments createBegin: getCZone (getZone (self))];
- 
-#if SWARM_OSX
-  [arguments setSelector: selector forTarget: theTarget];
-#else
+  
   [arguments setSelector: selector];
-#endif
   if ([theTarget respondsTo: M(isJavaProxy)])
     [arguments setLanguage: LanguageJava];
   else
@@ -328,7 +319,7 @@ PHASE(Using)
 {
   if (call)
     {
-      updateTarget ((FCall_c *)call, target);
+      updateTarget (call, target);
       PERFORM (call);
     }
   else
@@ -356,7 +347,7 @@ describeMessageArgs(id stream, SEL msg, int nargs, id arg1, id arg2, id arg3)
 {
   char buffer[100];
 
-  sprintf (buffer, " %s", swarm_sel_getName (msg));
+  sprintf (buffer, " %s", sel_get_name (msg));
   [stream catC: buffer];
   if (nargs > 0)
     {
@@ -440,7 +431,7 @@ PHASE(Using)
 
 @implementation ActionForEachHomogeneous_c
 #define ACTION_HOMOGENEOUS_TYPE ActionForEachHomogeneous_c
-#define SETUPCALL imp = swarm_class_getMethodImplementation (swarm_object_getClass([target getFirst]), selector)
+#define SETUPCALL imp = objc_msg_lookup ([target getFirst], selector)
 #define UPDATEOBJCTARGET(target)
 #define PERFORMOBJCCALL(target) imp (target, selector)
 #undef UPDATEJAVATARGET
@@ -506,7 +497,7 @@ PHASE(Using)
 @implementation FActionForEachHomogeneous_c
 #define ACTION_HOMOGENEOUS_TYPE FActionForEachHomogeneous_c
 #undef SETUPCALL
-#define UPDATEOBJCTARGET(target) updateTarget ((FCall_c *)call, target)
+#define UPDATEOBJCTARGET(target) updateTarget (call, target)
 #define PERFORMOBJCCALL(target) PERFORM (call)
 #ifdef HAVE_JDK
 #define UPDATEJAVATARGET(jtarget) updateJavaTarget (call, jtarget)

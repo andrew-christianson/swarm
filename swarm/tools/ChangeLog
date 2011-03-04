@@ -1,7 +1,3 @@
-2009-04-02  Scott Christley  <schristley@mac.com>
-
-	* findImp.m: ObjC runtime abstraction.
-
 2008-04-26  Marcus G. Daniels <marcus@snoutfarm.com>
 
 	* as: Don't recode sections individually (e.g. __cstring_object).

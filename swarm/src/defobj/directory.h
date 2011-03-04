@@ -17,9 +17,9 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <Swarm/Create.h>
-#include <Swarm/misc.h> 
-#include <Swarm/avl.h>
+#import <defobj/Create.h>
+#include <misc.h> 
+#include <misc/avl.h>
 
 const char *swarm_directory_language_independent_class_name_for_objc_object (id object);
 const char *language_independent_class_name_for_objc_class (Class class);

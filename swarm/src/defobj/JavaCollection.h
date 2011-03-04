@@ -17,8 +17,8 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <Swarm/JavaProxy.h>
-#import <Swarm/swarmconfig.h>
+#import "JavaProxy.h"
+#include <swarmconfig.h>
 
 @interface JavaCollection: JavaProxy <Serialization>
 {

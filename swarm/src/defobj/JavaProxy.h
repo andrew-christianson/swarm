@@ -17,8 +17,8 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <Swarm/defobj.h>
-#import <Swarm/Create.h>
+#import <defobj.h>
+#import <defobj/Create.h>
 
 @interface JavaProxy: CreateDrop
 - (BOOL)isJavaProxy;

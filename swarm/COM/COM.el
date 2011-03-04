@@ -483,7 +483,7 @@
 (defun selector-protocol ()
   (make-protocol
    :name "Selector"
-   :module (lookup-module 'SwarmTop)
+   :module (lookup-module 'swarm)
    :included-protocol-list (list (lookup-protocol "CREATABLE"))
    :method-list (list
                  (make-method
@@ -1006,7 +1006,7 @@
   (concat
    "SWARM_"
    (let ((sym (module-sym (protocol-module protocol))))
-     (if (eq sym 'SwarmTop)
+     (if (eq sym 'swarm)
          ""
        (concat
         (upcase (symbol-name sym))
@@ -1049,7 +1049,7 @@
   (insert " ")
   (insert "\"urn:swarm:")
   (let ((sym (module-sym (protocol-module protocol))))
-    (unless (eq sym 'SwarmTop)
+    (unless (eq sym 'swarm)
       (insert (symbol-name sym))
       (insert ".")))
   (insert (com-phase-name protocol phase))

@@ -17,7 +17,7 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <Swarm/swarmconfig.h>
+#include <swarmconfig.h>
 
 #ifdef HAVE_HDF5
 #define id hdf5id
@@ -25,9 +25,9 @@
 #undef id
 #endif
 
-#import <Swarm/Create.h>
-#import <Swarm/collections.h> // Map
-#import <Swarm/internal.h> // fcall_type_t
+#import <defobj/Create.h>
+#import <collections.h> // Map
+#import "internal.h" // fcall_type_t
 
 #define ATTRIB_TYPE_NAME "type"
 #define ATTRIB_COMPONENT_TYPE_NAME "component-type"
@@ -133,8 +133,8 @@
 
 - (void)addDoubleToVector: (double)val;
 
-- (void)iterate: (int (*) (id hdf5Obj))iterateFunc drop: (BOOL)dropFlag;
-- (void)iterate: (int (*) (id hdf5Obj))iterateFunc;
+- (void)iterate: (int (*) (id <HDF5> hdf5Obj))iterateFunc drop: (BOOL)dropFlag;
+- (void)iterate: (int (*) (id <HDF5> hdf5Obj))iterateFunc;
 
 - (void)storeAttribute: (const char *)attributeName value: (const char *)valueString;
 - (const char *)getAttribute: (const char *)attrName;

@@ -52,8 +52,8 @@ Relative speed:	|
 */
 
 
-#import <Swarm/SwarmObject.h>
-#import <Swarm/random.h>
+#import <objectbase/SwarmObject.h>
+#import <random.h>
 
 #define BINOMIALDISTMAGIC       2420400U  // put in randomdefs.h
 #define BINOMIALDISTREVISION          1U  //

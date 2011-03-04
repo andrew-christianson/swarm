@@ -1,8 +1,7 @@
 MODULE = gui
-guidir = $(includedir)/Swarm
+guidir = $(includedir)/$(MODULE)
 
 include $(top_srcdir)/src/Makefile.rules
 
-gui_HEADERS = $(MODULE).h
 
 

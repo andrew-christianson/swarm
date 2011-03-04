@@ -1,44 +1,17 @@
-2011-01-20  Scott Christley  <schristley@mac.com>
+2011-03-04  Scott Christley  <schristley@mac.com>
 
-	* autogen.sh: Reinstate warning for libtool version.
+	* VERSION: Bump. 2.4.1 bug fix release.
 
-2010-04-11  Marcus G. Daniels <marcus@snoutfarm.com>
+	* configure.in: Enable onelib by default.
 
-	* configure.in:  Change DATADIR to CONFIG_DATADIR.
-	DATADIR conflicts with windows.h defines.
+2011-02-17  Scott Christley  <schristley@mac.com>
 
-2010-04-10  Marcus G. Daniels <marcus@snoutfarm.com>
+	* config.guess, config.sub, ltmain.sh: Updated
+	by libtoolize 1.2.6b.
 
-	* ltmain.sh: Updated to libtool 2.2.6b (Fedora 12).
-
-2010-02-18  Bill Northcott  <w.northcott@unsw.edu.au>
-
-	* configure.in: use Cocoa framework if Apple 
-          compiler
-          remove redundant -fgnu-runtime
-    
-2009-11-24  Bill Northcott  <w.northcott@unsw.edu.au>
-
-	* configure.in: replace LT_AC_PROG_SED with WN_PROG_SED 
-       to find GNU sed as $GSED for make-h2x
-    
-2009-11-23  Bill Northcott  <w.northcott@unsw.edu.au>
-
-	* configure.in: replace AC_PROG_SED with LT_AC_PROG_SED 
-       to find GNU sed
-    
-2009-11-09  Scott Christley  <schristley@mac.com>
-
-	* configure.in: Switch flag from GNUstep to OpenStep.
-
-2009-09-24  Scott Christley  <schristley@mac.com>
-
-	* configure.in: Make single library the default.
-	* Makefile.am (super-clean): Remove files.
-
-2009-04-02  Scott Christley  <schristley@mac.com>
-
-	* NEWS: ObjC runtime abstraction. Mac OSX native support.
+	* VERSION: Bump. 2.4 release branch created.
+	* NEWS: version 2.4
+	* configure.in: version 2.4
 
 2009-03-05  Scott Christley  <schristley@mac.com>
 
@@ -77,8 +50,8 @@
 2008-05-19  Bill Northcott  <w.northcott@unsw.edu.au>
 
 	* autogen.sh: add -Wno-portability to automake to 
-	suppress warnings.
-	* configure.in: remove cruft leftover from pre-TEA
+    suppress warnings.
+    * configure.in: remove cruft leftover from pre-TEA
     
 2008-05-07  Scott Christley  <schristley@mac.com>
 

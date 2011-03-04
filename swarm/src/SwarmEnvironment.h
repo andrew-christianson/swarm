@@ -17,22 +17,22 @@
 // The Swarm Development Group can be reached via our website at:
 // http://www.swarm.org/
 
-#import <Swarm/SwarmTop.h>
+#import <swarm.h>
 
-#import <Swarm/defobj.h>
-#import <Swarm/collections.h>
-#import <Swarm/objectbase.h>
-#import <Swarm/random.h>
-#import <Swarm/simtools.h>
+#import <defobj.h>
+#import <collections.h>
+#import <objectbase.h>
+#import <random.h>
+#import <simtools.h>
 #ifndef DISABLE_GUI
 #ifndef GNUSTEP
-#import <Swarm/simtoolsgui.h>
+#import <simtoolsgui.h>
 #endif
 #endif
 #ifdef ENABLE_XMLRPC
-#import <Swarm/swarm_xmlrpc.h>
+#import <swarm_xmlrpc.h>
 #endif
-#import <Swarm/Create.h>
+#import <defobj/Create.h>
 
 @interface SwarmEnvironment: CreateDrop <SwarmEnvironment>
 {

@@ -9,7 +9,7 @@
 #import <collections/predicates.h> // stringp
 #import "global.h"
 
-#import <defobj/swarm-objc-api.h> // _C_INT
+#include <objc/objc-api.h> // _C_INT
 
 @implementation WindowGeometryRecord
 

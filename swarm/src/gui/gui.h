@@ -3,7 +3,7 @@
 // implied warranty of merchantability or fitness for a particular purpose.
 // See file LICENSE for details and terms of copying.
 
-#import <Swarm/objectbase.h>
+#import <objectbase.h>
 
 //S: GUI interface for Swarm
 
@@ -922,7 +922,7 @@ CREATING
 #define GUI_INIT(arguments)  initAWTObjc (arguments)
 #endif
 
-#if !defined(GNUSTEP) && !defined(SWARM_OSX)
+#ifndef GNUSTEP
 #ifndef USE_JAVA
 #import <tkobjc/common.h>
 extern void initTkObjc (id arguments);
@@ -979,11 +979,7 @@ extern void initTkObjc (id arguments);
 @class ZoomRaster;
 
 @class Circle;
-#if SWARM_OSX
-@class SwarmLine;
-#else
 @class Line;
-#endif
 @class NodeItem;
 @class Rectangle;
 @class ScheduleItem;

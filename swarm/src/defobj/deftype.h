@@ -34,7 +34,7 @@ Library:      defobj
 #ifdef INHERIT_OBJECT
 #import <objc/Object.h>
 #else
-#import <Swarm/swarm-objc-api.h>
+#import <objc/objc.h>
 #import <stdio.h>
 #endif
 

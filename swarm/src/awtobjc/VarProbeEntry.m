@@ -4,7 +4,7 @@
 // See file LICENSE for details and terms of copying.
 
 #import <awtobjc/VarProbeEntry.h>
-#import <defobj/swarm-objc-api.h>
+#import <objc/objc-api.h>
 
 @implementation VarProbeEntry
 

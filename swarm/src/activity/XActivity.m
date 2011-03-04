@@ -117,7 +117,7 @@ removeObsoleteMerges (id <ActivityIndex> currentIndex)
 
   if (getClass (action) == id_ActionConcurrent_c)
     {
-      id index =
+      id <Index> index =
         [((ActionConcurrent_c *) action)->concurrentGroup begin: scratchZone];
       CAction *caction;
       
@@ -308,9 +308,8 @@ terminateFunction (id activity)
 // stopFunction -- break function to stop a running leaf activity
 //
 static BOOL
-stopFunction (id anObj)
+stopFunction (Activity_c *activity)
 {
-  Activity_c *activity = anObj;
   // cancel stop function in local activity and any owner activity that
   // just created local activity
   
@@ -352,9 +351,8 @@ stopFunction (id anObj)
 // nextFunction -- break function to stop on return from 
 //
 static BOOL
-nextFunction (id anObj)
+nextFunction (Activity_c *activity)
 {
-  Activity_c *activity = anObj;
   // cancel local next function
   
   activity->breakFunction = _activity_trace;
@@ -382,10 +380,8 @@ nextFunction (id anObj)
 // installNext() -- break function to stop activity after next action
 //
 static BOOL
-installNext (id anObj)
+installNext (Activity_c *activity)
 {
-  Activity_c *activity = anObj;
-
   if (!COMPLETEDP (activity->status))
     activity->breakFunction = nextFunction;
   else if (activity->ownerActivity)
@@ -424,10 +420,8 @@ installNext (id anObj)
 // installStep() -- break function to stop activity after next subaction
 //
 static BOOL
-installStep (id anObj)
+installStep (Activity_c *activity)
 {
-  Activity_c *activity = anObj;
-
   // stop in local activity, or new subactivity, if not completed
   
   if (!COMPLETEDP (activity->status))
@@ -546,7 +540,7 @@ installStep (id anObj)
 //
 - (id <Activity>)getOwnerActivity
 {
-  return topLevelAction ? nil : (id <Activity>)ownerActivity;
+  return topLevelAction ? nil : ownerActivity;
 }
 
 //
@@ -555,7 +549,7 @@ installStep (id anObj)
 //
 - (id <Activity>)getControllingActivity
 {
-  return topLevelAction ? (id <Activity>)ownerActivity : nil;
+  return topLevelAction ? ownerActivity : nil;
 
 }
 

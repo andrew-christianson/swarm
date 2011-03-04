@@ -1,0 +1,75 @@
+<SECT1 id="swarm.random.sgml.appendix.sect1.usage-beginners">
+<!--
+// Random v. 0.81 (Swarm 1.4)
+// 
+// USAGE GUIDE for novice users
+// 
+// Sven Thommesen <sthomme@humsci.auburn.edu>
+//
+// 1999-02-05
+//
+// Paul Johnson <pauljohn@ukans.edu>
+// Integrated most of this "Randomness for neophytes" material 
+// with the material in my chapter of the User Guide
+// 2000-02-29
+
+-->
+
+<TITLE>Supplemental comments on random number generators</TITLE>
+
+
+<para>Please consider some additional warnings about the usage of random number generators</para>
+
+    <orderedlist>
+      <listitem>
+        <PARA>
+          DO NOT use generators with bad statistical properties. See
+           <link
+          linkend="swarm.random.sgml.appendix-adv-usage.sect1">Advanced
+          Usage Guide</link> for a discussion of the generators
+          implemented in this library.</PARA>
+      </listitem>
+
+      <listitem>
+        <PARA>DO NOT use generators whose maximum cycle length is too
+          short for the intended application; you don't want your
+          generators to start repeating themselves. Be especially
+          aware of this if you use the PMMLCGgen class of generator;
+          these have good properties but a fairly short cycle. See
+          <link
+          linkend="swarm.random.sgml.appendix-adv-usage.sect1">Advanced
+          Usage Guide</link> to read more about how to select a
+          generator.</PARA>
+      </listitem>
+
+      <listitem><PARA>AVOID having generators in your simulation run
+          in `lock-step', producing output that is statistically
+          correlated. This may happen if you have several generators
+          of the same class, all started with the same default
+          seed.</PARA>
+
+      </listitem>
+      <listitem>
+        <PARA>Be aware that even the best generators can have
+          unexpected correlations with particular implementations of
+          some models. As a result, in some cases using a "better"
+          random number generator can result in worse (less correct)
+          model behavior than one could obtain when using a "bad"
+          generator. If you suspect your model may have this kind of
+          problem, you probably should re-run some experiments using a
+          different underlying generator, to make sure the results are
+          (statistically at least) the same. (For examples of this,
+          see the references <citation>Ferrenberg et al 1992</citation> and
+          <citation>Nature 1994</citation>.)</PARA>
+      </listitem>
+
+    </orderedlist>
+  
+</sect1>
+<!--
+Local Variables:
+mode: sgml
+sgml-parent-document:("userapp-rand.sgml" "SECT1")
+End:
+-->
+

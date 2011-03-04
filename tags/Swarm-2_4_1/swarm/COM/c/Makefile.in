@@ -1,0 +1,39 @@
+S=$(HOME)/src
+topsrcdir = $(S)/mozilla
+mozilla_build = $(topsrcdir)/obj-debug
+DEPTH = $(mozilla_build)
+srcdir = @srcdir@
+swarm_srcdir = @top_srcdir@
+top_builddir = ../..
+
+include ../Makefile.common
+include $(mozilla_build)/config/autoconf.mk
+
+VPATH = .:$(srcdir)
+
+moduleidlfiles = $(subst __u,,$(foreach phase,C S __u,$(addprefix swarmI,$(addsuffix $(phase).idl,$($(1)_creatable_PROTOCOLS) $($(1)_noncreatable_PROTOCOLS)))))
+
+modulecppfiles = $(subst __u,,$(foreach phase,C __u,$(addprefix swarm,$(addsuffix $(phase)Impl.cpp,$($(1)_creatable_PROTOCOLS)))))
+
+MODULE = swarm
+LIBRARY_NAME = xpcomswarm
+IS_COMPONENT = 1
+
+REQUIRES = xpcom string xpconnect js
+
+CPPSRCS = swarmBase.cpp swarmSelectorImpl.cpp COMsupport.cpp module.cpp $(foreach module,$(MODULES) swarm,$(call modulecppfiles,$(module))) predispatch.cpp $(NULL)
+
+XPIDLSRCS = swarmIBase.idl swarmISelector.idl swarmITyping.idl $(foreach module,$(MODULES) swarm,$(call moduleidlfiles,$(module)))
+
+include $(topsrcdir)/config/rules.mk
+
+override INCLUDES += -I$(top_builddir)/libobjc -I$(swarm_srcdir)/libobjc -I$(swarm_srcdir)/src/misc -I$(top_builddir) -I$(top_builddir)/src -I$(swarm_srcdir)/src $(foreach module,defobj,-I$(swarm_srcdir)/src/$(module) -I$(top_srcdir)/src/$(module)) -I$(swarm_srcdir) -I$(swarm_srcdir)/COM/c -I. -DMOZILLA_INTERNAL_API
+
+
+SWARMMODULES = $(shell cat $(top_builddir)/etc/modules)
+
+EXTRA_DSO_LDOPTS += $(MOZ_COMPONENT_LIBS) -L$(top_builddir)/libobjc/.libs -L$(top_builddir)/src/.libs -lswarm $(foreach module,$(SWARMMODULES), -L$(top_builddir)/src/$(module)/.libs -l$(module)) -lobjc -lmozjs
+
+predispatch.cpp: 
+	(echo "#include <objc/objc.h>"; echo "#include <objc/objc-api.h>"; sort *-head.c | uniq;  echo "void swarm_COM_predispatch () {"; sort *-body.c | uniq ; echo "}") > predispatch.cpp
+

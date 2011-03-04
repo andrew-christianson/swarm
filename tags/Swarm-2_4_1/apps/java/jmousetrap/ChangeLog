@@ -1,0 +1,201 @@
+2001-09-03    <mgd@HELEN>
+
+	* Mousetrap.java: Import SimpleRandomGenerator, and use it in
+	constructor instead of Object.
+
+2000-02-27    <mgd@nest.swarm.org>
+
+	* StartMousetrap.java (main): Update for SDG and 2.1.
+
+1999-11-19  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* Mousetrap.java: Return an Object, for the sake of the ActionTo
+	interface.
+
+1999-09-18  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* 2.0.1 release.
+
+1999-09-14  Alex Lancaster  <alex@santafe.edu>
+
+	* MousetrapObserverSwarm.java (buildObjects): Pass windowGeometry
+	record name in ZoomRaster creation
+
+1999-09-12  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* StartMousetrap.java: Pass appName, version, and bug
+	report address.
+
+	* MousetrapObserverSwarm.java: Pass windowGeometry record name
+	in EZGraph creation.
+
+	* MousetrapModelSwarm.java, MousetrapObserverSwarm.java: Likewise
+	for ProbeDisplay (throughout) and for setters.
+
+1999-09-02  Alex Lancaster  <alex@santafe.edu>
+
+	* MousetrapModelSwarm.java (MousetrapModelSwarm): Make
+	MousetrapProbeMap a local inner class, rather than a member inner
+	class and relocate its definition to the constructor, since it is
+	the only place it is required.  Rename to MousetrapModelProbeMap.
+
+	* MousetrapObserverSwarm.java (MousetrapObserverSwarm): Inside
+	class constructor, rework the probeMap instance as an anonymous
+	class for succinctness.
+
+1999-09-01  Alex Lancaster  <alex@santafe.edu>
+
+	* StartMousetrap.java: Reword javadoc comment more precisely.
+
+	* MousetrapModelSwarm.java: Import Grid2d interface as well as
+	Grid2dImpl implementation.
+	(grid):  Type as Grid2d interface.
+	(getWorld):  Return type as Grid2d interface.
+
+1999-09-01  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* MousetrapObserverSwarm.java: Import Zone and Swarm interfaces
+	instead of implementations.  Import Colormap and ZoomRaster
+	interfaces.
+	(colormap): Type as Colormap interface.
+	(displayWindow): Type as ZoomRaster interface.
+	(MousetrapObserverSwarm): Type Zone argument as interface.
+	(probeMap): Type as EmptyProbeMap interface.
+	(activateIn): Type swarmContext as Swarm interface, not
+	implementation.
+
+	* MousetrapModelSwarm.java: Import Zone, Activity, VarProbe
+	interfaces instead of implementations.  Import Swarm interface.
+	(probeVariable): Return VarProbe interface type, not
+	implementation.
+	(MousetrapProbeMap, MousetrapModelSwarm): Use Zone interface type
+	as argument.
+	(activateIn): Type swarmContext as Swarm interface, not implementation.
+
+	* MousetrapBatchSwarm.java: Import Zone, Activity, Swarm
+	interfaces instead of implementations.  Import EZGraph interface.
+	(triggerGraph): Type as EZGraph interface instead of
+	implementation.
+	(MousetrapBatchSwarm): Type aZone argument as Zone interface, not
+	implementation.
+	(activateIn): Type swarmContext as Swarm interface, not
+	implementation.
+
+	* Mousetrap.java: Import ZoomRaster interface instead of
+	implementation.
+	(displayWidget): Type as a ZoomRaster interface.
+	(setDisplayWidget) Type argument to setDisplayWidget as a
+	ZoomRaster interface.
+
+1999-08-31  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* MousetrapBatchSwarm.java: Import and use ActionGroup and
+	Schedule for displayActions and displaySchedule, respectively.
+
+	* Mousetrap.java: Import and use UniformDoubleDist,
+	UniformUnsignedDist, and, UniformIntegerDist for uniform0to1,
+	uniformRadius, and uniformTrigTime, respectively.
+
+	* MousetrapModelSwarm.java: Import and use Schedule,
+	ActivityControl, PMMLCG1gen, and UniformDoubleDist for
+	moduleSchedule, modelActCont, randomGenerator, and uniform0to1,
+	respectively.
+
+	* MousetrapObserverSwarm.java: Import and use ActionGroup,
+	Schedule, ActivityControl, Object2dDisplay, and EZGraph interfaces
+	for displayActions, displaySchedule, observerActCont,
+	mousetrapDisplay, and triggerGraph, respectively.
+
+1999-08-24  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* MousetrapBatchSwarm.java: Use getSwarmActivity instead of cast.
+
+	* MousetrapObserverSwarm.java (buildObjects): Remove casting passing
+	displayWindow and world Grid2d to Object2dDisplay.
+
+1999-08-24    <mgd@HELEN>
+
+	* StartMousetrap.java: Drop topLevelSwarm at the end.
+
+	* MousetrapObserverSwarm.java (drop): New method.  Disable destroy
+	notification.
+
+1999-08-23  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* MousetrapObserverSwarm.java (buildObjects): Return null on Quit.
+
+	* StartMousetrap.java: Don't do anything if buildObjects returns null;
+	the user hit Quit.
+
+	* Mousetrap.java, MousetrapObserverSwarm.java,
+	MousetrapModelSwarm.java, MousetrapStatistics.java,
+	StartMousetrap.java: Do minimal, explicit imports.  Use SwarmImpl
+	as argument to activateIn:, not Object.
+
+	* MousetrapModelSwarm.java (MousetrapProbeMap): New inner class.
+
+	* MousetrapObserverSwarm.java, MousetrapModelSwarm.java: Eliminate
+	intermediate variables, misc. cleanups.
+
+1999-08-22  Marcus G. Daniels  <mgd@pojoaque.santafe.edu>
+
+	* MousetrapModelSwarm.java, MousetrapBatchSwarm.java,
+	MousetrapObserverSwarm.java, Mousetrap.java: Remove this.* ()
+	style calls and eliminate most casting.
+
+1999-08-17    <mgd@HELEN>
+
+	* Makefile: Add StartMousetrap.java.
+
+	* StartMousetrap.java, Mousetrap.java: Move StartMousetrap class
+	to be public in StartMousetrap.java.
+
+1999-08-12  Alex Lancaster  <alex@santafe.edu>
+
+	* Makefile (clean): Added target.
+
+	* MousetrapBatchSwarm.java, MousetrapModelSwarm.java,
+	MousetrapObserverSwarm.java, MousetrapStatistics.java,
+	Mousetrap.java: Add Copyright information.
+
+	* COPYING: Add GPL.
+
+1999-08-11  Alex Lancaster  <alex@santafe.edu>
+
+	* MousetrapModelSwarm.java (activateIn()): Create an
+	ArchivedProbeDisplay for model ActivityControlImpl.
+
+1999-08-10  Alex Lancaster  <alex@santafe.edu>
+
+	* Mousetrap.java: Changed the following references to classnames
+	Mousetrap{Observer,Model,Batch}SwarmImpl ->
+	Mousetrap{Observer,Model,Batch}Swarm.
+
+	* Makefile: Likewise.
+	
+	* MousetrapObserverSwarm.java, MousetrapBatchSwarm.java,
+	MousetrapModelSwarm.java: New files, renamed by removing their
+	respective `Impl' suffixes.  Changed all class names accordingly,
+	throughout.  Removed old files.
+
+1999-08-09  Alex Lancaster  <alex@santafe.edu>
+
+	* MousetrapObserverSwarmImpl.java (buildObjects()): Uncomment code
+	to handle ZoomRasterImpl probing.
+
+	* MousetrapBatchSwarmImpl.java: Reformatting throughout.
+
+	* MousetrapObserverSwarmImpl.java (MousetrapObserverSwarmImpl()):
+	Use convenience constructors for instances of EmptyProbeMapImpl.
+	Add javadoc-style comments for class and methods.
+
+	* MousetrapModelSwarmImpl.java (MousetrapModelSwarmImpl():  Likewise.
+
+	* Mousetrap.java (StartMoustrap.main()): Use Global.env.guiFlag
+	from SwarmEnvironment to switch on/off GUI mode.  Add
+	javadoc-style comments.
+
+	* Start ChangeLog.
+
+
+

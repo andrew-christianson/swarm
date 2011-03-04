@@ -1,0 +1,14 @@
+space
+analysis
+@SIMTOOLSGUI@
+@GNUSTEPMODULE@
+simtools
+random
+@TKMODULE@
+@TCLMODULE@
+objectbase
+activity
+defobj
+collections
+misc
+@SWARM_XMLRPC@

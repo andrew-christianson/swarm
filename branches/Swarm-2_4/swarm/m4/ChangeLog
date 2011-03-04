@@ -4,6 +4,16 @@
 	ltversion.m4, ltoptions.m4: New file for
 	from libtoolize 2.2.6b.
 
+2010-04-28 Marcus G. Daniels <marcus@snoutfarm.com>
+
+	* acsizes.m4:  Handle long long.
+
+	* acffi.m4:  Work with current libffi from github.
+
+2010-04-10  Marcus G. Daniels <marcus@snoutfarm.com>
+
+	* acjdk.m4: Add check for AMD64 JDK.
+
 2009-03-05  Scott Christley  <schristley@mac.com>
 
 	* acgnustep.m4: Add Local directories.

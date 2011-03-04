@@ -1,3 +1,7 @@
+2011-03-04  Scott Christley  <schristley@mac.com>
+
+	* configure.in: Enable onelib by default.
+
 2011-02-17  Scott Christley  <schristley@mac.com>
 
 	* config.guess, config.sub, ltmain.sh: Updated

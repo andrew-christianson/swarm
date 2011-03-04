@@ -1,3 +1,7 @@
+2011-03-04  Scott Christley  <schristley@mac.com>
+
+	* Makefile.am (CURRENT, AGE): Define version for library.
+
 2008-08-25  Marcus G. Daniels <marcus@snoutfarm.com>
 
 	* Makefile.am (DIST_SUBDIRS):  Add.

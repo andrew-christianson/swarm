@@ -59,16 +59,16 @@ void
 swarm_class_copyIvars (Class fromClass, Class toClass)
 {
 	unsigned int i, outCount;
-	unsigned int aSize, anAlign;
+	NSUInteger aSize, anAlign;
 
 	// copy the instance variables from one class to the other
 	Ivar *ivarList = class_copyIvarList(fromClass, &outCount);
 	if (ivarList) {
 		for (i = 0; i < outCount; ++i) {
 			NSGetSizeAndAlignment(ivar_getTypeEncoding(ivarList[i]), &aSize, &anAlign);
-			printf("copy ivar: %s %d %d\n", ivar_getName(ivarList[i]), aSize, log2(aSize));
-			class_addIvar(toClass, ivar_getName(ivarList[i]), aSize, log2(aSize),
-				ivar_getTypeEncoding(ivarList[i]));
+			printf("copy ivar from %s to %s: %s %s %ld %ld\n", class_getName(fromClass), class_getName(toClass),
+             ivar_getName(ivarList[i]), ivar_getTypeEncoding(ivarList[i]), aSize, anAlign);
+			class_addIvar(toClass, ivar_getName(ivarList[i]), aSize, anAlign, ivar_getTypeEncoding(ivarList[i]));
 		}
 		free(ivarList);
 	}

@@ -69,7 +69,7 @@ echo '0};
 
 # extract all declared types into temporary file
 
-$GSED <$srcdir/$m.h >$m.xm+ \
+$GSED <$srcdir/$m.h >$m.xp \
   -e 's/	//g' \
   -e '/^@protocol/!d' \
   -e 's/@protocol[ *]\([A-Za-z0-9_][A-Za-z0-9_]*\).*/\1/'
@@ -78,7 +78,7 @@ $GSED <$srcdir/$m.h >$m.xm+ \
 
 echo 'extern void *_'$m'_[];
 ' >$m.xt
-$GSED <$m.xm+ >>$m.xt \
+$GSED <$m.xp >>$m.xt \
   -e 's/^Zone/SwarmZone/' \
   -e 's/^EventType/SwarmEventType/' \
   -e 's/^Collection/SwarmCollection/' \
@@ -90,7 +90,7 @@ echo '
 
 # define type identifiers in generated file
 
-$GSED <$m.xm+ >>$m.xm \
+$GSED <$m.xp >>$m.xm \
   -e 's/^Zone/SwarmZone/' \
   -e 's/^EventType/SwarmEventType/' \
   -e 's/^Collection/SwarmCollection/' \
@@ -100,13 +100,13 @@ $GSED <$m.xm+ >>$m.xm \
 
 echo '
 void *_'$m'_types[]={' >>$m.xm
-$GSED <$m.xm+ >>$m.xm \
+$GSED <$m.xp >>$m.xm \
   -e 's/Zone/SwarmZone/' \
   -e 's/^EventType/SwarmEventType/' \
   -e 's/^Collection/SwarmCollection/' \
   -e 's/\(.*\)/\&\1,/'
 echo 0, >>$m.xm
-$GSED 's/\(.*\)/@protocol(\1),/' <$m.xm+ >>$m.xm
+$GSED 's/\(.*\)/0,/' <$m.xp >>$m.xm
 echo '0};
 ' >>$m.xm
 
@@ -176,6 +176,12 @@ echo '
 @implementation Module__'$m'_
 + initialize
 {
+ int i = 0;
+ while (_'$m'_types[i]) ++i;
+ ++i;
+// initialize protocols pointers, not constant on some platforms' >>$m.xm
+$GSED 's/\(.*\)/_'$m'_types[i++]=@protocol(\1);/' <$m.xp >>$m.xm
+echo '
 // initialize class id constants and link all classes into module' >>$m.xm
 $GSED 's/\(.*\)/id_\1=[\1 self];/' <$m.xm+ >>$m.xm
 echo '
@@ -189,4 +195,4 @@ return (id)_'$m'_;
 
 # remove temporary file containing class names
 
-rm $m.xm+
+rm $m.xm+ $m.xp

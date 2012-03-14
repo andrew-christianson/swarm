@@ -196,5 +196,10 @@ SET_RETURN_TYPE (FCall_c *fc)
 void
 AV_CALL (FArguments_c *fa)
 {
+#if SWARM_OSX
+  printf("av_call not supported on OSX.\n");
+  abort();
+#else
   av_call (AVALIST (fa));
+#endif
 }

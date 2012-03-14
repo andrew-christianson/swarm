@@ -124,6 +124,17 @@ parse_opt (int key, const char *arg, struct argp_state *state)
   // foreign targets.  It is one of the few cases where Swarm
   // sends a message outside of the Action framework.
 
+#if SWARM_OSX
+  error_t ret;
+  NSInvocation *inv = [NSInvocation invocationWithMethodSignature:
+                       [arguments methodSignatureForSelector: M(parseKey:arg:)]];
+  [inv setSelector: M(parseKey:arg:)];
+  [inv setArgument: &key atIndex: 2];
+  [inv setArgument: &arg atIndex: 3];
+  [inv invokeWithTarget: arguments];
+  [inv getReturnValue: &ret];
+  return ret;
+#else
   id fa = [FArguments createBegin: getCZone (scratchZone)];
   id fc;
   error_t ret;
@@ -153,6 +164,7 @@ parse_opt (int key, const char *arg, struct argp_state *state)
   [fc drop];
   [fa drop];
   return ret;
+#endif
 }
 
 @implementation Arguments_c
@@ -388,6 +400,9 @@ strip_quotes (const char *argv0)
   optionFunc: (int (*) (int key, const char *arg))anOptionFunc
 inhibitExecutableSearchFlag: (BOOL)theInhibitExecutableSearchFlag
 {
+#if SWARM_OSX
+  NSAutoreleasePool *pool = [NSAutoreleasePool new];
+#endif
   Arguments_c *argobj = [self createBegin: globalZone];
   
   [argobj setArgc: theArgc Argv: theArgv];
@@ -398,7 +413,12 @@ inhibitExecutableSearchFlag: (BOOL)theInhibitExecutableSearchFlag
   [argobj setVersion: theVersion];
   [argobj setAppName: theAppName];
   [argobj setInhibitExecutableSearchFlag: theInhibitExecutableSearchFlag];
-  return [argobj createEnd];
+  id a = [argobj createEnd];
+
+#if SWARM_OSX
+  [pool drain];
+#endif
+  return a;
 }
 
 PHASE(Setting)

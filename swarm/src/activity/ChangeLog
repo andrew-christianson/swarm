@@ -1,3 +1,9 @@
+2012-3-14  Scott Christley  <schristley@mac.com>
+
+  * ActionGroup.m, activity.m: Get correct ivar offset.
+  
+  * Action.[hm]: Use NSInvocation for OpenStep.
+  
 2009-11-24  Scott Christley  <schristley@mac.com>
 
 	* activity.h: Use activity directory to include generated file on

@@ -115,12 +115,21 @@ PHASE(Creating)
 PHASE(Using)
 - (void)_addArguments_: (id <FArguments>)arguments
 {
+#if SWARM_OSX
+  if (argCount >= 1)
+    [anInvocation setArgument: &arg1 atIndex: 2];
+  if (argCount >= 2)
+    [anInvocation setArgument: &arg2 atIndex: 3];
+  if (argCount >= 3)
+    [anInvocation setArgument: &arg3 atIndex: 4];
+#else
   if (argCount >= 1)
     [arguments addObject: arg1];
   if (argCount >= 2)
     [arguments addObject: arg2];
   if (argCount >= 3)
     [arguments addObject: arg3];
+#endif
 }
 
 - (void)_performAction_: (id <Activity>)anActivity
@@ -302,6 +311,14 @@ PHASE(Setting)
 
 - _createCall_: theTarget
 {
+#if SWARM_OSX
+  anInvocation = [[NSInvocation invocationWithMethodSignature:
+                  [theTarget methodSignatureForSelector: selector]] retain];
+  [anInvocation setTarget: theTarget];
+  [anInvocation setSelector: selector];
+  [self _addArguments_: nil];
+  return nil;
+#else
   id <FArguments> arguments =
     [FArguments createBegin: getCZone (getZone (self))];
  
@@ -321,11 +338,20 @@ PHASE(Setting)
                 target: theTarget
                 selector: selector
                 arguments: arguments];
+#endif
 }
 PHASE(Using)
 
 - (void)_performAction_: (id <Activity>)anActivity
 {
+#if SWARM_OSX
+  if (anInvocation) {
+    [anInvocation invokeWithTarget: target];
+  } else {
+    [self _createCall_: target];
+    [anInvocation invoke];
+  }
+#else
   if (call)
     {
       updateTarget ((FCall_c *)call, target);
@@ -339,6 +365,7 @@ PHASE(Using)
       [[fc getArguments] dropAllocations: YES];
       [fc dropAllocations: YES];
     }
+#endif
 }
 
 - getTarget

@@ -69,6 +69,10 @@ typedef void *retval_t;
 #define swarm_method_getName(method) method_getName(method)
 #define swarm_method_getTypeEncoding(method) method_getTypeEncoding(method)
 
+#define swarm_protocol_getName(p) protocol_getName((Protocol *)p)
+#define swarm_protocol_copyProtocolList(p, outCount) (ObjcProtocol **)protocol_copyProtocolList((Protocol *)p, outCount)
+
+
 // SWARM_TODO - selector type info
 #define swarm_sel_getName(sel) sel_getName(sel)
 #define swarm_sel_getTypedUid(str, types) sel_getUid(str)

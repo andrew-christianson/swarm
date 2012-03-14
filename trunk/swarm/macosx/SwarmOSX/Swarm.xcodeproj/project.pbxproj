@@ -304,7 +304,7 @@
 		D63BA7AD0E17108600E0FC0E /* structcpy.c in Sources */ = {isa = PBXBuildFile; fileRef = D63BA7AC0E17108600E0FC0E /* structcpy.c */; };
 		D675AEAF0E1068A700578367 /* swarm-objc-apple.m in Sources */ = {isa = PBXBuildFile; fileRef = D675AEAE0E1068A700578367 /* swarm-objc-apple.m */; };
 		D675AF080E10797700578367 /* SwarmTop.h in Headers */ = {isa = PBXBuildFile; fileRef = D675AF070E10797700578367 /* SwarmTop.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D69B41000E26ADAF00953B0F /* avcall-i386.S in Sources */ = {isa = PBXBuildFile; fileRef = D63BA7C20E17121B00E0FC0E /* avcall-i386.S */; };
+		D686CBD112F74BAE00353301 /* libhdf5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = D686CBD012F74BAE00353301 /* libhdf5.dylib */; };
 		D6B169620E21737B00573BB9 /* modulemap.c in Sources */ = {isa = PBXBuildFile; fileRef = D6B169610E21737B00573BB9 /* modulemap.c */; };
 		D6EAF9A00981D86A00EE3B51 /* SwarmEnvironment_getters.h in Headers */ = {isa = PBXBuildFile; fileRef = D615E38B08CBF48F00E2534C /* SwarmEnvironment_getters.h */; };
 		D6EAF9A30981D87400EE3B51 /* SwarmEnvironment_getters.m in Headers */ = {isa = PBXBuildFile; fileRef = D615E38C08CBF48F00E2534C /* SwarmEnvironment_getters.m */; };
@@ -404,7 +404,7 @@
 		D615D74F08C6C13800E2534C /* strnlen.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = strnlen.c; sourceTree = "<group>"; };
 		D615D75208C6C13800E2534C /* strtoll.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = strtoll.c; sourceTree = "<group>"; };
 		D615D75308C6C13800E2534C /* xmalloc.c */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.c; path = xmalloc.c; sourceTree = "<group>"; };
-		D615D78608C6C28900E2534C /* swarmconfig.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = swarmconfig.h; path = build/swarmconfig.h; sourceTree = SOURCE_ROOT; };
+		D615D78608C6C28900E2534C /* swarmconfig.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = swarmconfig.h; path = ../../swarmconfig.h; sourceTree = SOURCE_ROOT; };
 		D615D7B808C6C6CB00E2534C /* _fcall.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = _fcall.m; sourceTree = "<group>"; };
 		D615D7B908C6C6CB00E2534C /* Archiver.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = Archiver.h; sourceTree = "<group>"; };
 		D615D7BA08C6C6CB00E2534C /* Archiver.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = Archiver.m; sourceTree = "<group>"; };
@@ -613,17 +613,17 @@
 		D615DA4C08C6C73F00E2534C /* SwarmProcess.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = SwarmProcess.m; sourceTree = "<group>"; };
 		D615DA4D08C6C73F00E2534C /* XActivity.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = XActivity.h; sourceTree = "<group>"; };
 		D615DA4E08C6C73F00E2534C /* XActivity.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = XActivity.m; sourceTree = "<group>"; };
-		D615DA6108C6C7B300E2534C /* externvar.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = externvar.h; path = build/externvar.h; sourceTree = "<group>"; };
-		D615DA9408C6CD5600E2534C /* defobj_types.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = defobj_types.h; path = build/src/defobj/defobj_types.h; sourceTree = SOURCE_ROOT; };
-		D615DAB108C913F400E2534C /* collections_types.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = collections_types.h; path = build/src/collections/collections_types.h; sourceTree = SOURCE_ROOT; };
-		D615DAB408C9144700E2534C /* collections_classes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = collections_classes.h; path = build/src/collections/collections_classes.h; sourceTree = SOURCE_ROOT; };
-		D615DAC908C91A8900E2534C /* defobj_classes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = defobj_classes.h; path = build/src/defobj/defobj_classes.h; sourceTree = SOURCE_ROOT; };
-		D615DACB08C91A9100E2534C /* defobj.xm */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = defobj.xm; path = build/src/defobj/defobj.xm; sourceTree = SOURCE_ROOT; };
-		D615DACE08C91AC800E2534C /* version.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = version.h; path = build/src/defobj/version.h; sourceTree = SOURCE_ROOT; };
-		D615DB7808CA092B00E2534C /* activity_types.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = activity_types.h; path = build/src/activity/activity_types.h; sourceTree = SOURCE_ROOT; };
-		D615DB7A08CA093300E2534C /* activity.xm */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = activity.xm; path = build/src/activity/activity.xm; sourceTree = SOURCE_ROOT; };
-		D615DB7C08CA094300E2534C /* activity_classes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = activity_classes.h; path = build/src/activity/activity_classes.h; sourceTree = SOURCE_ROOT; };
-		D615DB9C08CA57AC00E2534C /* collections.xm */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = collections.xm; path = build/src/collections/collections.xm; sourceTree = SOURCE_ROOT; };
+		D615DA6108C6C7B300E2534C /* externvar.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = externvar.h; path = ../../externvar.h; sourceTree = "<group>"; };
+		D615DA9408C6CD5600E2534C /* defobj_types.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = defobj_types.h; sourceTree = "<group>"; };
+		D615DAB108C913F400E2534C /* collections_types.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = collections_types.h; sourceTree = "<group>"; };
+		D615DAB408C9144700E2534C /* collections_classes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = collections_classes.h; sourceTree = "<group>"; };
+		D615DAC908C91A8900E2534C /* defobj_classes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = defobj_classes.h; sourceTree = "<group>"; };
+		D615DACB08C91A9100E2534C /* defobj.xm */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; path = defobj.xm; sourceTree = "<group>"; };
+		D615DACE08C91AC800E2534C /* version.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = version.h; path = ../../src/defobj/version.h; sourceTree = SOURCE_ROOT; };
+		D615DB7808CA092B00E2534C /* activity_types.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = activity_types.h; sourceTree = "<group>"; };
+		D615DB7A08CA093300E2534C /* activity.xm */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; path = activity.xm; sourceTree = "<group>"; };
+		D615DB7C08CA094300E2534C /* activity_classes.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = activity_classes.h; sourceTree = "<group>"; };
+		D615DB9C08CA57AC00E2534C /* collections.xm */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; path = collections.xm; sourceTree = "<group>"; };
 		D615DEBA08CAB04C00E2534C /* AppendFile.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = AppendFile.h; sourceTree = "<group>"; };
 		D615DEBB08CAB04C00E2534C /* AppendFile.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = AppendFile.m; sourceTree = "<group>"; };
 		D615DEBC08CAB04C00E2534C /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
@@ -722,6 +722,7 @@
 		D615E37E08CBF32C00E2534C /* SwarmEnvironment.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = SwarmEnvironment.m; path = ../../src/SwarmEnvironment.m; sourceTree = SOURCE_ROOT; };
 		D615E38B08CBF48F00E2534C /* SwarmEnvironment_getters.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SwarmEnvironment_getters.h; path = ../../src/SwarmEnvironment_getters.h; sourceTree = SOURCE_ROOT; };
 		D615E38C08CBF48F00E2534C /* SwarmEnvironment_getters.m */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = SwarmEnvironment_getters.m; path = ../../src/SwarmEnvironment_getters.m; sourceTree = "<group>"; };
+		D6171C1214CF570A006D9162 /* avcall-x86_64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "avcall-x86_64.c"; sourceTree = "<group>"; };
 		D618622A0DD4F502006B1C2F /* swarm-objc-api.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "swarm-objc-api.h"; sourceTree = "<group>"; };
 		D618622B0DD4F502006B1C2F /* swarm-objc-apple.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "swarm-objc-apple.h"; sourceTree = "<group>"; };
 		D618622C0DD4F502006B1C2F /* swarm-objc-apple2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "swarm-objc-apple2.h"; sourceTree = "<group>"; };
@@ -731,6 +732,7 @@
 		D63BA7C20E17121B00E0FC0E /* avcall-i386.S */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.asm; path = "avcall-i386.S"; sourceTree = SOURCE_ROOT; };
 		D675AEAE0E1068A700578367 /* swarm-objc-apple.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "swarm-objc-apple.m"; sourceTree = "<group>"; };
 		D675AF070E10797700578367 /* SwarmTop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SwarmTop.h; path = ../../src/SwarmTop.h; sourceTree = SOURCE_ROOT; };
+		D686CBD012F74BAE00353301 /* libhdf5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libhdf5.dylib; path = /usr/local/lib/libhdf5.dylib; sourceTree = "<absolute>"; };
 		D6B169610E21737B00573BB9 /* modulemap.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = modulemap.c; sourceTree = "<group>"; };
 		D6BBBF67097F41CE005298EA /* include.dists.creating.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = include.dists.creating.m; sourceTree = "<group>"; };
 		D6BBBF68097F41CE005298EA /* include.dists.setting.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = include.dists.setting.m; sourceTree = "<group>"; };
@@ -823,6 +825,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DC2EF570486A6940098B216 /* Cocoa.framework in Frameworks */,
+				D686CBD112F74BAE00353301 /* libhdf5.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -857,6 +860,7 @@
 		0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				D686CBD012F74BAE00353301 /* libhdf5.dylib */,
 				1058C7B0FEA5585E11CA2CBB /* Linked Frameworks */,
 				1058C7B2FEA5585E11CA2CBB /* Other Frameworks */,
 			);
@@ -912,6 +916,7 @@
 			isa = PBXGroup;
 			children = (
 				D63BA7C20E17121B00E0FC0E /* avcall-i386.S */,
+				D6171C1214CF570A006D9162 /* avcall-x86_64.c */,
 				D63BA7AC0E17108600E0FC0E /* structcpy.c */,
 				D675AF070E10797700578367 /* SwarmTop.h */,
 				D615E38B08CBF48F00E2534C /* SwarmEnvironment_getters.h */,
@@ -1780,7 +1785,14 @@
 			isa = PBXProject;
 			buildConfigurationList = D615D71D08C6BFEC00E2534C /* Build configuration list for PBXProject "Swarm" */;
 			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
 			mainGroup = 0867D691FE84028FC02AAC07 /* Swarm */;
 			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
 			projectDirPath = "";
@@ -1861,7 +1873,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "../../autogen.sh\nexit 0";
+			shellScript = "# the proper version of the tools may not be in the path\n#../../autogen.sh\nexit 0\n";
 		};
 		7909CE08112B94C6009F123A /* Configure */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1877,7 +1889,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./configure.sh\nexit 0";
+			shellScript = "#./configure.sh\nexit 0";
 		};
 		D6EAF86B0981C20400EE3B51 /* Make headers */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1891,7 +1903,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#\n# Swarm\n#\n\n#pwd > ~/junk\nresult=0\n\ncd build\nln -s ./ Swarm\n\ncd src\nmake headers\nif [ $? -ne 0 ]; then result=$?; fi\ncd defobj\nmake version.h\nif [ $? -ne 0 ]; then result=$?; fi\nmake modulemap.c\nif [ $? -ne 0 ]; then result=$?; fi\n\nexit $result\n";
+			shellScript = "#\n# Swarm\n#\n\n#pwd > ~/junk\n#env > ~/junkenv\nresult=0\n\n#cd build\n#ln -s ./ Swarm\n\ncd ../../src\nmake headers\nif [ $? -ne 0 ]; then result=$?; fi\ncd defobj\nmake version.h\nif [ $? -ne 0 ]; then result=$?; fi\nmake modulemap.c\nif [ $? -ne 0 ]; then result=$?; fi\n\nexit $result\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2037,7 +2049,6 @@
 				D675AEAF0E1068A700578367 /* swarm-objc-apple.m in Sources */,
 				D63BA7AD0E17108600E0FC0E /* structcpy.c in Sources */,
 				D6B169620E21737B00573BB9 /* modulemap.c in Sources */,
-				D69B41000E26ADAF00953B0F /* avcall-i386.S in Sources */,
 				D6EFA56B0F98F9C6002997C4 /* Object2dDisplay.m in Sources */,
 				D6EFA56D0F98F9C6002997C4 /* openstep.m in Sources */,
 				D6EFA56F0F98F9C6002997C4 /* OpenStepSwarm.m in Sources */,
@@ -2064,7 +2075,6 @@
 		D615D71A08C6BFEC00E2534C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
 				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "ppc i386 ppc64 x86_64";
 				COPY_PHASE_STRIP = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -2082,6 +2092,7 @@
 				GCC_WARN_INHIBIT_ALL_WARNINGS = NO;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
+					../..,
 					"${BUILT_PRODUCTS_DIR}/../src/defobj",
 					../../avcall,
 					"${BUILT_PRODUCTS_DIR}/../avcall",
@@ -2094,13 +2105,13 @@
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
+					/usr/local/lib,
 					/opt/local/lib,
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
 				);
 				LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)/../../avcall\"";
 				LIBRARY_STYLE = DYNAMIC;
 				MACH_O_TYPE = mh_dylib;
-				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH)";
 				PREBINDING = NO;
 				PRODUCT_NAME = Swarm;
 				VALID_ARCHS = "ppc64 ppc7400 ppc970 i386 x86_64 ppc";
@@ -2146,8 +2157,8 @@
 		D615D71E08C6BFEC00E2534C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "ppc i386 ppc64 x86_64";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				HEADER_SEARCH_PATHS = (
 					../../avcall,
@@ -2157,7 +2168,7 @@
 					/usr/include/ffi,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH)";
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_CFLAGS = "-fnested-functions";
 				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
 				VALID_ARCHS = "ppc64 ppc7400 ppc970 i386 x86_64 ppc";

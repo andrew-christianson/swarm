@@ -65,13 +65,23 @@ _activity_initialize (void)
   _activity_zone = globalZone;
 
   _activity_activityRefsType = [OrderedSet customizeBegin: globalZone];
+#if SWARM_OBJC_DONE
   [_activity_activityRefsType
-    setIndexFromMemberLoc: offsetof (Activity_c, activityRefs)];
+   setIndexFromMemberLoc: offsetof (Activity_c, activityRefs)];
+#else
+  [_activity_activityRefsType
+    setIndexFromMemberLoc: ivar_getOffset(class_getInstanceVariable([Activity_c class], "activityRefs"))];
+#endif
   _activity_activityRefsType = [_activity_activityRefsType customizeEnd];
 
   _activity_activitySetRefsType = [OrderedSet customizeBegin: globalZone];
+#if SWARM_OBJC_DONE
   [_activity_activitySetRefsType
-    setIndexFromMemberLoc: offsetof (Activity_c, activitySetRefs)];
+   setIndexFromMemberLoc: offsetof (Activity_c, activitySetRefs)];
+#else
+  [_activity_activitySetRefsType
+    setIndexFromMemberLoc: ivar_getOffset(class_getInstanceVariable([Activity_c class], "activitySetRefs"))];
+#endif
   _activity_activitySetRefsType = [_activity_activitySetRefsType customizeEnd];
 
   _activity_swarmSyncType = [Schedule customizeBegin: globalZone];

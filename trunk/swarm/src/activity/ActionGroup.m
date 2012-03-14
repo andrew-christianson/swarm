@@ -46,7 +46,11 @@ PHASE(Creating)
   if (createByMessageToCopy (self, createEnd))
     return self;
 
+#if SWARM_OBJC_DONE
   [(id) self setIndexFromMemberLoc: offsetof (CAction, ownerActions)];
+#else
+  [(id) self setIndexFromMemberLoc: ivar_getOffset(class_getInstanceVariable([CAction class], "ownerActions"))];
+#endif
   setNextPhase (self);
   setMappedAlloc (self);
   return self;
@@ -364,7 +368,11 @@ PHASE(Creating)
   if (createByMessageToCopy (self, createEnd))
     return self;
   
+#if SWARM_OBJC_DONE
   [(id) self setIndexFromMemberLoc: offsetof (CAction, ownerActions)];
+#else
+  [(id) self setIndexFromMemberLoc: ivar_getOffset(class_getInstanceVariable([CAction class], "ownerActions"))];
+#endif
   setMappedAlloc (self);
   setNextPhase (self);
   return self;

@@ -322,13 +322,18 @@ _obj_initModule (void *module)
       **typeID = [_obj_initZone allocIVars: id_Type_c];
       type = **typeID;
       type->owner = moduleObject;
+#if SWARM_OBJC_DONE
       type->name = (*(proto_t *) protocol)->name;
+#else
+      type->name = swarm_protocol_getName(*protocol);
+      if (type->name) printf("Protocol: %s\n", type->name);
+#endif
       type->typeID = *typeID;
       type->supertypes = *protocol;
       
       // also mark whether type is creatable based on protocol declaration
       
-#if SWARM_OBJC_TODO
+#if SWARM_OBJC_DONE
       for (protoList = (*(proto_t *) protocol)->protoList;
            protoList; protoList = protoList->next)
         {
@@ -341,6 +346,17 @@ _obj_initModule (void *module)
                 type->implementation = Creating;
             }
         }
+#else
+      unsigned int outCount;
+      ObjcProtocol **pList = swarm_protocol_copyProtocolList(*protocol, &outCount);
+      int i = 0;
+      for (i = 0; i < outCount; ++i) {
+        printf("Protocol list: %s\n", swarm_protocol_getName(pList[i]));
+        if ((strcmp (swarm_protocol_getName(pList[i]), "CREATABLE") == 0)
+            || strcmp (swarm_protocol_getName(pList[i]), "RETURNABLE") == 0)
+          type->implementation = Creating;
+      }
+      if (pList) free(pList);
 #endif
     }
   

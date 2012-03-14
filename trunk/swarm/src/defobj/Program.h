@@ -50,7 +50,11 @@ extern void _obj_setTypeImplemented (id, id);
 - (const char *)getName;
 @end
 
+#if SWARM_OSX
+@interface ProgramModule_c: NSObject
+#else
 @interface ProgramModule_c: Object
+#endif
 {
 @public
   const char *name; // name of module

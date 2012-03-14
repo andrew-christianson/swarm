@@ -26,6 +26,8 @@ Library:      defobj
 #import <Swarm/swarm-objc-api.h>
 #import <objc/Object.h>
 
+#import <Swarm/swarmconfig.h>
+
 //
 // type declarations
 //
@@ -35,7 +37,11 @@ typedef struct methodDefs *methodDefs_t;
 //
 // Class_s -- portion of class object allocated for all created classes 
 //
+#if SWARM_OSX
+@interface Class_s: NSObject
+#else
 @interface Class_s: Object
+#endif
 {
 @public
   Class_s *superclass;    // object for [super ...] dispatch

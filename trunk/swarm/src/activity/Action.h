@@ -47,6 +47,9 @@ Library:      activity
   id <FCall> call;
   IMP perform_imp; 
   id target; 
+#if SWARM_OSX
+  NSInvocation *anInvocation;
+#endif
 }
 - createEnd;
 @end

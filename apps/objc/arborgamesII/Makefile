@@ -9,7 +9,7 @@ OBJECTS=SeedSpace.o Forest.o   \
         ForestBatchSwarm.o main.o
 DATAFILES = species.scm batch.setup experiment.setup
 
-include $(SWARMHOME)/etc/swarm/Makefile.appl
+include $(SWARMHOME)/share/swarm/Makefile.appl
 
 main.o: main.m ForestObserverSwarm.h ForestBatchSwarm.h
 ForestObserverSwarm.o: ForestObserverSwarm.m ForestObserverSwarm.h \

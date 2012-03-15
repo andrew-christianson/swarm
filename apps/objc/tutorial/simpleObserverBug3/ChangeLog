@@ -1,3 +1,7 @@
+2012-03-15  Scott Christley  <schristley@mac.com>
+
+	* Makefile: make tools now in share directory.
+
 2003-05-16  Paul E. Johnson  <pauljohn@pjdell.pols.ukans.edu>
 
 	* Parameters.m: removed the -S command line option 

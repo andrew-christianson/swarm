@@ -1,3 +1,7 @@
+2012-03-15  Scott Christley  <schristley@mac.com>
+
+	* Makefile: make tools now in share directory.
+
 2000-02-27    <mgd@nest.swarm.org>
 
 	* Makefile (BUGADDRESS): Update to SDG.

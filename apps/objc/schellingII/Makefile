@@ -6,7 +6,7 @@ endif
 APPLICATION=schellingSwarm
 OBJECTS=main.o ObserverSwarm.o ModelSwarm.o SchellingWorld.o  Person.o  Nhood2dCounter.o Output.o BatchSwarm.o Parameters.o BatchColormap.o BatchRaster.o
 
-include $(SWARMHOME)/etc/swarm/Makefile.appl
+include $(SWARMHOME)/share/swarm/Makefile.appl
 main.o: main.m ObserverSwarm.h ModelSwarm.h BatchSwarm.h
 SchellingWorld.o: SchellingWorld.m SchellingWorld.h
 Person.o: Person.h Person.m

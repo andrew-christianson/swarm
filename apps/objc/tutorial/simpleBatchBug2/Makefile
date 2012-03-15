@@ -5,7 +5,7 @@ APPLICATION=bug
 APPVERSION=2.1
 BUGADDRESS=bug-swarm@swarm.org
 OBJECTS=Bug.o  main.o ObserverSwarm.o BatchSwarm.o ModelSwarm.o FoodSpace.o Parameters.o Output.o
-include $(SWARMHOME)/etc/swarm/Makefile.appl
+include $(SWARMHOME)/share/swarm/Makefile.appl
 
 main.o: main.m ObserverSwarm.h BatchSwarm.m Bug.h FoodSpace.h  Parameters.h
 Parameters.o: Parameters.h Parameters.m

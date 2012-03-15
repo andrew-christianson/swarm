@@ -1,3 +1,7 @@
+2012-03-15  Scott Christley  <schristley@mac.com>
+
+	* Makefile: make tools now in share directory.
+
 2003-02-24  Paul E Johnson  <pauljohn@ukans.edu>
 
 	* ConwayWorld.m ([ConwayWorld -stepRule]): Replace profligate use

@@ -1,3 +1,7 @@
+2012-03-15  Scott Christley  <schristley@mac.com>
+
+	* Makefile: make tools now in share directory.
+
 2004-09-24  Paul Johnson  <pauljohn@localhost.localdomain>
 
 	* ForestBatchSwarm.m ([ForestBatchSwarm -buildObjects]): Switch

@@ -1,4 +1,4 @@
-bin_SCRIPTS = print-hdf5
+#bin_SCRIPTS = print-hdf5
 SCHEME = print-table.scm swarm.scm
 EXTRA_DIST = as print-hdf5.in $(SCHEME)
 
@@ -19,3 +19,6 @@ INCLUDES = $(LIBOBJCINCLUDES) -I$(top_builddir)/src -I$(swarm_srcdir) -I$(swarm_
 USEDLL=@USEDLL@
 findImp_LDFLAGS = -L$(top_builddir)/src $(LIBOBJCLDFLAGS) $(GNUSTEPLIBLDFLAGS)
 findImp_LDADD = @SWARMLIBS@ $(GNUSTEPLIBLIBS)
+
+install-data-local:
+	$(INSTALL_PROGRAM) print-hdf5 $(DESTDIR)$(datarootdir)/swarm/print-hdf5

@@ -1,3 +1,12 @@
+2012-03-15  Scott Christley  <schristley@mac.com>
+
+	* swarmrc.in: Remove hash bang as script is meant to be
+	sourced not executed.
+	* Makefile.lib.in: Move make tools into Swarm share
+	directory instead of non-standard etc directory.
+	* Makefile.appl.in: Likewise.
+	* Makefile.am: Likewise.
+
 2007-06-06  Bill Northcott <W.Northcott@unsw.edu.au>
 
 	* config.swarm.in Makefile.common.in: TEA updates

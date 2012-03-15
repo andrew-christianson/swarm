@@ -1,3 +1,9 @@
+2012-03-15  Scott Christley  <schristley@mac.com>
+
+	* Makefile.am: Install print-hdf5 into Swarm share
+	directory instead of in system bin.
+	* print-hdf5.in: Move hash bang to first line.
+
 2008-04-26  Marcus G. Daniels <marcus@snoutfarm.com>
 
 	* as: Don't recode sections individually (e.g. __cstring_object).

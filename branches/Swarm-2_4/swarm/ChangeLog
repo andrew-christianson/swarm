@@ -1,3 +1,8 @@
+2012-03-15  Scott Christley  <schristley@mac.com>
+
+	* Makefile.am: Install libtool-swarm in Swarm
+	share directory instead of system bin.
+
 2011-03-04  Scott Christley  <schristley@mac.com>
 
 	* VERSION: Bump. 2.4.1 bug fix release.

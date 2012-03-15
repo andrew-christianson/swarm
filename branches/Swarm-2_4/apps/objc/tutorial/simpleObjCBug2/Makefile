@@ -6,7 +6,7 @@ APPVERSION=2.1
 BUGADDRESS=bug-swarm@swarm.org
 OBJECTS= main.o Bug.o FoodSpace.o
 
-include $(SWARMHOME)/etc/swarm/Makefile.appl
+include $(SWARMHOME)/share/swarm/Makefile.appl
 
 main.o: main.m Bug.h FoodSpace.h
 Bug.o: Bug.h Bug.m

@@ -1,3 +1,7 @@
+2012-03-15  Scott Christley  <schristley@mac.com>
+
+	* Makefile: make tools now in share directory.
+
 2004-04-13    <pauljohn@localhost.localdomain>
 
 	* bug.scm (cons): inserted file. Have no idea why it was not

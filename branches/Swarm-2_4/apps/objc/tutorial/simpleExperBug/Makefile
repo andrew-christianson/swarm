@@ -8,7 +8,7 @@ OBJECTS=Bug.o main.o ExperSwarm.o ModelSwarm.o FoodSpace.o
 OTHERCLEAN = output.hdf output.scm
 DATAFILES = bug.scm
 
-include $(SWARMHOME)/etc/swarm/Makefile.appl
+include $(SWARMHOME)/share/swarm/Makefile.appl
 
 main.o: main.m ExperSwarm.h Bug.h FoodSpace.h 
 Bug.o: Bug.h Bug.m

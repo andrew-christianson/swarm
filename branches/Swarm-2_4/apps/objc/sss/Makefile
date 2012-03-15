@@ -10,5 +10,5 @@ OBJECTS=main.o SugarAgent.o SugarSpace.o ModelSwarm.o ObserverSwarm.o
 
 DATAFILES = sugarspace.pgm
 
-include $(SWARMHOME)/etc/swarm/Makefile.appl
+include $(SWARMHOME)/share/swarm/Makefile.appl
 

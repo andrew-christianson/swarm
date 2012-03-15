@@ -9,7 +9,7 @@ OBJECTS=FEntity.o FLink.o ILink.o BLink.o FNet.o main.o BankModelSwarm.o \
 APPLIBS=-lgraph
 OTHERCLEAN=banks.data
 
-include $(SWARMHOME)/etc/swarm/Makefile.appl
+include $(SWARMHOME)/share/swarm/Makefile.appl
 
 main.o: main.m BankObserverSwarm.h BankBatchSwarm.h
 FEntity.o: FEntity.m FEntity.h

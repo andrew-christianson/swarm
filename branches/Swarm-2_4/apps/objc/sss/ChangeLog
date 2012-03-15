@@ -1,3 +1,7 @@
+2012-03-15  Scott Christley  <schristley@mac.com>
+
+	* Makefile: make tools now in share directory.
+
 2003-04-18  Paul E. Johnson  <pauljohn@pjdell.pols.ukans.edu>
 
 	* SugarSpace.m ([SugarSpace -createEnd]): change usage of methods

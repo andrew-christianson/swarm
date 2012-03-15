@@ -1,5 +1,5 @@
-include @swarm_prefix@/etc/swarm/Makefile.common
-include @swarm_prefix@/etc/swarm/Makefile.rules
+include @prefix@/share/swarm/Makefile.common
+include @prefix@/share/swarm/Makefile.rules
 
 LIBRARY = lib$(LIBNAME).a
 INCFILE = $(LIBNAME).h

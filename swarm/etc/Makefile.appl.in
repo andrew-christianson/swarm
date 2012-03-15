@@ -1,5 +1,6 @@
-include @swarm_prefix@/etc/swarm/Makefile.common
-include @swarm_prefix@/etc/swarm/Makefile.rules
+swarm_datarootdir = @prefix@/share/swarm
+include $(swarm_datarootdir)/Makefile.common
+include $(swarm_datarootdir)/Makefile.rules
 
 APPEXE = $(APPLICATION)@EXEEXT@
 LDFLAGS = $(SWARMLDFLAGS) $(EXTRALDFLAGS)
@@ -21,7 +22,7 @@ clean:
 	-rm -f $(OBJECTS) $(APPEXE) .libs/$(APPEXE) .libs/lt-$(APPEXE) $(OTHERCLEAN) core gmon.out $(APPEXE).core
 
 install: $(APPEXE) install-config install-data
-	$(SHELL) $(bindir)/libtool-swarm --mode install	$(INSTALL_PROGRAM) $(APPEXE) $(bindir)
+	$(SHELL) $(swarm_datarootdir)/libtool-swarm --mode install	$(INSTALL_PROGRAM) $(APPEXE) $(bindir)
 
 install-config:
 	if test -n "$(CONFIGFILES)" ; then \
@@ -38,7 +39,7 @@ install-data:
         fi
 
 $(APPEXE): $(OBJECTS)
-	$(SHELL) $(bindir)/libtool-swarm --mode link $(CC) $(CFLAGS) $(LDFLAGS) $(GNUSTEPLIBLDFLAGS) -o $@ $(OBJECTS) $(APPLIBS) $(SWARMLIBS) $(OBJCLIBS) $(EXTRALIBS) $(GNUSTEPLIBLIBS)
+	$(SHELL) $(swarm_datarootdir)/libtool-swarm --mode link $(CC) $(CFLAGS) $(LDFLAGS) $(GNUSTEPLIBLDFLAGS) -o $@ $(OBJECTS) $(APPLIBS) $(SWARMLIBS) $(OBJCLIBS) $(EXTRALIBS) $(GNUSTEPLIBLIBS)
 
 # Local variables:
 # mode: makefile

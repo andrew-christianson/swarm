@@ -28,7 +28,7 @@ libdefobj_la_SOURCES = $(SRC) modulemap.c
 libdefobj_la_LDFLAGS = @inst_LDFLAGS@
 libdefobj_la_LIBADD = $(FFILIB)
 
-bin_SCRIPTS = m2h make-h2x
+#bin_SCRIPTS = m2h make-h2x
 
 defobj_HEADERS = Archiver.h LispArchiver.h HDF5Archiver.h Arguments.h Create.h Customize.h DefClass.h DefObject.h HDF5Object.h Program.h Symbol.h Zone.h FCall.h FArguments.h defalloc.h deftype.h directory.h JavaProxy.h JavaClassProxy.h JavaCollection.h JavaCollectionIndex.h javavars.h COMProxy.h macros.h COM.h
 
@@ -44,6 +44,8 @@ install-data-local: install-defobjHEADERS
 	$(INSTALL_DATA) classes.h $(DESTDIR)$(defobjdir)
 	$(INSTALL_DATA) types.h $(DESTDIR)$(defobjdir)
 	$(INSTALL_DATA) version.h $(DESTDIR)$(defobjdir)
+	$(INSTALL_PROGRAM) m2h $(DESTDIR)$(datarootdir)/swarm/m2h
+	$(INSTALL_PROGRAM) make-h2x $(DESTDIR)$(datarootdir)/swarm/make-h2x
 
  include $(top_srcdir)/etc/Makefile.protocol
 

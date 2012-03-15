@@ -1,3 +1,8 @@
+2012-03-15  Scott Christley  <schristley@mac.com>
+
+	* Makefile.am: Install m2h and make-h2x into Swarm
+	share directory instead of system bin.
+
 2009-03-05  Scott Christley  <schristley@mac.com>
 
 	* FCall.m: mframe internals not available for GNUstep.

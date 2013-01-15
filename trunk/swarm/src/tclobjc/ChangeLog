@@ -1,3 +1,7 @@
+2013-01-15  Scott Christley  <schristley@mac.com>
+
+	* TclInterp.m: Add tcl8.5
+
 2009-09-24  Scott Christley  <schristley@mac.com>
 
 	* TclInterp.m, tclObjc.m: Adjust casts to eliminate compiler

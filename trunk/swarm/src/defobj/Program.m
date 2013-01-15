@@ -326,7 +326,7 @@ _obj_initModule (void *module)
       type->name = (*(proto_t *) protocol)->name;
 #else
       type->name = swarm_protocol_getName(*protocol);
-      if (type->name) printf("Protocol: %s\n", type->name);
+      //if (type->name) printf("Protocol: %s\n", type->name);
 #endif
       type->typeID = *typeID;
       type->supertypes = *protocol;
@@ -351,7 +351,7 @@ _obj_initModule (void *module)
       ObjcProtocol **pList = swarm_protocol_copyProtocolList(*protocol, &outCount);
       int i = 0;
       for (i = 0; i < outCount; ++i) {
-        printf("Protocol list: %s\n", swarm_protocol_getName(pList[i]));
+        //printf("Protocol list: %s\n", swarm_protocol_getName(pList[i]));
         if ((strcmp (swarm_protocol_getName(pList[i]), "CREATABLE") == 0)
             || strcmp (swarm_protocol_getName(pList[i]), "RETURNABLE") == 0)
           type->implementation = Creating;

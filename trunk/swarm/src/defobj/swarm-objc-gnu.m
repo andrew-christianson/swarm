@@ -427,3 +427,35 @@ swarm_object_setClass (id obj, Class cls)
 //
 // Working with protocols
 //
+Protocol **
+swarm_protocol_copyProtocolList (Protocol *proto, unsigned int *outCount)
+{
+  struct objc_protocol_list *protocols;
+  Protocol **protocolList;
+  int i, j;
+
+  // Get count of all protocols
+  *outCount = 0;
+  protocols = proto->protocol_list;
+  while (protocols != NULL) {
+    *outCount += protocols->count;
+    protocols = protocols->next;
+  }
+
+  // no protocols?
+  if (*outCount == 0) return NULL;
+
+  // Allocate protocol array
+  protocolList = (Protocol **)malloc(*outCount * sizeof(Protocol *));
+  i = 0;
+  protocols = proto->protocol_list;
+  while (protocols != NULL) {
+    for (j = 0; j < protocols->count; ++j) {
+      protocolList[i] = protocols->list[j];
+      ++i;
+    }
+    protocols = protocols->next;
+  }
+
+  return protocolList;
+}

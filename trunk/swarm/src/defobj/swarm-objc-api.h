@@ -259,7 +259,7 @@ swarm_objc_getProtocol (const char *name);
 const char *
 swarm_protocol_getName (ObjcProtocol *);
 
-BOOL
+ObjcBOOL
 swarm_protocol_isEqual(ObjcProtocol *proto, ObjcProtocol *other);
 
 ObjcProtocol **

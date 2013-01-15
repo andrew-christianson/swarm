@@ -49,7 +49,7 @@ PHASE(Creating)
 #if SWARM_OBJC_DONE
   [(id) self setIndexFromMemberLoc: offsetof (CAction, ownerActions)];
 #else
-  [(id) self setIndexFromMemberLoc: ivar_getOffset(class_getInstanceVariable([CAction class], "ownerActions"))];
+  [(id) self setIndexFromMemberLoc: swarm_ivar_getOffset(swarm_class_getInstanceVariable([CAction class], "ownerActions"))];
 #endif
   setNextPhase (self);
   setMappedAlloc (self);
@@ -371,7 +371,7 @@ PHASE(Creating)
 #if SWARM_OBJC_DONE
   [(id) self setIndexFromMemberLoc: offsetof (CAction, ownerActions)];
 #else
-  [(id) self setIndexFromMemberLoc: ivar_getOffset(class_getInstanceVariable([CAction class], "ownerActions"))];
+  [(id) self setIndexFromMemberLoc: swarm_ivar_getOffset(swarm_class_getInstanceVariable([CAction class], "ownerActions"))];
 #endif
   setMappedAlloc (self);
   setNextPhase (self);

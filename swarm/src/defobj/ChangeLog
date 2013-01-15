@@ -1,22 +1,28 @@
+2013-01-15  Scott Christley  <schristley@mac.com>
+
+	* swarm-objc-api.h: Use ObjCBOOL.
+	* swarm-objc-gnu.h: Add swarm_protocol_getName.
+	* swarm-objc-gnu.m: New function swarm_procotocl_copyProtocolList.
+
 2012-3-14  Scott Christley  <schristley@mac.com>
 
-  * Arguments.m: Use NSInvocation on OpenStep, which requires an
-  autorelease pool so memory is leaked during argument parsing.
-  
-  * swarm-objc-api.h: Add protocol functions.
-  * swarm-objc-apple2.h: Likewise.
-  
-  * swarm-objc-apple.m: Get proper alignment when copying ivar info.
-  
-  * Program.h: Need to inherit from NSObject for OpenStep.
-  * DefClass.h: Likewise.
-  
-  * Program.m: Copy protocols.
-  
-  * _fcall.m: Do not use avcall on OpenStep.
-  
-  * make-h2x: Protocols not constant on 64-bit Mac OSX, so assign
-  values at runtime.
+	* Arguments.m: Use NSInvocation on OpenStep, which requires an
+	autorelease pool so memory is leaked during argument parsing.
+
+	* swarm-objc-api.h: Add protocol functions.
+	* swarm-objc-apple2.h: Likewise.
+
+	* swarm-objc-apple.m: Get proper alignment when copying ivar info.
+
+	* Program.h: Need to inherit from NSObject for OpenStep.
+	* DefClass.h: Likewise.
+
+	* Program.m: Copy protocols.
+
+	* _fcall.m: Do not use avcall on OpenStep.
+
+	* make-h2x: Protocols not constant on 64-bit Mac OSX, so assign
+	values at runtime.
 
 2010-04-11  Marcus G. Daniels <marcus@snoutfarm.com>
 

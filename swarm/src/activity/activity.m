@@ -70,7 +70,7 @@ _activity_initialize (void)
    setIndexFromMemberLoc: offsetof (Activity_c, activityRefs)];
 #else
   [_activity_activityRefsType
-    setIndexFromMemberLoc: ivar_getOffset(class_getInstanceVariable([Activity_c class], "activityRefs"))];
+    setIndexFromMemberLoc: swarm_ivar_getOffset(swarm_class_getInstanceVariable([Activity_c class], "activityRefs"))];
 #endif
   _activity_activityRefsType = [_activity_activityRefsType customizeEnd];
 
@@ -80,7 +80,7 @@ _activity_initialize (void)
    setIndexFromMemberLoc: offsetof (Activity_c, activitySetRefs)];
 #else
   [_activity_activitySetRefsType
-    setIndexFromMemberLoc: ivar_getOffset(class_getInstanceVariable([Activity_c class], "activitySetRefs"))];
+    setIndexFromMemberLoc: swarm_ivar_getOffset(swarm_class_getInstanceVariable([Activity_c class], "activitySetRefs"))];
 #endif
   _activity_activitySetRefsType = [_activity_activitySetRefsType customizeEnd];
 

@@ -62,3 +62,5 @@ Library:      defobj
 #define swarm_ivar_getName(ivar) (((Ivar_t)ivar)->ivar_name)
 #define swarm_ivar_getOffset(ivar) (((Ivar_t)ivar)->ivar_offset)
 #define swarm_ivar_getTypeEncoding(ivar) (((Ivar_t)ivar)->ivar_type)
+
+#define swarm_protocol_getName(p) (((Protocol *)p)->protocol_name)

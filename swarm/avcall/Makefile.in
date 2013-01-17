@@ -46,7 +46,7 @@ INSTALL_DATA = @INSTALL_DATA@
 
 #### End of system configuration section. ####
 
-SHELL = /bin/sh
+SHELL = @SHELL@
 
 # Needed by $(LIBTOOL).
 top_builddir = .
@@ -241,4 +241,3 @@ distdir:
 	cp $(filter-out %/tests.output,$(filter-out %/autom4te.cache %/CVS %/m4,$(wildcard $(srcdir)/*))) $(distdir)
 	mkdir $(distdir)/tests.output
 	cp $(filter-out %/CVS,$(wildcard $(srcdir)/tests.output/*)) $(distdir)/tests.output
-	

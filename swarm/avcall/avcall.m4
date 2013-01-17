@@ -308,7 +308,7 @@ dnl A substitute for AC_CONFIG_AUX_DIR_DEFAULT, so we don't need install.sh.
 ac_config_guess="$SHELL $ac_aux_dir/config.guess"
 ac_config_sub="$SHELL $ac_aux_dir/config.sub"
 dnl We have defined $ac_aux_dir.
-AC_PROVIDE([AC_CONFIG_AUX_DIR_DEFAULT])dnl
+dnl AC_PROVIDE([AC_CONFIG_AUX_DIR_DEFAULT])
 dnl In autoconf-2.52, a single AC_CANONICAL_HOST has the effect of inserting
 dnl the code of AC_CANONICAL_BUILD *before* CL_CANONICAL_HOST, i.e. before
 dnl ac_aux_dir has been set. To work around this, we list AC_CANONICAL_BUILD

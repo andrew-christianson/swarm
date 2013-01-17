@@ -1,3 +1,7 @@
+2013-01-17  Scott Christley  <schristley@mac.com>
+
+	* Makefile.common.in: Set SHELL.
+
 2009-10-01  Scott Christley  <schristley@mac.com>
 
 	* XcodeTemplate: Add batch (non-GUI) batch target.
@@ -16,11 +20,11 @@
 
 	* config.swarm.in Makefile.common.in: TEA updates
 	and NESTEDLDFLAGS.
-	
+
 2007-06-04  Bill Northcott <W.Northcott@unsw.edu.au>
 
 	* swarmrc.in swarmtrc.in: update to MacOS 10.4
-	
+
 2007-03-10 Marcus G. Daniels <marcus@snoutfarm.com>
 
 	* Makefile.rules:  Handle .mm for Objective C++.

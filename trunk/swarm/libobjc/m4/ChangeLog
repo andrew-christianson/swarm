@@ -1,3 +1,8 @@
+2013-01-17  Scott Christley  <schristley@mac.com>
+
+	* ltsugar.m4, ltversion.m4, ltoptions.m4, libtool.m4,
+	lt~obsolete.m4: Updated to libtool 2.4.2 (Debian Wheezy)
+
 2004-11-29  Marcus G. Daniels <mgd@santafe.edu>
 
 	* acdll.m4, acheaders.m4: Quote all macro names for newer aclocal.

@@ -17,4 +17,4 @@ USING
 @protocol ConcurrentGroup_test <Group_test, ConcurrentGroup, CREATABLE>
 @end
 
-#import <tactivity/tactivity_types.h>
+#import <Swarm/tactivity_types.h>

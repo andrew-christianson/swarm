@@ -1,4 +1,4 @@
-// DrugWar model. Copyright © 2000 Swarm Development Group
+// DrugWar model. Copyright © 2000-2014 Swarm Development Group
 // This library is distributed without any warranty; without even the
 // implied warranty of merchantability or fitness for a particular purpose.
 // See file LICENSE for details and terms of copying.
@@ -26,7 +26,7 @@
 +createBegin: (id) aZone {
   Agent * newMe;
   newMe = [super createBegin: aZone];
-  newMe->agentZone = [Zone create: aZone];
+  newMe->agentZone = [SwarmZone create: aZone];
   newMe->cycle = 0;
   newMe->deadTimeStart = -1;
   newMe->deadPriorState = -2;

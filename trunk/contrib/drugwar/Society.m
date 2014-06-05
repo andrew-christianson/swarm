@@ -1,4 +1,4 @@
-// DrugWar model. Copyright © 2000 Swarm Development Group
+// DrugWar model. Copyright © 2000-2014 Swarm Development Group
 // This library is distributed without any warranty; without even the
 // implied warranty of merchantability or fitness for a particular purpose.
 // See file LICENSE for details and terms of copying.
@@ -19,7 +19,7 @@
 
 - build
 {
-  modelZone = [Zone create: [self getZone]];
+  modelZone = [SwarmZone create: [self getZone]];
   if (swarmGUIMode != 1)
     [ObjectLoader load: self fromAppDataFileNamed: "Society-Data.001"];
   [self buildAgents];

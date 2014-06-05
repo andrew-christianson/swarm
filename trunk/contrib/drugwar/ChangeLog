@@ -1,3 +1,9 @@
+2014-06-05  gepr  <gepr@tempusdictum.com>
+
+	* Makefile (APPLIBS): Add -lm to APPLIBS.
+
+	* Agent, GUI, MemeFactory, Society: Zone -> SwarmZone throughout.
+
 2009-01-14  glen  <gepr@tempusdictum.com>
 
 	* Makefile (BUGADDRESS): Changed e-mail address.

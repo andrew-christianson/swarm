@@ -5,7 +5,7 @@ APPLICATION=drugwar
 OBJECTS=Agent.o MemeFactory.o Society.o GUI.o main.o \
 	graph/DiGraph.o graph/DiGraphLink.o graph/DiGraphNode.o graph/graph.o
 
-APPLIBS=
+APPLIBS= -lm
 OTHERCLEAN=
 DATAFILES = GUI-Data.001 Society-Data.001
 

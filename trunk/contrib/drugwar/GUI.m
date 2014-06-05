@@ -13,7 +13,7 @@
 {
   GUI *newMe;
   newMe = [super createBegin: aZone];
-  newMe->guiZone = [Zone create: aZone];
+  newMe->guiZone = [SwarmZone create: aZone];
 
   newMe->displayFrequency = 1;
   newMe->canvasHeight = 600;
